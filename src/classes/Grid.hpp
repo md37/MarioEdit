@@ -24,9 +24,12 @@ private:
     sf::Vector2u windowSize;
     sf::Uint32 rows = 12;
     float distance;
-    sf::Uint32 size;
-    sf::Uint32 sizeDivider = 400;
+    
+    sf::Uint32 lineThickness;
+    sf::Uint32 lineThicknessDivider = 400;
+    
     sf::Color lineColor;
+    
     bool hightlight = false;
     sf::Vector2f highlightPosition;
 

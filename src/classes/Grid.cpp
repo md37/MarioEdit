@@ -9,7 +9,7 @@ Grid::Grid(sf::Vector2u windowSize) : lineColor(74, 119, 203, 255) {
 void Grid::rescale(sf::Vector2u windowSize) {
     this->windowSize = windowSize;
 
-    size = windowSize.y / sizeDivider;
+    lineThickness = windowSize.y / lineThicknessDivider;
     distance = windowSize.y / rows;
 }
 
@@ -43,9 +43,9 @@ void Grid::drawHorizontalLine(sf::Uint32 number, std::shared_ptr<sf::RenderWindo
     sf::Uint32 posY = number*distance;
 
     sf::RectangleShape line;
-    line.setPosition(sf::Vector2f(0, posY-size/2));
+    line.setPosition(sf::Vector2f(0, posY-lineThickness/2));
     line.setFillColor(lineColor);
-    line.setSize(sf::Vector2f(windowSize.x, size));
+    line.setSize(sf::Vector2f(windowSize.x, lineThickness));
 
     window->draw(line);
 }
@@ -54,9 +54,9 @@ void Grid::drawVerticalLine(sf::Uint32 number, std::shared_ptr<sf::RenderWindow>
     sf::Uint32 posX = number*distance;
 
     sf::RectangleShape line;
-    line.setPosition(sf::Vector2f(posX-size/2, 0));
+    line.setPosition(sf::Vector2f(posX-lineThickness/2, 0));
     line.setFillColor(lineColor);
-    line.setSize(sf::Vector2f(size, windowSize.y));
+    line.setSize(sf::Vector2f(lineThickness, windowSize.y));
 
     window->draw(line);
 }

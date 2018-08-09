@@ -131,7 +131,7 @@ bool Tile::isDragging() {
 }
 
 void Tile::highlight() {
-    scalePromotion = 1.2f;
+    scalePromotion = 1.5f;
 
     rescaleCenter();
     correctCorners();

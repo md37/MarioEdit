@@ -28,7 +28,6 @@ private:
 
     std::shared_ptr<sf::RenderWindow> window;
 
-    Scale scale;
     Cursor cursor;
     Keyboard keyboard;
     TileSet tileSet;

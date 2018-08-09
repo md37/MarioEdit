@@ -22,7 +22,7 @@ void Game::reinitializeWindow() {
     window->setFramerateLimit(100);
     window->setKeyRepeatEnabled(false);
 
-    scale.rescale(window->getSize());
+    Scale::rescale(window->getSize());
 
     Cursor::reinitialize(window);
     Tile::setWindow(window);
@@ -141,7 +141,7 @@ void Game::handleSystemEvents() {
                 }
 
                 sf::Vector2u newSize(width, height);
-                scale.rescale(newSize);
+                Scale::rescale(newSize);
                 grid->rescale(newSize);
                 snapTilesToGrid();
                 window->setView(sf::View(sf::FloatRect(0, 0, width, height)));

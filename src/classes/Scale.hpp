@@ -10,15 +10,17 @@ class Scale {
 
 public:
 
-    void rescale(sf::Vector2u windowSize);
+    static void reset();
+    static void rescale(sf::Vector2u windowSize);
 
     static float getScale();
     static float getScaleRatio();
 
 private:
 
-    const sf::Uint32 blocksOnHeight = 12;
-    const sf::Uint32 blockHeight = 16;
+    static const sf::Uint32 blocksOnHeight;
+    static const sf::Uint32 blockHeight;
+
     static float scale;
     static float scaleRatio;
 

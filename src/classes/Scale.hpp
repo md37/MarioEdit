@@ -18,9 +18,6 @@ public:
 
 private:
 
-    static const sf::Uint32 blocksOnHeight;
-    static const sf::Uint32 blockHeight;
-
     static float scale;
     static float scaleRatio;
 

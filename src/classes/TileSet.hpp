@@ -19,7 +19,6 @@ public:
 
 private:
 
-    const size_t scale = 10;
     TileConfig config;
     
     std::shared_ptr<sf::Texture> texture;

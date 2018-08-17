@@ -43,8 +43,8 @@ int Game::run() {
         handleTileEvents(tiles);
 
         window->clear(BG_LIGHT_COLOR);
-
         grid->draw(window);
+
         for (std::size_t i=0; i<tiles.size(); i++) {
             tiles[i]->draw(window);
         }

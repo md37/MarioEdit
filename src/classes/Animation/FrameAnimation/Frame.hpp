@@ -3,11 +3,11 @@
 #include <functional>
 #include <SFML/Graphics.hpp>
 
-class AnimationFrame {
+class Frame {
 
 public:
 
-    AnimationFrame(sf::Uint32 leftBound, sf::Uint32 rightBound, std::function<void()> callback);
+    Frame(sf::Uint32 leftBound, sf::Uint32 rightBound, std::function<void()> callback);
 
     bool entersNow(sf::Int32 animationPointInTime, sf::Int32 duration);
     void enter();

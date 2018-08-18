@@ -2,9 +2,9 @@
 #include <memory>
 
 #include <SFML/Graphics.hpp>
-#include "AnimationFrame.hpp"
+#include "FrameAnimation/Frame.hpp"
 
-class Animation {
+class FrameAnimation {
 
 public:
 
@@ -14,8 +14,8 @@ protected:
 
     sf::Uint32 sleepTime = 10;
     sf::Uint32 duration = 1000;
-    std::vector<std::shared_ptr<AnimationFrame>> frames;
+    std::vector<std::shared_ptr<Frame>> frames;
 
-    void addFrame(std::shared_ptr<AnimationFrame> frame);
+    void addFrame(std::shared_ptr<Frame> frame);
 
 };

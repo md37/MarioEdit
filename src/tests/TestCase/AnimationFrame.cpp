@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
 
 #include <SFML/Graphics.hpp>
-#include "classes/AnimationFrame.hpp"
+#include "classes/Animation/FrameAnimation/Frame.hpp"
 
 #define EMPTY_CALLBACK [](){}
 
 sf::Uint32 frameDuration = 1000;
-AnimationFrame frame(0, 50, EMPTY_CALLBACK);
+Frame frame(0, 50, EMPTY_CALLBACK);
 
 TEST(AnimationFrameTest, test_enters_now_on_begin) {
     EXPECT_TRUE(frame.entersNow(0, frameDuration));

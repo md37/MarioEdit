@@ -1,9 +1,9 @@
 #pragma once
 
-#include "classes/Animation.hpp"
+#include "classes/Animation/FrameAnimation.hpp"
 #include "classes/Tile.hpp"
 
-class SpecialBlockBlinkingAnimation : public Animation {
+class SpecialBlockBlinkingAnimation : public FrameAnimation {
 
 public:
 

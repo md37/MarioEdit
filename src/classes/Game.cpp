@@ -6,7 +6,7 @@
 #include "TileSet.hpp"
 #include "Scale.hpp"
 #include "TileRegistry.hpp"
-#include "Animation/SpecialBlockBlinkingAnimation.hpp"
+#include "Animation/FrameAnimation/Animation/SpecialBlockBlinkingAnimation.hpp"
 
 Game::Game() : tileSet("resources/tiles2.png") {
     window = std::make_shared<sf::RenderWindow>(

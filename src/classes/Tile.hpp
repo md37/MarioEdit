@@ -6,8 +6,9 @@
 #include <functional>
 #include "classes/TileConfig.hpp"
 #include "classes/Grid.hpp"
+#include "classes/Animation/SmoothAnimation/HighlightTileAnimation.hpp"
 
-class Tile
+class Tile : public std::enable_shared_from_this<Tile>
 {
 
 public:
@@ -25,6 +26,8 @@ public:
 
     Tile(sf::Sprite sprite, TileConfig config = TileConfig());
 
+    float scalePromotion = 1.0f;
+
     void change(sf::Uint32 x, sf::Uint32 y);
 
     void setPosition(sf::Vector2f position);
@@ -37,6 +40,7 @@ public:
     sf::Vector2i getSize();
 
     void rescale(float scale);
+
     void draw(std::shared_ptr<sf::RenderWindow> window);
     void handleEvent(Tile::Event event);
     void setEventHandler(Tile::Event event, std::function<void(Tile* tile)> callback);
@@ -62,7 +66,6 @@ private:
     sf::Vector2u gridPosition;
 
     sf::Vector2f scale = {1.0f, 1.0f};
-    float scalePromotion = 1.0f;
 
     sf::Sprite sprite;
 
@@ -74,6 +77,8 @@ private:
     std::function<void(Tile* tile)> startDragCallback = nullptr;
     std::function<void(Tile* tile)> dragCallback = nullptr;
     std::function<void(Tile* tile)> dropCallback = nullptr;
+
+    std::shared_ptr<HighlightTileAnimation> highlightTileAnimation;
 
     sf::Vector2f getCenterPoint();
 

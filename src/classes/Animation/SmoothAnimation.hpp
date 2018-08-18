@@ -10,7 +10,8 @@ public:
 
 protected:
 
-    sf::Uint32  duration = 1000;
+    sf::Uint32 sleepTime = 10;
+    sf::Uint32 duration = 1000;
 
     bool repeatable = false;
     bool stoppable = true;

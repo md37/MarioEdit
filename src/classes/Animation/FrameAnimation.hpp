@@ -13,7 +13,7 @@ public:
 
 protected:
 
-    sf::Uint32 sleepTime = 10;
+    sf::Uint32 sleepTime = 100;
     sf::Uint32 duration = 1000;
     std::vector<std::shared_ptr<Frame>> frames;
 

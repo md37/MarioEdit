@@ -1,7 +1,7 @@
 #pragma once
 
 #include <functional>
-#include <SFML/Graphics.hpp>
+#include <SFML/Config.hpp>
 
 class Frame {
 

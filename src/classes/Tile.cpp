@@ -1,6 +1,6 @@
 #include "Tile.hpp"
 
-#include <iostream>
+#include <SFML/Graphics/Texture.hpp>
 #include "classes/TileRegistry.hpp"
 #include "classes/Cursor.hpp"
 

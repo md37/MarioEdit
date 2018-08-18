@@ -1,7 +1,8 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include <memory>
+#include <SFML/Config.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include "Keyboard.hpp"
 #include "Scale.hpp"
 #include "Cursor.hpp"

@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-#include <iostream>
+#include <SFML/Window/Event.hpp>
 #include "defines.hpp"
 #include "Cursor.hpp"
 #include "TileSet.hpp"

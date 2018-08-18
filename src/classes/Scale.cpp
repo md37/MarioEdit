@@ -1,7 +1,6 @@
 #include "Scale.hpp"
 
 #include <vector>
-#include <iostream>
 #include "Tile.hpp"
 #include "TileRegistry.hpp"
 

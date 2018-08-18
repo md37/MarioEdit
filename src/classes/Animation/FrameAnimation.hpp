@@ -1,7 +1,8 @@
 #pragma once
-#include <memory>
 
-#include <SFML/Graphics.hpp>
+#include <memory>
+#include <vector>
+#include <SFML/Config.hpp>
 #include "FrameAnimation/Frame.hpp"
 
 class FrameAnimation {

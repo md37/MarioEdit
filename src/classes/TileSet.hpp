@@ -2,7 +2,7 @@
 
 #include <string>
 #include <memory>
-#include <SFML/Graphics.hpp>
+#include <SFML/Config.hpp>
 #include "TileConfig.hpp"
 #include "Tile.hpp"
 

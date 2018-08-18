@@ -1,6 +1,6 @@
 #include "Grid.hpp"
 
-#include <iostream>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 Grid::Grid(sf::Vector2u windowSize) : lineColor(74, 119, 203, 255) {
     this->rescale(windowSize);

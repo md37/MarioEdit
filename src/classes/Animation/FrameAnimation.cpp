@@ -1,6 +1,7 @@
 #include "FrameAnimation.hpp"
 
 #include <thread>
+#include <SFML/System/Clock.hpp>
 
 void FrameAnimation::run() {
     sf::Clock clock;

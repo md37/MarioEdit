@@ -131,9 +131,8 @@ bool Tile::isDragging() {
     return isDraggingFlag;
 }
 
-void Tile::highlight() {
+void Tile::hightlight() {
     highlightTileAnimation->run();
-//    scalePromotion = 1.5f;
 
     rescaleCenter();
     correctCorners();

@@ -8,7 +8,7 @@
 #include "classes/Grid.hpp"
 #include "classes/Animation/SmoothAnimation/HighlightTileAnimation.hpp"
 
-class Tile : public std::enable_shared_from_this<Tile>
+class Tile
 {
 
 public:
@@ -48,7 +48,7 @@ public:
     bool isMouseOver();
     bool isDragging();
 
-    void highlight();
+    void hightlight();
     void undoHighlight();
     void startDrag();
     void drag();

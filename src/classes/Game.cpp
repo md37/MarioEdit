@@ -58,7 +58,7 @@ int Game::run() {
 void Game::createTiles() {
     auto questionMark = tileSet.createTile(0, 5);
     questionMark->setEventHandler(Tile::MouseEnter, [](Tile* tile) {
-        tile->highlight();
+        tile->hightlight();
     });
     questionMark->setEventHandler(Tile::MouseLeave, [](Tile* tile) {
         tile->undoHighlight();

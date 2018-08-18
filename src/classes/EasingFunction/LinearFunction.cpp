@@ -10,7 +10,7 @@ LinearFunction::LinearFunction(sf::Int32 a, sf::Int32 b) {
 float LinearFunction::getValue(sf::Int32 time) {
     float timePart = (float)time/(float)duration;
     float value = a*timePart + b;
-    value *= abs(minValue)+abs(maxValue);
+    value *= maxValue-minValue;
     value += minValue;
     return value;
 }

@@ -4,15 +4,17 @@
 #include <functional>
 #include "classes/Animation/SmoothAnimation.hpp"
 
+class Tile;
+
 class HighlightTileAnimation : public SmoothAnimation {
 
 public:
 
-    HighlightTileAnimation(float* tileScalePromotion);
+    HighlightTileAnimation(Tile* tile);
     void run() override;
 
 private:
 
-    float* tileScalePromotion;
+    Tile* tile;
 
 };

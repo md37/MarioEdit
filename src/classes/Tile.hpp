@@ -54,6 +54,9 @@ public:
     void drag();
     void drop();
 
+    void rescaleCenter();
+    void correctCorners();
+
 private:
 
     static std::shared_ptr<sf::RenderWindow> window;
@@ -81,9 +84,6 @@ private:
     std::shared_ptr<HighlightTileAnimation> highlightTileAnimation;
 
     sf::Vector2f getCenterPoint();
-
-    void rescaleCenter();
-    void correctCorners();
 
     bool isOnLeftEdge();
     bool isOnRightEdge();

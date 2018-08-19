@@ -13,7 +13,7 @@ void Tile::setWindow(std::shared_ptr<sf::RenderWindow> &window) {
 Tile::Tile(sf::Sprite sprite, TileConfig config) {
     this->sprite = sprite;
     this->config = config;
-    highlightTileAnimation = std::make_shared<HighlightTileAnimation>(&(this->scalePromotion));
+    highlightTileAnimation = std::make_shared<HighlightTileAnimation>(this);
 }
 
 void Tile::change(sf::Uint32 x, sf::Uint32 y) {

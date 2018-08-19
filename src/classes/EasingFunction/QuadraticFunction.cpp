@@ -1,8 +1,6 @@
 #include "QuadraticFunction.hpp"
 
-#include <cmath>
-
-QuadraticFunction::QuadraticFunction(sf::Int32 duration, float minValue, float maxValue) : EasingFunction(duration, minValue, maxValue) {
+QuadraticFunction::QuadraticFunction(sf::Int32 duration, float startValue, float targetValue) : EasingFunction(duration, startValue, targetValue) {
 
 }
 

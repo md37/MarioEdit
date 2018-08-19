@@ -1,8 +1,6 @@
 #include "LinearFunction.hpp"
 
-#include <cmath>
-
-LinearFunction::LinearFunction(sf::Int32 duration, float minValue, float maxValue) : EasingFunction(duration, minValue, maxValue) {
+LinearFunction::LinearFunction(sf::Int32 duration, float startValue, float targetValue) : EasingFunction(duration, startValue, targetValue) {
 
 }
 

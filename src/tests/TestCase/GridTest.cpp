@@ -149,3 +149,19 @@ TEST(GridTest, test_tile_2_1_point_on_inside) {
     ASSERT_FLOAT_EQ(2*66, gridPoint.x);
     ASSERT_FLOAT_EQ(66, gridPoint.y);
 }
+
+TEST(GridTest, test_center_0_0) {
+    sf::Vector2u pointOnGrid(0, 0);
+    sf::Vector2f center = grid.getCenter(pointOnGrid);
+
+    ASSERT_FLOAT_EQ(33, center.x);
+    ASSERT_FLOAT_EQ(33, center.y);
+}
+
+TEST(GridTest, test_center_2_1) {
+    sf::Vector2u pointOnGrid(2, 1);
+    sf::Vector2f center = grid.getCenter(pointOnGrid);
+
+    ASSERT_FLOAT_EQ(165, center.x);
+    ASSERT_FLOAT_EQ(99, center.y);
+}

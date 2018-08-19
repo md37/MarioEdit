@@ -5,7 +5,7 @@
 #include <SFML/System/Clock.hpp>
 #include "classes/EasingFunction/LinearFunction.hpp"
 #include "classes/EasingFunction/QuadraticFunction.hpp"
-#include "classes/EasingFunction/LogarithmFunction.hpp"
+#include "classes/EasingFunction/LogarithmicFunction.hpp"
 
 class Tile {
 
@@ -38,7 +38,7 @@ void HightlightTileAnimation::run() {
 
         float finishScalePromotion = 1.8f;
         sf::Int32 duration1 = duration/3*2;
-        LogarithmFunction function(duration1, tile->scalePromotion, finishScalePromotion);
+        LogarithmicFunction function(duration1, tile->scalePromotion, finishScalePromotion);
 
         do {
             if (isStopped) {
@@ -62,7 +62,7 @@ void HightlightTileAnimation::run() {
         startMilliseconds = clock.getElapsedTime().asMilliseconds();
 
         sf::Int32 duration2 = duration/3;
-        LogarithmFunction function2(duration2, tile->scalePromotion, finishScalePromotion);
+        LogarithmicFunction function2(duration2, tile->scalePromotion, finishScalePromotion);
 
         do {
             if (isStopped) {

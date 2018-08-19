@@ -1,12 +1,12 @@
-#include "LogarithmFunction.hpp"
+#include "LogarithmicFunction.hpp"
 
 #include <cmath>
 
-LogarithmFunction::LogarithmFunction(sf::Int32 duration, float startValue, float targetValue) : EasingFunction(duration, startValue, targetValue) {
+LogarithmicFunction::LogarithmicFunction(sf::Int32 duration, float startValue, float targetValue) : EasingFunction(duration, startValue, targetValue) {
 
 }
 
-float LogarithmFunction::getValue(sf::Int32 time) {
+float LogarithmicFunction::getValue(sf::Int32 time) {
     float timePart = (float)time/(float)duration;
     if (timePart < infinityBound) {
         timePart = infinityBound;

@@ -91,3 +91,33 @@ TEST(EasingFunction_QuadraticFunction_NegativeToNegative_Test, test_100percent_v
     auto function = createQuadraticNegativeToNegativeFunction();
     ASSERT_FLOAT_EQ(-2.0f, function.getValue(1500));
 }
+
+QuadraticFunction createQuadraticReversedFunction() {
+    QuadraticFunction function(1500, 2.0f, 1.0f);
+    return function;
+}
+
+TEST(EasingFunction_QuadraticFunction_Reversed_Test, test_0percent_value) {
+    auto function = createQuadraticReversedFunction();
+    ASSERT_FLOAT_EQ(2.0f, function.getValue(0));
+}
+
+TEST(EasingFunction_QuadraticFunction_Reversed_Test, test_25percent_value) {
+    auto function = createQuadraticReversedFunction();
+    ASSERT_FLOAT_EQ(1.9375f, function.getValue(375));
+}
+
+TEST(EasingFunction_QuadraticFunction_Reversed_Test, test_50percent_value) {
+    auto function = createQuadraticReversedFunction();
+    ASSERT_FLOAT_EQ(1.75f, function.getValue(750));
+}
+
+TEST(EasingFunction_QuadraticFunction_Reversed_Test, test_75percent_value) {
+    auto function = createQuadraticReversedFunction();
+    ASSERT_FLOAT_EQ(1.4375f, function.getValue(1125));
+}
+
+TEST(EasingFunction_QuadraticFunction_Reversed_Test, test_100percent_value) {
+    auto function = createQuadraticReversedFunction();
+    ASSERT_FLOAT_EQ(1.0f, function.getValue(1500));
+}

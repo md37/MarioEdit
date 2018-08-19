@@ -52,6 +52,8 @@ void HightlightTileAnimation::run() {
             }
 
             tile->scalePromotion = function.getValue(animationPointInTime);
+            tile->rescaleCenter();
+            tile->correctCorners();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
         } while (animationPointInTime < duration1 || isStopped);
@@ -74,6 +76,8 @@ void HightlightTileAnimation::run() {
             }
 
             tile->scalePromotion = function2.getValue(animationPointInTime);
+            tile->rescaleCenter();
+            tile->correctCorners();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
         } while (animationPointInTime < duration2 || isStopped);

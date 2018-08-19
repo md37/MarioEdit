@@ -237,18 +237,16 @@ void Tile::rescaleToTopRightCorner() {
 }
 
 void Tile::rescaleCenter() {
-    auto newSpriteScale = scale*scalePromotion;
+    auto center = getCenterPoint();
 
+    auto newSpriteScale = scale*scalePromotion;
     auto newWidth = sprite.getTextureRect().width * newSpriteScale.x;
     auto newHeight = sprite.getTextureRect().height * newSpriteScale.y;
 
-    auto diffWidth = (newWidth - getSize().x) / 2;
-    auto diffHeight = (newHeight - getSize().y) / 2;
-
     sprite.setScale(newSpriteScale.x, newSpriteScale.y);
 
-    position.x = sprite.getPosition().x - diffWidth;
-    position.y = sprite.getPosition().y - diffHeight;
+    position.x = center.x-newWidth/2;
+    position.y = center.y-newHeight/2;
     sprite.setPosition(position);
 }
 
@@ -351,8 +349,5 @@ void Tile::drop() {
 }
 
 sf::Vector2f Tile::getCenterPoint() {
-    sf::Vector2f retval = position;
-    retval.x += getSize().x/2;
-    retval.y += getSize().y/2;
-    return retval;
+    return grid->getCenter(gridPosition);
 }

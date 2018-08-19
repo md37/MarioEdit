@@ -52,6 +52,8 @@ void UndoHightlightTileAnimation::run() {
             }
 
             tile->scalePromotion = function.getValue(animationPointInTime);
+            tile->snapToGrid();
+            tile->rescaleToWindowBound();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
         } while (animationPointInTime < duration1 || isStopped);
@@ -74,6 +76,8 @@ void UndoHightlightTileAnimation::run() {
             }
 
             tile->scalePromotion = function2.getValue(animationPointInTime);
+            tile->snapToGrid();
+            tile->rescaleToWindowBound();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
         } while (animationPointInTime < duration2 || isStopped);

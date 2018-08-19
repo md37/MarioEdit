@@ -74,6 +74,14 @@ sf::Vector2f Grid::getHighlightPosition() {
     return highlightPosition;
 }
 
+sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) {
+    sf::Vector2f retval(pointOnGrid);
+    retval *= distance;
+    retval.x += distance/2;
+    retval.y += distance/2;
+    return retval;
+}
+
 sf::Vector2u Grid::getHighlightPlace() {
     return sf::Vector2u(highlightPosition/distance);
 }

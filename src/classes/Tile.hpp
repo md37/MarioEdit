@@ -6,7 +6,8 @@
 #include <functional>
 #include "classes/TileConfig.hpp"
 #include "classes/Grid.hpp"
-#include "classes/Animation/SmoothAnimation/HighlightTileAnimation.hpp"
+#include "classes/Animation/SmoothAnimation/HightlightTileAnimation.hpp"
+#include "classes/Animation/SmoothAnimation/UndoHightlightTileAnimation.hpp"
 
 class Tile
 {
@@ -57,6 +58,8 @@ public:
     void rescaleCenter();
     void correctCorners();
 
+    void rescaleToWindowBound();
+
 private:
 
     static std::shared_ptr<sf::RenderWindow> window;
@@ -81,7 +84,8 @@ private:
     std::function<void(Tile* tile)> dragCallback = nullptr;
     std::function<void(Tile* tile)> dropCallback = nullptr;
 
-    std::shared_ptr<HighlightTileAnimation> highlightTileAnimation;
+    std::shared_ptr<HightlightTileAnimation> highlightTileAnimation;
+    std::shared_ptr<UndoHightlightTileAnimation> undoHighlightTileAnimation;
 
     sf::Vector2f getCenterPoint();
 

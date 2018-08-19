@@ -13,6 +13,7 @@ public:
 protected:
 
     sf::Int32 duration = 1000;
+
     float startValue = 0.0f;
     float targetValue = 1.0f;
 

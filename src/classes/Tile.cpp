@@ -13,7 +13,8 @@ void Tile::setWindow(std::shared_ptr<sf::RenderWindow> &window) {
 Tile::Tile(sf::Sprite sprite, TileConfig config) {
     this->sprite = sprite;
     this->config = config;
-    highlightTileAnimation = std::make_shared<HighlightTileAnimation>(this);
+    highlightTileAnimation = std::make_shared<HightlightTileAnimation>(this);
+    undoHighlightTileAnimation = std::make_shared<UndoHightlightTileAnimation>(this);
 }
 
 void Tile::change(sf::Uint32 x, sf::Uint32 y) {
@@ -132,15 +133,24 @@ bool Tile::isDragging() {
 }
 
 void Tile::hightlight() {
-    highlightTileAnimation->run();
-
-    rescaleCenter();
-    correctCorners();
+    if (undoHighlightTileAnimation->isRunning()) {
+        undoHighlightTileAnimation->stop();
+    }
+    if (!highlightTileAnimation->isRunning()) {
+        highlightTileAnimation->run();
+    }
 }
 
 void Tile::undoHighlight() {
-    scalePromotion = 1.0f;
+    if (highlightTileAnimation->isRunning()) {
+        highlightTileAnimation->stop();
+    }
+    if (!undoHighlightTileAnimation->isRunning()) {
+        undoHighlightTileAnimation->run();
+    }
+}
 
+void Tile::rescaleToWindowBound() {
     if (isOnTopLeftCorner()) {
         rescaleToTopLeftCorner();
     } else if (isOnBottomLeftCorner()) {
@@ -160,7 +170,6 @@ void Tile::undoHighlight() {
     } else {
         rescaleCenter();
     }
-    snapToGrid();
 }
 
 bool Tile::isOnLeftEdge() {

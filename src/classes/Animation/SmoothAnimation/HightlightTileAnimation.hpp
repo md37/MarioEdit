@@ -6,11 +6,11 @@
 
 class Tile;
 
-class HighlightTileAnimation : public SmoothAnimation {
+class HightlightTileAnimation : public SmoothAnimation {
 
 public:
 
-    HighlightTileAnimation(Tile* tile);
+    HightlightTileAnimation(Tile* tile);
     void run() override;
 
 private:

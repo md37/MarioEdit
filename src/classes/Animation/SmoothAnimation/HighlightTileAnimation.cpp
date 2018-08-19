@@ -9,7 +9,7 @@
 HighlightTileAnimation::HighlightTileAnimation(float* tileScalePromotion) {
     this->tileScalePromotion = tileScalePromotion;
     this->sleepTime = 10;
-    this->duration = 100;
+    this->duration = 300;
 }
 
 void HighlightTileAnimation::run() {
@@ -22,11 +22,7 @@ void HighlightTileAnimation::run() {
     std::thread interval([=]() {
         sf::Int32 animationPointInTime = 0;
 
-        LinearFunction function(1, 0);
-
-        function.setMinValue(*tileScalePromotion);
-        function.setMaxValue(*tileScalePromotion*2.0f);
-        function.setDuration(duration);
+        QuadraticFunction function(duration, *tileScalePromotion, *tileScalePromotion*2.0f);
 
         while (animationPointInTime < duration) {
             sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();

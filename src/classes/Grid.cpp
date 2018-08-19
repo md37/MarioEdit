@@ -1,6 +1,6 @@
 #include "Grid.hpp"
 
-#include <iostream>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 Grid::Grid(sf::Vector2u windowSize) : lineColor(74, 119, 203, 255) {
     this->rescale(windowSize);
@@ -72,6 +72,14 @@ void Grid::drawHightlight(std::shared_ptr<sf::RenderWindow> window) {
 
 sf::Vector2f Grid::getHighlightPosition() {
     return highlightPosition;
+}
+
+sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) {
+    sf::Vector2f retval(pointOnGrid);
+    retval *= distance;
+    retval.x += distance/2;
+    retval.y += distance/2;
+    return retval;
 }
 
 sf::Vector2u Grid::getHighlightPlace() {

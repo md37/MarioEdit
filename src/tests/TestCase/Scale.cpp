@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
 #include "classes/Scale.hpp"
 
 TEST(ScaleTest, test_default_scale) {

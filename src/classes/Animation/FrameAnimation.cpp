@@ -1,8 +1,9 @@
-#include "Animation.hpp"
+#include "FrameAnimation.hpp"
 
 #include <thread>
+#include <SFML/System/Clock.hpp>
 
-void Animation::run() {
+void FrameAnimation::run() {
     sf::Clock clock;
     sf::Int32 startMilliseconds = clock.getElapsedTime().asMilliseconds();
 
@@ -23,6 +24,6 @@ void Animation::run() {
     interval.detach();
 }
 
-void Animation::addFrame(std::shared_ptr<AnimationFrame> frame) {
+void FrameAnimation::addFrame(std::shared_ptr<Frame> frame) {
     frames.push_back(frame);
 }

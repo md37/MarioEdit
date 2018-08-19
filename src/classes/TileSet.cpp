@@ -1,4 +1,6 @@
 #include "TileSet.hpp"
+
+#include <SFML/Graphics/Texture.hpp>
 #include "Scale.hpp"
 #include "TileRegistry.hpp"
 

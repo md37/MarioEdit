@@ -1,10 +1,13 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Config.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <memory>
 #include <functional>
 #include "classes/TileConfig.hpp"
 #include "classes/Grid.hpp"
+#include "classes/Animation/SmoothAnimation/HightlightTileAnimation.hpp"
+#include "classes/Animation/SmoothAnimation/UndoHightlightTileAnimation.hpp"
 
 class Tile
 {
@@ -24,6 +27,8 @@ public:
 
     Tile(sf::Sprite sprite, TileConfig config = TileConfig());
 
+    float scalePromotion = 1.0f;
+
     void change(sf::Uint32 x, sf::Uint32 y);
 
     void setPosition(sf::Vector2f position);
@@ -36,6 +41,7 @@ public:
     sf::Vector2i getSize();
 
     void rescale(float scale);
+
     void draw(std::shared_ptr<sf::RenderWindow> window);
     void handleEvent(Tile::Event event);
     void setEventHandler(Tile::Event event, std::function<void(Tile* tile)> callback);
@@ -43,11 +49,16 @@ public:
     bool isMouseOver();
     bool isDragging();
 
-    void highlight();
+    void hightlight();
     void undoHighlight();
     void startDrag();
     void drag();
     void drop();
+
+    void rescaleCenter();
+    void correctCorners();
+
+    void rescaleToWindowBound();
 
 private:
 
@@ -61,7 +72,6 @@ private:
     sf::Vector2u gridPosition;
 
     sf::Vector2f scale = {1.0f, 1.0f};
-    float scalePromotion = 1.0f;
 
     sf::Sprite sprite;
 
@@ -74,10 +84,10 @@ private:
     std::function<void(Tile* tile)> dragCallback = nullptr;
     std::function<void(Tile* tile)> dropCallback = nullptr;
 
-    sf::Vector2f getCenterPoint();
+    std::shared_ptr<HightlightTileAnimation> highlightTileAnimation;
+    std::shared_ptr<UndoHightlightTileAnimation> undoHighlightTileAnimation;
 
-    void rescaleCenter();
-    void correctCorners();
+    sf::Vector2f getCenterPoint();
 
     bool isOnLeftEdge();
     bool isOnRightEdge();

@@ -1,6 +1,6 @@
 #include "Tile.hpp"
 
-#include <iostream>
+#include <SFML/Graphics/Texture.hpp>
 #include "classes/TileRegistry.hpp"
 #include "classes/Cursor.hpp"
 
@@ -13,6 +13,8 @@ void Tile::setWindow(std::shared_ptr<sf::RenderWindow> &window) {
 Tile::Tile(sf::Sprite sprite, TileConfig config) {
     this->sprite = sprite;
     this->config = config;
+    highlightTileAnimation = std::make_shared<HightlightTileAnimation>(this);
+    undoHighlightTileAnimation = std::make_shared<UndoHightlightTileAnimation>(this);
 }
 
 void Tile::change(sf::Uint32 x, sf::Uint32 y) {
@@ -130,16 +132,25 @@ bool Tile::isDragging() {
     return isDraggingFlag;
 }
 
-void Tile::highlight() {
-    scalePromotion = 1.5f;
-
-    rescaleCenter();
-    correctCorners();
+void Tile::hightlight() {
+    if (undoHighlightTileAnimation->isRunning()) {
+        undoHighlightTileAnimation->stop();
+    }
+    if (!highlightTileAnimation->isRunning()) {
+        highlightTileAnimation->run();
+    }
 }
 
 void Tile::undoHighlight() {
-    scalePromotion = 1.0f;
+    if (highlightTileAnimation->isRunning()) {
+        highlightTileAnimation->stop();
+    }
+    if (!undoHighlightTileAnimation->isRunning()) {
+        undoHighlightTileAnimation->run();
+    }
+}
 
+void Tile::rescaleToWindowBound() {
     if (isOnTopLeftCorner()) {
         rescaleToTopLeftCorner();
     } else if (isOnBottomLeftCorner()) {
@@ -159,7 +170,6 @@ void Tile::undoHighlight() {
     } else {
         rescaleCenter();
     }
-    snapToGrid();
 }
 
 bool Tile::isOnLeftEdge() {
@@ -227,18 +237,16 @@ void Tile::rescaleToTopRightCorner() {
 }
 
 void Tile::rescaleCenter() {
-    auto newSpriteScale = scale*scalePromotion;
+    auto center = getCenterPoint();
 
+    auto newSpriteScale = scale*scalePromotion;
     auto newWidth = sprite.getTextureRect().width * newSpriteScale.x;
     auto newHeight = sprite.getTextureRect().height * newSpriteScale.y;
 
-    auto diffWidth = (newWidth - getSize().x) / 2;
-    auto diffHeight = (newHeight - getSize().y) / 2;
-
     sprite.setScale(newSpriteScale.x, newSpriteScale.y);
 
-    position.x = sprite.getPosition().x - diffWidth;
-    position.y = sprite.getPosition().y - diffHeight;
+    position.x = center.x-newWidth/2;
+    position.y = center.y-newHeight/2;
     sprite.setPosition(position);
 }
 
@@ -341,8 +349,5 @@ void Tile::drop() {
 }
 
 sf::Vector2f Tile::getCenterPoint() {
-    sf::Vector2f retval = position;
-    retval.x += getSize().x/2;
-    retval.y += getSize().y/2;
-    return retval;
+    return grid->getCenter(gridPosition);
 }

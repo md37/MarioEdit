@@ -1,12 +1,12 @@
 #include "Game.hpp"
 
-#include <iostream>
+#include <SFML/Window/Event.hpp>
 #include "defines.hpp"
 #include "Cursor.hpp"
 #include "TileSet.hpp"
 #include "Scale.hpp"
 #include "TileRegistry.hpp"
-#include "Animation/SpecialBlockBlinkingAnimation.hpp"
+#include "Animation/FrameAnimation/Animation/SpecialBlockBlinkingAnimation.hpp"
 
 Game::Game() : tileSet("resources/tiles2.png") {
     window = std::make_shared<sf::RenderWindow>(
@@ -43,8 +43,8 @@ int Game::run() {
         handleTileEvents(tiles);
 
         window->clear(BG_LIGHT_COLOR);
-
         grid->draw(window);
+
         for (std::size_t i=0; i<tiles.size(); i++) {
             tiles[i]->draw(window);
         }
@@ -58,7 +58,7 @@ int Game::run() {
 void Game::createTiles() {
     auto questionMark = tileSet.createTile(0, 5);
     questionMark->setEventHandler(Tile::MouseEnter, [](Tile* tile) {
-        tile->highlight();
+        tile->hightlight();
     });
     questionMark->setEventHandler(Tile::MouseLeave, [](Tile* tile) {
         tile->undoHighlight();

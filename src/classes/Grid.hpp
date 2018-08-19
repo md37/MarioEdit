@@ -2,7 +2,8 @@
 
 #include <memory>
 
-#include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 class Grid
 {
@@ -14,6 +15,7 @@ public:
     sf::Vector2f getPointOnGrid(sf::Vector2f pointOnScreen);
     sf::Vector2f pointOnGridToPosition(sf::Vector2u pointOnGrid);
     sf::Vector2f getHighlightPosition();
+    sf::Vector2f getCenter(sf::Vector2u pointOnGrid);
     sf::Vector2u getHighlightPlace();
     void draw(std::shared_ptr<sf::RenderWindow> window);
 

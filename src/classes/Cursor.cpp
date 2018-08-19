@@ -1,5 +1,7 @@
 #include "Cursor.hpp"
 
+#include <SFML/Window/Mouse.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include "TileRegistry.hpp"
 
 std::shared_ptr<sf::RenderWindow> Cursor::window;

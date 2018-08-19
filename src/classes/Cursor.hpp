@@ -1,8 +1,8 @@
 #pragma once
 
-#include "SFML/Graphics.hpp"
 #include <memory>
 #include <vector>
+#include <SFML/Config.hpp>
 #include "Tile.hpp"
 
 class Cursor {

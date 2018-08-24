@@ -1,7 +1,7 @@
 #include "HightlightTileAnimation.hpp"
 
 #include <iostream>
-#include <thread>
+#include <functional>
 #include <SFML/System/Clock.hpp>
 #include "classes/EasingFunction/LinearFunction.hpp"
 #include "classes/EasingFunction/QuadraticFunction.hpp"
@@ -33,7 +33,7 @@ void HightlightTileAnimation::run() {
     sf::Int32 sleepTime = this->sleepTime;
     Tile* tile = this->tile;
 
-    std::thread interval([=]() mutable {
+    thread = std::thread([=]() mutable {
         sf::Int32 animationPointInTime = 0;
 
         float finishScalePromotion = 1.8f;
@@ -41,7 +41,9 @@ void HightlightTileAnimation::run() {
         LogarithmicFunction function(duration1, tile->scalePromotion, finishScalePromotion);
 
         do {
+            mutex.lock();
             if (isStopped) {
+                mutex.unlock();
                 break;
             }
 
@@ -54,6 +56,7 @@ void HightlightTileAnimation::run() {
             tile->scalePromotion = function.getValue(animationPointInTime);
             tile->rescaleCenter();
             tile->correctCorners();
+            mutex.unlock();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
         } while (animationPointInTime < duration1 || isStopped);
@@ -65,7 +68,9 @@ void HightlightTileAnimation::run() {
         LogarithmicFunction function2(duration2, tile->scalePromotion, finishScalePromotion);
 
         do {
+            mutex.lock();
             if (isStopped) {
+                mutex.unlock();
                 break;
             }
 
@@ -78,6 +83,7 @@ void HightlightTileAnimation::run() {
             tile->scalePromotion = function2.getValue(animationPointInTime);
             tile->rescaleCenter();
             tile->correctCorners();
+            mutex.unlock();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
         } while (animationPointInTime < duration2 || isStopped);
@@ -85,5 +91,5 @@ void HightlightTileAnimation::run() {
         isRunningFlag = false;
         isStopped = false;
     });
-    interval.detach();
+    thread.detach();
 }

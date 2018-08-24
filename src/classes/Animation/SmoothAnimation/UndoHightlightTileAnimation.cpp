@@ -1,7 +1,7 @@
 #include "UndoHightlightTileAnimation.hpp"
 
 #include <iostream>
-#include <thread>
+#include <functional>
 #include <SFML/System/Clock.hpp>
 #include "classes/EasingFunction/LinearFunction.hpp"
 #include "classes/EasingFunction/QuadraticFunction.hpp"
@@ -33,7 +33,7 @@ void UndoHightlightTileAnimation::run() {
     sf::Int32 sleepTime = this->sleepTime;
     Tile* tile = this->tile;
 
-    std::thread interval([=]() mutable {
+    thread = std::thread([=]() mutable {
         sf::Int32 animationPointInTime = 0;
         float finishScalePromotion = 0.9f;
 
@@ -42,7 +42,10 @@ void UndoHightlightTileAnimation::run() {
 
 
         do {
+            mutex.lock();
+
             if (isStopped) {
+                mutex.unlock();
                 break;
             }
             sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();
@@ -55,6 +58,8 @@ void UndoHightlightTileAnimation::run() {
             tile->snapToGrid();
             tile->rescaleToWindowBound();
 
+            mutex.unlock();
+
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
         } while (animationPointInTime < duration1 || isStopped);
 
@@ -65,7 +70,10 @@ void UndoHightlightTileAnimation::run() {
         sf::Int32 duration2 = duration/3;
         QuadraticFunction function2(duration2, tile->scalePromotion, finishScalePromotion);
         do {
+            mutex.lock();
+
             if (isStopped) {
+                mutex.unlock();
                 break;
             }
 
@@ -79,11 +87,13 @@ void UndoHightlightTileAnimation::run() {
             tile->snapToGrid();
             tile->rescaleToWindowBound();
 
+            mutex.unlock();
+
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
         } while (animationPointInTime < duration2 || isStopped);
 
         isRunningFlag = false;
         isStopped = false;
     });
-    interval.detach();
+    thread.detach();
 }

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <memory>
-#include <functional>
+#include <thread>
+#include <mutex>
 #include "classes/Animation/SmoothAnimation.hpp"
 
 class Tile;
@@ -16,5 +17,7 @@ public:
 private:
 
     Tile* tile;
+    std::thread thread;
+    std::mutex mutex;
 
 };

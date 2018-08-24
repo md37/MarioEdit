@@ -7,7 +7,7 @@ void FrameAnimation::run() {
     sf::Clock clock;
     sf::Int32 startMilliseconds = clock.getElapsedTime().asMilliseconds();
 
-    std::thread interval([=]() {
+    thread = std::thread([=]() {
         while (true) {
             sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();
             sf::Int32 animationPointInTime = (currentMilliseconds-startMilliseconds) % duration;
@@ -21,7 +21,7 @@ void FrameAnimation::run() {
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
         }
     });
-    interval.detach();
+    thread.detach();
 }
 
 void FrameAnimation::addFrame(std::shared_ptr<Frame> frame) {

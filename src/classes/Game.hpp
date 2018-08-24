@@ -32,7 +32,8 @@ private:
 
     Cursor cursor;
     Keyboard keyboard;
-    TileSet tileSet;
+    std::shared_ptr<TileSet> tileSet;
+    std::shared_ptr<TileSet> tileSet2;
     std::shared_ptr<Grid> grid;
     std::shared_ptr<World> world;
 

@@ -7,15 +7,17 @@ class MushroomWorld : public World {
 
 public:
 
-    void drawBackground(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Grid> grid) override;
+    MushroomWorld(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Grid> grid, std::shared_ptr<TileSet> tileSet);
+    virtual sf::Color getBackgroundColor() override;
 
 protected:
 
     sf::Color backgroundColor = BG_LIGHT_COLOR;
 
-    void drawHills(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Grid> grid, sf::Uint32 position);
-    void drawHill(std::shared_ptr<sf::RenderWindow> window, sf::Int32 position, sf::Uint32 size);
+    void generateBackground();
+    void generateHills(sf::Uint32 position);
+    void generateHill(sf::Int32 position, sf::Uint32 size);
 
-    void drawClouds(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Grid> grid, sf::Uint32 position);
-    void drawCloud(std::shared_ptr<sf::RenderWindow> window, sf::Vector2u position, sf::Uint32 size);
+    void generateClouds(sf::Uint32 position);
+    void generateCloud(sf::Vector2u position, sf::Uint32 size);
 };

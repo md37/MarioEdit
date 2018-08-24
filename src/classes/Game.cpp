@@ -9,15 +9,19 @@
 #include "Animation/FrameAnimation/Animation/SpecialBlockBlinkingAnimation.hpp"
 #include "World/MushroomWorld.hpp"
 
-Game::Game() : tileSet("resources/tiles2.png") {
+Game::Game() {
     window = std::make_shared<sf::RenderWindow>(
         sf::VideoMode(windowedWidth, windowedHeight), title, sf::Style::Default
     );
 
+    tileSet = std::make_shared<TileSet>("resources/tiles.png");
+    tileSet->setTileSeparators(1, 1);
+    tileSet2 = std::make_shared<TileSet>("resources/tiles2.png");
     grid = std::make_shared<Grid>(window->getSize());
-    world = std::make_shared<MushroomWorld>();
 
     reinitializeWindow();
+
+    world = std::make_shared<MushroomWorld>(window, grid, tileSet);
 }
 
 void Game::reinitializeWindow() {
@@ -38,14 +42,14 @@ int Game::run() {
 
     auto tiles = TileRegistry::getAll();
     
-    SpecialBlockBlinkingAnimation blinkAnimation(tiles);
-    blinkAnimation.run();
+//    SpecialBlockBlinkingAnimation blinkAnimation(tiles);
+//    blinkAnimation.run();
 
     while (window->isOpen()) {
         handleSystemEvents();
         handleTileEvents(tiles);
 
-        world->drawBackground(window, grid);
+        window->clear(world->getBackgroundColor());
         grid->draw(window);
 
         for (std::size_t i=0; i<tiles.size(); i++) {
@@ -59,7 +63,7 @@ int Game::run() {
 }
 
 void Game::createTiles() {
-    auto questionMark = tileSet.createTile(0, 5);
+    auto questionMark = tileSet2->createTile(0, 5);
     questionMark->setEventHandler(Tile::MouseEnter, [](Tile* tile) {
         tile->hightlight();
     });

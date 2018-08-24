@@ -12,6 +12,7 @@ public:
 
     Grid(sf::Vector2u windowSize);
     void rescale(sf::Vector2u windowSize);
+    sf::Vector2u getSize();
     sf::Vector2f getPointOnGrid(sf::Vector2f pointOnScreen);
     sf::Vector2f pointOnGridToPosition(sf::Vector2u pointOnGrid);
     sf::Vector2f getHighlightPosition();
@@ -27,6 +28,7 @@ private:
 
     sf::Vector2u windowSize;
     sf::Uint32 rows = 12;
+    sf::Uint32 cols;
     float distance;
     
     sf::Uint32 lineThickness;

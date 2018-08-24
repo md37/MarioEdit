@@ -11,6 +11,11 @@ void Grid::rescale(sf::Vector2u windowSize) {
 
     lineThickness = windowSize.y / lineThicknessDivider;
     distance = windowSize.y / rows;
+    cols = windowSize.x / distance;
+}
+
+sf::Vector2u Grid::getSize() {
+    return sf::Vector2u(cols, rows);
 }
 
 sf::Vector2f Grid::getPointOnGrid(sf::Vector2f pointOnScreen) {
@@ -21,7 +26,9 @@ sf::Vector2f Grid::getPointOnGrid(sf::Vector2f pointOnScreen) {
 }
 
 sf::Vector2f Grid::pointOnGridToPosition(sf::Vector2u pointOnGrid) {
-    return sf::Vector2f(pointOnGrid) * distance;
+    sf::Vector2f retval = sf::Vector2f(pointOnGrid) * distance;
+    retval.y = distance*(rows-1) - retval.y;
+    return retval;
 }
 
 void Grid::draw(std::shared_ptr<sf::RenderWindow> window) {
@@ -29,8 +36,7 @@ void Grid::draw(std::shared_ptr<sf::RenderWindow> window) {
         drawHorizontalLine(i, window);
     }
 
-    sf::Uint32 columnsCount = windowSize.x / distance;
-    for (int i=1; i<columnsCount+1; i++) {
+    for (int i=1; i<cols+1; i++) {
         drawVerticalLine(i, window);
     }
 
@@ -76,14 +82,17 @@ sf::Vector2f Grid::getHighlightPosition() {
 
 sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) {
     sf::Vector2f retval(pointOnGrid);
+    retval.y = rows-retval.y;
     retval *= distance;
     retval.x += distance/2;
-    retval.y += distance/2;
+    retval.y -= distance/2;
     return retval;
 }
 
 sf::Vector2u Grid::getHighlightPlace() {
-    return sf::Vector2u(highlightPosition/distance);
+    sf::Vector2u retval(highlightPosition/distance);
+    retval.y = rows-retval.y-1;
+    return retval;
 }
 
 void Grid::hightlightOn() {

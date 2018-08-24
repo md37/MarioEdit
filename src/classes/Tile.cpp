@@ -1,5 +1,6 @@
 #include "Tile.hpp"
 
+#include <iostream>
 #include <SFML/Graphics/Texture.hpp>
 #include "classes/TileRegistry.hpp"
 #include "classes/Cursor.hpp"
@@ -173,19 +174,19 @@ void Tile::rescaleToWindowBound() {
 }
 
 bool Tile::isOnLeftEdge() {
-    return position.x == 0;
+    return gridPosition.x == 0;
 }
 
 bool Tile::isOnRightEdge() {
-    return position.x+getSize().x == window->getSize().x;
+    return gridPosition.x == grid->getSize().x-1;
 }
 
 bool Tile::isOnTopEdge() {
-    return position.y == 0;
+    return gridPosition.y == grid->getSize().y-1;
 }
 
 bool Tile::isOnBottomEdge() {
-    return position.y+getSize().y == window->getSize().y;
+    return gridPosition.y == 0;
 }
 
 bool Tile::isOnTopRightCorner() {

@@ -1,6 +1,5 @@
 #include "Tile.hpp"
 
-#include <iostream>
 #include <SFML/Graphics/Texture.hpp>
 #include "classes/TileRegistry.hpp"
 #include "classes/Cursor.hpp"
@@ -178,6 +177,9 @@ bool Tile::isOnLeftEdge() {
 }
 
 bool Tile::isOnRightEdge() {
+    if (grid->hasIncompleteEnding()) {
+        return false;
+    }
     return gridPosition.x == grid->getSize().x-1;
 }
 

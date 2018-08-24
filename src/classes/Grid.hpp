@@ -20,6 +20,7 @@ public:
     sf::Vector2u getHighlightPlace();
     void draw(std::shared_ptr<sf::RenderWindow> window);
 
+    bool hasIncompleteEnding();
     void hightlightOn();
     void hightlightOff();
     void setHightlightPosition(sf::Vector2f cursorPosition);
@@ -30,6 +31,7 @@ private:
     sf::Uint32 rows = 12;
     sf::Uint32 cols;
     float distance;
+    bool hasIncompleteEndingFlag = false;
     
     sf::Uint32 lineThickness;
     sf::Uint32 lineThicknessDivider = 400;

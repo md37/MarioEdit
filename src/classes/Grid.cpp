@@ -11,7 +11,8 @@ void Grid::rescale(sf::Vector2u windowSize) {
 
     lineThickness = windowSize.y / lineThicknessDivider;
     distance = windowSize.y / rows;
-    cols = windowSize.x / distance;
+    cols = sf::Uint32(windowSize.x / distance);
+    hasIncompleteEndingFlag = windowSize.x > cols*distance;
 }
 
 sf::Vector2u Grid::getSize() {
@@ -105,4 +106,8 @@ void Grid::hightlightOff() {
 
 void Grid::setHightlightPosition(sf::Vector2f cursorPosition) {
     highlightPosition = getPointOnGrid(cursorPosition);
+}
+
+bool Grid::hasIncompleteEnding() {
+    return hasIncompleteEndingFlag;
 }

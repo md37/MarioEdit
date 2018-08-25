@@ -1,6 +1,5 @@
 #include "UndoHighlightTileAnimation.hpp"
 
-#include <iostream>
 #include <functional>
 #include "classes/Tile/DynamicTile.hpp"
 #include "classes/EasingFunction/LinearFunction.hpp"

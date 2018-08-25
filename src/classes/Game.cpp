@@ -4,7 +4,6 @@
 #include "defines.hpp"
 #include "classes/Cursor.hpp"
 #include "classes/Scale.hpp"
-#include "classes/Tile/TileFactory.hpp"
 #include "classes/Tile/TileRegistry.hpp"
 #include "classes/Animation/FrameAnimation/Animation/SpecialBlockBlinkingAnimation.hpp"
 
@@ -13,13 +12,9 @@ Game::Game() {
         sf::VideoMode(windowedWidth, windowedHeight), title, sf::Style::Default
     );
 
-    grid = std::make_shared<Grid>(window->getSize());
-    tileSet = std::make_shared<TileFactory>("resources/tiles.png");
-    tileSet->setTileSeparators(1, 1);
-    tileSet2 = std::make_shared<TileFactory>("resources/tiles2.png");
-
+    scene = std::make_shared<Scene>(window);
     initializeEventHandler();
-    reinitializeWindow();
+    reInitializeWindow();
 }
 
 void Game::initializeEventHandler() {
@@ -45,8 +40,7 @@ void Game::initializeEventHandler() {
 
         sf::Vector2u newSize(width, height);
         Scale::rescale(newSize);
-        grid->rescale(newSize);
-        resnapTilesToGrid();
+        scene->rescale();
         window->setView(sf::View(sf::FloatRect(0, 0, width, height)));
     });
 
@@ -65,11 +59,11 @@ void Game::initializeEventHandler() {
             sf::VideoMode mode(width, height);
             window->create(mode, title, isFullscreen ? sf::Style::Fullscreen : sf::Style::Default);
         }
-        reinitializeWindow();
+        reInitializeWindow();
     });
 }
 
-void Game::reinitializeWindow() {
+void Game::reInitializeWindow() {
     window->setVerticalSyncEnabled(true);
     window->setFramerateLimit(100);
     window->setKeyRepeatEnabled(false);
@@ -78,64 +72,21 @@ void Game::reinitializeWindow() {
     Scale::rescale(window->getSize());
     Cursor::reinitialize(window);
 
-    grid->rescale(window->getSize());
-    resnapTilesToGrid();
+    scene->rescale();
 }
 
 int Game::run() {
-    createTiles();
-
-    auto dynamicTiles = TileRegistry::getDynamicTiles();
-    
-    SpecialBlockBlinkingAnimation blinkAnimation(dynamicTiles);
-    blinkAnimation.run();
+    scene->runTasks();
 
     while (window->isOpen()) {
         eventHandler->handleSystemEvents(window);
-        eventHandler->handleDynamicTilesEvents(dynamicTiles);
+        eventHandler->handleDynamicTilesEvents();
 
-        window->clear(BG_LIGHT_COLOR);
-        grid->draw(window);
-
-        for (std::size_t i=0; i<dynamicTiles.size(); i++) {
-            dynamicTiles[i]->draw(window);
-        }
-
+        scene->draw();
         cursor.draw();
         window->display();
     }
     return 0;
-}
-
-void Game::createTiles() {
-    auto questionMark = tileSet2->createDynamicTile(0, 5);
-    questionMark->addEventHandler(DynamicTile::MouseEnter, [](DynamicTile *tile) {
-        tile->highlight();
-    });
-    questionMark->addEventHandler(DynamicTile::MouseLeave, [](DynamicTile *tile) {
-        tile->undoHighlight();
-    });
-    questionMark->addEventHandler(DynamicTile::StartDrag, [](DynamicTile *tile) {
-        tile->changeImage(0, 5);
-        tile->startDrag();
-    });
-    questionMark->addEventHandler(DynamicTile::Drag, [](DynamicTile *tile) {
-        tile->drag();
-    });
-    questionMark->addEventHandler(DynamicTile::Drop, [](DynamicTile *tile) {
-        tile->drop();
-    });
-
-    questionMark->setGrid(grid);
-    questionMark->snapToGrid(sf::Vector2u(2, 1));
-}
-
-void Game::resnapTilesToGrid() {
-    auto tiles = TileRegistry::getDynamicTiles();
-    for (size_t i=0; i < tiles.size(); i++) {
-        auto tile = tiles[i];
-        tile->snapToGrid();
-    }
 }
 
 sf::VideoMode Game::findHighestResolutionMode() {

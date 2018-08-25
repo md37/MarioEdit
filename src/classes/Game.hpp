@@ -4,11 +4,9 @@
 #include <SFML/Config.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "classes/EventHandler.hpp"
-#include "classes/Keyboard.hpp"
 #include "classes/Scale.hpp"
 #include "classes/Cursor.hpp"
-#include "classes/Grid.hpp"
-#include "classes/Tile/TileFactory.hpp"
+#include "classes/Scene.hpp"
 
 class Game {
 
@@ -30,17 +28,12 @@ private:
 
     std::shared_ptr<sf::RenderWindow> window;
     std::shared_ptr<EventHandler> eventHandler;
+    std::shared_ptr<Scene> scene;
 
     Cursor cursor;
-    std::shared_ptr<TileFactory> tileSet;
-    std::shared_ptr<TileFactory> tileSet2;
-    std::shared_ptr<Grid> grid;
 
     void initializeEventHandler();
 
-    void createTiles();
-    void resnapTilesToGrid();
-
-    void reinitializeWindow();
+    void reInitializeWindow();
     sf::VideoMode findHighestResolutionMode();
 };

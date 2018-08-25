@@ -1,5 +1,6 @@
 #include "FrameAnimation.hpp"
 
+#include <iostream>
 #include <thread>
 #include <SFML/System/Clock.hpp>
 
@@ -9,6 +10,7 @@ void FrameAnimation::run() {
 
     thread = std::thread([=]() {
         while (true) {
+            mutex.lock();
             sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();
             sf::Int32 animationPointInTime = (currentMilliseconds-startMilliseconds) % duration;
 
@@ -17,7 +19,7 @@ void FrameAnimation::run() {
                     frames.at(i)->enter();
                 }
             }
-
+            mutex.unlock();
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
         }
     });

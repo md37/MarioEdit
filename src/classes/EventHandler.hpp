@@ -26,7 +26,7 @@ public:
     sf::Event getLastEvent();
     void addEventHandler(Event event, std::function<void()> callback);
     void handleSystemEvents(std::shared_ptr<sf::RenderWindow> window);
-    void handleDynamicTilesEvents(const std::vector<std::shared_ptr<DynamicTile>> &tiles);
+    void handleDynamicTilesEvents();
 
 private:
 

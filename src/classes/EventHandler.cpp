@@ -1,6 +1,7 @@
 #include "EventHandler.hpp"
 
 #include "classes/Scale.hpp"
+#include "classes/Tile/TileRegistry.hpp"
 
 EventHandler::EventHandler(Cursor& cursor) : cursor(cursor) {
 
@@ -65,7 +66,9 @@ void EventHandler::handleKeyboardEvents() {
     }
 }
 
-void EventHandler::handleDynamicTilesEvents(const std::vector<std::shared_ptr<DynamicTile>> &tiles) {
+void EventHandler::handleDynamicTilesEvents() {
+    auto tiles = TileRegistry::getDynamicTiles();
+
     for (size_t i=0; i < tiles.size(); i++) {
         auto tile = tiles[i];
         if (cursor.isOver(tile) && !cursor.isOverRegistered(tile)) {

@@ -2,11 +2,11 @@
 
 #include <SFML/Window/Event.hpp>
 #include "defines.hpp"
-#include "Cursor.hpp"
-#include "TileFactory.hpp"
-#include "Scale.hpp"
-#include "TileRegistry.hpp"
-#include "Animation/FrameAnimation/Animation/SpecialBlockBlinkingAnimation.hpp"
+#include "classes/Cursor.hpp"
+#include "classes/Scale.hpp"
+#include "classes/Tile/TileFactory.hpp"
+#include "classes/Tile/TileRegistry.hpp"
+#include "classes/Animation/FrameAnimation/Animation/SpecialBlockBlinkingAnimation.hpp"
 
 Game::Game() {
     window = std::make_shared<sf::RenderWindow>(

@@ -2,7 +2,7 @@
 
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include "TileRegistry.hpp"
+#include "classes/Tile/TileRegistry.hpp"
 
 std::shared_ptr<sf::RenderWindow> Cursor::window;
 

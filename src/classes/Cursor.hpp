@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 #include <SFML/Config.hpp>
-#include "Tile.hpp"
+#include "classes/Tile.hpp"
 
 class Cursor {
 

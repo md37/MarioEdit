@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "classes/TileRegistry.hpp"
+#include "classes/Tile/TileRegistry.hpp"
 #include "classes/Tile.hpp"
 
 TEST(TileRegistryTest, test_getall_no_tiles) {

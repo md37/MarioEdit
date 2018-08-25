@@ -3,8 +3,8 @@
 #include <string>
 #include <memory>
 #include <SFML/Config.hpp>
-#include "TileConfig.hpp"
-#include "Tile.hpp"
+#include "classes/Tile.hpp"
+#include "classes/Tile/TileConfig.hpp"
 
 class TileFactory
 {

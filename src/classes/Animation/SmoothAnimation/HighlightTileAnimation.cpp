@@ -13,7 +13,7 @@ public:
 
     float scalePromotion;
 
-    void rescaleCenter();
+    void snapToCenterPoint();
     void correctCorners();
 };
 
@@ -54,7 +54,7 @@ void HighlightTileAnimation::run() {
             }
 
             tile->scalePromotion = function.getValue(animationPointInTime);
-            tile->rescaleCenter();
+            tile->snapToCenterPoint();
             tile->correctCorners();
             mutex.unlock();
 
@@ -81,7 +81,7 @@ void HighlightTileAnimation::run() {
             }
 
             tile->scalePromotion = function2.getValue(animationPointInTime);
-            tile->rescaleCenter();
+            tile->snapToCenterPoint();
             tile->correctCorners();
             mutex.unlock();
 

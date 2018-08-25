@@ -3,11 +3,11 @@
 #include <memory>
 #include <SFML/Config.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "Keyboard.hpp"
-#include "Scale.hpp"
-#include "Cursor.hpp"
-#include "TileFactory.hpp"
-#include "Grid.hpp"
+#include "classes/Keyboard.hpp"
+#include "classes/Scale.hpp"
+#include "classes/Cursor.hpp"
+#include "classes/Grid.hpp"
+#include "classes/Tile/TileFactory.hpp"
 
 class Game {
 

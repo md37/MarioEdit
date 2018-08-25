@@ -2,10 +2,11 @@
 
 #include <SFML/Config.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <map>
 #include <memory>
 #include <functional>
-#include "classes/TileConfig.hpp"
 #include "classes/Grid.hpp"
+#include "classes/Tile/TileConfig.hpp"
 #include "classes/Animation/SmoothAnimation/HighlightTileAnimation.hpp"
 #include "classes/Animation/SmoothAnimation/UndoHighlightTileAnimation.hpp"
 
@@ -55,10 +56,10 @@ public:
     void drag();
     void drop();
 
-    void rescaleCenter();
+    void snapToCenterPoint();
     void correctCorners();
 
-    void rescaleToWindowBound();
+    void snapToWindowBound();
 
 private:
 
@@ -77,17 +78,11 @@ private:
 
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;
-    std::function<void(Tile* tile)> mouseOverCallback = nullptr;
-    std::function<void(Tile* tile)> mouseEnterCallback = nullptr;
-    std::function<void(Tile* tile)> mouseLeaveCallback = nullptr;
-    std::function<void(Tile* tile)> startDragCallback = nullptr;
-    std::function<void(Tile* tile)> dragCallback = nullptr;
-    std::function<void(Tile* tile)> dropCallback = nullptr;
+
+    std::map<Event, std::function<void(Tile* tile)>> eventCallbacks;
 
     std::shared_ptr<HighlightTileAnimation> highlightTileAnimation;
     std::shared_ptr<UndoHighlightTileAnimation> undoHighlightTileAnimation;
-
-    sf::Vector2f getCenterPoint();
 
     bool isOnLeftEdge();
     bool isOnRightEdge();
@@ -99,13 +94,13 @@ private:
     bool isOnBottomRightCorner();
     bool isOnTopRightCorner();
 
-    void rescaleToTopLeftCorner();
-    void rescaleToBottomLeftCorner();
-    void rescaleToBottomRightCorner();
-    void rescaleToTopRightCorner();
+    void snapToTopLeftCorner();
+    void snapToBottomLeftCorner();
+    void snapToBottomRightCorner();
+    void snapToTopRightCorner();
 
-    void rescaleToLeftEdge();
-    void rescaleToRightEdge();
-    void rescaleToTopEdge();
-    void rescaleToBottomEdge();
+    void snapToLeftEdge();
+    void snapToRightEdge();
+    void snapToTopEdge();
+    void snapToBottomEdge();
 };

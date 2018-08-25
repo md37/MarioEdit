@@ -1,8 +1,8 @@
 #include "TileFactory.hpp"
 
 #include <SFML/Graphics/Texture.hpp>
-#include "Scale.hpp"
-#include "TileRegistry.hpp"
+#include "classes/Scale.hpp"
+#include "classes/Tile/TileRegistry.hpp"
 
 TileFactory::TileFactory(std::string filepath)
 {

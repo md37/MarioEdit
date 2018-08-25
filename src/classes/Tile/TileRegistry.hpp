@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Tile.hpp"
+#include "classes/Tile.hpp"
 
 class TileRegistry {
 

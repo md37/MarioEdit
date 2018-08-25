@@ -14,7 +14,7 @@ public:
 
     float scalePromotion;
     void snapToGrid();
-    void rescaleToWindowBound();
+    void snapToWindowBound();
 };
 
 UndoHighlightTileAnimation::UndoHighlightTileAnimation(Tile *tile) {
@@ -56,7 +56,7 @@ void UndoHighlightTileAnimation::run() {
 
             tile->scalePromotion = function.getValue(animationPointInTime);
             tile->snapToGrid();
-            tile->rescaleToWindowBound();
+            tile->snapToWindowBound();
 
             mutex.unlock();
 
@@ -85,7 +85,7 @@ void UndoHighlightTileAnimation::run() {
 
             tile->scalePromotion = function2.getValue(animationPointInTime);
             tile->snapToGrid();
-            tile->rescaleToWindowBound();
+            tile->snapToWindowBound();
 
             mutex.unlock();
 

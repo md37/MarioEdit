@@ -4,7 +4,7 @@
 #include <thread>
 #include <mutex>
 #include <SFML/System/Clock.hpp>
-#include "classes/EasingFunction/LogarithmicFunction.hpp"
+#include "classes/EasingFunction.hpp"
 #include "classes/Animation/SmoothAnimation.hpp"
 
 class DynamicTile;
@@ -23,5 +23,5 @@ private:
     std::thread thread;
     std::mutex mutex;
 
-    void animate(sf::Int32 duration, LogarithmicFunction &function);
+    void animate(sf::Int32 duration, EasingFunction& function);
 };

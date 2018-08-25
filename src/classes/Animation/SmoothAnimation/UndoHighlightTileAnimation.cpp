@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <functional>
-#include <SFML/System/Clock.hpp>
 #include "classes/Tile/DynamicTile.hpp"
 #include "classes/EasingFunction/LinearFunction.hpp"
 #include "classes/EasingFunction/QuadraticFunction.hpp"
@@ -17,74 +16,44 @@ UndoHighlightTileAnimation::UndoHighlightTileAnimation(DynamicTile *tile) {
 void UndoHighlightTileAnimation::run() {
     isRunningFlag = true;
 
-    sf::Clock clock;
-    sf::Int32 startMilliseconds = clock.getElapsedTime().asMilliseconds();
-
-    sf::Int32 duration = this->duration;
-    sf::Int32 sleepTime = this->sleepTime;
-    DynamicTile* tile = this->tile;
-
     thread = std::thread([=]() mutable {
-        sf::Int32 animationPointInTime = 0;
-        float finishScalePromotion = 0.9f;
-
         sf::Int32 duration1 = duration/3*2;
-        LogarithmicFunction function(duration1, tile->scalePromotion, finishScalePromotion);
-
-
-        do {
-            mutex.lock();
-
-            if (isStopped) {
-                mutex.unlock();
-                break;
-            }
-            sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();
-            animationPointInTime = currentMilliseconds-startMilliseconds;
-            if (animationPointInTime > duration1) {
-                animationPointInTime = duration1;
-            }
-
-            tile->scalePromotion = function.getValue(animationPointInTime);
-            tile->snapToGrid();
-            tile->snapToWindowBound();
-
-            mutex.unlock();
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-        } while (animationPointInTime < duration1 || isStopped);
-
-
-        startMilliseconds = clock.getElapsedTime().asMilliseconds();
-        finishScalePromotion = 1.0f;
+        LogarithmicFunction function1(duration1, tile->scalePromotion, 0.9f);
+        animate(duration1, function1);
 
         sf::Int32 duration2 = duration/3;
-        QuadraticFunction function2(duration2, tile->scalePromotion, finishScalePromotion);
-        do {
-            mutex.lock();
-
-            if (isStopped) {
-                mutex.unlock();
-                break;
-            }
-
-            sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();
-            animationPointInTime = currentMilliseconds-startMilliseconds;
-            if (animationPointInTime > duration2) {
-                animationPointInTime = duration2;
-            }
-
-            tile->scalePromotion = function2.getValue(animationPointInTime);
-            tile->snapToGrid();
-            tile->snapToWindowBound();
-
-            mutex.unlock();
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-        } while (animationPointInTime < duration2 || isStopped);
+        QuadraticFunction function2(duration2, tile->scalePromotion, 1.0f);
+        animate(duration2, function2);
 
         isRunningFlag = false;
         isStopped = false;
     });
     thread.detach();
+}
+
+void UndoHighlightTileAnimation::animate(sf::Int32 duration, EasingFunction& function) {
+    sf::Int32 animationPointInTime = 0;
+    sf::Int32 startMilliseconds = clock.getElapsedTime().asMilliseconds();
+
+    do {
+        mutex.lock();
+
+        if (isStopped) {
+            mutex.unlock();
+            break;
+        }
+        sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();
+        animationPointInTime = currentMilliseconds-startMilliseconds;
+        if (animationPointInTime > duration) {
+            animationPointInTime = duration;
+        }
+
+        tile->scalePromotion = function.getValue(animationPointInTime);
+        tile->snapToGrid();
+        tile->snapToWindowBound();
+
+        mutex.unlock();
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+    } while (animationPointInTime < duration || isStopped);
 }

@@ -3,7 +3,6 @@
 #include <memory>
 #include <SFML/Config.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <classes/World/World.hpp>
 #include "Keyboard.hpp"
 #include "Scale.hpp"
 #include "Cursor.hpp"
@@ -35,7 +34,6 @@ private:
     std::shared_ptr<TileSet> tileSet;
     std::shared_ptr<TileSet> tileSet2;
     std::shared_ptr<Grid> grid;
-    std::shared_ptr<World> world;
 
 
     void handleSystemEvents();

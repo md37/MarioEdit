@@ -7,7 +7,6 @@
 #include "Scale.hpp"
 #include "TileRegistry.hpp"
 #include "Animation/FrameAnimation/Animation/SpecialBlockBlinkingAnimation.hpp"
-#include "World/MushroomWorld.hpp"
 
 Game::Game() {
     window = std::make_shared<sf::RenderWindow>(
@@ -20,8 +19,6 @@ Game::Game() {
     grid = std::make_shared<Grid>(window->getSize());
 
     reinitializeWindow();
-
-    world = std::make_shared<MushroomWorld>(window, grid, tileSet);
 }
 
 void Game::reinitializeWindow() {
@@ -42,14 +39,14 @@ int Game::run() {
 
     auto tiles = TileRegistry::getAll();
     
-//    SpecialBlockBlinkingAnimation blinkAnimation(tiles);
-//    blinkAnimation.run();
+    SpecialBlockBlinkingAnimation blinkAnimation(tiles);
+    blinkAnimation.run();
 
     while (window->isOpen()) {
         handleSystemEvents();
         handleTileEvents(tiles);
 
-        window->clear(world->getBackgroundColor());
+        window->clear(BG_LIGHT_COLOR);
         grid->draw(window);
 
         for (std::size_t i=0; i<tiles.size(); i++) {

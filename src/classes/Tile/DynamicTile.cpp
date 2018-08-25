@@ -14,7 +14,7 @@ void DynamicTile::handleEvent(DynamicTile::Event event) {
     eventCallbacks[event](this);
 }
 
-void DynamicTile::setEventHandler(DynamicTile::Event event, std::function<void(DynamicTile* tile)> callback) {
+void DynamicTile::addEventHandler(DynamicTile::Event event, std::function<void(DynamicTile *tile)> callback) {
     eventCallbacks[event] = callback;
 }
 

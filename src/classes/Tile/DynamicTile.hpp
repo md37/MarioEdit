@@ -17,10 +17,10 @@ public:
         Drop,
     };
 
-    DynamicTile(sf::Sprite sprite, TileConfig config = TileConfig());
+    DynamicTile(sf::Sprite sprite, TileConfig config=TileConfig());
 
     void handleEvent(DynamicTile::Event event);
-    void setEventHandler(DynamicTile::Event event, std::function<void(DynamicTile* tile)> callback);
+    void addEventHandler(DynamicTile::Event event, std::function<void(DynamicTile *tile)> callback);
 
     bool isMouseOver();
     bool isDragging();

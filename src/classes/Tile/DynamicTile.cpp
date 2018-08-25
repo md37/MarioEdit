@@ -26,7 +26,7 @@ void DynamicTile::startDrag() {
 
     dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
 
-    grid->highlightOn();
+    grid->turnHighlightOn();
 }
 
 void DynamicTile::drag() {
@@ -50,7 +50,7 @@ void DynamicTile::drop() {
     positionOnGrid -= (tileSize-(tileSize/scalePromotion))/2.0f;
 
     setPosition(positionOnGrid);
-    grid->highlightOff();
+    grid->turnHighlightOff();
 
     correctCorners();
 }

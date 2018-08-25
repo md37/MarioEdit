@@ -60,7 +60,7 @@ int Game::run() {
 }
 
 void Game::createTiles() {
-    auto questionMark = tileSet2->createTile(0, 5);
+    auto questionMark = tileSet2->createDynamicTile(0, 5);
     questionMark->setEventHandler(DynamicTile::MouseEnter, [](DynamicTile* tile) {
         tile->highlight();
     });

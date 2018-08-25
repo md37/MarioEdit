@@ -2,10 +2,6 @@
 
 #include <SFML/System/Vector2.hpp>
 
-enum Direction {
-    X=1, Y=2,
-};
-
 class Scale {
 
 public:

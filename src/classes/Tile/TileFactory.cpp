@@ -20,7 +20,7 @@ void TileFactory::setTileOffset(sf::Uint32 offsetX, sf::Uint32 offsetY) {
     config.offsetY = offsetY;
 }
 
-std::shared_ptr<DynamicTile> TileFactory::createTile(sf::Uint32 x, sf::Uint32 y) {
+std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Uint32 y) {
     sf::Sprite sprite;
     sprite.setTexture(*(texture));
     sprite.setScale(Scale::getScale(), Scale::getScale());

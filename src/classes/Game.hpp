@@ -4,7 +4,6 @@
 #include <SFML/Config.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "classes/EventHandler.hpp"
-#include "classes/Scale.hpp"
 #include "classes/Cursor.hpp"
 #include "classes/Scene.hpp"
 

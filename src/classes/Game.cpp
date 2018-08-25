@@ -3,9 +3,6 @@
 #include <SFML/Window/Event.hpp>
 #include "defines.hpp"
 #include "classes/Cursor.hpp"
-#include "classes/Scale.hpp"
-#include "classes/Tile/TileRegistry.hpp"
-#include "classes/Animation/FrameAnimation/Animation/SpecialBlockBlinkingAnimation.hpp"
 
 Game::Game() {
     window = std::make_shared<sf::RenderWindow>(
@@ -38,8 +35,6 @@ void Game::initializeEventHandler() {
             windowedHeight = minWindowHeight;
         }
 
-        sf::Vector2u newSize(width, height);
-        Scale::rescale(newSize);
         scene->rescale();
         window->setView(sf::View(sf::FloatRect(0, 0, width, height)));
     });
@@ -68,8 +63,6 @@ void Game::reInitializeWindow() {
     window->setFramerateLimit(100);
     window->setKeyRepeatEnabled(false);
 
-    Tile::setWindow(window);
-    Scale::rescale(window->getSize());
     Cursor::reinitialize(window);
 
     scene->rescale();

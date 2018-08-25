@@ -1,6 +1,7 @@
 #include "Scene.hpp"
 
 #include "defines.hpp"
+#include "classes/Scale.hpp"
 #include "classes/Tile/TileRegistry.hpp"
 
 Scene::Scene(std::shared_ptr<sf::RenderWindow> window) {
@@ -41,6 +42,8 @@ void Scene::runTasks() {
 }
 
 void Scene::rescale() {
+    Scale::rescale(window->getSize());
+    Tile::setWindow(window);
     grid->rescale(window->getSize());
     reSnapTilesToGrid();
 }

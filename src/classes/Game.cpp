@@ -13,10 +13,10 @@ Game::Game() {
         sf::VideoMode(windowedWidth, windowedHeight), title, sf::Style::Default
     );
 
+    grid = std::make_shared<Grid>(window->getSize());
     tileSet = std::make_shared<TileFactory>("resources/tiles.png");
     tileSet->setTileSeparators(1, 1);
     tileSet2 = std::make_shared<TileFactory>("resources/tiles2.png");
-    grid = std::make_shared<Grid>(window->getSize());
 
     reinitializeWindow();
 }
@@ -31,26 +31,26 @@ void Game::reinitializeWindow() {
     Cursor::reinitialize(window);
     Tile::setWindow(window);
     grid->rescale(window->getSize());
-    snapTilesToGrid();
+    resnapTilesToGrid();
 }
 
 int Game::run() {
     createTiles();
 
-    auto tiles = TileRegistry::getDynamicTiles();
+    auto dynamicTiles = TileRegistry::getDynamicTiles();
     
-    SpecialBlockBlinkingAnimation blinkAnimation(tiles);
+    SpecialBlockBlinkingAnimation blinkAnimation(dynamicTiles);
     blinkAnimation.run();
 
     while (window->isOpen()) {
         handleSystemEvents();
-        handleTileEvents(tiles);
+        handleTileEvents(dynamicTiles);
 
         window->clear(BG_LIGHT_COLOR);
         grid->draw(window);
 
-        for (std::size_t i=0; i<tiles.size(); i++) {
-            tiles[i]->draw(window);
+        for (std::size_t i=0; i<dynamicTiles.size(); i++) {
+            dynamicTiles[i]->draw(window);
         }
 
         cursor.draw();
@@ -147,7 +147,7 @@ void Game::handleSystemEvents() {
                 sf::Vector2u newSize(width, height);
                 Scale::rescale(newSize);
                 grid->rescale(newSize);
-                snapTilesToGrid();
+                resnapTilesToGrid();
                 window->setView(sf::View(sf::FloatRect(0, 0, width, height)));
             } break;
             case sf::Event::MouseButtonPressed: {
@@ -167,7 +167,7 @@ void Game::handleSystemEvents() {
     }
 }
 
-void Game::snapTilesToGrid() {
+void Game::resnapTilesToGrid() {
     auto tiles = TileRegistry::getDynamicTiles();
     for (size_t i=0; i < tiles.size(); i++) {
         auto tile = tiles[i];

@@ -1,4 +1,4 @@
-#include "HightlightTileAnimation.hpp"
+#include "UndoHighlightTileAnimation.hpp"
 
 #include <iostream>
 #include <functional>
@@ -7,23 +7,23 @@
 #include "classes/EasingFunction/QuadraticFunction.hpp"
 #include "classes/EasingFunction/LogarithmicFunction.hpp"
 
+
 class Tile {
 
 public:
 
     float scalePromotion;
-
-    void rescaleCenter();
-    void correctCorners();
+    void snapToGrid();
+    void rescaleToWindowBound();
 };
 
-HightlightTileAnimation::HightlightTileAnimation(Tile* tile) {
+UndoHighlightTileAnimation::UndoHighlightTileAnimation(Tile *tile) {
     this->tile = tile;
     this->sleepTime = 10;
     this->duration = 300;
 }
 
-void HightlightTileAnimation::run() {
+void UndoHighlightTileAnimation::run() {
     isRunningFlag = true;
 
     sf::Clock clock;
@@ -35,18 +35,19 @@ void HightlightTileAnimation::run() {
 
     thread = std::thread([=]() mutable {
         sf::Int32 animationPointInTime = 0;
+        float finishScalePromotion = 0.9f;
 
-        float finishScalePromotion = 1.8f;
         sf::Int32 duration1 = duration/3*2;
         LogarithmicFunction function(duration1, tile->scalePromotion, finishScalePromotion);
 
+
         do {
             mutex.lock();
+
             if (isStopped) {
                 mutex.unlock();
                 break;
             }
-
             sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();
             animationPointInTime = currentMilliseconds-startMilliseconds;
             if (animationPointInTime > duration1) {
@@ -54,21 +55,23 @@ void HightlightTileAnimation::run() {
             }
 
             tile->scalePromotion = function.getValue(animationPointInTime);
-            tile->rescaleCenter();
-            tile->correctCorners();
+            tile->snapToGrid();
+            tile->rescaleToWindowBound();
+
             mutex.unlock();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
         } while (animationPointInTime < duration1 || isStopped);
 
-        finishScalePromotion = 1.5f;
+
         startMilliseconds = clock.getElapsedTime().asMilliseconds();
+        finishScalePromotion = 1.0f;
 
         sf::Int32 duration2 = duration/3;
-        LogarithmicFunction function2(duration2, tile->scalePromotion, finishScalePromotion);
-
+        QuadraticFunction function2(duration2, tile->scalePromotion, finishScalePromotion);
         do {
             mutex.lock();
+
             if (isStopped) {
                 mutex.unlock();
                 break;
@@ -81,8 +84,9 @@ void HightlightTileAnimation::run() {
             }
 
             tile->scalePromotion = function2.getValue(animationPointInTime);
-            tile->rescaleCenter();
-            tile->correctCorners();
+            tile->snapToGrid();
+            tile->rescaleToWindowBound();
+
             mutex.unlock();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));

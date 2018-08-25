@@ -7,11 +7,11 @@
 
 class Tile;
 
-class UndoHightlightTileAnimation : public SmoothAnimation {
+class UndoHighlightTileAnimation : public SmoothAnimation {
 
 public:
 
-    UndoHightlightTileAnimation(Tile* tile);
+    UndoHighlightTileAnimation(Tile* tile);
     void run() override;
 
 private:

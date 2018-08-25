@@ -6,8 +6,8 @@
 #include <functional>
 #include "classes/TileConfig.hpp"
 #include "classes/Grid.hpp"
-#include "classes/Animation/SmoothAnimation/HightlightTileAnimation.hpp"
-#include "classes/Animation/SmoothAnimation/UndoHightlightTileAnimation.hpp"
+#include "classes/Animation/SmoothAnimation/HighlightTileAnimation.hpp"
+#include "classes/Animation/SmoothAnimation/UndoHighlightTileAnimation.hpp"
 
 class Tile
 {
@@ -49,7 +49,7 @@ public:
     bool isMouseOver();
     bool isDragging();
 
-    void hightlight();
+    void highlight();
     void undoHighlight();
     void startDrag();
     void drag();
@@ -84,8 +84,8 @@ private:
     std::function<void(Tile* tile)> dragCallback = nullptr;
     std::function<void(Tile* tile)> dropCallback = nullptr;
 
-    std::shared_ptr<HightlightTileAnimation> highlightTileAnimation;
-    std::shared_ptr<UndoHightlightTileAnimation> undoHighlightTileAnimation;
+    std::shared_ptr<HighlightTileAnimation> highlightTileAnimation;
+    std::shared_ptr<UndoHighlightTileAnimation> undoHighlightTileAnimation;
 
     sf::Vector2f getCenterPoint();
 

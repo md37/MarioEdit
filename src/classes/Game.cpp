@@ -3,7 +3,7 @@
 #include <SFML/Window/Event.hpp>
 #include "defines.hpp"
 #include "Cursor.hpp"
-#include "TileSet.hpp"
+#include "TileFactory.hpp"
 #include "Scale.hpp"
 #include "TileRegistry.hpp"
 #include "Animation/FrameAnimation/Animation/SpecialBlockBlinkingAnimation.hpp"
@@ -13,9 +13,9 @@ Game::Game() {
         sf::VideoMode(windowedWidth, windowedHeight), title, sf::Style::Default
     );
 
-    tileSet = std::make_shared<TileSet>("resources/tiles.png");
+    tileSet = std::make_shared<TileFactory>("resources/tiles.png");
     tileSet->setTileSeparators(1, 1);
-    tileSet2 = std::make_shared<TileSet>("resources/tiles2.png");
+    tileSet2 = std::make_shared<TileFactory>("resources/tiles2.png");
     grid = std::make_shared<Grid>(window->getSize());
 
     reinitializeWindow();
@@ -62,7 +62,7 @@ int Game::run() {
 void Game::createTiles() {
     auto questionMark = tileSet2->createTile(0, 5);
     questionMark->setEventHandler(Tile::MouseEnter, [](Tile* tile) {
-        tile->hightlight();
+        tile->highlight();
     });
     questionMark->setEventHandler(Tile::MouseLeave, [](Tile* tile) {
         tile->undoHighlight();

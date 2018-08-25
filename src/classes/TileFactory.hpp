@@ -6,12 +6,12 @@
 #include "TileConfig.hpp"
 #include "Tile.hpp"
 
-class TileSet
+class TileFactory
 {
 
 public:
 
-    TileSet(std::string filepath);
+    TileFactory(std::string filepath);
 
     void setTileSeparators(sf::Uint32 separatorX, sf::Uint32 separatorY);
     void setTileOffset(sf::Uint32 offsetX, sf::Uint32 offsetY);

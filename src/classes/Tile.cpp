@@ -13,8 +13,8 @@ void Tile::setWindow(std::shared_ptr<sf::RenderWindow> &window) {
 Tile::Tile(sf::Sprite sprite, TileConfig config) {
     this->sprite = sprite;
     this->config = config;
-    highlightTileAnimation = std::make_shared<HightlightTileAnimation>(this);
-    undoHighlightTileAnimation = std::make_shared<UndoHightlightTileAnimation>(this);
+    highlightTileAnimation = std::make_shared<HighlightTileAnimation>(this);
+    undoHighlightTileAnimation = std::make_shared<UndoHighlightTileAnimation>(this);
 }
 
 void Tile::change(sf::Uint32 x, sf::Uint32 y) {
@@ -132,7 +132,7 @@ bool Tile::isDragging() {
     return isDraggingFlag;
 }
 
-void Tile::hightlight() {
+void Tile::highlight() {
     if (undoHighlightTileAnimation->isRunning()) {
         undoHighlightTileAnimation->stop();
     }
@@ -314,16 +314,16 @@ void Tile::startDrag() {
     sprite.setColor(sf::Color(255, 255, 255, 180));
 
     auto cursorPosition = Cursor::getCurrentPosition();
-    grid->setHightlightPosition(cursorPosition);
+    grid->setHighlightPosition(cursorPosition);
     
     dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
 
-    grid->hightlightOn();
+    grid->highlightOn();
 }
 
 void Tile::drag() {
     auto cursorPosition = Cursor::getCurrentPosition();
-    grid->setHightlightPosition(cursorPosition);
+    grid->setHighlightPosition(cursorPosition);
 
     cursorPosition -= dragOffset;
     sprite.setPosition(sf::Vector2f(cursorPosition));
@@ -344,7 +344,7 @@ void Tile::drop() {
     }
 
     setPosition(positionOnGrid);
-    grid->hightlightOff();
+    grid->highlightOff();
 
     if (isMouseOverFlag) {
         correctCorners();

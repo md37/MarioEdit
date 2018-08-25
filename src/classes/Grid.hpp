@@ -21,9 +21,9 @@ public:
     void draw(std::shared_ptr<sf::RenderWindow> window);
 
     bool hasIncompleteEnding();
-    void hightlightOn();
-    void hightlightOff();
-    void setHightlightPosition(sf::Vector2f cursorPosition);
+    void highlightOn();
+    void highlightOff();
+    void setHighlightPosition(sf::Vector2f cursorPosition);
 
 private:
 
@@ -38,10 +38,10 @@ private:
     
     sf::Color lineColor;
     
-    bool hightlight = false;
+    bool highlight = false;
     sf::Vector2f highlightPosition;
 
     void drawHorizontalLine(sf::Uint32 number, std::shared_ptr<sf::RenderWindow> window);
     void drawVerticalLine(sf::Uint32 number, std::shared_ptr<sf::RenderWindow> window);
-    void drawHightlight(std::shared_ptr<sf::RenderWindow> window);
+    void drawHighlight(std::shared_ptr<sf::RenderWindow> window);
 };

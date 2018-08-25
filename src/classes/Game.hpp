@@ -6,7 +6,7 @@
 #include "Keyboard.hpp"
 #include "Scale.hpp"
 #include "Cursor.hpp"
-#include "TileSet.hpp"
+#include "TileFactory.hpp"
 #include "Grid.hpp"
 
 class Game {
@@ -31,8 +31,8 @@ private:
 
     Cursor cursor;
     Keyboard keyboard;
-    std::shared_ptr<TileSet> tileSet;
-    std::shared_ptr<TileSet> tileSet2;
+    std::shared_ptr<TileFactory> tileSet;
+    std::shared_ptr<TileFactory> tileSet2;
     std::shared_ptr<Grid> grid;
 
 

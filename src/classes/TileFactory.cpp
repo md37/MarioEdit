@@ -1,28 +1,28 @@
-#include "TileSet.hpp"
+#include "TileFactory.hpp"
 
 #include <SFML/Graphics/Texture.hpp>
 #include "Scale.hpp"
 #include "TileRegistry.hpp"
 
-TileSet::TileSet(std::string filepath)
+TileFactory::TileFactory(std::string filepath)
 {
     texture = std::make_shared<sf::Texture>();
     texture->loadFromFile(filepath);
 }
 
-void TileSet::setTileSeparators(sf::Uint32 separatorX, sf::Uint32 separatorY)
+void TileFactory::setTileSeparators(sf::Uint32 separatorX, sf::Uint32 separatorY)
 {
     config.separatorX = separatorX;
     config.separatorY = separatorY;
 }
 
-void TileSet::setTileOffset(sf::Uint32 offsetX, sf::Uint32 offsetY)
+void TileFactory::setTileOffset(sf::Uint32 offsetX, sf::Uint32 offsetY)
 {
     config.offsetX = offsetX;
     config.offsetY = offsetY;
 }
 
-std::shared_ptr<Tile> TileSet::createTile(sf::Uint32 x, sf::Uint32 y)
+std::shared_ptr<Tile> TileFactory::createTile(sf::Uint32 x, sf::Uint32 y)
 {
     sf::Sprite sprite;
     sprite.setTexture(*(texture));

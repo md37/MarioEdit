@@ -41,8 +41,8 @@ void Grid::draw(std::shared_ptr<sf::RenderWindow> window) {
         drawVerticalLine(i, window);
     }
 
-    if (hightlight) {
-        drawHightlight(window);
+    if (highlight) {
+        drawHighlight(window);
     }
 }
 
@@ -68,7 +68,7 @@ void Grid::drawVerticalLine(sf::Uint32 number, std::shared_ptr<sf::RenderWindow>
     window->draw(line);
 }
 
-void Grid::drawHightlight(std::shared_ptr<sf::RenderWindow> window) {
+void Grid::drawHighlight(std::shared_ptr<sf::RenderWindow> window) {
     sf::RectangleShape line;
     line.setPosition(highlightPosition);
     line.setFillColor(lineColor);
@@ -96,15 +96,15 @@ sf::Vector2u Grid::getHighlightPlace() {
     return retval;
 }
 
-void Grid::hightlightOn() {
-    hightlight = true;
+void Grid::highlightOn() {
+    highlight = true;
 }
 
-void Grid::hightlightOff() {
-    hightlight = false;
+void Grid::highlightOff() {
+    highlight = false;
 }
 
-void Grid::setHightlightPosition(sf::Vector2f cursorPosition) {
+void Grid::setHighlightPosition(sf::Vector2f cursorPosition) {
     highlightPosition = getPointOnGrid(cursorPosition);
 }
 

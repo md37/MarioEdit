@@ -35,7 +35,7 @@ void Cursor::draw() {
     Cursor::window->draw(*sprite);
 }
 
-bool Cursor::isOver(std::shared_ptr<Tile> tile) {
+bool Cursor::isOver(std::shared_ptr<DynamicTile> tile) {
     auto mousePosition = sf::Mouse::getPosition(*(Cursor::window));
     int posX = mousePosition.x;
     int posY = mousePosition.y;
@@ -45,13 +45,13 @@ bool Cursor::isOver(std::shared_ptr<Tile> tile) {
            posY <= tile->getPosition().y+tile->getSize().y;
 }
 
-void Cursor::registerOver(std::shared_ptr<Tile> tile) {
+void Cursor::registerOver(std::shared_ptr<DynamicTile> tile) {
     if (!isOverRegistered(tile)) {
         registeredOverOnTiles.push_back(tile);
     }
 }
 
-void Cursor::unregisterOver(std::shared_ptr<Tile> tile) {
+void Cursor::unregisterOver(std::shared_ptr<DynamicTile> tile) {
     if (isOverRegistered(tile)) {
         registeredOverOnTiles.erase(
                 std::remove(registeredOverOnTiles.begin(), registeredOverOnTiles.end(), tile), registeredOverOnTiles.end()
@@ -59,7 +59,7 @@ void Cursor::unregisterOver(std::shared_ptr<Tile> tile) {
     }
 }
 
-bool Cursor::isOverRegistered(std::shared_ptr<Tile> tile) {
+bool Cursor::isOverRegistered(std::shared_ptr<DynamicTile> tile) {
     if (registeredOverOnTiles.empty()) {
         return false;
     }
@@ -67,13 +67,13 @@ bool Cursor::isOverRegistered(std::shared_ptr<Tile> tile) {
     return std::find(registeredOverOnTiles.begin(), registeredOverOnTiles.end(), tile) != registeredOverOnTiles.end();
 }
 
-void Cursor::registerDrag(std::shared_ptr<Tile> tile) {
+void Cursor::registerDrag(std::shared_ptr<DynamicTile> tile) {
     if (!isDragRegistered(tile)) {
         registeredDragOnTiles.push_back(tile);
     }
 }
 
-void Cursor::unregisterDrag(std::shared_ptr<Tile> tile) {
+void Cursor::unregisterDrag(std::shared_ptr<DynamicTile> tile) {
     if (isDragRegistered(tile)) {
         registeredDragOnTiles.erase(
                 std::remove(registeredDragOnTiles.begin(), registeredDragOnTiles.end(), tile), registeredDragOnTiles.end()
@@ -81,7 +81,7 @@ void Cursor::unregisterDrag(std::shared_ptr<Tile> tile) {
     }
 }
 
-bool Cursor::isDragRegistered(std::shared_ptr<Tile> tile) {
+bool Cursor::isDragRegistered(std::shared_ptr<DynamicTile> tile) {
     if (registeredDragOnTiles.empty()) {
         return false;
     }
@@ -99,6 +99,6 @@ void Cursor::click(bool click) {
 
 void Cursor::handleRegisteredDrags() {
     for (std::size_t i=0; i<registeredDragOnTiles.size(); i++) {
-        registeredDragOnTiles[i]->handleEvent(Tile::Event::Drag);
+        registeredDragOnTiles[i]->handleEvent(DynamicTile::Event::Drag);
     }
 }

@@ -3,30 +3,30 @@
 #include "classes/Tile/TileRegistry.hpp"
 #include "classes/Tile.hpp"
 
-TEST(TileRegistryTest, test_getall_no_tiles) {
+TEST(TileRegistryTest, test_get_dynamic_tiles_but_no_tiles) {
     TileRegistry::clear();
 
-    ASSERT_EQ(0, TileRegistry::getAll().size());
+    ASSERT_EQ(0, TileRegistry::getDynamicTiles().size());
 }
 
-TEST(TileRegistryTest, test_getall_one_tile) {
+TEST(TileRegistryTest, test_get_dynamic_tiles_but_one_tile) {
     TileRegistry::clear();
 
     sf::Sprite sprite;
-    auto tile = std::make_shared<Tile>(sprite, TileConfig());
+    auto tile = std::make_shared<DynamicTile>(sprite, TileConfig());
 
     TileRegistry::registerTile(tile);
-    ASSERT_EQ(1, TileRegistry::getAll().size());
+    ASSERT_EQ(1, TileRegistry::getDynamicTiles().size());
 }
 
-TEST(TileRegistryTest, test_getall_two_tiles) {
+TEST(TileRegistryTest, test_get_dynamic_tiles_but_two_tiles) {
     TileRegistry::clear();
 
     for (int i=0; i<2; i++) {
         sf::Sprite sprite;
-        auto tile = std::make_shared<Tile>(sprite, TileConfig());
+        auto tile = std::make_shared<DynamicTile>(sprite, TileConfig());
         TileRegistry::registerTile(tile);
     }
 
-    ASSERT_EQ(2, TileRegistry::getAll().size());
+    ASSERT_EQ(2, TileRegistry::getDynamicTiles().size());
 }

@@ -1,15 +1,15 @@
 #include "TileRegistry.hpp"
 
-std::vector<std::shared_ptr<Tile>> TileRegistry::allTiles;
+std::vector<std::shared_ptr<DynamicTile>> TileRegistry::dynamicTiles;
 
 void TileRegistry::clear() {
-    allTiles.clear();
+    dynamicTiles.clear();
 }
 
-void TileRegistry::registerTile(std::shared_ptr<Tile> tile) {
-    allTiles.push_back(tile);
+void TileRegistry::registerTile(std::shared_ptr<DynamicTile> tile) {
+    dynamicTiles.push_back(tile);
 }
 
-std::vector<std::shared_ptr<Tile>> TileRegistry::getAll() {
-    return allTiles;
+std::vector<std::shared_ptr<DynamicTile>> TileRegistry::getDynamicTiles() {
+    return dynamicTiles;
 }

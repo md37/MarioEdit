@@ -5,18 +5,18 @@
 #include <mutex>
 #include "classes/Animation/SmoothAnimation.hpp"
 
-class Tile;
+class DynamicTile;
 
 class UndoHighlightTileAnimation : public SmoothAnimation {
 
 public:
 
-    UndoHighlightTileAnimation(Tile* tile);
+    UndoHighlightTileAnimation(DynamicTile* tile);
     void run() override;
 
 private:
 
-    Tile* tile;
+    DynamicTile* tile;
     std::thread thread;
     std::mutex mutex;
 

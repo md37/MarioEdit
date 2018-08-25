@@ -37,7 +37,7 @@ private:
 
 
     void handleSystemEvents();
-    void handleTileEvents(const std::vector<std::shared_ptr<Tile>> &tiles);
+    void handleTileEvents(const std::vector<std::shared_ptr<DynamicTile>> &tiles);
     void createTiles();
     void snapTilesToGrid();
 

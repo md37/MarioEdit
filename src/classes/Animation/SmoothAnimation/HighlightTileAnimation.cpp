@@ -3,21 +3,12 @@
 #include <iostream>
 #include <functional>
 #include <SFML/System/Clock.hpp>
+#include "classes/Tile/DynamicTile.hpp"
 #include "classes/EasingFunction/LinearFunction.hpp"
 #include "classes/EasingFunction/QuadraticFunction.hpp"
 #include "classes/EasingFunction/LogarithmicFunction.hpp"
 
-class Tile {
-
-public:
-
-    float scalePromotion;
-
-    void snapToCenterPoint();
-    void correctCorners();
-};
-
-HighlightTileAnimation::HighlightTileAnimation(Tile* tile) {
+HighlightTileAnimation::HighlightTileAnimation(DynamicTile* tile) {
     this->tile = tile;
     this->sleepTime = 10;
     this->duration = 300;
@@ -31,7 +22,7 @@ void HighlightTileAnimation::run() {
 
     sf::Int32 duration = this->duration;
     sf::Int32 sleepTime = this->sleepTime;
-    Tile* tile = this->tile;
+    DynamicTile* tile = this->tile;
 
     thread = std::thread([=]() mutable {
         sf::Int32 animationPointInTime = 0;

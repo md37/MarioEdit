@@ -37,7 +37,7 @@ void Game::reinitializeWindow() {
 int Game::run() {
     createTiles();
 
-    auto tiles = TileRegistry::getAll();
+    auto tiles = TileRegistry::getDynamicTiles();
     
     SpecialBlockBlinkingAnimation blinkAnimation(tiles);
     blinkAnimation.run();
@@ -61,20 +61,20 @@ int Game::run() {
 
 void Game::createTiles() {
     auto questionMark = tileSet2->createTile(0, 5);
-    questionMark->setEventHandler(Tile::MouseEnter, [](Tile* tile) {
+    questionMark->setEventHandler(DynamicTile::MouseEnter, [](DynamicTile* tile) {
         tile->highlight();
     });
-    questionMark->setEventHandler(Tile::MouseLeave, [](Tile* tile) {
+    questionMark->setEventHandler(DynamicTile::MouseLeave, [](DynamicTile* tile) {
         tile->undoHighlight();
     });
-    questionMark->setEventHandler(Tile::StartDrag, [](Tile* tile) {
-        tile->change(0, 5);
+    questionMark->setEventHandler(DynamicTile::StartDrag, [](DynamicTile* tile) {
+        tile->changeImage(0, 5);
         tile->startDrag();
     });
-    questionMark->setEventHandler(Tile::Drag, [](Tile* tile) {
+    questionMark->setEventHandler(DynamicTile::Drag, [](DynamicTile* tile) {
         tile->drag();
     });
-    questionMark->setEventHandler(Tile::Drop, [](Tile* tile) {
+    questionMark->setEventHandler(DynamicTile::Drop, [](DynamicTile* tile) {
         tile->drop();
     });
 
@@ -82,33 +82,33 @@ void Game::createTiles() {
     questionMark->snapToGrid(sf::Vector2u(2, 1));
 }
 
-void Game::handleTileEvents(const std::vector<std::shared_ptr<Tile>> &tiles) {
+void Game::handleTileEvents(const std::vector<std::shared_ptr<DynamicTile>> &tiles) {
     for (size_t i=0; i < tiles.size(); i++) {
         auto tile = tiles[i];
         if (cursor.isOver(tile) && !cursor.isOverRegistered(tile)) {
             cursor.registerOver(tile);
-            tile->handleEvent(Tile::MouseEnter);
+            tile->handleEvent(DynamicTile::MouseEnter);
         } else if (cursor.isOver(tile)) {
-            tile->handleEvent(Tile::MouseOver);
+            tile->handleEvent(DynamicTile::MouseOver);
 
             if (cursor.isClick() && !cursor.isDragRegistered(tile)) {
                 cursor.registerDrag(tile);
-                tile->handleEvent(Tile::StartDrag);
+                tile->handleEvent(DynamicTile::StartDrag);
             } else if (!cursor.isClick() && cursor.isDragRegistered(tile)) {
                 cursor.unregisterDrag(tile);
-                tile->handleEvent(Tile::Drop);
+                tile->handleEvent(DynamicTile::Drop);
             }
         } else if (!cursor.isOver(tile) && cursor.isOverRegistered(tile)) {
             if (cursor.isDragRegistered(tile)) {
                 cursor.unregisterDrag(tile);
-                tile->handleEvent(Tile::Drop);
+                tile->handleEvent(DynamicTile::Drop);
             }
             cursor.unregisterOver(tile);
-            tile->handleEvent(Tile::MouseLeave);
+            tile->handleEvent(DynamicTile::MouseLeave);
         } else {
             if (cursor.isDragRegistered(tile)) {
                 cursor.unregisterDrag(tile);
-                tile->handleEvent(Tile::Drop);
+                tile->handleEvent(DynamicTile::Drop);
             }
         }
         tile->rescale(Scale::getScale());
@@ -168,7 +168,7 @@ void Game::handleSystemEvents() {
 }
 
 void Game::snapTilesToGrid() {
-    auto tiles = TileRegistry::getAll();
+    auto tiles = TileRegistry::getDynamicTiles();
     for (size_t i=0; i < tiles.size(); i++) {
         auto tile = tiles[i];
         tile->snapToGrid();

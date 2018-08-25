@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <functional>
-#include <SFML/System/Clock.hpp>
 #include "classes/Tile/DynamicTile.hpp"
 #include "classes/EasingFunction/LinearFunction.hpp"
 #include "classes/EasingFunction/QuadraticFunction.hpp"
@@ -17,70 +16,44 @@ HighlightTileAnimation::HighlightTileAnimation(DynamicTile* tile) {
 void HighlightTileAnimation::run() {
     isRunningFlag = true;
 
-    sf::Clock clock;
-    sf::Int32 startMilliseconds = clock.getElapsedTime().asMilliseconds();
+    sf::Int32 duration1 = duration/3*2;
+    LogarithmicFunction function1(duration1, tile->scalePromotion, 1.8f);
 
-    sf::Int32 duration = this->duration;
-    sf::Int32 sleepTime = this->sleepTime;
-    DynamicTile* tile = this->tile;
+    sf::Int32 duration2 = duration/3;
+    LogarithmicFunction function2(duration2, tile->scalePromotion, 1.5f);
 
     thread = std::thread([=]() mutable {
-        sf::Int32 animationPointInTime = 0;
-
-        float finishScalePromotion = 1.8f;
-        sf::Int32 duration1 = duration/3*2;
-        LogarithmicFunction function(duration1, tile->scalePromotion, finishScalePromotion);
-
-        do {
-            mutex.lock();
-            if (isStopped) {
-                mutex.unlock();
-                break;
-            }
-
-            sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();
-            animationPointInTime = currentMilliseconds-startMilliseconds;
-            if (animationPointInTime > duration1) {
-                animationPointInTime = duration1;
-            }
-
-            tile->scalePromotion = function.getValue(animationPointInTime);
-            tile->snapToCenterPoint();
-            tile->correctCorners();
-            mutex.unlock();
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-        } while (animationPointInTime < duration1 || isStopped);
-
-        finishScalePromotion = 1.5f;
-        startMilliseconds = clock.getElapsedTime().asMilliseconds();
-
-        sf::Int32 duration2 = duration/3;
-        LogarithmicFunction function2(duration2, tile->scalePromotion, finishScalePromotion);
-
-        do {
-            mutex.lock();
-            if (isStopped) {
-                mutex.unlock();
-                break;
-            }
-
-            sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();
-            animationPointInTime = currentMilliseconds-startMilliseconds;
-            if (animationPointInTime > duration2) {
-                animationPointInTime = duration2;
-            }
-
-            tile->scalePromotion = function2.getValue(animationPointInTime);
-            tile->snapToCenterPoint();
-            tile->correctCorners();
-            mutex.unlock();
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-        } while (animationPointInTime < duration2 || isStopped);
+        animate(duration1, function1);
+        animate(duration2, function2);
 
         isRunningFlag = false;
         isStopped = false;
     });
     thread.detach();
+}
+
+void HighlightTileAnimation::animate(sf::Int32 duration, LogarithmicFunction &function) {
+    sf::Int32 animationPointInTime = 0;
+    sf::Int32 startMilliseconds = clock.getElapsedTime().asMilliseconds();
+
+    do {
+        mutex.lock();
+        if (isStopped) {
+            mutex.unlock();
+            break;
+        }
+
+        sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();
+        animationPointInTime = currentMilliseconds-startMilliseconds;
+        if (animationPointInTime > duration) {
+            animationPointInTime = duration;
+        }
+
+        tile->scalePromotion = function.getValue(animationPointInTime);
+        tile->snapToCenterPoint();
+        tile->correctCorners();
+        mutex.unlock();
+
+        std::__1::this_thread::sleep_for(std::__1::chrono::milliseconds(sleepTime));
+    } while (animationPointInTime < duration || isStopped);
 }

@@ -64,7 +64,7 @@ bool DynamicTile::isDragging() {
     return isDraggingFlag;
 }
 
-void DynamicTile::highlight() {
+void DynamicTile::mouseEnter() {
     if (undoHighlightTileAnimation->isRunning()) {
         undoHighlightTileAnimation->stop();
     }
@@ -73,7 +73,7 @@ void DynamicTile::highlight() {
     }
 }
 
-void DynamicTile::undoHighlight() {
+void DynamicTile::mouseLeave() {
     if (highlightTileAnimation->isRunning()) {
         highlightTileAnimation->stop();
     }

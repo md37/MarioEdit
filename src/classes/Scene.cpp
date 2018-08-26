@@ -17,10 +17,10 @@ Scene::Scene(std::shared_ptr<sf::RenderWindow> window) {
 void Scene::generateScene() {
     auto questionMark = tileFactory->createDynamicTile(0, 5);
     questionMark->addEventHandler(DynamicTile::MouseEnter, [](DynamicTile *tile) {
-        tile->highlight();
+        tile->mouseEnter();
     });
     questionMark->addEventHandler(DynamicTile::MouseLeave, [](DynamicTile *tile) {
-        tile->undoHighlight();
+        tile->mouseLeave();
     });
     questionMark->addEventHandler(DynamicTile::StartDrag, [](DynamicTile *tile) {
         tile->changeImage(0, 5);

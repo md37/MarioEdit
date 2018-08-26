@@ -1,10 +1,12 @@
 #pragma once
 
+#include "classes/Interface/HoverableInterface.hpp"
+#include "classes/Interface/DraggableInterface.hpp"
 #include "classes/Tile/GridTile.hpp"
 #include "classes/Animation/SmoothAnimation/HighlightTileAnimation.hpp"
 #include "classes/Animation/SmoothAnimation/UndoHighlightTileAnimation.hpp"
 
-class DynamicTile : public GridTile {
+class DynamicTile : public GridTile, public HoverableInterface, public DraggableInterface {
 
 public:
 
@@ -27,11 +29,11 @@ public:
     bool isMouseOver();
     bool isDragging();
 
-    void highlight();
-    void undoHighlight();
-    void startDrag();
-    void drag();
-    void drop();
+    void mouseEnter() override;
+    void mouseLeave() override;
+    void startDrag() override;
+    void drag() override;
+    void drop() override;
 
     void correctCorners();
 

@@ -2,7 +2,7 @@
 
 #include "classes/Cursor.hpp"
 
-DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : Tile(sprite, config) {
+DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite, config) {
     highlightTileAnimation = std::make_shared<HighlightTileAnimation>(this);
     undoHighlightTileAnimation = std::make_shared<UndoHighlightTileAnimation>(this);
 }
@@ -80,133 +80,6 @@ void DynamicTile::undoHighlight() {
     if (!undoHighlightTileAnimation->isRunning()) {
         undoHighlightTileAnimation->run();
     }
-}
-
-void DynamicTile::snapToCenterPoint() {
-    auto center = grid->getCenter(gridPosition);
-
-    auto newSpriteScale = scale*scalePromotion;
-    auto newWidth = sprite.getTextureRect().width * newSpriteScale.x;
-    auto newHeight = sprite.getTextureRect().height * newSpriteScale.y;
-
-    sprite.setScale(newSpriteScale.x, newSpriteScale.y);
-
-    position.x = center.x-newWidth/2;
-    position.y = center.y-newHeight/2;
-    sprite.setPosition(position);
-}
-
-void DynamicTile::snapToWindowBound() {
-    if (isOnTopLeftCorner()) {
-        snapToTopLeftCorner();
-    } else if (isOnBottomLeftCorner()) {
-        snapToBottomLeftCorner();
-    } else if (isOnBottomRightCorner()) {
-        snapToBottomRightCorner();
-    } else if (isOnTopRightCorner()) {
-        snapToTopRightCorner();
-    } else if (isOnLeftEdge()) {
-        snapToLeftEdge();
-    } else if (isOnRightEdge()) {
-        snapToRightEdge();
-    } else if (isOnTopEdge()) {
-        snapToTopEdge();
-    } else if (isOnBottomEdge()) {
-        snapToBottomEdge();
-    } else {
-        snapToCenterPoint();
-    }
-}
-
-bool DynamicTile::isOnLeftEdge() {
-    return gridPosition.x == 0;
-}
-
-bool DynamicTile::isOnRightEdge() {
-    if (grid->hasIncompleteEnding()) {
-        return false;
-    }
-    return gridPosition.x == grid->getSize().x-1;
-}
-
-bool DynamicTile::isOnTopEdge() {
-    return gridPosition.y == grid->getSize().y-1;
-}
-
-bool DynamicTile::isOnBottomEdge() {
-    return gridPosition.y == 0;
-}
-
-bool DynamicTile::isOnTopRightCorner() {
-    return isOnTopEdge() && isOnRightEdge();
-}
-
-bool DynamicTile::isOnBottomRightCorner() {
-    return isOnBottomEdge() && isOnRightEdge();
-}
-
-bool DynamicTile::isOnBottomLeftCorner() {
-    return isOnBottomEdge() && isOnLeftEdge();
-}
-
-bool DynamicTile::isOnTopLeftCorner() {
-    return isOnTopEdge() && isOnLeftEdge();
-}
-
-void DynamicTile::snapToTopLeftCorner() {
-    sprite.setScale(scale*scalePromotion);
-
-    position.x = 0;
-    position.y = 0;
-    sprite.setPosition(position);
-}
-
-void DynamicTile::snapToBottomLeftCorner() {
-    sprite.setScale(scale*scalePromotion);
-
-    position.x = 0;
-    position.y = window->getSize().y-getSize().y;
-    sprite.setPosition(position);
-}
-
-void DynamicTile::snapToBottomRightCorner() {
-    sprite.setScale(scale*scalePromotion);
-
-    position.x = window->getSize().x-getSize().x;
-    position.y = window->getSize().y-getSize().y;
-    sprite.setPosition(position);
-}
-
-void DynamicTile::snapToTopRightCorner() {
-    sprite.setScale(scale*scalePromotion);
-
-    position.x = window->getSize().x-getSize().x;
-    position.y = 0;
-    sprite.setPosition(position);
-}
-
-void DynamicTile::snapToLeftEdge() {
-    snapToCenterPoint();
-    position.x = 0;
-    sprite.setPosition(position);
-}
-
-void DynamicTile::snapToRightEdge() {
-    snapToCenterPoint();
-    position.x = window->getSize().x-getSize().x;
-    sprite.setPosition(position);
-}
-
-void DynamicTile::snapToTopEdge() {
-    snapToCenterPoint();
-    position.y = 0;
-    sprite.setPosition(position);
-}
-
-void DynamicTile::snapToBottomEdge() {
-    snapToCenterPoint();
-    position.y = window->getSize().y-getSize().y;
-    sprite.setPosition(position);
 }
 
 void DynamicTile::correctCorners() {

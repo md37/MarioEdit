@@ -27,10 +27,6 @@ public:
     sf::Vector2f getPosition();
     sf::Vector2i getSize();
 
-    void setGrid(std::shared_ptr<Grid> grid);
-    void snapToGrid();
-    void snapToGrid(sf::Vector2u gridPosition);
-
 protected:
 
     static std::shared_ptr<sf::RenderWindow> window;
@@ -38,9 +34,6 @@ protected:
     sf::Sprite sprite;
     sf::Vector2f scale = {1.0f, 1.0f};
     sf::Vector2f position;
-
-    std::shared_ptr<Grid> grid;
-    sf::Vector2u gridPosition;
 
 private:
 

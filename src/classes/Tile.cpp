@@ -38,19 +38,6 @@ sf::Vector2f Tile::getPosition() {
     return sprite.getPosition();
 }
 
-void Tile::setGrid(std::shared_ptr<Grid> grid) {
-    this->grid = grid;
-}
-
-void Tile::snapToGrid() {
-    setPosition(grid->pointOnGridToPosition(gridPosition));
-}
-
-void Tile::snapToGrid(sf::Vector2u gridPosition) {
-    this->gridPosition = gridPosition;
-    setPosition(grid->pointOnGridToPosition(gridPosition));
-}
-
 sf::Vector2i Tile::getSize() {
     return sf::Vector2i(
         sprite.getTextureRect().width * sprite.getScale().x,

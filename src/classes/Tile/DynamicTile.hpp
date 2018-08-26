@@ -1,10 +1,10 @@
 #pragma once
 
-#include "classes/Tile.hpp"
+#include "classes/Tile/GridTile.hpp"
 #include "classes/Animation/SmoothAnimation/HighlightTileAnimation.hpp"
 #include "classes/Animation/SmoothAnimation/UndoHighlightTileAnimation.hpp"
 
-class DynamicTile : public Tile {
+class DynamicTile : public GridTile {
 
 public:
 
@@ -33,30 +33,7 @@ public:
     void drag();
     void drop();
 
-    void snapToCenterPoint();
     void correctCorners();
-
-    void snapToWindowBound();
-
-    bool isOnLeftEdge();
-    bool isOnRightEdge();
-    bool isOnTopEdge();
-    bool isOnBottomEdge();
-
-    bool isOnTopLeftCorner();
-    bool isOnBottomLeftCorner();
-    bool isOnBottomRightCorner();
-    bool isOnTopRightCorner();
-
-    void snapToTopLeftCorner();
-    void snapToBottomLeftCorner();
-    void snapToBottomRightCorner();
-    void snapToTopRightCorner();
-
-    void snapToLeftEdge();
-    void snapToRightEdge();
-    void snapToTopEdge();
-    void snapToBottomEdge();
 
 private:
 

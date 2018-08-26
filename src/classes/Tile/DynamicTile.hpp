@@ -19,6 +19,8 @@ public:
 
     DynamicTile(sf::Sprite sprite, TileConfig config=TileConfig());
 
+    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+
     void handleEvent(DynamicTile::Event event);
     void addEventHandler(DynamicTile::Event event, std::function<void(DynamicTile *tile)> callback);
 

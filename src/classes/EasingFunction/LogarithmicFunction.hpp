@@ -7,7 +7,7 @@ class LogarithmicFunction : public EasingFunction {
 public:
 
     LogarithmicFunction(sf::Int32 duration, float minValue, float maxValue);
-    virtual float getValue(sf::Int32 time) override;
+    float getValue(sf::Int32 time) override;
 
 private:
 

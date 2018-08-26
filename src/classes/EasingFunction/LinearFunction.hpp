@@ -7,6 +7,6 @@ class LinearFunction : public EasingFunction {
 public:
 
     LinearFunction(sf::Int32 duration, float startValue, float targetValue);
-    virtual float getValue(sf::Int32 time) override;
+    float getValue(sf::Int32 time) override;
 
 };

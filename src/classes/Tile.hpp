@@ -16,11 +16,12 @@ public:
 
     Tile(sf::Sprite sprite, TileConfig config=TileConfig());
 
+    virtual void draw(std::shared_ptr<sf::RenderWindow> window)=0;
+
     float scalePromotion = 1.0f;
 
     void changeImage(sf::Uint32 x, sf::Uint32 y);
     void rescale(float scale);
-    void draw(std::shared_ptr<sf::RenderWindow> window);
 
     void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition();

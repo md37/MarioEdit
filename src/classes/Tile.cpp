@@ -29,10 +29,6 @@ void Tile::rescale(float scale) {
     sprite.setScale(this->scale*scalePromotion);
 }
 
-void Tile::draw(std::shared_ptr<sf::RenderWindow> window) {
-    window->draw(sprite);
-}
-
 void Tile::setPosition(sf::Vector2f position) {
     this->position = position;
     sprite.setPosition(position);

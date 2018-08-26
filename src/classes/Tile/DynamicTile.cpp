@@ -7,6 +7,10 @@ DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : Tile(sprite, co
     undoHighlightTileAnimation = std::make_shared<UndoHighlightTileAnimation>(this);
 }
 
+void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) {
+    window->draw(sprite);
+}
+
 void DynamicTile::handleEvent(DynamicTile::Event event) {
     if (eventCallbacks.find(event) == eventCallbacks.end()) {
         return;
@@ -19,8 +23,6 @@ void DynamicTile::addEventHandler(DynamicTile::Event event, std::function<void(D
 }
 
 void DynamicTile::startDrag() {
-    sprite.setColor(sf::Color(255, 255, 255, 180));
-
     auto cursorPosition = Cursor::getCurrentPosition();
     grid->setHighlightPosition(cursorPosition);
 
@@ -40,7 +42,6 @@ void DynamicTile::drag() {
 }
 
 void DynamicTile::drop() {
-    sprite.setColor(sf::Color(255, 255, 255, 255));
     dragOffset = {0, 0};
 
     snapToGrid(grid->getHighlightPlace());

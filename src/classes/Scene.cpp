@@ -14,7 +14,7 @@ Scene::Scene(std::shared_ptr<sf::RenderWindow> window) {
     blinkAnimation = std::make_shared<SpecialBlockBlinkingAnimation>();
 }
 
-void Scene::generateScene() const {
+void Scene::generateScene() {
     auto questionMark = tileFactory->createDynamicTile(0, 5);
     questionMark->addEventHandler(DynamicTile::MouseEnter, [](DynamicTile *tile) {
         tile->highlight();

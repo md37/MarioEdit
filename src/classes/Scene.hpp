@@ -25,5 +25,5 @@ private:
 
     void reSnapTilesToGrid();
 
-    void generateScene() const;
+    void generateScene();
 };

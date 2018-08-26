@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-Grid::Grid(sf::Vector2u windowSize) : lineColor(74, 119, 203, 255) {
+Grid::Grid(sf::Vector2u windowSize) : lineColor(0, 0, 0, 50) {
     this->rescale(windowSize);
 }
 
@@ -34,11 +34,10 @@ sf::Vector2f Grid::pointOnGridToPosition(sf::Vector2u pointOnGrid) {
 
 void Grid::draw(std::shared_ptr<sf::RenderWindow> window) {
     for (int i=0; i<rows+1; i++) {
-        drawHorizontalLine(i, window);
-    }
-
-    for (int i=1; i<cols+1; i++) {
-        drawVerticalLine(i, window);
+        for (int j=0; j<cols+1; j++) {
+            drawHorizontalLine(i, j, window);
+            drawVerticalLine(i, j, window);
+        }
     }
 
     if (highlightFlag) {
@@ -46,24 +45,20 @@ void Grid::draw(std::shared_ptr<sf::RenderWindow> window) {
     }
 }
 
-void Grid::drawHorizontalLine(sf::Uint32 number, std::shared_ptr<sf::RenderWindow> window) {
-    sf::Uint32 posY = number*lineDistance;
-
+void Grid::drawHorizontalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window) {
     sf::RectangleShape line;
-    line.setPosition(sf::Vector2f(0, posY-lineThickness/2));
+    line.setPosition(sf::Vector2f(col*lineDistance, row*lineDistance-lineThickness));
     line.setFillColor(lineColor);
-    line.setSize(sf::Vector2f(windowSize.x, lineThickness));
+    line.setSize(sf::Vector2f(lineDistance-lineThickness, lineThickness));
 
     window->draw(line);
 }
 
-void Grid::drawVerticalLine(sf::Uint32 number, std::shared_ptr<sf::RenderWindow> window) {
-    sf::Uint32 posX = number*lineDistance;
-
+void Grid::drawVerticalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window) {
     sf::RectangleShape line;
-    line.setPosition(sf::Vector2f(posX-lineThickness/2, 0));
+    line.setPosition(sf::Vector2f(col*lineDistance-lineThickness, row*lineDistance));
     line.setFillColor(lineColor);
-    line.setSize(sf::Vector2f(lineThickness, windowSize.y));
+    line.setSize(sf::Vector2f(lineThickness, lineDistance));
 
     window->draw(line);
 }

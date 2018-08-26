@@ -41,7 +41,7 @@ private:
     bool highlightFlag = false;
     sf::Vector2f highlightPosition;
 
-    void drawHorizontalLine(sf::Uint32 number, std::shared_ptr<sf::RenderWindow> window);
-    void drawVerticalLine(sf::Uint32 number, std::shared_ptr<sf::RenderWindow> window);
+    void drawHorizontalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window);
+    void drawVerticalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window);
     void drawHighlight(std::shared_ptr<sf::RenderWindow> window);
 };

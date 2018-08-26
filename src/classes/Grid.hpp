@@ -8,7 +8,7 @@ class Grid {
 
 public:
 
-    Grid(sf::Vector2u windowSize);
+    explicit Grid(sf::Vector2u windowSize);
     void rescale(sf::Vector2u windowSize);
     bool hasIncompleteEnding();
 

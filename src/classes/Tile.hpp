@@ -14,7 +14,7 @@ public:
 
     static void setWindow(std::shared_ptr<sf::RenderWindow>& window);
 
-    Tile(sf::Sprite sprite, TileConfig config=TileConfig());
+    explicit Tile(sf::Sprite sprite, TileConfig config=TileConfig());
 
     virtual void draw(std::shared_ptr<sf::RenderWindow> window)=0;
 

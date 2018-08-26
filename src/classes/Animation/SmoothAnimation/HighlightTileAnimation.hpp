@@ -13,7 +13,7 @@ class HighlightTileAnimation : public SmoothAnimation {
 
 public:
 
-    HighlightTileAnimation(DynamicTile* tile);
+    explicit HighlightTileAnimation(DynamicTile* tile);
     void run() override;
 
 private:

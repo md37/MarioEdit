@@ -9,7 +9,7 @@ class Scene {
 
 public:
 
-    Scene(std::shared_ptr<sf::RenderWindow> window);
+    explicit Scene(std::shared_ptr<sf::RenderWindow> window);
 
     void rescale();
     void runTasks();

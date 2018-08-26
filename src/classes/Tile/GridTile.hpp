@@ -6,7 +6,7 @@ class GridTile : public Tile {
 
 public:
 
-    GridTile(sf::Sprite sprite, TileConfig config=TileConfig());
+    explicit GridTile(sf::Sprite sprite, TileConfig config=TileConfig());
 
     void setGrid(std::shared_ptr<Grid> grid);
     void snapToGrid();

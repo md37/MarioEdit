@@ -17,7 +17,7 @@ public:
         Drop,
     };
 
-    DynamicTile(sf::Sprite sprite, TileConfig config=TileConfig());
+    explicit DynamicTile(sf::Sprite sprite, TileConfig config=TileConfig());
 
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 

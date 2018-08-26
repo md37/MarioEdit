@@ -13,7 +13,7 @@ class UndoHighlightTileAnimation : public SmoothAnimation {
 
 public:
 
-    UndoHighlightTileAnimation(DynamicTile* tile);
+    explicit UndoHighlightTileAnimation(DynamicTile* tile);
     void run() override;
 
 private:

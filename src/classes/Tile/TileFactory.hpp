@@ -11,7 +11,7 @@ class TileFactory
 
 public:
 
-    TileFactory(std::string filepath);
+    explicit TileFactory(std::string filepath);
 
     void setTileSeparators(sf::Uint32 separatorX, sf::Uint32 separatorY);
     void setTileOffset(sf::Uint32 offsetX, sf::Uint32 offsetY);

@@ -2,9 +2,7 @@
 
 #include <functional>
 #include "classes/Tile/DynamicTile.hpp"
-#include "classes/EasingFunction/LinearFunction.hpp"
-#include "classes/EasingFunction/QuadraticFunction.hpp"
-#include "classes/EasingFunction/LogarithmicFunction.hpp"
+#include "classes/EasingFunction/SmoothStepFunction.hpp"
 
 UndoHighlightTileAnimation::UndoHighlightTileAnimation(DynamicTile *tile) {
     this->tile = tile;
@@ -17,11 +15,11 @@ void UndoHighlightTileAnimation::run() {
 
     thread = std::thread([=]() mutable {
         sf::Int32 duration1 = duration/3*2;
-        LogarithmicFunction function1(duration1, tile->scalePromotion, 0.9f);
+        SmoothStepFunction function1(duration1, tile->scalePromotion, 0.9f);
         animate(duration1, function1);
 
         sf::Int32 duration2 = duration/3;
-        QuadraticFunction function2(duration2, tile->scalePromotion, 1.0f);
+        SmoothStepFunction function2(duration2, tile->scalePromotion, 1.0f);
         animate(duration2, function2);
 
         isRunningFlag = false;

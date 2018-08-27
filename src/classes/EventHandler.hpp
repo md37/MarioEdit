@@ -7,7 +7,7 @@
 #include <SFML/Window/Event.hpp>
 #include "classes/Cursor.hpp"
 #include "classes/Keyboard.hpp"
-#include "classes/Tile/DynamicTile.hpp"
+#include "classes/Scene/Tile/DynamicTile.hpp"
 
 class Game;
 

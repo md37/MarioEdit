@@ -1,7 +1,7 @@
 #include "SpecialBlockBlinkingAnimation.hpp"
 
-#include "classes/Tile/DynamicTile.hpp"
-#include "classes/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile/DynamicTile.hpp"
+#include "classes/Scene/Tile/TileRegistry.hpp"
 #include "classes/Animation/FrameAnimation/Frame.hpp"
 
 SpecialBlockBlinkingAnimation::SpecialBlockBlinkingAnimation() {

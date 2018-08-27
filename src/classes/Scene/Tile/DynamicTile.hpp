@@ -2,7 +2,7 @@
 
 #include "classes/Interface/HoverableInterface.hpp"
 #include "classes/Interface/DraggableInterface.hpp"
-#include "classes/Tile/GridTile.hpp"
+#include "classes/Scene/Tile/GridTile.hpp"
 #include "classes/Animation/SmoothAnimation/HighlightTileAnimation.hpp"
 #include "classes/Animation/SmoothAnimation/UndoHighlightTileAnimation.hpp"
 

@@ -1,8 +1,9 @@
 #pragma once
 
 #include <memory>
-#include "classes/Tile/TileFactory.hpp"
 #include "classes/Grid.hpp"
+#include "classes/Scene/TileBar.hpp"
+#include "classes/Scene/Tile/TileFactory.hpp"
 #include "classes/Animation/FrameAnimation/Animation/SpecialBlockBlinkingAnimation.hpp"
 
 class Scene {
@@ -19,6 +20,7 @@ private:
 
     std::shared_ptr<sf::RenderWindow> window;
     std::shared_ptr<TileFactory> tileFactory;
+    std::shared_ptr<TileBar> tileBar;
     std::shared_ptr<Grid> grid;
 
     std::shared_ptr<SpecialBlockBlinkingAnimation> blinkAnimation;

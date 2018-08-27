@@ -3,8 +3,8 @@
 #include <string>
 #include <memory>
 #include <SFML/Config.hpp>
-#include "classes/Tile/DynamicTile.hpp"
-#include "classes/Tile/TileConfig.hpp"
+#include "classes/Scene/Tile/DynamicTile.hpp"
+#include "classes/Scene/Tile/TileConfig.hpp"
 
 class TileFactory
 {

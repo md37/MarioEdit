@@ -1,8 +1,8 @@
 #include "Scale.hpp"
 
 #include <vector>
-#include "classes/Tile.hpp"
-#include "classes/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile.hpp"
+#include "classes/Scene/Tile/TileRegistry.hpp"
 
 float Scale::scale = 1.0f;
 float Scale::scaleRatio = 1.0f;

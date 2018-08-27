@@ -15,7 +15,7 @@ protected:
     bool isRunningFlag = false;
     bool isStopped = false;
 
-    sf::Uint32 sleepTime = 10;
+    sf::Uint32 sleepTime = 20;
     sf::Uint32 duration = 1000;
 
     bool repeatable = false;

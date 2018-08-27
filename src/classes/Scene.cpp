@@ -2,10 +2,11 @@
 
 #include "defines.hpp"
 #include "classes/Scale.hpp"
-#include "classes/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile/TileRegistry.hpp"
 
 Scene::Scene(std::shared_ptr<sf::RenderWindow> window) {
     this->window = window;
+    tileBar = std::make_shared<TileBar>();
     grid = std::make_shared<Grid>(window->getSize());
     tileFactory = std::make_shared<TileFactory>("resources/tiles2.png");
 
@@ -59,6 +60,7 @@ void Scene::reSnapTilesToGrid() {
 void Scene::draw() {
     window->clear(BG_LIGHT_COLOR);
     grid->draw(window);
+    tileBar->draw(window);
 
     auto dynamicTiles = TileRegistry::getDynamicTiles();
     for (std::size_t i=0; i<dynamicTiles.size(); i++) {

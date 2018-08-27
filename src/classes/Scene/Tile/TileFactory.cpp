@@ -2,8 +2,8 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include "classes/Scale.hpp"
-#include "classes/Tile/DynamicTile.hpp"
-#include "classes/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile/DynamicTile.hpp"
+#include "classes/Scene/Tile/TileRegistry.hpp"
 
 TileFactory::TileFactory(std::string filepath) {
     texture = std::make_shared<sf::Texture>();

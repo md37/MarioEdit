@@ -1,12 +1,12 @@
 #include "UndoHighlightTileAnimation.hpp"
 
 #include <functional>
-#include "classes/Tile/DynamicTile.hpp"
+#include "classes/Scene/Tile/DynamicTile.hpp"
 #include "classes/EasingFunction/SmoothStepFunction.hpp"
 
 UndoHighlightTileAnimation::UndoHighlightTileAnimation(DynamicTile *tile) {
     this->tile = tile;
-    this->sleepTime = 10;
+    this->sleepTime = 20;
     this->duration = 300;
 }
 

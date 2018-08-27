@@ -1,7 +1,7 @@
 #include "EventHandler.hpp"
 
 #include "classes/Scale.hpp"
-#include "classes/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile/TileRegistry.hpp"
 
 EventHandler::EventHandler(Cursor& cursor) : cursor(cursor) {
 

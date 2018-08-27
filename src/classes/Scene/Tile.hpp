@@ -6,7 +6,7 @@
 #include <memory>
 #include <functional>
 #include "classes/Grid.hpp"
-#include "classes/Tile/TileConfig.hpp"
+#include "classes/Scene/Tile/TileConfig.hpp"
 
 class Tile {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "classes/Tile.hpp"
+#include "classes/Scene/Tile.hpp"
 
 class BackgroundTile : public Tile {
 

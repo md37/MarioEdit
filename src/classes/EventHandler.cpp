@@ -1,10 +1,14 @@
 #include "EventHandler.hpp"
 
-#include "classes/Scale.hpp"
+#include "classes/Scene/Scale.hpp"
 #include "classes/Scene/Tile/TileRegistry.hpp"
 
-EventHandler::EventHandler(Cursor& cursor) : cursor(cursor) {
+EventHandler::EventHandler(Cursor& cursor, std::shared_ptr<Scale> scale) : cursor(cursor) {
+    this->scale = scale;
+}
 
+sf::Event EventHandler::getLastEvent() {
+    return lastEvent;
 }
 
 void EventHandler::addEventHandler(EventHandler::Event event, std::function<void()> callback) {
@@ -97,10 +101,6 @@ void EventHandler::handleDynamicTilesEvents() {
                 tile->handleEvent(DynamicTile::Drop);
             }
         }
-        tile->rescale(Scale::getScale());
+        tile->rescale(scale->getScale());
     }
-}
-
-sf::Event EventHandler::getLastEvent() {
-    return lastEvent;
 }

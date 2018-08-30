@@ -15,7 +15,7 @@ Game::Game() {
 }
 
 void Game::initializeEventHandler() {
-    eventHandler = std::make_shared<EventHandler>(cursor);
+    eventHandler = std::make_shared<EventHandler>(cursor, scene->getScale());
 
     eventHandler->addEventHandler(EventHandler::QuitGame, [=]() {
         window->close();

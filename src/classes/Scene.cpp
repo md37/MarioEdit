@@ -1,14 +1,15 @@
 #include "Scene.hpp"
 
 #include "defines.hpp"
-#include "classes/Scale.hpp"
+#include "classes/Scene/Scale.hpp"
 #include "classes/Scene/Tile/TileRegistry.hpp"
 
 Scene::Scene(std::shared_ptr<sf::RenderWindow> window) {
     this->window = window;
     tileBar = std::make_shared<TileBar>();
     grid = std::make_shared<Grid>(window->getSize());
-    tileFactory = std::make_shared<TileFactory>("resources/tiles2.png");
+    scale = std::make_shared<Scale>();
+    tileFactory = std::make_shared<TileFactory>("resources/tiles2.png", scale);
 
     generateScene();
 
@@ -38,12 +39,16 @@ void Scene::generateScene() {
     questionMark->snapToGrid(sf::Vector2u(2, 1));
 }
 
+std::shared_ptr<Scale> Scene::getScale() {
+    return scale;
+}
+
 void Scene::runTasks() {
     blinkAnimation->run();
 }
 
 void Scene::rescale() {
-    Scale::rescale(window->getSize());
+    scale->rescale(window->getSize());
     Tile::setWindow(window);
     grid->rescale(window->getSize());
     reSnapTilesToGrid();

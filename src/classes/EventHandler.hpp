@@ -8,6 +8,7 @@
 #include "classes/Cursor.hpp"
 #include "classes/Keyboard.hpp"
 #include "classes/Scene/Tile/DynamicTile.hpp"
+#include "classes/Scene/Scale.hpp"
 
 class Game;
 
@@ -21,7 +22,7 @@ public:
         ResizeWindow,
     };
 
-    explicit EventHandler(Cursor& cursor);
+    explicit EventHandler(Cursor& cursor, std::shared_ptr<Scale> scale);
 
     sf::Event getLastEvent();
     void addEventHandler(Event event, std::function<void()> callback);
@@ -33,6 +34,7 @@ private:
     Cursor& cursor;
     Keyboard keyboard;
     sf::Event lastEvent;
+    std::shared_ptr<Scale> scale;
     std::map<Event, std::function<void()>> eventHandlers;
 
     void handleEvent(Event event);

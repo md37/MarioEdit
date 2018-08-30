@@ -1,10 +1,10 @@
 #pragma once
 
-#include <SFML/Config.hpp>
-#include <SFML/Graphics/Sprite.hpp>
 #include <map>
 #include <memory>
 #include <functional>
+#include <SFML/Config.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include "classes/Grid.hpp"
 #include "classes/Scene/Tile/TileConfig.hpp"
 

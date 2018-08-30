@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "classes/Tile/TileRegistry.hpp"
-#include "classes/Tile.hpp"
+#include "classes/Scene/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile.hpp"
 
 TEST(TileRegistryTest, test_get_dynamic_tiles_but_no_tiles) {
     TileRegistry::clear();

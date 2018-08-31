@@ -11,32 +11,10 @@ Scene::Scene(std::shared_ptr<sf::RenderWindow> window) {
     scale = std::make_shared<Scale>();
     tileFactory = std::make_shared<TileFactory>("resources/tiles2.png", scale);
 
-    generateScene();
+    sceneGenerator = std::make_shared<SceneGenerator>(tileFactory, grid);
+    sceneGenerator->generate();
 
     blinkAnimation = std::make_shared<SpecialBlockBlinkingAnimation>();
-}
-
-void Scene::generateScene() {
-    auto questionMark = tileFactory->createDynamicTile(0, 5);
-    questionMark->addEventHandler(DynamicTile::MouseEnter, [](DynamicTile *tile) {
-        tile->mouseEnter();
-    });
-    questionMark->addEventHandler(DynamicTile::MouseLeave, [](DynamicTile *tile) {
-        tile->mouseLeave();
-    });
-    questionMark->addEventHandler(DynamicTile::StartDrag, [](DynamicTile *tile) {
-        tile->changeImage(0, 5);
-        tile->startDrag();
-    });
-    questionMark->addEventHandler(DynamicTile::Drag, [](DynamicTile *tile) {
-        tile->drag();
-    });
-    questionMark->addEventHandler(DynamicTile::Drop, [](DynamicTile *tile) {
-        tile->drop();
-    });
-
-    questionMark->setGrid(grid);
-    questionMark->snapToGrid(sf::Vector2u(2, 1));
 }
 
 std::shared_ptr<Scale> Scene::getScale() {

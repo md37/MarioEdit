@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "classes/Grid.hpp"
+#include "classes/Scene/SceneGenerator.hpp"
 #include "classes/Scene/TileBar.hpp"
 #include "classes/Scene/Tile/TileFactory.hpp"
 #include "classes/Scene/Scale.hpp"
@@ -26,10 +27,9 @@ private:
     std::shared_ptr<TileBar> tileBar;
     std::shared_ptr<Scale> scale;
     std::shared_ptr<Grid> grid;
+    std::shared_ptr<SceneGenerator> sceneGenerator;
 
     std::shared_ptr<SpecialBlockBlinkingAnimation> blinkAnimation;
 
     void reSnapTilesToGrid();
-
-    void generateScene();
 };

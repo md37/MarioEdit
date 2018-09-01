@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "classes/Scene/Tile/SceneRegistry.hpp"
+#include "classes/Scene/SceneRegistry.hpp"
 #include "classes/Scene/Tile.hpp"
 
 TEST(TileRegistryTest, test_get_dynamic_tiles_but_no_tiles) {

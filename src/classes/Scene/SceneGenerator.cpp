@@ -32,7 +32,7 @@ void SceneGenerator::createClouds() {
 }
 
 void SceneGenerator::createHills() {
-    auto hill = std::make_shared<Hill>(tileFactory, grid, sf::Vector2i(10, 0), sf::Vector2u(4, 4));
+    auto hill = std::make_shared<Hill>(tileFactory, grid, sf::Vector2i(8, 2), 2);
     SceneRegistry::registerFigure(hill);
 }
 

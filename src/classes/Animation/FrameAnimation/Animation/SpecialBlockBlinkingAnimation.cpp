@@ -11,7 +11,7 @@ SpecialBlockBlinkingAnimation::SpecialBlockBlinkingAnimation() {
         auto tiles = TileRegistry::getDynamicTiles();
         for (std::size_t i=0; i<tiles.size(); i++) {
             if (!tiles.at(i)->isDragging()) {
-                tiles.at(i)->changeImage(0, 5);
+                tiles.at(i)->changeImage(0, 11);
             }
         }
     }));
@@ -20,7 +20,7 @@ SpecialBlockBlinkingAnimation::SpecialBlockBlinkingAnimation() {
         auto tiles = TileRegistry::getDynamicTiles();
         for (std::size_t i=0; i<tiles.size(); i++) {
             if (!tiles.at(i)->isDragging()) {
-                tiles.at(i)->changeImage(1, 5);
+                tiles.at(i)->changeImage(1, 11);
             }
         }
     }));
@@ -29,7 +29,7 @@ SpecialBlockBlinkingAnimation::SpecialBlockBlinkingAnimation() {
         auto tiles = TileRegistry::getDynamicTiles();
         for (std::size_t i=0; i<tiles.size(); i++) {
             if (!tiles.at(i)->isDragging()) {
-                tiles.at(i)->changeImage(2, 5);
+                tiles.at(i)->changeImage(2, 11);
             }
         }
     }));
@@ -38,7 +38,7 @@ SpecialBlockBlinkingAnimation::SpecialBlockBlinkingAnimation() {
         auto tiles = TileRegistry::getDynamicTiles();
         for (std::size_t i=0; i<tiles.size(); i++) {
             if (!tiles.at(i)->isDragging()) {
-                tiles.at(i)->changeImage(1, 5);
+                tiles.at(i)->changeImage(1, 11);
             }
         }
     }));

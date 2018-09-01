@@ -4,6 +4,7 @@
 #include <memory>
 #include <SFML/Config.hpp>
 #include "classes/Scene/Tile/DynamicTile.hpp"
+#include "classes/Scene/Tile/StaticTile.hpp"
 #include "classes/Scene/Tile/TileConfig.hpp"
 #include "classes/Scene/Scale.hpp"
 
@@ -18,6 +19,7 @@ public:
     void setTileOffset(sf::Uint32 offsetX, sf::Uint32 offsetY);
 
     std::shared_ptr<DynamicTile> createDynamicTile(sf::Uint32 x, sf::Uint32 y);
+    std::shared_ptr<StaticTile> createStaticTile(sf::Uint32 x, sf::Uint32 y);
 
 private:
 

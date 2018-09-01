@@ -31,3 +31,15 @@ std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Ui
 
     return tile;
 }
+
+std::shared_ptr<StaticTile> TileFactory::createStaticTile(sf::Uint32 x, sf::Uint32 y) {
+    sf::Sprite sprite;
+    sprite.setTexture(*(texture));
+    sprite.setScale(scale->getScale(), scale->getScale());
+
+    auto tile = std::make_shared<StaticTile>(sprite, config);
+    tile->changeImage(x, y);
+    TileRegistry::registerTile(tile);
+
+    return tile;
+}

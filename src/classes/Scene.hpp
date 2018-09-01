@@ -31,5 +31,6 @@ private:
 
     std::shared_ptr<SpecialBlockBlinkingAnimation> blinkAnimation;
 
+    void reScaleTiles();
     void reSnapTilesToGrid();
 };

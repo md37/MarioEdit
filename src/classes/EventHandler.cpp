@@ -101,6 +101,5 @@ void EventHandler::handleDynamicTilesEvents() {
                 tile->handleEvent(DynamicTile::Drop);
             }
         }
-        tile->rescale(scale->getScale());
     }
 }

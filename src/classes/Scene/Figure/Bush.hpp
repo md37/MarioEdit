@@ -6,7 +6,7 @@ class Bush : public Figure {
 
 public:
 
-    Bush(sf::Vector2i position, sf::Uint8 size);
+    Bush(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid, sf::Vector2i position, sf::Uint8 size);
 
     void createTiles() override;
 

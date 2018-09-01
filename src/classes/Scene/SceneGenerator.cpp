@@ -21,22 +21,22 @@ void SceneGenerator::generateBackground() {
 }
 
 void SceneGenerator::createBushes() {
-    Bush bush(sf::Vector2i(2, 2), 3);
+    Bush bush(tileFactory, grid, sf::Vector2i(2, 2), 3);
     bush.createTiles();
 }
 
 void SceneGenerator::createClouds() {
-    Cloud cloud(sf::Vector2i(2, 8), 3);
+    Cloud cloud(tileFactory, grid, sf::Vector2i(2, 8), 3);
     cloud.createTiles();
 }
 
 void SceneGenerator::createHills() {
-    Hill hill(sf::Vector2i(10, 0), sf::Vector2u(4, 4));
+    Hill hill(tileFactory, grid, sf::Vector2i(10, 0), sf::Vector2u(4, 4));
     hill.createTiles();
 }
 
 void SceneGenerator::generateForeground() {
-    auto questionMark = tileFactory->createDynamicTile(0, 5);
+    auto questionMark = tileFactory->createDynamicTile(0, 11);
     questionMark->addEventHandler(DynamicTile::MouseEnter, [](DynamicTile *tile) {
         tile->mouseEnter();
     });
@@ -44,7 +44,7 @@ void SceneGenerator::generateForeground() {
         tile->mouseLeave();
     });
     questionMark->addEventHandler(DynamicTile::StartDrag, [](DynamicTile *tile) {
-        tile->changeImage(0, 5);
+        tile->changeImage(0, 11);
         tile->startDrag();
     });
     questionMark->addEventHandler(DynamicTile::Drag, [](DynamicTile *tile) {

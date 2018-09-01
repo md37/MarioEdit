@@ -27,6 +27,7 @@ void EventHandler::handleSystemEvents(std::shared_ptr<sf::RenderWindow> window) 
 
     sf::Event event;
     while (window->pollEvent(event)) {
+        lastEvent = event;
         switch (event.type) {
             case sf::Event::Closed: {
                 handleEvent(Event::QuitGame);
@@ -73,8 +74,7 @@ void EventHandler::handleKeyboardEvents() {
 void EventHandler::handleDynamicTilesEvents() {
     auto tiles = TileRegistry::getDynamicTiles();
 
-    for (size_t i=0; i < tiles.size(); i++) {
-        auto tile = tiles[i];
+    for (auto tile : tiles) {
         if (cursor.isOver(tile) && !cursor.isOverRegistered(tile)) {
             cursor.registerOver(tile);
             tile->handleEvent(DynamicTile::MouseEnter);

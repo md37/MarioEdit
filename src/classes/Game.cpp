@@ -35,8 +35,8 @@ void Game::initializeEventHandler() {
             windowedHeight = minWindowHeight;
         }
 
-        scene->rescale();
         window->setView(sf::View(sf::FloatRect(0, 0, width, height)));
+        scene->rescale();
     });
 
     eventHandler->addEventHandler(EventHandler::ToggleFullScreen, [=]() {
@@ -46,13 +46,13 @@ void Game::initializeEventHandler() {
             sf::VideoMode mode = findHighestResolutionMode();
             width = mode.width;
             height = mode.height;
-            window->create(mode, title, isFullscreen ? sf::Style::Fullscreen : sf::Style::Default);
+            window->create(mode, title, sf::Style::Fullscreen);
         } else {
             width = windowedWidth;
             height = windowedHeight;
 
             sf::VideoMode mode(width, height);
-            window->create(mode, title, isFullscreen ? sf::Style::Fullscreen : sf::Style::Default);
+            window->create(mode, title, sf::Style::Default);
         }
         reInitializeWindow();
     });
@@ -85,9 +85,9 @@ int Game::run() {
 sf::VideoMode Game::findHighestResolutionMode() {
     auto modes = sf::VideoMode::getFullscreenModes();
     auto maxHeightMode = modes[0];
-    for (int i=0; i<modes.size(); i++) {
-        if (modes[i].height > maxHeightMode.height) {
-            maxHeightMode = modes[i];
+    for (auto mode : modes) {
+        if (mode.height > maxHeightMode.height) {
+            maxHeightMode = mode;
         }
     }
     return maxHeightMode;

@@ -14,9 +14,9 @@ void FrameAnimation::run() {
             sf::Int32 currentMilliseconds = clock.getElapsedTime().asMilliseconds();
             sf::Int32 animationPointInTime = (currentMilliseconds-startMilliseconds) % duration;
 
-            for (std::size_t i=0; i<frames.size(); i++) {
-                if (frames.at(i)->entersNow(animationPointInTime, duration)) {
-                    frames.at(i)->enter();
+            for (auto frame : frames) {
+                if (frame->entersNow(animationPointInTime, duration)) {
+                    frame->enter();
                 }
             }
             mutex.unlock();

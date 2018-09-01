@@ -2,7 +2,7 @@
 
 #include "defines.hpp"
 #include "classes/Scene/Scale.hpp"
-#include "classes/Scene/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile/SceneRegistry.hpp"
 
 Scene::Scene(std::shared_ptr<sf::RenderWindow> window) {
     this->window = window;
@@ -36,12 +36,12 @@ void Scene::rescale() {
 }
 
 void Scene::reSnapTilesToGrid() {
-    auto staticTiles = TileRegistry::getStaticTiles();
-    for (auto const &tile : staticTiles) {
-        tile->snapToGrid();
+    auto figures = SceneRegistry::getFigures();
+    for (auto const &figure : figures) {
+        figure->snapToGrid();
     }
 
-    auto dynamicTiles = TileRegistry::getDynamicTiles();
+    auto dynamicTiles = SceneRegistry::getDynamicTiles();
     for (auto const &tile : dynamicTiles) {
         tile->snapToGrid();
     }
@@ -50,28 +50,23 @@ void Scene::reSnapTilesToGrid() {
 void Scene::draw() {
     window->clear(BG_LIGHT_COLOR);
 
-    auto staticTiles = TileRegistry::getStaticTiles();
-    for (auto const &tile : staticTiles) {
-        tile->draw(window);
+    auto figures = SceneRegistry::getFigures();
+    for (auto const &figure : figures) {
+        figure->draw(window);
     }
 
     grid->draw(window);
     tileBar->draw(window);
 
-    auto dynamicTiles = TileRegistry::getDynamicTiles();
+    auto dynamicTiles = SceneRegistry::getDynamicTiles();
     for (auto const &tile : dynamicTiles) {
         tile->draw(window);
     }
 }
 
 void Scene::reScaleTiles() {
-    auto staticTiles = TileRegistry::getStaticTiles();
-    for (auto const &tile : staticTiles) {
-        tile->rescale(scale->getScale());
-    }
-
-    auto dynamicTiles = TileRegistry::getDynamicTiles();
-    for (auto const &tile : dynamicTiles) {
+    auto allTiles = SceneRegistry::getAllTiles();
+    for (auto const &tile : allTiles) {
         tile->rescale(scale->getScale());
     }
 }

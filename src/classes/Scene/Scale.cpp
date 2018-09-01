@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "classes/Scene/Tile.hpp"
-#include "classes/Scene/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile/SceneRegistry.hpp"
 
 Scale::Scale() {
     scale = 1.0f;

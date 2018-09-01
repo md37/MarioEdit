@@ -1,3 +1,4 @@
+#include <classes/Scene/Tile/SceneRegistry.hpp>
 #include "SceneGenerator.hpp"
 
 #include "classes/Scene/Figure/Bush.hpp"
@@ -21,18 +22,18 @@ void SceneGenerator::generateBackground() {
 }
 
 void SceneGenerator::createBushes() {
-    Bush bush(tileFactory, grid, sf::Vector2i(2, 2), 3);
-    bush.createTiles();
+    auto bush = std::make_shared<Bush>(tileFactory, grid, sf::Vector2i(2, 2), 3);
+    SceneRegistry::registerFigure(bush);
 }
 
 void SceneGenerator::createClouds() {
-    Cloud cloud(tileFactory, grid, sf::Vector2i(6, 10), 3);
-    cloud.createTiles();
+    auto cloud = std::make_shared<Cloud>(tileFactory, grid, sf::Vector2i(6, 10), 3);
+    SceneRegistry::registerFigure(cloud);
 }
 
 void SceneGenerator::createHills() {
-    Hill hill(tileFactory, grid, sf::Vector2i(10, 0), sf::Vector2u(4, 4));
-    hill.createTiles();
+    auto hill = std::make_shared<Hill>(tileFactory, grid, sf::Vector2i(10, 0), sf::Vector2u(4, 4));
+    SceneRegistry::registerFigure(hill);
 }
 
 void SceneGenerator::generateForeground() {

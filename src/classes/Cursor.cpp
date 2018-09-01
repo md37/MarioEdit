@@ -2,7 +2,7 @@
 
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include "classes/Scene/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile/SceneRegistry.hpp"
 
 std::shared_ptr<sf::RenderWindow> Cursor::window;
 
@@ -98,7 +98,7 @@ void Cursor::click(bool click) {
 }
 
 void Cursor::handleRegisteredDrags() {
-    for (std::size_t i=0; i<registeredDragOnTiles.size(); i++) {
-        registeredDragOnTiles[i]->handleEvent(DynamicTile::Event::Drag);
+    for (auto dragOnTile : registeredDragOnTiles) {
+        dragOnTile->handleEvent(DynamicTile::Event::Drag);
     }
 }

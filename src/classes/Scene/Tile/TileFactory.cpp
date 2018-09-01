@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include "classes/Scene/Tile/DynamicTile.hpp"
-#include "classes/Scene/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile/SceneRegistry.hpp"
 
 TileFactory::TileFactory(std::string filepath, std::shared_ptr<Scale> scale) {
     texture = std::make_shared<sf::Texture>();
@@ -27,7 +27,7 @@ std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Ui
 
     auto tile = std::make_shared<DynamicTile>(sprite, config);
     tile->changeImage(x, y);
-    TileRegistry::registerTile(tile);
+    SceneRegistry::registerTile(tile);
 
     return tile;
 }
@@ -39,7 +39,7 @@ std::shared_ptr<StaticTile> TileFactory::createStaticTile(sf::Uint32 x, sf::Uint
 
     auto tile = std::make_shared<StaticTile>(sprite, config);
     tile->changeImage(x, y);
-    TileRegistry::registerTile(tile);
+    SceneRegistry::registerTile(tile);
 
     return tile;
 }

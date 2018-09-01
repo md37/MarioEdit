@@ -1,7 +1,7 @@
 #include "EventHandler.hpp"
 
 #include "classes/Scene/Scale.hpp"
-#include "classes/Scene/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile/SceneRegistry.hpp"
 
 EventHandler::EventHandler(Cursor& cursor, std::shared_ptr<Scale> scale) : cursor(cursor) {
     this->scale = scale;
@@ -72,7 +72,7 @@ void EventHandler::handleKeyboardEvents() {
 }
 
 void EventHandler::handleDynamicTilesEvents() {
-    auto tiles = TileRegistry::getDynamicTiles();
+    auto tiles = SceneRegistry::getDynamicTiles();
 
     for (auto tile : tiles) {
         if (cursor.isOver(tile) && !cursor.isOverRegistered(tile)) {

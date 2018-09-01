@@ -1,7 +1,7 @@
 #include "Tile.hpp"
 
 #include <SFML/Graphics/Texture.hpp>
-#include "classes/Scene/Tile/TileRegistry.hpp"
+#include "classes/Scene/Tile/SceneRegistry.hpp"
 
 std::shared_ptr<sf::RenderWindow> Tile::window;
 

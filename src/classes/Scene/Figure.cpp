@@ -5,3 +5,15 @@ Figure::Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> g
     this->grid = grid;
     this->position = position;
 }
+
+void Figure::snapToGrid() {
+    for (auto tile : tiles) {
+        tile->snapToGrid();
+    }
+}
+
+void Figure::draw(std::shared_ptr<sf::RenderWindow> window) {
+    for (auto tile : tiles) {
+        tile->draw(window);
+    }
+}

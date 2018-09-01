@@ -11,7 +11,9 @@ public:
 
     Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid, sf::Vector2i position);
 
-    virtual void createTiles()=0;
+    void snapToGrid();
+
+    virtual void draw(std::shared_ptr<sf::RenderWindow> window);
 
 protected:
 
@@ -19,5 +21,6 @@ protected:
     std::shared_ptr<Grid> grid;
 
     sf::Vector2i position;
+    std::vector<std::shared_ptr<GridTile>> tiles;
 
 };

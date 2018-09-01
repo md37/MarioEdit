@@ -1,9 +1,9 @@
-#include <classes/Scene/Tile/SceneRegistry.hpp>
 #include "SceneGenerator.hpp"
 
 #include "classes/Scene/Figure/Bush.hpp"
 #include "classes/Scene/Figure/Cloud.hpp"
 #include "classes/Scene/Figure/Hill.hpp"
+#include "classes/Scene/SceneRegistry.hpp"
 
 SceneGenerator::SceneGenerator(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid) {
     this->tileFactory = tileFactory;

@@ -2,7 +2,7 @@
 
 #include "defines.hpp"
 #include "classes/Scene/Scale.hpp"
-#include "classes/Scene/Tile/SceneRegistry.hpp"
+#include "classes/Scene/SceneRegistry.hpp"
 
 Scene::Scene(std::shared_ptr<sf::RenderWindow> window) {
     this->window = window;

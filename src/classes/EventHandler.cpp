@@ -1,7 +1,7 @@
 #include "EventHandler.hpp"
 
 #include "classes/Scene/Scale.hpp"
-#include "classes/Scene/Tile/SceneRegistry.hpp"
+#include "classes/Scene/SceneRegistry.hpp"
 
 EventHandler::EventHandler(Cursor& cursor, std::shared_ptr<Scale> scale) : cursor(cursor) {
     this->scale = scale;

@@ -26,7 +26,7 @@ void SceneGenerator::createBushes() {
 }
 
 void SceneGenerator::createClouds() {
-    Cloud cloud(tileFactory, grid, sf::Vector2i(2, 8), 3);
+    Cloud cloud(tileFactory, grid, sf::Vector2i(6, 10), 3);
     cloud.createTiles();
 }
 

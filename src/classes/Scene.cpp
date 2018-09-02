@@ -60,7 +60,15 @@ void Scene::draw() {
 
     auto dynamicTiles = SceneRegistry::getDynamicTiles();
     for (auto const &tile : dynamicTiles) {
+        if (tile->isMouseOver() || tile->isDragging()) {
+            continue;
+        }
         tile->draw(window);
+    }
+
+    auto highlightedTile = SceneRegistry::getHighlightedTile();
+    if (highlightedTile != nullptr) {
+        highlightedTile->draw(window);
     }
 }
 

@@ -29,6 +29,7 @@ void DynamicTile::startDrag() {
     dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
 
     grid->turnHighlightOn();
+    isDraggingFlag = true;
 }
 
 void DynamicTile::drag() {
@@ -54,6 +55,7 @@ void DynamicTile::drop() {
     grid->turnHighlightOff();
 
     correctCorners();
+    isDraggingFlag = false;
 }
 
 bool DynamicTile::isMouseOver() {
@@ -65,6 +67,7 @@ bool DynamicTile::isDragging() {
 }
 
 void DynamicTile::mouseEnter() {
+    isMouseOverFlag = true;
     if (undoHighlightTileAnimation->isRunning()) {
         undoHighlightTileAnimation->stop();
     }
@@ -74,6 +77,7 @@ void DynamicTile::mouseEnter() {
 }
 
 void DynamicTile::mouseLeave() {
+    isMouseOverFlag = false;
     if (highlightTileAnimation->isRunning()) {
         highlightTileAnimation->stop();
     }

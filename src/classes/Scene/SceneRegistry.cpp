@@ -25,6 +25,15 @@ std::vector<std::shared_ptr<Tile>> SceneRegistry::getAllTiles() {
     return allTiles;
 }
 
+std::shared_ptr<DynamicTile> SceneRegistry::getHighlightedTile() {
+    for (auto tile : dynamicTiles) {
+        if (tile->isMouseOver() || tile->isDragging()) {
+            return tile;
+        }
+    }
+    return nullptr;
+}
+
 std::vector<std::shared_ptr<DynamicTile>> SceneRegistry::getDynamicTiles() {
     return dynamicTiles;
 }

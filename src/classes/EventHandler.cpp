@@ -75,6 +75,18 @@ void EventHandler::handleDynamicTilesEvents() {
     auto tiles = SceneRegistry::getDynamicTiles();
 
     for (auto tile : tiles) {
+        if (cursor.isDragRegistered(tile)) {
+            if (cursor.isClick()) {
+                tile->handleEvent(DynamicTile::Drag);
+            } else {
+                cursor.unregisterDrag(tile);
+                tile->handleEvent(DynamicTile::Drop);
+            }
+            return;
+        }
+    }
+
+    for (auto tile : tiles) {
         if (cursor.isOver(tile) && !cursor.isOverRegistered(tile)) {
             cursor.registerOver(tile);
             tile->handleEvent(DynamicTile::MouseEnter);

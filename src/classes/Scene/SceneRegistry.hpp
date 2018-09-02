@@ -14,6 +14,7 @@ public:
     static void registerFigure(std::shared_ptr<Figure> figure);
     static std::vector<std::shared_ptr<Tile>> getAllTiles();
     static std::vector<std::shared_ptr<DynamicTile>> getDynamicTiles();
+    static std::shared_ptr<DynamicTile> getHighlightedTile();
     static std::vector<std::shared_ptr<Figure>> getFigures();
 
 private:

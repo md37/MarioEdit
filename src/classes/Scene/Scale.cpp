@@ -1,33 +1,30 @@
 #include "Scale.hpp"
 
 #include <vector>
-#include "Tile.hpp"
-#include "TileRegistry.hpp"
+#include "classes/Scene/Tile.hpp"
+#include "classes/Scene/SceneRegistry.hpp"
 
-float Scale::scale = 1.0f;
-float Scale::scaleRatio = 1.0f;
-
-void Scale::reset() {
+Scale::Scale() {
     scale = 1.0f;
     scaleRatio = 1.0f;
 }
 
 void Scale::rescale(sf::Vector2u windowSize) {
     TileConfig config;
-    float prevScale = Scale::scale;
+    float prevScale = scale;
     scale = (float)windowSize.y / (float)(config.tileHeight*config.blocksOnHeight);
 
-    if (prevScale == Scale::scale || prevScale == 1.0f) {
+    if (prevScale == scale || prevScale == 1.0f) {
         return;
     }
 
-    scaleRatio = Scale::scale/prevScale;
+    scaleRatio = scale/prevScale;
 }
 
 float Scale::getScale() {
-    return Scale::scale;
+    return scale;
 }
 
 float Scale::getScaleRatio() {
-    return Scale::scaleRatio;
+    return scaleRatio;
 }

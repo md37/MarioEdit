@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 #include <SFML/Config.hpp>
-#include "Tile.hpp"
+#include "classes/Scene/Tile/DynamicTile.hpp"
 
 class Cursor {
 
@@ -16,18 +16,18 @@ public:
 
 
     void draw();
-    bool isOver(std::shared_ptr<Tile> tile);
+    bool isOver(std::shared_ptr<DynamicTile> tile);
 
     bool isClick();
     void click(bool click);
 
-    void registerOver(std::shared_ptr<Tile> tile);
-    void unregisterOver(std::shared_ptr<Tile> tile);
-    bool isOverRegistered(std::shared_ptr<Tile> tile);
+    void registerOver(std::shared_ptr<DynamicTile> tile);
+    void unregisterOver(std::shared_ptr<DynamicTile> tile);
+    bool isOverRegistered(std::shared_ptr<DynamicTile> tile);
 
-    void registerDrag(std::shared_ptr<Tile> tile);
-    void unregisterDrag(std::shared_ptr<Tile> tile);
-    bool isDragRegistered(std::shared_ptr<Tile> tile);
+    void registerDrag(std::shared_ptr<DynamicTile> tile);
+    void unregisterDrag(std::shared_ptr<DynamicTile> tile);
+    bool isDragRegistered(std::shared_ptr<DynamicTile> tile);
 
     void handleRegisteredDrags();
 
@@ -37,8 +37,8 @@ private:
     std::shared_ptr<sf::Texture> texture;
     std::shared_ptr<sf::Sprite> sprite;
 
-    std::vector<std::shared_ptr<Tile>> registeredOverOnTiles;
-    std::vector<std::shared_ptr<Tile>> registeredDragOnTiles;
+    std::vector<std::shared_ptr<DynamicTile>> registeredOverOnTiles;
+    std::vector<std::shared_ptr<DynamicTile>> registeredDragOnTiles;
 
     bool clickFlag;
 

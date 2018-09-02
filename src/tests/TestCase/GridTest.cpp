@@ -5,6 +5,10 @@
 sf::Vector2u windowSize(1280, 800);
 Grid grid(windowSize);
 
+TEST(GridTest, test_size) {
+    ASSERT_EQ(19, grid.getSize().x);
+    ASSERT_EQ(12, grid.getSize().y);
+}
 
 TEST(GridTest, test_tile_0_0_point_on_top_left_corner) {
     sf::Vector2f point(0, 0);
@@ -155,7 +159,7 @@ TEST(GridTest, test_center_0_0) {
     sf::Vector2f center = grid.getCenter(pointOnGrid);
 
     ASSERT_FLOAT_EQ(33, center.x);
-    ASSERT_FLOAT_EQ(33, center.y);
+    ASSERT_FLOAT_EQ(759, center.y);
 }
 
 TEST(GridTest, test_center_2_1) {
@@ -163,5 +167,5 @@ TEST(GridTest, test_center_2_1) {
     sf::Vector2f center = grid.getCenter(pointOnGrid);
 
     ASSERT_FLOAT_EQ(165, center.x);
-    ASSERT_FLOAT_EQ(99, center.y);
+    ASSERT_FLOAT_EQ(693, center.y);
 }

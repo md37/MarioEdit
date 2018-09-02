@@ -3,11 +3,9 @@
 #include <memory>
 #include <SFML/Config.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "Keyboard.hpp"
-#include "Scale.hpp"
-#include "Cursor.hpp"
-#include "TileSet.hpp"
-#include "Grid.hpp"
+#include "classes/EventHandler.hpp"
+#include "classes/Cursor.hpp"
+#include "classes/Scene.hpp"
 
 class Game {
 
@@ -28,20 +26,13 @@ private:
     bool isFullscreen = false;
 
     std::shared_ptr<sf::RenderWindow> window;
+    std::shared_ptr<EventHandler> eventHandler;
+    std::shared_ptr<Scene> scene;
 
     Cursor cursor;
-    Keyboard keyboard;
-    TileSet tileSet;
-    std::shared_ptr<Grid> grid;
 
+    void initializeEventHandler();
 
-    void handleSystemEvents();
-    void handleTileEvents(const std::vector<std::shared_ptr<Tile>> &tiles);
-    void createTiles();
-    void snapTilesToGrid();
-
-    void handleKeyboardEvents();
-
-    void reinitializeWindow();
+    void reInitializeWindow();
     sf::VideoMode findHighestResolutionMode();
 };

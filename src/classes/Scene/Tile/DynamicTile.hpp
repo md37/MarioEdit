@@ -26,6 +26,8 @@ public:
     void handleEvent(DynamicTile::Event event);
     void addEventHandler(DynamicTile::Event event, std::function<void(DynamicTile *tile)> callback);
 
+    bool isBlinking = false;
+
     bool isMouseOver();
     bool isDragging();
 

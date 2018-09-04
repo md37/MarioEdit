@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "classes/Grid.hpp"
+#include "classes/Scene/Grid.hpp"
 
 sf::Vector2u windowSize(1280, 800);
 Grid grid(windowSize);

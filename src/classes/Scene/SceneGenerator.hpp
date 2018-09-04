@@ -2,7 +2,7 @@
 
 #include <memory>
 #include "classes/Scene/Tile/TileFactory.hpp"
-#include "classes/Grid.hpp"
+#include "classes/Scene/Grid.hpp"
 
 class SceneGenerator {
 

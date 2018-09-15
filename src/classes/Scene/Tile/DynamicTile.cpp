@@ -5,6 +5,22 @@
 DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite, config) {
     highlightTileAnimation = std::make_shared<HighlightTileAnimation>(this);
     undoHighlightTileAnimation = std::make_shared<UndoHighlightTileAnimation>(this);
+
+    this->addEventHandler(DynamicTile::MouseEnter, [](DynamicTile *tile) {
+        tile->mouseEnter();
+    });
+    this->addEventHandler(DynamicTile::MouseLeave, [](DynamicTile *tile) {
+        tile->mouseLeave();
+    });
+    this->addEventHandler(DynamicTile::StartDrag, [](DynamicTile *tile) {
+        tile->startDrag();
+    });
+    this->addEventHandler(DynamicTile::Drag, [](DynamicTile *tile) {
+        tile->drag();
+    });
+    this->addEventHandler(DynamicTile::Drop, [](DynamicTile *tile) {
+        tile->drop();
+    });
 }
 
 void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) {
@@ -20,6 +36,34 @@ void DynamicTile::handleEvent(DynamicTile::Event event) {
 
 void DynamicTile::addEventHandler(DynamicTile::Event event, std::function<void(DynamicTile *tile)> callback) {
     eventCallbacks[event] = callback;
+}
+
+bool DynamicTile::isMouseOver() {
+    return isMouseOverFlag;
+}
+
+bool DynamicTile::isDragging() {
+    return isDraggingFlag;
+}
+
+void DynamicTile::mouseEnter() {
+    isMouseOverFlag = true;
+    if (undoHighlightTileAnimation->isRunning()) {
+        undoHighlightTileAnimation->stop();
+    }
+    if (!highlightTileAnimation->isRunning()) {
+        highlightTileAnimation->run();
+    }
+}
+
+void DynamicTile::mouseLeave() {
+    isMouseOverFlag = false;
+    if (highlightTileAnimation->isRunning()) {
+        highlightTileAnimation->stop();
+    }
+    if (!undoHighlightTileAnimation->isRunning()) {
+        undoHighlightTileAnimation->run();
+    }
 }
 
 void DynamicTile::startDrag() {
@@ -56,34 +100,6 @@ void DynamicTile::drop() {
 
     correctCorners();
     isDraggingFlag = false;
-}
-
-bool DynamicTile::isMouseOver() {
-    return isMouseOverFlag;
-}
-
-bool DynamicTile::isDragging() {
-    return isDraggingFlag;
-}
-
-void DynamicTile::mouseEnter() {
-    isMouseOverFlag = true;
-    if (undoHighlightTileAnimation->isRunning()) {
-        undoHighlightTileAnimation->stop();
-    }
-    if (!highlightTileAnimation->isRunning()) {
-        highlightTileAnimation->run();
-    }
-}
-
-void DynamicTile::mouseLeave() {
-    isMouseOverFlag = false;
-    if (highlightTileAnimation->isRunning()) {
-        highlightTileAnimation->stop();
-    }
-    if (!undoHighlightTileAnimation->isRunning()) {
-        undoHighlightTileAnimation->run();
-    }
 }
 
 void DynamicTile::correctCorners() {

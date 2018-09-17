@@ -6,7 +6,7 @@
 #include <SFML/Config.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include "classes/Scene/Grid.hpp"
-#include "classes/Scene/Tile/TileConfig.hpp"
+#include "classes/TileConfig.hpp"
 
 class Tile {
 
@@ -15,8 +15,6 @@ public:
     static void setWindow(std::shared_ptr<sf::RenderWindow>& window);
 
     explicit Tile(sf::Sprite sprite, TileConfig config=TileConfig());
-
-    virtual void draw(std::shared_ptr<sf::RenderWindow> window)=0;
 
     float scalePromotion = 1.0f;
 

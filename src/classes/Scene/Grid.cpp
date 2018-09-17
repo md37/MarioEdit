@@ -2,13 +2,11 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-Grid::Grid(sf::Vector2u windowSize) : lineColor(0, 0, 0, 50) {
-    this->rescale(windowSize);
+Grid::Grid() : lineColor(0, 0, 0, 50) {
+
 }
 
 void Grid::rescale(sf::Vector2u windowSize) {
-    this->windowSize = windowSize;
-
     lineThickness = windowSize.y / lineThicknessDivider;
     lineDistance = windowSize.y / rows;
     cols = sf::Uint32(windowSize.x / lineDistance);

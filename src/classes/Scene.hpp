@@ -3,12 +3,12 @@
 #include <memory>
 #include "classes/Scene/Grid.hpp"
 #include "classes/Scene/SceneGenerator.hpp"
-#include "classes/Scene/TileBar.hpp"
-#include "classes/Scene/Tile/TileFactory.hpp"
+#include "classes/Tilebar.hpp"
+#include "classes/TileFactory.hpp"
 #include "classes/Scene/Scale.hpp"
 #include "classes/Animation/FrameAnimation/Animation/SpecialBlockBlinkingAnimation.hpp"
 
-class Scene {
+class Scene : public RescalableInterface, DrawableInterface {
 
 public:
 
@@ -16,15 +16,14 @@ public:
 
     std::shared_ptr<Scale> getScale();
 
-    void rescale();
+    void rescale(sf::Vector2u windowSize) override;
     void runTasks();
-    void draw();
+    void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
 private:
 
     std::shared_ptr<sf::RenderWindow> window;
     std::shared_ptr<TileFactory> tileFactory;
-    std::shared_ptr<TileBar> tileBar;
     std::shared_ptr<Scale> scale;
     std::shared_ptr<Grid> grid;
     std::shared_ptr<SceneGenerator> sceneGenerator;

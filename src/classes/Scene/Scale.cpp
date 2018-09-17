@@ -1,8 +1,8 @@
 #include "Scale.hpp"
 
 #include <vector>
-#include "classes/Scene/Tile.hpp"
-#include "classes/Scene/SceneRegistry.hpp"
+#include "classes/Tile.hpp"
+#include "classes/ObjectRegistry.hpp"
 
 Scale::Scale() {
     scale = 1.0f;

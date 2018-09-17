@@ -3,13 +3,16 @@
 #include <memory>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "classes/Interface/RescalableInterface.hpp"
+#include "classes/Interface/DrawableInterface.hpp"
 
-class Grid {
+class Grid : public RescalableInterface, public DrawableInterface {
 
 public:
 
-    explicit Grid(sf::Vector2u windowSize);
-    void rescale(sf::Vector2u windowSize);
+    explicit Grid();
+    void rescale(sf::Vector2u windowSize) override;
+    void draw(std::shared_ptr<sf::RenderWindow> window) override;
     bool hasIncompleteEnding();
 
     sf::Vector2u getSize();
@@ -23,11 +26,9 @@ public:
     sf::Vector2f getHighlightPosition();
     sf::Vector2u getHighlightPlace();
 
-    void draw(std::shared_ptr<sf::RenderWindow> window);
 
 private:
 
-    sf::Vector2u windowSize;
     sf::Uint32 rows = 12;
     sf::Uint32 cols;
     float lineDistance;

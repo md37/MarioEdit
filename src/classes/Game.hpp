@@ -28,6 +28,7 @@ private:
     std::shared_ptr<sf::RenderWindow> window;
     std::shared_ptr<EventHandler> eventHandler;
     std::shared_ptr<Scene> scene;
+    std::shared_ptr<Tilebar> tilebar;
 
     Cursor cursor;
 

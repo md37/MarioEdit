@@ -2,11 +2,12 @@
 
 #include "classes/Interface/HoverableInterface.hpp"
 #include "classes/Interface/DraggableInterface.hpp"
+#include "classes/Interface/DrawableInterface.hpp"
 #include "classes/Scene/Tile/GridTile.hpp"
 #include "classes/Animation/SmoothAnimation/HighlightTileAnimation.hpp"
 #include "classes/Animation/SmoothAnimation/UndoHighlightTileAnimation.hpp"
 
-class DynamicTile : public GridTile, public HoverableInterface, public DraggableInterface {
+class DynamicTile : public GridTile, public HoverableInterface, public DraggableInterface, DrawableInterface {
 
 public:
 

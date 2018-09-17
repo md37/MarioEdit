@@ -10,6 +10,7 @@ Game::Game() {
     );
 
     scene = std::make_shared<Scene>(window);
+    tilebar = std::make_shared<Tilebar>(window);
     initializeEventHandler();
     reInitializeWindow();
 }
@@ -36,7 +37,8 @@ void Game::initializeEventHandler() {
         }
 
         window->setView(sf::View(sf::FloatRect(0, 0, width, height)));
-        scene->rescale();
+        scene->rescale(window->getSize());
+        tilebar->rescale(window->getSize());
     });
 
     eventHandler->addEventHandler(EventHandler::ToggleFullScreen, [=]() {
@@ -65,7 +67,8 @@ void Game::reInitializeWindow() {
 
     Cursor::reinitialize(window);
 
-    scene->rescale();
+    scene->rescale(window->getSize());
+    tilebar->rescale(window->getSize());
 }
 
 int Game::run() {
@@ -75,8 +78,10 @@ int Game::run() {
         eventHandler->handleSystemEvents(window);
         eventHandler->handleDynamicTilesEvents();
 
-        scene->draw();
-        cursor.draw();
+        scene->draw(window);
+        tilebar->draw(window);
+        cursor.draw(window);
+
         window->display();
     }
     return 0;

@@ -2,13 +2,12 @@
 
 #include "defines.hpp"
 #include "classes/Scene/Scale.hpp"
-#include "classes/Scene/SceneRegistry.hpp"
+#include "classes/ObjectRegistry.hpp"
 
 Scene::Scene(std::shared_ptr<sf::RenderWindow> window) {
     this->window = window;
 
-    tileBar = std::make_shared<TileBar>();
-    grid = std::make_shared<Grid>(window->getSize());
+    grid = std::make_shared<Grid>();
     scale = std::make_shared<Scale>();
     tileFactory = std::make_shared<TileFactory>("resources/tiles.png", scale);
     tileFactory->setTileSeparators(1, 1);
@@ -27,38 +26,37 @@ void Scene::runTasks() {
     blinkAnimation->run();
 }
 
-void Scene::rescale() {
-    scale->rescale(window->getSize());
+void Scene::rescale(sf::Vector2u windowSize) {
+    scale->rescale(windowSize);
+    grid->rescale(windowSize);
     Tile::setWindow(window);
-    grid->rescale(window->getSize());
     reScaleTiles();
     reSnapTilesToGrid();
 }
 
 void Scene::reSnapTilesToGrid() {
-    auto figures = SceneRegistry::getFigures();
+    auto figures = ObjectRegistry::getFigures();
     for (auto const &figure : figures) {
         figure->snapToGrid();
     }
 
-    auto dynamicTiles = SceneRegistry::getDynamicTiles();
+    auto dynamicTiles = ObjectRegistry::getDynamicTiles();
     for (auto const &tile : dynamicTiles) {
         tile->snapToGrid();
     }
 }
 
-void Scene::draw() {
+void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
     window->clear(BG_LIGHT_COLOR);
 
-    auto figures = SceneRegistry::getFigures();
+    auto figures = ObjectRegistry::getFigures();
     for (auto const &figure : figures) {
         figure->draw(window);
     }
 
     grid->draw(window);
-    tileBar->draw(window);
 
-    auto dynamicTiles = SceneRegistry::getDynamicTiles();
+    auto dynamicTiles = ObjectRegistry::getDynamicTiles();
     for (auto const &tile : dynamicTiles) {
         if (tile->isMouseOver() || tile->isDragging()) {
             continue;
@@ -66,14 +64,14 @@ void Scene::draw() {
         tile->draw(window);
     }
 
-    auto highlightedTile = SceneRegistry::getHighlightedTile();
+    auto highlightedTile = ObjectRegistry::getHighlightedTile();
     if (highlightedTile != nullptr) {
         highlightedTile->draw(window);
     }
 }
 
 void Scene::reScaleTiles() {
-    auto allTiles = SceneRegistry::getAllTiles();
+    auto allTiles = ObjectRegistry::getAllTiles();
     for (auto const &tile : allTiles) {
         tile->rescale(scale->getScale());
     }

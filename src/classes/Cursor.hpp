@@ -4,6 +4,7 @@
 #include <vector>
 #include <SFML/Config.hpp>
 #include "classes/Scene/Tile/DynamicTile.hpp"
+#include "classes/Interface/DrawableInterface.hpp"
 
 class Cursor {
 
@@ -14,8 +15,7 @@ public:
 
     Cursor();
 
-
-    void draw();
+    void draw(std::shared_ptr<sf::RenderWindow> window);
     bool isOver(std::shared_ptr<DynamicTile> tile);
 
     bool isClick();

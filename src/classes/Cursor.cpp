@@ -2,7 +2,7 @@
 
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include "classes/Scene/SceneRegistry.hpp"
+#include "classes/ObjectRegistry.hpp"
 
 std::shared_ptr<sf::RenderWindow> Cursor::window;
 
@@ -30,9 +30,9 @@ sf::Vector2f Cursor::getCurrentPosition() {
     return sf::Vector2f(sf::Mouse::getPosition(*(window)));
 }
 
-void Cursor::draw() {
+void Cursor::draw(std::shared_ptr<sf::RenderWindow> window) {
     updatePosition();
-    Cursor::window->draw(*sprite);
+    window->draw(*sprite);
 }
 
 bool Cursor::isOver(std::shared_ptr<DynamicTile> tile) {

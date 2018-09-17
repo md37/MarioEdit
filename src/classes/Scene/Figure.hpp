@@ -3,9 +3,10 @@
 #include <memory>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "classes/Scene/Grid.hpp"
-#include "classes/Scene/Tile/TileFactory.hpp"
+#include "classes/TileFactory.hpp"
+#include "classes/Interface/DrawableInterface.hpp"
 
-class Figure {
+class Figure : public DrawableInterface {
 
 public:
 
@@ -13,7 +14,7 @@ public:
 
     void snapToGrid();
 
-    virtual void draw(std::shared_ptr<sf::RenderWindow> window);
+    void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
 protected:
 
@@ -21,6 +22,6 @@ protected:
     std::shared_ptr<Grid> grid;
 
     sf::Vector2i position;
-    std::vector<std::shared_ptr<GridTile>> tiles;
+    std::vector<std::shared_ptr<StaticTile>> tiles;
 
 };

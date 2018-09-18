@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "classes/ObjectRegistry.hpp"
-#include "classes/Tile.hpp"
+#include "classes/Editor/ObjectRegistry.hpp"
+#include "classes/Editor/Tile.hpp"
 
 TEST(ObjectRegistryTest, test_get_dynamic_tiles_but_no_tiles) {
     ObjectRegistry::clear();

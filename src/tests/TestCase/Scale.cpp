@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <SFML/System/Vector2.hpp>
-#include "classes/Scene/Scale.hpp"
+#include "classes/Editor/Scene/Scale.hpp"
 
 
 TEST(ScaleTest, test_default_scale) {

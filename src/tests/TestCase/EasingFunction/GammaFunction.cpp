@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "classes/EasingFunction/GammaFunction.hpp"
+#include "classes/Animation/EasingFunction/GammaFunction.hpp"
 
 GammaFunction createGammaPositiveToPositiveFunction() {
     GammaFunction function(2.3, 1500, 1.0f, 2.0f);

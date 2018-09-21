@@ -1,16 +1,16 @@
-#include "Tilebar.hpp"
+#include "Navigation.hpp"
 
 #include <SFML/Graphics/Text.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
 
-Tilebar::Tilebar(std::shared_ptr<TileFactory> tileFactory) {
+Navigation::Navigation(std::shared_ptr<TileFactory> tileFactory) {
     this->tileFactory = tileFactory;
 
     generateBox();
     generateDynamicTileButtons();
 }
 
-void Tilebar::rescale(sf::Vector2u windowSize) {
+void Navigation::rescale(sf::Vector2u windowSize) {
     boxHeight = windowSize.y*0.155;
 
     sf::Vector2f size(windowSize);
@@ -21,7 +21,7 @@ void Tilebar::rescale(sf::Vector2u windowSize) {
     box.setOutlineThickness(lineThickness);
 }
 
-void Tilebar::generateBox() {
+void Navigation::generateBox() {
     auto newPosition = box.getPosition();
     box.setPosition(newPosition);
 
@@ -32,7 +32,7 @@ void Tilebar::generateBox() {
     box.setOutlineColor(borderColor);
 }
 
-void Tilebar::generateDynamicTileButtons() {
+void Navigation::generateDynamicTileButtons() {
     auto ground = tileFactory->createButtonTile(0, 0);
     ground->setPosition(sf::Vector2f(100, 100));
 
@@ -46,12 +46,12 @@ void Tilebar::generateDynamicTileButtons() {
     questionMark->setPosition(sf::Vector2f(700, 100));
 }
 
-void Tilebar::draw(std::shared_ptr<sf::RenderWindow> window) {
+void Navigation::draw(std::shared_ptr<sf::RenderWindow> window) {
     window->draw(box);
     drawDynamicTileButtons(window);
 }
 
-void Tilebar::drawDynamicTileButtons(std::shared_ptr<sf::RenderWindow> &window) const {
+void Navigation::drawDynamicTileButtons(std::shared_ptr<sf::RenderWindow> &window) const {
     auto buttonTiles = ObjectRegistry::getButtonTiles();
     for (auto const &tile : buttonTiles) {
         tile->draw(window);

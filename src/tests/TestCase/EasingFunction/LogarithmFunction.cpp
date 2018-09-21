@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "classes/Animation/EasingFunction/LogarithmicFunction.hpp"
+#include "classes/System/Animation/EasingFunction/LogarithmicFunction.hpp"
 
 LogarithmicFunction createLogarithmicPositiveToPositiveFunction() {
     LogarithmicFunction function(1500, 1.0f, 2.0f);

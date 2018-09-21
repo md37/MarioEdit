@@ -3,8 +3,8 @@
 #include <memory>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "classes/Interface/RescalableInterface.hpp"
-#include "classes/Interface/DrawableInterface.hpp"
+#include "classes/System/Interface/RescalableInterface.hpp"
+#include "classes/System/Interface/DrawableInterface.hpp"
 
 class Grid : public RescalableInterface, public DrawableInterface {
 

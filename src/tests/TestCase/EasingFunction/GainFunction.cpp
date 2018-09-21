@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "classes/Animation/EasingFunction/GainFunction.hpp"
+#include "classes/System/Animation/EasingFunction/GainFunction.hpp"
 
 GainFunction createGainPositiveToPositiveFunction() {
     GainFunction function(0.2, 1500, 1.0f, 2.0f);

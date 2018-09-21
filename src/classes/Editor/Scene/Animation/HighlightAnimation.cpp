@@ -3,7 +3,7 @@
 #include <iostream>
 #include <functional>
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
-#include "classes/Animation/EasingFunction/SmoothStepFunction.hpp"
+#include "classes/System/Animation/EasingFunction/SmoothStepFunction.hpp"
 
 HighlightAnimation::HighlightAnimation(DynamicTile* tile) {
     this->tile = tile;

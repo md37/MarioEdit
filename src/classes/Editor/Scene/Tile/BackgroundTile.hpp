@@ -1,7 +1,7 @@
 #pragma once
 
 #include "classes/Editor/Tile.hpp"
-#include "classes/Interface/DrawableInterface.hpp"
+#include "classes/System/Interface/DrawableInterface.hpp"
 
 class BackgroundTile : public Tile, public DrawableInterface {
 

@@ -6,6 +6,9 @@
 #include "classes/Editor/Scene.hpp"
 #include "classes/System/EventHandler.hpp"
 #include "classes/System/Cursor.hpp"
+#include "classes/System/Resolution.hpp"
+#include "classes/Editor.hpp"
+#include "classes/Game.hpp"
 
 class Main {
 
@@ -25,18 +28,18 @@ private:
     sf::Uint32 windowedHeight = 960;
     bool isFullscreen = false;
 
+    Resolution resolution;
     std::shared_ptr<sf::RenderWindow> window;
-    std::shared_ptr<EventHandler> eventHandler;
+    std::shared_ptr<EventHandler> systemEventHandler;
 
     std::shared_ptr<Scale> scale;
     std::shared_ptr<TileFactory> tileFactory;
-    std::shared_ptr<Tilebar> tilebar;
-    std::shared_ptr<Scene> scene;
+    std::shared_ptr<Editor> editor;
+    std::shared_ptr<Game> game;
 
     Cursor cursor;
 
     void initializeEventHandler();
 
     void reInitializeWindow();
-    sf::VideoMode findHighestResolutionMode();
 };

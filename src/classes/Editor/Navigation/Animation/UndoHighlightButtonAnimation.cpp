@@ -1,8 +1,8 @@
 #include "UndoHighlightButtonAnimation.hpp"
 
 #include <functional>
-#include "classes/Editor/Tilebar/Tile/ButtonTile.hpp"
-#include "classes/Animation/EasingFunction/SmoothStepFunction.hpp"
+#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
+#include "classes/System/Animation/EasingFunction/SmoothStepFunction.hpp"
 
 UndoHighlightButtonAnimation::UndoHighlightButtonAnimation(ButtonTile *tile) {
     this->tile = tile;

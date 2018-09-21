@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "classes/Animation/EasingFunction/QuadraticFunction.hpp"
+#include "classes/System/Animation/EasingFunction/QuadraticFunction.hpp"
 
 QuadraticFunction createQuadraticPositiveToPositiveFunction() {
     QuadraticFunction function(1500, 1.0f, 2.0f);

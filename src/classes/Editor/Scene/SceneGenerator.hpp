@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "classes/Editor/TileFactory.hpp"
+#include "classes/System/TileFactory.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 
 class SceneGenerator {

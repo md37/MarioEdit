@@ -3,16 +3,16 @@
 #include <memory>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "classes/Editor/Tilebar/Tile/ButtonTile.hpp"
-#include "classes/Editor/TileFactory.hpp"
-#include "classes/Interface/RescalableInterface.hpp"
-#include "classes/Interface/DrawableInterface.hpp"
+#include "classes/System/TileFactory.hpp"
+#include "classes/System/Interface/RescalableInterface.hpp"
+#include "classes/System/Interface/DrawableInterface.hpp"
+#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 
-class Tilebar : public RescalableInterface, public DrawableInterface {
+class Navigation : public RescalableInterface, public DrawableInterface {
 
 public:
 
-    explicit Tilebar(std::shared_ptr<TileFactory> tileFactory);
+    explicit Navigation(std::shared_ptr<TileFactory> tileFactory);
     void rescale(sf::Vector2u windowSize) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 

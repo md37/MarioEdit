@@ -1,7 +1,6 @@
 #include "Main.hpp"
 
 #include <SFML/Window/Event.hpp>
-#include "defines.hpp"
 #include "classes/System/Cursor.hpp"
 
 Main::Main() {
@@ -11,21 +10,22 @@ Main::Main() {
 
     scale = std::make_shared<Scale>();
     tileFactory = std::make_shared<TileFactory>("resources/tiles.png", scale);
-    tilebar = std::make_shared<Tilebar>(tileFactory);
-    scene = std::make_shared<Scene>(tileFactory, scale);
+    editor = std::make_shared<Editor>(tileFactory, scale);
+    game = std::make_shared<Game>();
+
     initializeEventHandler();
     reInitializeWindow();
 }
 
 void Main::initializeEventHandler() {
-    eventHandler = std::make_shared<EventHandler>(cursor, scale);
+    systemEventHandler = std::make_shared<EventHandler>(cursor, scale);
 
-    eventHandler->addEventHandler(EventHandler::QuitGame, [=]() {
+    systemEventHandler->addEventHandler(EventHandler::QuitGame, [=]() {
         window->close();
     });
 
-    eventHandler->addEventHandler(EventHandler::ResizeWindow, [=]() {
-        sf::Event event = eventHandler->getLastEvent();
+    systemEventHandler->addEventHandler(EventHandler::ResizeWindow, [=]() {
+        sf::Event event = systemEventHandler->getLastEvent();
 
         width = event.size.width;
         height = event.size.height;
@@ -40,15 +40,14 @@ void Main::initializeEventHandler() {
 
         window->setView(sf::View(sf::FloatRect(0, 0, width, height)));
         scale->rescale(window->getSize());
-        scene->rescale(window->getSize());
-        tilebar->rescale(window->getSize());
+        editor->rescale(window->getSize());
     });
 
-    eventHandler->addEventHandler(EventHandler::ToggleFullScreen, [=]() {
+    systemEventHandler->addEventHandler(EventHandler::ToggleFullScreen, [=]() {
         isFullscreen = !isFullscreen;
 
         if (isFullscreen) {
-            sf::VideoMode mode = findHighestResolutionMode();
+            sf::VideoMode mode = resolution.findHighestResolutionMode();
             width = mode.width;
             height = mode.height;
             window->create(mode, title, sf::Style::Fullscreen);
@@ -72,33 +71,23 @@ void Main::reInitializeWindow() {
     Tile::setWindow(window);
 
     scale->rescale(window->getSize());
-    scene->rescale(window->getSize());
-    tilebar->rescale(window->getSize());
+    editor->rescale(window->getSize());
 }
 
 int Main::run() {
-    scene->runTasks();
+    editor->start();
 
     while (window->isOpen()) {
-        eventHandler->handleSystemEvents(window);
-        eventHandler->handleTilesEvents();
+        systemEventHandler->handleEvents(window);
 
-        scene->draw(window);
-        tilebar->draw(window);
+        if (editor->isStarted()) {
+            editor->handleEvents(systemEventHandler->keyboard, systemEventHandler->cursor);
+        }
+
+        editor->draw(window);
         cursor.draw(window);
 
         window->display();
     }
     return 0;
-}
-
-sf::VideoMode Main::findHighestResolutionMode() {
-    auto modes = sf::VideoMode::getFullscreenModes();
-    auto maxHeightMode = modes[0];
-    for (auto mode : modes) {
-        if (mode.height > maxHeightMode.height) {
-            maxHeightMode = mode;
-        }
-    }
-    return maxHeightMode;
 }

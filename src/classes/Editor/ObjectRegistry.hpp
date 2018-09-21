@@ -1,11 +1,11 @@
 #pragma once
 
 #include <vector>
-#include "classes/Interface/HoverableInterface.hpp"
-#include "classes/Interface/DraggableInterface.hpp"
+#include "classes/System/Interface/DraggableInterface.hpp"
+#include "classes/System/Interface/HoverableInterface.hpp"
 #include "classes/Editor/Scene/Figure.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
-#include "classes/Editor/Tilebar/Tile/ButtonTile.hpp"
+#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 
 class ObjectRegistry {
 

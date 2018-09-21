@@ -2,9 +2,9 @@
 
 #include <memory>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "classes/System/TileFactory.hpp"
+#include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
-#include "classes/Editor/TileFactory.hpp"
-#include "classes/Interface/DrawableInterface.hpp"
 
 class Figure : public DrawableInterface {
 

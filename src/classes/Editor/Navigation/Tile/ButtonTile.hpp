@@ -1,11 +1,11 @@
 #pragma once
 
-#include "classes/Interface/DrawableInterface.hpp"
-#include "classes/Interface/DraggableInterface.hpp"
-#include "classes/Interface/HoverableInterface.hpp"
+#include "classes/System/Interface/DrawableInterface.hpp"
+#include "classes/System/Interface/DraggableInterface.hpp"
+#include "classes/System/Interface/HoverableInterface.hpp"
 #include "classes/Editor/Tile.hpp"
-#include "classes/Editor/Tilebar/Animation/HighlightButtonAnimation.hpp"
-#include "classes/Editor/Tilebar/Animation/UndoHighlightButtonAnimation.hpp"
+#include "classes/Editor/Navigation/Animation/HighlightButtonAnimation.hpp"
+#include "classes/Editor/Navigation/Animation/UndoHighlightButtonAnimation.hpp"
 
 class ButtonTile : public Tile, public DrawableInterface, public DraggableInterface, public HoverableInterface {
 

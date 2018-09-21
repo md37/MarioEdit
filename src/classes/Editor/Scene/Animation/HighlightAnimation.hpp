@@ -4,8 +4,8 @@
 #include <thread>
 #include <mutex>
 #include <SFML/System/Clock.hpp>
-#include "classes/Animation/EasingFunction.hpp"
-#include "classes/Animation/SmoothAnimation.hpp"
+#include "classes/System/Animation/EasingFunction.hpp"
+#include "classes/System/Animation/SmoothAnimation.hpp"
 
 class DynamicTile;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "classes/Animation/EasingFunction.hpp"
+#include "classes/System/Animation/EasingFunction.hpp"
 
 class BiasFunction : public EasingFunction {
 

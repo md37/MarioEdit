@@ -1,7 +1,6 @@
 #include "Scene.hpp"
 
-#include "defines.hpp"
-#include "classes/Editor/Scene/Scale.hpp"
+#include "classes/System/Scale.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
 Scene::Scene(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Scale> scale) {
@@ -14,7 +13,7 @@ Scene::Scene(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Scale> sc
     blinkAnimation = std::make_shared<SpecialBlockBlinkAnimation>();
 }
 
-void Scene::runTasks() {
+void Scene::startTasks() {
     blinkAnimation->run();
 }
 
@@ -44,7 +43,7 @@ void Scene::reSnapTilesToGrid() {
 }
 
 void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
-    window->clear(BG_LIGHT_COLOR);
+    window->clear(sf::Color(92, 148, 252));
 
     auto figures = ObjectRegistry::getFigures();
     for (auto const &figure : figures) {

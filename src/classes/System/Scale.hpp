@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/System/Vector2.hpp>
-#include "classes/Interface/RescalableInterface.hpp"
+#include "classes/System/Interface/RescalableInterface.hpp"
 
 class Scale : public RescalableInterface {
 

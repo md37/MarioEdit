@@ -5,7 +5,7 @@
 #include <thread>
 #include <mutex>
 #include <SFML/Config.hpp>
-#include "classes/Animation/FrameAnimation/Frame.hpp"
+#include "classes/System/Animation/FrameAnimation/Frame.hpp"
 
 class FrameAnimation {
 

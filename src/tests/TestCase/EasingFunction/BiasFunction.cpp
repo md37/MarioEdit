@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "classes/Animation/EasingFunction/BiasFunction.hpp"
+#include "classes/System/Animation/EasingFunction/BiasFunction.hpp"
 
 BiasFunction createBiasPositiveToPositiveFunction() {
     BiasFunction function(0.8, 1500, 1.0f, 2.0f);

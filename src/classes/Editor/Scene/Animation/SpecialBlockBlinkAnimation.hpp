@@ -1,6 +1,6 @@
 #pragma once
 
-#include "classes/Animation/FrameAnimation.hpp"
+#include "classes/System/Animation/FrameAnimation.hpp"
 
 class DynamicTile;
 

@@ -2,8 +2,8 @@
 
 #include <iostream>
 #include <functional>
-#include "classes/Editor/Tilebar/Tile/ButtonTile.hpp"
-#include "classes/Animation/EasingFunction/SmoothStepFunction.hpp"
+#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
+#include "classes/System/Animation/EasingFunction/SmoothStepFunction.hpp"
 
 HighlightButtonAnimation::HighlightButtonAnimation(ButtonTile* tile) {
     this->tile = tile;

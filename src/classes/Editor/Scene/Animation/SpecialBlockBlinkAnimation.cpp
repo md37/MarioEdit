@@ -2,7 +2,7 @@
 
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
-#include "classes/Animation/FrameAnimation/Frame.hpp"
+#include "classes/System/Animation/FrameAnimation/Frame.hpp"
 
 SpecialBlockBlinkAnimation::SpecialBlockBlinkAnimation() {
     duration = 1000;

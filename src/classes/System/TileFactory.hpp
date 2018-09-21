@@ -3,11 +3,11 @@
 #include <string>
 #include <memory>
 #include <SFML/Config.hpp>
-#include "classes/Editor/TileConfig.hpp"
-#include "classes/Editor/Tilebar/Tile/ButtonTile.hpp"
+#include "classes/System/Scale.hpp"
+#include "classes/System/TileConfig.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 #include "classes/Editor/Scene/Tile/StaticTile.hpp"
-#include "classes/Editor/Scene/Scale.hpp"
+#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 
 class TileFactory
 {

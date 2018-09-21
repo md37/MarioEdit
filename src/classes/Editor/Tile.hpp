@@ -5,7 +5,7 @@
 #include <functional>
 #include <SFML/Config.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include "classes/Editor/TileConfig.hpp"
+#include "classes/System/TileConfig.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 
 class Tile {

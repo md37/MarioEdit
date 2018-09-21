@@ -14,6 +14,7 @@ public:
     explicit DynamicTile(sf::Sprite sprite, TileConfig config=TileConfig());
 
     bool isBlinking = false;
+    bool isReturning = false;
 
     void mouseEnter() override;
     void mouseOver() override;

@@ -14,6 +14,7 @@ void UndoHighlightAnimation::run() {
     isRunningFlag = true;
 
     thread = std::thread([=]() mutable {
+        tile->isReturning = true;
         sf::Int32 duration1 = duration/3*2;
         SmoothStepFunction function1(duration1, tile->scalePromotion, 0.9f);
         animate(duration1, function1);
@@ -22,6 +23,7 @@ void UndoHighlightAnimation::run() {
         SmoothStepFunction function2(duration2, tile->scalePromotion, 1.0f);
         animate(duration2, function2);
 
+        tile->isReturning = false;
         isRunningFlag = false;
         isStopped = false;
     });

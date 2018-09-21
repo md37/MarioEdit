@@ -22,7 +22,8 @@ public:
     static std::vector<std::shared_ptr<DynamicTile>> getDynamicTiles();
     static std::vector<std::shared_ptr<ButtonTile>> getButtonTiles();
 
-    static std::shared_ptr<DynamicTile> getHighlightedTile();
+    static std::vector<std::shared_ptr<DynamicTile>> getHighlightedTiles();
+    static std::vector<std::shared_ptr<DynamicTile>> getReturningTiles();
     static std::vector<std::shared_ptr<Figure>> getFigures();
 
 private:

@@ -54,14 +54,19 @@ void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
 
     auto dynamicTiles = ObjectRegistry::getDynamicTiles();
     for (auto const &tile : dynamicTiles) {
-        if (tile->isMouseOver() || tile->isDragging()) {
+        if (tile->isMouseOver() || tile->isDragging() || tile->isReturning) {
             continue;
         }
         tile->draw(window);
     }
 
-    auto highlightedTile = ObjectRegistry::getHighlightedTile();
-    if (highlightedTile != nullptr) {
-        highlightedTile->draw(window);
+    auto returningTiles = ObjectRegistry::getReturningTiles();
+    for (auto const &tile : returningTiles) {
+        tile->draw(window);
+    }
+
+    auto highlightedTiles = ObjectRegistry::getHighlightedTiles();
+    for (auto const &tile : highlightedTiles) {
+        tile->draw(window);
     }
 }

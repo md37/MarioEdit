@@ -31,13 +31,24 @@ std::vector<std::shared_ptr<Tile>> ObjectRegistry::getAllTiles() {
     return allTiles;
 }
 
-std::shared_ptr<DynamicTile> ObjectRegistry::getHighlightedTile() {
+std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::getHighlightedTiles() {
+    std::vector<std::shared_ptr<DynamicTile>> tiles;
     for (auto tile : dynamicTiles) {
         if (tile->isMouseOver() || tile->isDragging()) {
-            return tile;
+            tiles.push_back(tile);
         }
     }
-    return nullptr;
+    return tiles;
+}
+
+std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::getReturningTiles() {
+    std::vector<std::shared_ptr<DynamicTile>> tiles;
+    for (auto tile : dynamicTiles) {
+        if (tile->isReturning) {
+            tiles.push_back(tile);
+        }
+    }
+    return tiles;
 }
 
 std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::getDynamicTiles() {

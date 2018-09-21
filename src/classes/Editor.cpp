@@ -63,11 +63,14 @@ void Editor::handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor) {
     }
 
     for (auto &tile : tiles) {
-        if (cursor.isOver(tile) && !cursor.isOverRegistered(tile)) {
-            cursor.registerOver(tile);
-            tile->mouseEnter();
-        } else if (cursor.isOver(tile)) {
-            tile->mouseOver();
+        auto highlightedTiles = ObjectRegistry::getHighlightedTiles();
+        if (highlightedTiles.empty()) {
+            if (cursor.isOver(tile) && !cursor.isOverRegistered(tile)) {
+                cursor.registerOver(tile);
+                tile->mouseEnter();
+            } else if (cursor.isOver(tile)) {
+                tile->mouseOver();
+            }
         } else if (!cursor.isOver(tile) && cursor.isOverRegistered(tile)) {
             cursor.unregisterOver(tile);
             tile->mouseLeave();

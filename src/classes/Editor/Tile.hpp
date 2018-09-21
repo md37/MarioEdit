@@ -12,18 +12,6 @@ class Tile {
 
 public:
 
-    enum HandleType {
-        TopLeft = 1,
-        Top,
-        TopRight,
-        Right,
-        BottomRight,
-        Botton,
-        BottomLeft,
-        Left,
-        Center,
-    };
-
     static void setWindow(std::shared_ptr<sf::RenderWindow>& window);
 
     explicit Tile(sf::Sprite sprite, TileConfig config=TileConfig());
@@ -46,7 +34,6 @@ protected:
     sf::Sprite sprite;
     sf::Vector2f scale = {1.0f, 1.0f};
     sf::Vector2f position;
-    HandleType handlePoint;
     sf::Vector2f centerPoint;
 
 private:

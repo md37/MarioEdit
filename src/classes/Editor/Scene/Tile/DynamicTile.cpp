@@ -15,10 +15,6 @@ bool DynamicTile::isMouseOver() {
     return isMouseOverFlag;
 }
 
-bool DynamicTile::isDragging() {
-    return isDraggingFlag;
-}
-
 void DynamicTile::mouseEnter() {
     isMouseOverFlag = true;
     if (undoHighlightAnimation->isRunning()) {
@@ -41,6 +37,10 @@ void DynamicTile::mouseLeave() {
     if (!undoHighlightAnimation->isRunning()) {
         undoHighlightAnimation->run();
     }
+}
+
+bool DynamicTile::isDragging() {
+    return isDraggingFlag;
 }
 
 void DynamicTile::startDrag() {

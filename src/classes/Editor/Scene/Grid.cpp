@@ -70,6 +70,10 @@ void Grid::drawHighlight(std::shared_ptr<sf::RenderWindow> window) {
     window->draw(line);
 }
 
+sf::Uint32 Grid::getCols() {
+    return cols;
+}
+
 sf::Vector2f Grid::getHighlightPosition() {
     return highlightPosition;
 }
@@ -93,8 +97,8 @@ sf::Vector2u Grid::getHighlightPlace() {
     return retval;
 }
 
-bool Grid::isHighlightOnIncompletePlace() {
-    return hasIncompleteEndingFlag && getHighlightPlace().x == cols;
+bool Grid::hasIncompleteEnding() {
+    return hasIncompleteEndingFlag;
 }
 
 void Grid::turnHighlightOn() {

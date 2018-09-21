@@ -29,6 +29,6 @@ void GridTile::snapToCenterPoint() {
     sprite.setPosition(position);
 }
 
-bool GridTile::isOnIncompletePlace() {
-    return grid->isHighlightOnIncompletePlace();
+bool GridTile::isOnIncompletePlace(sf::Vector2u dropPlace) {
+    return grid->hasIncompleteEnding() && dropPlace.x == grid->getCols();
 }

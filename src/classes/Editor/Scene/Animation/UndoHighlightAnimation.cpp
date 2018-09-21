@@ -49,7 +49,9 @@ void UndoHighlightAnimation::animate(sf::Int32 duration, EasingFunction& functio
 
         tile->scalePromotion = function.getValue(animationPointInTime);
         tile->snapToCenterPoint();
-        if (!tile->isOnIncompletePlace()) {
+
+        auto dropPlace = tile->getDropHighlightPlace();
+        if (!tile->isOnIncompletePlace(dropPlace)) {
             tile->correctCorners();
         }
 

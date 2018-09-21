@@ -65,6 +65,7 @@ void DynamicTile::drag() {
 
 void DynamicTile::drop() {
     dragOffset = {0, 0};
+    dropHighlightPlace = grid->getHighlightPlace();
 
     snapToGrid(grid->getHighlightPlace());
 
@@ -72,9 +73,7 @@ void DynamicTile::drop() {
     sf::Vector2f tileSize(getSize());
     positionOnGrid -= (tileSize-(tileSize/scalePromotion))/2.0f;
 
-    this->position = positionOnGrid;
-    sprite.setPosition(positionOnGrid);
-    recalculateCenter();
+    setPosition(positionOnGrid);
 
     grid->turnHighlightOff();
 
@@ -108,4 +107,8 @@ void DynamicTile::correctCorners() {
 
     position = sf::Vector2f(posX, posY);
     sprite.setPosition(position);
+}
+
+sf::Vector2u DynamicTile::getDropHighlightPlace() {
+    return dropHighlightPlace;
 }

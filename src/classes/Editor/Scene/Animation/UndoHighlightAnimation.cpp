@@ -46,8 +46,10 @@ void UndoHighlightAnimation::animate(sf::Int32 duration, EasingFunction& functio
         }
 
         tile->scalePromotion = function.getValue(animationPointInTime);
-        tile->snapToGrid();
-        tile->snapToWindowBound();
+        tile->snapToCenterPoint();
+        if (!tile->isOnIncompletePlace()) {
+            tile->correctCorners();
+        }
 
         mutex.unlock();
 

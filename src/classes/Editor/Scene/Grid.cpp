@@ -14,7 +14,7 @@ void Grid::rescale(sf::Vector2u windowSize) {
 }
 
 sf::Vector2u Grid::getSize() {
-    return sf::Vector2u(cols, rows);
+    return {cols, rows};
 }
 
 sf::Vector2f Grid::getPointOnGrid(sf::Vector2f pointOnScreen) {
@@ -93,14 +93,14 @@ sf::Vector2u Grid::getHighlightPlace() {
     return retval;
 }
 
+bool Grid::isHighlightOnIncompletePlace() {
+    return hasIncompleteEndingFlag && getHighlightPlace().x == cols;
+}
+
 void Grid::turnHighlightOn() {
     highlightFlag = true;
 }
 
 void Grid::turnHighlightOff() {
     highlightFlag = false;
-}
-
-bool Grid::hasIncompleteEnding() {
-    return hasIncompleteEndingFlag;
 }

@@ -72,7 +72,10 @@ void DynamicTile::drop() {
     sf::Vector2f tileSize(getSize());
     positionOnGrid -= (tileSize-(tileSize/scalePromotion))/2.0f;
 
-    setPosition(positionOnGrid);
+    this->position = positionOnGrid;
+    sprite.setPosition(positionOnGrid);
+    recalculateCenter();
+
     grid->turnHighlightOff();
 
     correctCorners();

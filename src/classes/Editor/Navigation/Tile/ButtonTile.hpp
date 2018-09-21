@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SFML/Graphics/RectangleShape.hpp>
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/System/Interface/DraggableInterface.hpp"
 #include "classes/System/Interface/HoverableInterface.hpp"
@@ -29,8 +30,11 @@ private:
 
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;
+    sf::RectangleShape border;
 
     std::shared_ptr<HighlightButtonAnimation> highlightAnimation;
     std::shared_ptr<UndoHighlightButtonAnimation> undoHighlightAnimation;
+
+    void createBorder();
 
 };

@@ -13,29 +13,9 @@ public:
     void snapToGrid(sf::Vector2u gridPosition);
 
     void snapToCenterPoint();
-    void snapToWindowBound();
+    bool isOnIncompletePlace();
 
 protected:
-
-    bool isOnLeftEdge();
-    bool isOnRightEdge();
-    bool isOnTopEdge();
-    bool isOnBottomEdge();
-
-    bool isOnTopLeftCorner();
-    bool isOnBottomLeftCorner();
-    bool isOnBottomRightCorner();
-    bool isOnTopRightCorner();
-
-    void snapToLeftEdge();
-    void snapToRightEdge();
-    void snapToTopEdge();
-    void snapToBottomEdge();
-
-    void snapToTopLeftCorner();
-    void snapToBottomLeftCorner();
-    void snapToBottomRightCorner();
-    void snapToTopRightCorner();
 
     std::shared_ptr<Grid> grid;
     sf::Vector2u gridPosition;

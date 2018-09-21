@@ -13,7 +13,7 @@ public:
     explicit Grid();
     void rescale(sf::Vector2u windowSize) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
-    bool hasIncompleteEnding();
+
 
     sf::Vector2u getSize();
     sf::Vector2f getPointOnGrid(sf::Vector2f pointOnScreen);
@@ -22,6 +22,7 @@ public:
 
     void turnHighlightOn();
     void turnHighlightOff();
+    bool isHighlightOnIncompletePlace();
     void setHighlightPosition(sf::Vector2f cursorPosition);
     sf::Vector2f getHighlightPosition();
     sf::Vector2u getHighlightPlace();

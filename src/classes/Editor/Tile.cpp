@@ -14,6 +14,11 @@ Tile::Tile(sf::Sprite sprite, TileConfig config) {
     this->config = config;
 }
 
+void Tile::recalculateCenter() {
+    centerPoint.x = position.x + getSize().x/2;
+    centerPoint.y = position.y + getSize().y/2;
+}
+
 void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
     sf::IntRect textureRect;
     textureRect.width = config.tileWidth;
@@ -32,6 +37,7 @@ void Tile::rescale(float scale) {
 void Tile::setPosition(sf::Vector2f position) {
     this->position = position;
     sprite.setPosition(position);
+    recalculateCenter();
 }
 
 sf::Vector2f Tile::getPosition() {

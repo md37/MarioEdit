@@ -11,11 +11,8 @@ Navigation::Navigation(std::shared_ptr<TileFactory> tileFactory) {
 }
 
 void Navigation::rescale(std::shared_ptr<Scale> scale) {
-    boxHeight = 120* scale->getRatio();
-
-    auto windowSize = scale->getWindowSize();
-    sf::Vector2f size(windowSize);
-    size.y = boxHeight;
+    sf::Vector2f size(boxWidth, boxHeight);
+    size *= scale->getRatio();
     box.setSize(size);
 
     auto buttonTiles = ObjectRegistry::getButtonTiles();

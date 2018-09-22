@@ -19,7 +19,8 @@ public:
 private:
 
     sf::RectangleShape box;
-    sf::Uint32 boxHeight;
+    sf::Uint32 boxWidth = 420;
+    sf::Uint32 boxHeight = 120;
     float lineThicknessDivider = 1200;
 
     std::shared_ptr<TileFactory> tileFactory;

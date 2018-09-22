@@ -1,6 +1,5 @@
 #include "FrameAnimation.hpp"
 
-#include <iostream>
 #include <thread>
 #include <SFML/System/Clock.hpp>
 

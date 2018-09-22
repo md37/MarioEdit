@@ -1,6 +1,5 @@
 #include "HighlightAnimation.hpp"
 
-#include <iostream>
 #include <functional>
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 #include "classes/System/Animation/EasingFunction/SmoothStepFunction.hpp"

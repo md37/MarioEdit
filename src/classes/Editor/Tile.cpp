@@ -29,9 +29,25 @@ void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
     sprite.setTextureRect(textureRect);
 }
 
-void Tile::rescale(float scale) {
-    this->scale = sf::Vector2f(scale, scale);
+void Tile::rescale(std::shared_ptr<Scale>& scale) {
+    auto scaleRatio = scale->getScaleRatio();
+    this->sprite.setPosition(position*scaleRatio);
+
+    this->scale = sf::Vector2f(scale->getScale(), scale->getScale());
     sprite.setScale(this->scale*scalePromotion);
+
+    if (borderSize > 0) {
+        auto borderSize = this->borderSize*scale->getScale()*scalePromotion;
+        auto borderSquareSize = sf::Vector2f(getSize());
+        borderSquareSize.x += 2*borderSize;
+        borderSquareSize.y += 2*borderSize;
+        border.setSize(borderSquareSize);
+
+        auto borderSquarePosition = sf::Vector2f(position*scaleRatio);
+        borderSquarePosition.x -= borderSize;
+        borderSquarePosition.y -= borderSize;
+        border.setPosition(borderSquarePosition);
+    }
 }
 
 void Tile::setPosition(sf::Vector2f position) {
@@ -49,4 +65,9 @@ sf::Vector2i Tile::getSize() {
         sprite.getTextureRect().width * sprite.getScale().x,
         sprite.getTextureRect().height * sprite.getScale().y
     );
+}
+
+void Tile::setBorder(sf::Uint8 size, sf::Color color) {
+    borderSize = size;
+    border.setFillColor(color);
 }

@@ -18,6 +18,8 @@ public:
     void startTasks();
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
+    std::shared_ptr<Grid> getGrid();
+
 private:
 
     std::shared_ptr<Scale> scale;

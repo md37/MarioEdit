@@ -1,23 +1,18 @@
 #include "ButtonTile.hpp"
 
 ButtonTile::ButtonTile(sf::Sprite sprite, TileConfig config) : Tile(sprite, config) {
-    highlightAnimation = std::make_shared<HighlightButtonAnimation>(this);
-    undoHighlightAnimation = std::make_shared<UndoHighlightButtonAnimation>(this);
-    createBorder();
+
 }
 
-void ButtonTile::createBorder() {
-
+void ButtonTile::draw(std::shared_ptr<sf::RenderWindow> window) {
+    if (border.getSize().x > 0 && border.getSize().y > 0) {
+        window->draw(border);
+    }
+    window->draw(sprite);
 }
 
 void ButtonTile::mouseEnter() {
-    isMouseOverFlag = true;
-    if (undoHighlightAnimation->isRunning()) {
-        undoHighlightAnimation->stop();
-    }
-    if (!highlightAnimation->isRunning()) {
-        highlightAnimation->run();
-    }
+
 }
 
 void ButtonTile::mouseOver() {
@@ -25,13 +20,7 @@ void ButtonTile::mouseOver() {
 }
 
 void ButtonTile::mouseLeave() {
-    isMouseOverFlag = false;
-    if (highlightAnimation->isRunning()) {
-        highlightAnimation->stop();
-    }
-    if (!undoHighlightAnimation->isRunning()) {
-        undoHighlightAnimation->run();
-    }
+
 }
 
 bool ButtonTile::isMouseOver() {
@@ -52,9 +41,4 @@ void ButtonTile::drop() {
 
 bool ButtonTile::isDragging() {
     return isDraggingFlag;
-}
-
-void ButtonTile::draw(std::shared_ptr<sf::RenderWindow> window) {
-    window->draw(border);
-    window->draw(sprite);
 }

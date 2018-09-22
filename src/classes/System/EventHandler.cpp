@@ -1,6 +1,5 @@
 #include "EventHandler.hpp"
 
-#include <iostream>
 #include "classes/System/Scale.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 

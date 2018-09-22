@@ -5,8 +5,6 @@
 #include "classes/System/Interface/DraggableInterface.hpp"
 #include "classes/System/Interface/HoverableInterface.hpp"
 #include "classes/Editor/Tile.hpp"
-#include "classes/Editor/Navigation/Animation/HighlightButtonAnimation.hpp"
-#include "classes/Editor/Navigation/Animation/UndoHighlightButtonAnimation.hpp"
 
 class ButtonTile : public Tile, public DrawableInterface, public DraggableInterface, public HoverableInterface {
 
@@ -30,11 +28,5 @@ private:
 
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;
-    sf::RectangleShape border;
-
-    std::shared_ptr<HighlightButtonAnimation> highlightAnimation;
-    std::shared_ptr<UndoHighlightButtonAnimation> undoHighlightAnimation;
-
-    void createBorder();
 
 };

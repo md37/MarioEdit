@@ -26,7 +26,7 @@ void Scene::rescale(sf::Vector2u windowSize) {
 void Scene::reScaleTiles() {
     auto allTiles = ObjectRegistry::getAllTiles();
     for (auto const &tile : allTiles) {
-        tile->rescale(scale->getScale());
+        tile->rescale(scale);
     }
 }
 
@@ -69,4 +69,8 @@ void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
     for (auto const &tile : highlightedTiles) {
         tile->draw(window);
     }
+}
+
+std::shared_ptr<Grid> Scene::getGrid() {
+    return grid;
 }

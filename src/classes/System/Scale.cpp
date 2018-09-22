@@ -11,14 +11,12 @@ Scale::Scale() {
 
 void Scale::rescale(sf::Vector2u windowSize) {
     TileConfig config;
-    float prevScale = scale;
     scale = (float)windowSize.y / (float)(config.tileHeight*config.blocksOnHeight);
-
-    if (prevScale == scale || prevScale == 1.0f) {
-        return;
+    if (originalScale == 0) {
+        originalScale = scale;
     }
 
-    scaleRatio = scale/prevScale;
+    scaleRatio = scale/originalScale;
 }
 
 float Scale::getScale() {

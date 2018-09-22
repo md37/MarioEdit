@@ -3,22 +3,20 @@
 #include <SFML/Graphics/Text.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
 
-Navigation::Navigation(std::shared_ptr<TileFactory> tileFactory) {
+Navigation::Navigation(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Scale> scale) {
     this->tileFactory = tileFactory;
+    this->scale = scale;
 
     generateBox();
-    generateDynamicTileButtons();
+    generateTileButtons();
 }
 
 void Navigation::rescale(sf::Vector2u windowSize) {
-    boxHeight = windowSize.y*0.155;
+    boxHeight = 120*scale->getScaleRatio();
 
     sf::Vector2f size(windowSize);
     size.y = boxHeight;
     box.setSize(size);
-
-    float lineThickness = windowSize.y / lineThicknessDivider;
-    box.setOutlineThickness(lineThickness);
 }
 
 void Navigation::generateBox() {
@@ -28,30 +26,34 @@ void Navigation::generateBox() {
     sf::Color bgColor(188, 211, 254);
     box.setFillColor(bgColor);
 
-    sf::Color borderColor(0, 0, 0);
+    sf::Color borderColor(255, 255, 255);
     box.setOutlineColor(borderColor);
 }
 
-void Navigation::generateDynamicTileButtons() {
+void Navigation::generateTileButtons() {
     auto ground = tileFactory->createButtonTile(0, 0);
-    ground->setPosition(sf::Vector2f(100, 100));
+    ground->setPosition(sf::Vector2f(20, 20));
+    ground->setBorder(1);
 
     auto brick = tileFactory->createButtonTile(5, 0);
-    brick->setPosition(sf::Vector2f(300, 100));
+    brick->setPosition(sf::Vector2f(120, 20));
+    brick->setBorder(1);
 
     auto stair = tileFactory->createButtonTile(2, 2);
-    stair->setPosition(sf::Vector2f(500, 100));
+    stair->setPosition(sf::Vector2f(220, 20));
+    stair->setBorder(1);
 
     auto questionMark = tileFactory->createButtonTile(0, 11);
-    questionMark->setPosition(sf::Vector2f(700, 100));
+    questionMark->setPosition(sf::Vector2f(320, 20));
+    questionMark->setBorder(1);
 }
 
 void Navigation::draw(std::shared_ptr<sf::RenderWindow> window) {
     window->draw(box);
-    drawDynamicTileButtons(window);
+    drawTileButtons(window);
 }
 
-void Navigation::drawDynamicTileButtons(std::shared_ptr<sf::RenderWindow> &window) const {
+void Navigation::drawTileButtons(std::shared_ptr<sf::RenderWindow> &window) const {
     auto buttonTiles = ObjectRegistry::getButtonTiles();
     for (auto const &tile : buttonTiles) {
         tile->draw(window);

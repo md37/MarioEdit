@@ -1,3 +1,4 @@
+#include <classes/Editor/ObjectRegistry.hpp>
 #include "DynamicTile.hpp"
 
 #include "classes/System/Cursor.hpp"
@@ -65,9 +66,9 @@ void DynamicTile::drag() {
 
 void DynamicTile::drop() {
     dragOffset = {0, 0};
-    dropHighlightPlace = grid->getHighlightPlace();
 
-    snapToGrid(grid->getHighlightPlace());
+    dropHighlightPlace = grid->getHighlightPlace();
+    snapToGrid(dropHighlightPlace);
 
     sf::Vector2f positionOnGrid = grid->getHighlightPosition();
     sf::Vector2f tileSize(getSize());
@@ -111,4 +112,8 @@ void DynamicTile::correctCorners() {
 
 sf::Vector2u DynamicTile::getDropHighlightPlace() {
     return dropHighlightPlace;
+}
+
+sf::Vector2u DynamicTile::getGridPosition() {
+    return gridPosition;
 }

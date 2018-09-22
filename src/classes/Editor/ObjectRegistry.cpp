@@ -33,7 +33,7 @@ std::vector<std::shared_ptr<Tile>> ObjectRegistry::getAllTiles() {
 
 std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::getHighlightedTiles() {
     std::vector<std::shared_ptr<DynamicTile>> tiles;
-    for (auto tile : dynamicTiles) {
+    for (auto &tile : dynamicTiles) {
         if (tile->isMouseOver() || tile->isDragging()) {
             tiles.push_back(tile);
         }
@@ -43,7 +43,7 @@ std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::getHighlightedTiles() 
 
 std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::getReturningTiles() {
     std::vector<std::shared_ptr<DynamicTile>> tiles;
-    for (auto tile : dynamicTiles) {
+    for (auto &tile : dynamicTiles) {
         if (tile->isReturning) {
             tiles.push_back(tile);
         }
@@ -61,4 +61,13 @@ std::vector<std::shared_ptr<ButtonTile>> ObjectRegistry::getButtonTiles() {
 
 std::vector<std::shared_ptr<Figure>> ObjectRegistry::getFigures() {
     return figures;
+}
+
+std::shared_ptr<DynamicTile> ObjectRegistry::getTileOnGrid(sf::Vector2u position) {
+    for (auto &tile : dynamicTiles) {
+        if (tile->getGridPosition() == position) {
+            return tile;
+        }
+    }
+    return nullptr;
 }

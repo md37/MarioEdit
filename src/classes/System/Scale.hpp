@@ -18,5 +18,6 @@ private:
 
     float scale;
     float scaleRatio;
+    float originalScale = 0;
 
 };

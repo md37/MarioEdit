@@ -26,6 +26,8 @@ public:
     static std::vector<std::shared_ptr<DynamicTile>> getReturningTiles();
     static std::vector<std::shared_ptr<Figure>> getFigures();
 
+    static std::shared_ptr<DynamicTile> getTileOnGrid(sf::Vector2u gridPlace);
+
 private:
 
     static std::vector<std::shared_ptr<Tile>> allTiles;

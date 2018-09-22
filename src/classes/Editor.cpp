@@ -3,7 +3,7 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 
 Editor::Editor(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Scale> scale) {
-    navigation = std::make_shared<Navigation>(tileFactory);
+    navigation = std::make_shared<Navigation>(tileFactory, scale);
     scene = std::make_shared<Scene>(tileFactory, scale);
 }
 
@@ -55,8 +55,7 @@ void Editor::handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor) {
             if (cursor.isClick()) {
                 tile->drag();
             } else {
-                cursor.unregisterDrag(tile);
-                tile->drop();
+                performDrop(cursor, tile);
             }
             return;
         }
@@ -83,17 +82,30 @@ void Editor::handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor) {
                 cursor.registerDrag(tile);
                 tile->startDrag();
             } else if (!cursor.isClick() && cursor.isDragRegistered(tile)) {
-                cursor.unregisterDrag(tile);
-                tile->drop();
+                performDrop(cursor, tile);
             }
         } else if (!cursor.isOver(tile) && cursor.isOverRegistered(tile)) {
             if (cursor.isDragRegistered(tile)) {
-                cursor.unregisterDrag(tile);
-                tile->drop();
+                performDrop(cursor, tile);
             }
         } else if (cursor.isDragRegistered(tile)) {
-            cursor.unregisterDrag(tile);
-            tile->drop();
+            performDrop(cursor, tile);
         }
+    }
+}
+
+void Editor::performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) const {
+    auto dropHighlightPlace = scene->getGrid()->getHighlightPlace();
+    auto tileOnThisPlace = ObjectRegistry::getTileOnGrid(dropHighlightPlace);
+
+    cursor.unregisterDrag(tile);
+    tile->drop();
+
+    if (tileOnThisPlace != nullptr) {
+        cursor.registerOver(tileOnThisPlace);
+        tileOnThisPlace->mouseEnter();
+
+        cursor.registerDrag(tileOnThisPlace);
+        tileOnThisPlace->startDrag();
     }
 }

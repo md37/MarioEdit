@@ -28,4 +28,5 @@ private:
     void handleButtonTilesEvents(Keyboard& keyboard, Cursor& cursor);
     void handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor);
 
+    void performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) const;
 };

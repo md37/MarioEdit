@@ -28,8 +28,10 @@ public:
 
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
-    void correctCorners();
+    sf::Vector2u getGridPosition();
     sf::Vector2u getDropHighlightPlace();
+
+    void correctCorners();
 
 private:
 

@@ -101,7 +101,7 @@ void Editor::performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) con
     cursor.unregisterDrag(tile);
     tile->drop();
 
-    if (tileOnThisPlace != nullptr) {
+    if (tileOnThisPlace != nullptr && tileOnThisPlace != tile) {
         cursor.registerOver(tileOnThisPlace);
         tileOnThisPlace->mouseEnter();
 

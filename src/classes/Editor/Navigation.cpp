@@ -17,6 +17,11 @@ void Navigation::rescale(sf::Vector2u windowSize) {
     sf::Vector2f size(windowSize);
     size.y = boxHeight;
     box.setSize(size);
+
+    auto buttonTiles = ObjectRegistry::getButtonTiles();
+    for (auto const &tile : buttonTiles) {
+        tile->rescale(scale);
+    }
 }
 
 void Navigation::generateBox() {

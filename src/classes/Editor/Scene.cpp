@@ -24,9 +24,14 @@ void Scene::rescale(sf::Vector2u windowSize) {
 }
 
 void Scene::reScaleTiles() {
-    auto allTiles = ObjectRegistry::getAllTiles();
-    for (auto const &tile : allTiles) {
+    auto dynamicTiles = ObjectRegistry::getDynamicTiles();
+    for (auto const &tile : dynamicTiles) {
         tile->rescale(scale);
+    }
+
+    auto figures = ObjectRegistry::getFigures();
+    for (auto const &figure : figures) {
+        figure->rescale(scale);
     }
 }
 

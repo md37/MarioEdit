@@ -6,14 +6,20 @@ Figure::Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> g
     this->position = position;
 }
 
-void Figure::snapToGrid() {
-    for (auto tile : tiles) {
-        tile->snapToGrid();
-    }
-}
-
 void Figure::draw(std::shared_ptr<sf::RenderWindow> window) {
     for (auto tile : tiles) {
         tile->draw(window);
+    }
+}
+
+void Figure::rescale(std::shared_ptr<Scale> scale) {
+    for (auto &tile : tiles) {
+        tile->rescale(scale);
+    }
+}
+
+void Figure::snapToGrid() {
+    for (auto tile : tiles) {
+        tile->snapToGrid();
     }
 }

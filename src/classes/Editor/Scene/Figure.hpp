@@ -14,6 +14,8 @@ public:
 
     void snapToGrid();
 
+    void rescale(std::shared_ptr<Scale> scale);
+
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
 protected:

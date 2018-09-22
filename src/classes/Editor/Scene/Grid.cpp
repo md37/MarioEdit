@@ -6,7 +6,9 @@ Grid::Grid() : lineColor(0, 0, 0, 50) {
 
 }
 
-void Grid::rescale(sf::Vector2u windowSize) {
+void Grid::rescale(std::shared_ptr<Scale> scale) {
+    auto windowSize = scale->getWindowSize();
+
     lineThickness = windowSize.y / lineThicknessDivider;
     lineDistance = windowSize.y / rows;
     cols = sf::Uint32(windowSize.x / lineDistance);

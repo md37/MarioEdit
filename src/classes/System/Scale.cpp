@@ -4,25 +4,26 @@
 #include "classes/Editor/Tile.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
-Scale::Scale() {
-    scale = 1.0f;
-    scaleRatio = 1.0f;
+Scale::Scale(sf::Vector2u windowSize) {
+    change(windowSize);
+    original = current;
+    ratio = 1.0f;
 }
 
-void Scale::rescale(sf::Vector2u windowSize) {
-    TileConfig config;
-    scale = (float)windowSize.y / (float)(config.tileHeight*config.blocksOnHeight);
-    if (originalScale == 0) {
-        originalScale = scale;
-    }
-
-    scaleRatio = scale/originalScale;
+void Scale::change(sf::Vector2u windowSize) {
+    this->windowSize = windowSize;
+    current = (float)windowSize.y / (float)(config.tileHeight*config.blocksOnHeight);
+    ratio = current/original;
 }
 
-float Scale::getScale() {
-    return scale;
+float Scale::getCurrent() {
+    return current;
 }
 
-float Scale::getScaleRatio() {
-    return scaleRatio;
+float Scale::getRatio() {
+    return ratio;
+}
+
+sf::Vector2u Scale::getWindowSize() {
+    return windowSize;
 }

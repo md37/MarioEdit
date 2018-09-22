@@ -2,9 +2,9 @@
 
 #include "classes/Editor/ObjectRegistry.hpp"
 
-Editor::Editor(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Scale> scale) {
-    navigation = std::make_shared<Navigation>(tileFactory, scale);
-    scene = std::make_shared<Scene>(tileFactory, scale);
+Editor::Editor(std::shared_ptr<TileFactory> tileFactory) {
+    navigation = std::make_shared<Navigation>(tileFactory);
+    scene = std::make_shared<Scene>(tileFactory);
 }
 
 void Editor::start() {
@@ -12,9 +12,9 @@ void Editor::start() {
     scene->startTasks();
 }
 
-void Editor::rescale(sf::Vector2u windowSize) {
-    scene->rescale(windowSize);
-    navigation->rescale(windowSize);
+void Editor::rescale(std::shared_ptr<Scale> scale) {
+    scene->rescale(scale);
+    navigation->rescale(scale);
 }
 
 void Editor::draw(std::shared_ptr<sf::RenderWindow> window) {

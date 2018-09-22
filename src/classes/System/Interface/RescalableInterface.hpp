@@ -1,11 +1,14 @@
 #pragma once
 
-#include <SFML/System/Vector2.hpp>
+#include <memory>
+#include "classes/System/Scale.hpp"
+
+class Scale;
 
 class RescalableInterface {
 
 public:
 
-    virtual void rescale(sf::Vector2u windowSize)=0;
+    virtual void rescale(std::shared_ptr<Scale> scale)=0;
 
 };

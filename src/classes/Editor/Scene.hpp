@@ -12,9 +12,9 @@ class Scene : public RescalableInterface, DrawableInterface {
 
 public:
 
-    explicit Scene(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Scale> scale);
+    explicit Scene(std::shared_ptr<TileFactory> tileFactory);
 
-    void rescale(sf::Vector2u windowSize) override;
+    void rescale(std::shared_ptr<Scale> scale) override;
     void startTasks();
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
@@ -22,12 +22,11 @@ public:
 
 private:
 
-    std::shared_ptr<Scale> scale;
     std::shared_ptr<Grid> grid;
     std::shared_ptr<SceneGenerator> sceneGenerator;
 
     std::shared_ptr<SpecialBlockBlinkAnimation> blinkAnimation;
 
-    void reScaleTiles();
+    void reScaleTiles(std::shared_ptr<Scale> scale);
     void reSnapTilesToGrid();
 };

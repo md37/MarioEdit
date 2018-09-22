@@ -51,6 +51,6 @@ std::shared_ptr<ButtonTile> TileFactory::createButtonTile(sf::Uint32 x, sf::Uint
 sf::Sprite TileFactory::prepareSprite() const {
     sf::Sprite sprite;
     sprite.setTexture(*(texture));
-    sprite.setScale(scale->getScale(), scale->getScale());
+    sprite.setScale(scale->getCurrent(), scale->getCurrent());
     return sprite;
 }

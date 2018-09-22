@@ -6,7 +6,7 @@
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 
-class Figure : public DrawableInterface {
+class Figure : public DrawableInterface, RescalableInterface {
 
 public:
 
@@ -14,8 +14,7 @@ public:
 
     void snapToGrid();
 
-    void rescale(std::shared_ptr<Scale> scale);
-
+    void rescale(std::shared_ptr<Scale> scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
 protected:

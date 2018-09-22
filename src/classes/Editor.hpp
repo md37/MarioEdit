@@ -9,12 +9,12 @@ class Editor : public RunnableInterface, public RescalableInterface, public Draw
 
 public:
 
-    Editor(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Scale> scale);
+    Editor(std::shared_ptr<TileFactory> tileFactory);
 
     void start() override;
     bool isStarted() override;
 
-    void rescale(sf::Vector2u windowSize) override;
+    void rescale(std::shared_ptr<Scale> scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
     void handleEvents(Keyboard& keyboard, Cursor& cursor) override;

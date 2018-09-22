@@ -8,9 +8,9 @@ Main::Main() {
         sf::VideoMode(windowedWidth, windowedHeight), title, sf::Style::Default
     );
 
-    scale = std::make_shared<Scale>();
+    scale = std::make_shared<Scale>(window->getSize());
     tileFactory = std::make_shared<TileFactory>("resources/tiles.png", scale);
-    editor = std::make_shared<Editor>(tileFactory, scale);
+    editor = std::make_shared<Editor>(tileFactory);
     game = std::make_shared<Game>();
 
     initializeEventHandler();
@@ -39,8 +39,8 @@ void Main::initializeEventHandler() {
         }
 
         window->setView(sf::View(sf::FloatRect(0, 0, width, height)));
-        scale->rescale(window->getSize());
-        editor->rescale(window->getSize());
+        scale->change(window->getSize());
+        editor->rescale(scale);
     });
 
     systemEventHandler->addEventHandler(EventHandler::ToggleFullScreen, [=]() {
@@ -70,8 +70,8 @@ void Main::reInitializeWindow() {
     Cursor::reinitialize(window);
     Tile::setWindow(window);
 
-    scale->rescale(window->getSize());
-    editor->rescale(window->getSize());
+    scale->change(window->getSize());
+    editor->rescale(scale);
 }
 
 int Main::run() {

@@ -2,22 +2,26 @@
 
 #include <SFML/System/Vector2.hpp>
 #include "classes/System/Interface/RescalableInterface.hpp"
+#include "classes/System/TileConfig.hpp"
 
-class Scale : public RescalableInterface {
+class Scale {
 
 public:
 
-    Scale();
+    Scale(sf::Vector2u windowSize);
 
-    void rescale(sf::Vector2u windowSize) override;
+    void change(sf::Vector2u windowSize);
 
-    float getScale();
-    float getScaleRatio();
+    float getCurrent();
+    float getRatio();
+    sf::Vector2u getWindowSize();
 
 private:
 
-    float scale;
-    float scaleRatio;
-    float originalScale = 0;
+    TileConfig config;
+    sf::Vector2u windowSize;
+    float original = 0;
+    float current;
+    float ratio;
 
 };

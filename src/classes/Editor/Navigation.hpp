@@ -12,8 +12,8 @@ class Navigation : public RescalableInterface, public DrawableInterface {
 
 public:
 
-    explicit Navigation(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Scale> scale);
-    void rescale(sf::Vector2u windowSize) override;
+    explicit Navigation(std::shared_ptr<TileFactory> tileFactory);
+    void rescale(std::shared_ptr<Scale> scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
 private:
@@ -23,7 +23,6 @@ private:
     float lineThicknessDivider = 1200;
 
     std::shared_ptr<TileFactory> tileFactory;
-    std::shared_ptr<Scale> scale;
     std::vector<std::shared_ptr<ButtonTile>> tiles;
 
     void generateBox();

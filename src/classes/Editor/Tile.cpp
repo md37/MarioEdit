@@ -30,14 +30,14 @@ void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
 }
 
 void Tile::rescale(std::shared_ptr<Scale>& scale) {
-    auto scaleRatio = scale->getScaleRatio();
+    auto scaleRatio = scale->getRatio();
     this->sprite.setPosition(position*scaleRatio);
 
-    this->scale = sf::Vector2f(scale->getScale(), scale->getScale());
+    this->scale = sf::Vector2f(scale->getCurrent(), scale->getCurrent());
     sprite.setScale(this->scale*scalePromotion);
 
     if (borderSize > 0) {
-        auto borderSize = this->borderSize*scale->getScale()*scalePromotion;
+        auto borderSize = this->borderSize* scale->getCurrent()*scalePromotion;
         auto borderSquareSize = sf::Vector2f(getSize());
         borderSquareSize.x += 2*borderSize;
         borderSquareSize.y += 2*borderSize;

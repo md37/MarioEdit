@@ -14,21 +14,6 @@ Tile::Tile(sf::Sprite sprite, TileConfig config) {
     this->config = config;
 }
 
-void Tile::recalculateCenter() {
-    centerPoint.x = position.x + getSize().x/2;
-    centerPoint.y = position.y + getSize().y/2;
-}
-
-void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
-    sf::IntRect textureRect;
-    textureRect.width = config.tileWidth;
-    textureRect.height = config.tileHeight;
-
-    textureRect.top = (y * (config.tileHeight+config.separatorY)) + config.offsetY;
-    textureRect.left = (x * (config.tileWidth+config.separatorX)) + config.offsetX;
-    sprite.setTextureRect(textureRect);
-}
-
 void Tile::rescale(std::shared_ptr<Scale>& scale) {
     auto scaleRatio = scale->getRatio();
     this->sprite.setPosition(position*scaleRatio);
@@ -48,6 +33,21 @@ void Tile::rescale(std::shared_ptr<Scale>& scale) {
         borderSquarePosition.y -= borderSize;
         border.setPosition(borderSquarePosition);
     }
+}
+
+void Tile::recalculateCenter() {
+    centerPoint.x = position.x + getSize().x/2;
+    centerPoint.y = position.y + getSize().y/2;
+}
+
+void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
+    sf::IntRect textureRect;
+    textureRect.width = config.tileWidth;
+    textureRect.height = config.tileHeight;
+
+    textureRect.top = (y * (config.tileHeight+config.separatorY)) + config.offsetY;
+    textureRect.left = (x * (config.tileWidth+config.separatorX)) + config.offsetX;
+    sprite.setTextureRect(textureRect);
 }
 
 void Tile::setPosition(sf::Vector2f position) {
@@ -70,4 +70,16 @@ sf::Vector2i Tile::getSize() {
 void Tile::setBorder(sf::Uint8 size, sf::Color color) {
     borderSize = size;
     border.setFillColor(color);
+}
+
+void Tile::snapToCenterPoint() {
+    auto newSpriteScale = scale*scalePromotion;
+    auto newWidth = sprite.getTextureRect().width * newSpriteScale.x;
+    auto newHeight = sprite.getTextureRect().height * newSpriteScale.y;
+
+    sprite.setScale(newSpriteScale.x, newSpriteScale.y);
+
+    position.x = centerPoint.x-newWidth/2;
+    position.y = centerPoint.y-newHeight/2;
+    sprite.setPosition(position);
 }

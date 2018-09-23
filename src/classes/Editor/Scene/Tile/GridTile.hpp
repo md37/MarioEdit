@@ -12,7 +12,6 @@ public:
     void snapToGrid();
     void snapToGrid(sf::Vector2u gridPosition);
 
-    void snapToCenterPoint();
     bool isOnIncompletePlace(sf::Vector2u dropPlace);
 
 protected:

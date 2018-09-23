@@ -34,14 +34,14 @@ void Scene::reScaleTiles(std::shared_ptr<Scale> scale) {
 }
 
 void Scene::reSnapTilesToGrid() {
-    auto figures = ObjectRegistry::getFigures();
-    for (auto const &figure : figures) {
-        figure->snapToGrid();
-    }
-
     auto dynamicTiles = ObjectRegistry::getDynamicTiles();
     for (auto const &tile : dynamicTiles) {
         tile->snapToGrid();
+    }
+
+    auto figures = ObjectRegistry::getFigures();
+    for (auto const &figure : figures) {
+        figure->snapToGrid();
     }
 }
 

@@ -17,18 +17,6 @@ void GridTile::snapToGrid(sf::Vector2u gridPosition) {
     setPosition(grid->pointOnGridToPosition(gridPosition));
 }
 
-void GridTile::snapToCenterPoint() {
-    auto newSpriteScale = scale*scalePromotion;
-    auto newWidth = sprite.getTextureRect().width * newSpriteScale.x;
-    auto newHeight = sprite.getTextureRect().height * newSpriteScale.y;
-
-    sprite.setScale(newSpriteScale.x, newSpriteScale.y);
-
-    position.x = centerPoint.x-newWidth/2;
-    position.y = centerPoint.y-newHeight/2;
-    sprite.setPosition(position);
-}
-
 bool GridTile::isOnIncompletePlace(sf::Vector2u dropPlace) {
     return grid->hasIncompleteEnding() && dropPlace.x == grid->getCols();
 }

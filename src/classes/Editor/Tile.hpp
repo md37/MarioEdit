@@ -28,6 +28,7 @@ public:
     sf::Vector2i getSize();
 
     void setBorder(sf::Uint8 size, sf::Color color=sf::Color(255, 255, 255, 255));
+    void snapToCenterPoint();
 
 protected:
 

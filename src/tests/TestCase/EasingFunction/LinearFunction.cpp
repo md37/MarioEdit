@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "classes/EasingFunction/LinearFunction.hpp"
+#include "classes/System/Animation/EasingFunction/LinearFunction.hpp"
 
 LinearFunction createLinearPositiveToPositiveFunction() {
     LinearFunction function(1500, 1.0f, 2.0f);

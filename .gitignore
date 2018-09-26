@@ -5,3 +5,4 @@ bin/tests
 bin/lib/libclasses.*
 build
 bin/tests.dSYM/
+bin/game.dSYM/

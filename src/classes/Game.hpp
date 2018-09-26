@@ -1,38 +1,19 @@
 #pragma once
 
-#include <memory>
-#include <SFML/Config.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include "classes/EventHandler.hpp"
-#include "classes/Cursor.hpp"
-#include "classes/Scene.hpp"
+#include "classes/System/Interface/RunnableInterface.hpp"
+#include "classes/System/Interface/EventReceiverableInterface.hpp"
 
-class Game {
+class Game : public RunnableInterface, public EventReceiverableInterface {
 
 public:
 
-    Game();
+    void start() override;
+    bool isStarted() override;
 
-    int run();
+    void handleEvents(Keyboard& keyboard, Cursor& cursor) override;
 
 private:
 
-    const std::string title = "Mario::Edit";
-    sf::Uint32 minWindowHeight = 640;
-    sf::Uint32 width = 1280;
-    sf::Uint32 height = 960;
-    sf::Uint32 windowedWidth = 1280;
-    sf::Uint32 windowedHeight = 960;
-    bool isFullscreen = false;
+    bool isStartedFlag = false;
 
-    std::shared_ptr<sf::RenderWindow> window;
-    std::shared_ptr<EventHandler> eventHandler;
-    std::shared_ptr<Scene> scene;
-
-    Cursor cursor;
-
-    void initializeEventHandler();
-
-    void reInitializeWindow();
-    sf::VideoMode findHighestResolutionMode();
 };

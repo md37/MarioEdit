@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <SFML/Config.hpp>
-#include "classes/Animation/FrameAnimation/Frame.hpp"
+#include "classes/System/Animation/FrameAnimation/Frame.hpp"
 
 #define EMPTY_CALLBACK [](){}
 

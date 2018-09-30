@@ -28,6 +28,8 @@ private:
 
     bool isDraggingTile = false;
     bool dismissTileDrop = false;
+    bool clickedOnTileButton = false;
+    std::shared_ptr<ButtonTile> lastUsedTileButton;
 
     void handleButtonTilesEvents(Keyboard& keyboard, Cursor& cursor);
     void handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor);

@@ -47,7 +47,9 @@ void Editor::handleButtonTilesEvents(Keyboard& keyboard, Cursor& cursor) {
 
                 if (cursor.isMousePressed()) {
                     doButtonMouseClick(cursor, button);
+                    lastUsedTileButton = button;
                     isDraggingTile = true;
+                    clickedOnTileButton = true;
                 }
                 break;
             } else if (cursor.isOverRegistered(button)) {
@@ -96,7 +98,19 @@ void Editor::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<Bu
 }
 
 void Editor::handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor) {
-    if (cursor.isMouseReleased()) {
+    auto clickDuration = cursor.getClickDuration();
+
+    if (cursor.isClick() && cursor.isLongClick() && isDraggingTile && !clickedOnTileButton) {
+        bool isEmptySlot = true;
+        if (isEmptySlot) {
+            auto draggingTile = scene->getDraggingTile();
+            draggingTile->drop();
+            cursor.unregisterDrag(draggingTile);
+            createDynamicTileSnappedToCursor(cursor, lastUsedTileButton);
+        }
+
+    } else if (cursor.isMouseReleased()) {
+        clickedOnTileButton = false;
         if (isDraggingTile && !dismissTileDrop) {
             auto draggingTile = scene->getDraggingTile();
             draggingTile->drop();

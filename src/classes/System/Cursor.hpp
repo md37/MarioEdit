@@ -37,6 +37,8 @@ public:
 
     void handleRegisteredDrags();
 
+    bool isLongClick();
+
     void resetPressState();
     sf::Time getClickDuration();
 
@@ -53,7 +55,6 @@ private:
     bool mousePressedFlag = false;
     bool mouseReleasedFlag = false;
     sf::Clock clickClock;
-    sf::Time clickDuration;
 
     void updatePosition();
 };

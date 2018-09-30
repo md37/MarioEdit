@@ -108,7 +108,7 @@ void Cursor::handleRegisteredDrags() {
 }
 
 sf::Time Cursor::getClickDuration() {
-    return clickDuration;
+    return clickClock.getElapsedTime();
 }
 
 void Cursor::resetPressState() {
@@ -131,5 +131,8 @@ bool Cursor::isMouseReleased() {
 
 void Cursor::mouseRelease(bool mouseReleased) {
     mouseReleasedFlag = mouseReleased;
-    clickDuration = clickClock.getElapsedTime();
+}
+
+bool Cursor::isLongClick() {
+    return getClickDuration().asMilliseconds() > 150;
 }

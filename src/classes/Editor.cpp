@@ -98,39 +98,74 @@ void Editor::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<Bu
 }
 
 void Editor::handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor) {
-    auto clickDuration = cursor.getClickDuration();
-    auto grid = scene->getGrid();
+    if (isDraggingTile) {
+        auto clickDuration = cursor.getClickDuration();
+        auto grid = scene->getGrid();
 
-    auto currentSlotGridPosition = grid->positionToGridPlace(cursor.getCurrentPosition());
-    auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
-    auto draggingTile = scene->getDraggingTile();
+        auto currentSlotGridPosition = grid->positionToGridPlace(cursor.getCurrentPosition());
+        auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
+        auto draggingTile = scene->getDraggingTile();
 
-    if (cursor.isClick() && cursor.isLongClick() && isDraggingTile && !clickedOnTileButton) {
-        bool insertTile = false;
-        if (tileOnCurrentSlot != nullptr && tileOnCurrentSlot != draggingTile) {
-            bool tileIsSameType = tileOnCurrentSlot->isTypeOf(lastUsedTileButton);
-            if (!tileIsSameType) {
-                insertTile = true;
-                ObjectRegistry::removeTile(tileOnCurrentSlot);
-            }
-        } else {
-            insertTile = true;
-        }
-
-        if (insertTile) {
-            draggingTile->drop();
-            cursor.unregisterDrag(draggingTile);
-            createDynamicTileSnappedToCursor(cursor, lastUsedTileButton);
-        }
-    } else if (cursor.isMouseReleased()) {
-        clickedOnTileButton = false;
-        if (isDraggingTile && !dismissTileDrop) {
+        if (cursor.isClick() && cursor.isLongClick() && isDraggingTile && !clickedOnTileButton) {
+            bool insertTile = false;
             if (tileOnCurrentSlot != nullptr && tileOnCurrentSlot != draggingTile) {
-                ObjectRegistry::removeTile(tileOnCurrentSlot);
+                bool tileIsSameType = tileOnCurrentSlot->isTypeOf(lastUsedTileButton);
+                if (!tileIsSameType) {
+                    insertTile = true;
+                    ObjectRegistry::removeTile(tileOnCurrentSlot);
+                }
+            } else {
+                insertTile = true;
             }
-            draggingTile->drop();
-            cursor.unregisterDrag(draggingTile);
-            isDraggingTile = false;
+
+            if (insertTile) {
+                draggingTile->drop();
+                cursor.unregisterDrag(draggingTile);
+                createDynamicTileSnappedToCursor(cursor, lastUsedTileButton);
+            }
+        } else if (cursor.isMouseReleased()) {
+            clickedOnTileButton = false;
+            if (isDraggingTile && !dismissTileDrop) {
+                if (tileOnCurrentSlot != nullptr && tileOnCurrentSlot != draggingTile) {
+                    ObjectRegistry::removeTile(tileOnCurrentSlot);
+                }
+                draggingTile->drop();
+                cursor.unregisterDrag(draggingTile);
+                isDraggingTile = false;
+            }
         }
+    } else {
+        auto tiles = ObjectRegistry::getDynamicTiles();
+
+        for (auto &tile : tiles) {
+            auto highlightedTiles = ObjectRegistry::getHighlightedTiles();
+            if (highlightedTiles.empty()) {
+                if (cursor.isOver(tile) && !cursor.isOverRegistered(tile)) {
+                    cursor.registerOver(tile);
+                    tile->mouseEnter();
+                } else if (cursor.isOver(tile)) {
+                    tile->mouseOver();
+                }
+            } else if (!cursor.isOver(tile) && cursor.isOverRegistered(tile)) {
+                cursor.unregisterOver(tile);
+                tile->mouseLeave();
+            }
+        }
+    }
+}
+
+void Editor::performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
+    auto dropHighlightPlace = scene->getGrid()->getHighlightPlace();
+    auto tileOnThisPlace = ObjectRegistry::getTileOnGrid(dropHighlightPlace);
+
+    cursor.unregisterDrag(tile);
+    tile->drop();
+
+    if (tileOnThisPlace != nullptr && tileOnThisPlace != tile) {
+        cursor.registerOver(tileOnThisPlace);
+        tileOnThisPlace->mouseEnter();
+
+        cursor.registerDrag(tileOnThisPlace);
+        tileOnThisPlace->startDrag();
     }
 }

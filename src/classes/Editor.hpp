@@ -39,4 +39,6 @@ private:
     void doButtonMouseClick(Cursor& cursor, std::shared_ptr<ButtonTile> button);
 
     void createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<ButtonTile> button);
+
+    void performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
 };

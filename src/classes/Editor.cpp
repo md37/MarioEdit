@@ -99,20 +99,35 @@ void Editor::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<Bu
 
 void Editor::handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor) {
     auto clickDuration = cursor.getClickDuration();
+    auto grid = scene->getGrid();
+
+    auto currentSlotGridPosition = grid->positionToGridPlace(cursor.getCurrentPosition());
+    auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
+    auto draggingTile = scene->getDraggingTile();
 
     if (cursor.isClick() && cursor.isLongClick() && isDraggingTile && !clickedOnTileButton) {
-        bool isEmptySlot = true;
-        if (isEmptySlot) {
-            auto draggingTile = scene->getDraggingTile();
+        bool insertTile = false;
+        if (tileOnCurrentSlot != nullptr && tileOnCurrentSlot != draggingTile) {
+            bool tileIsSameType = tileOnCurrentSlot->isTypeOf(lastUsedTileButton);
+            if (!tileIsSameType) {
+                insertTile = true;
+                ObjectRegistry::removeTile(tileOnCurrentSlot);
+            }
+        } else {
+            insertTile = true;
+        }
+
+        if (insertTile) {
             draggingTile->drop();
             cursor.unregisterDrag(draggingTile);
             createDynamicTileSnappedToCursor(cursor, lastUsedTileButton);
         }
-
     } else if (cursor.isMouseReleased()) {
         clickedOnTileButton = false;
         if (isDraggingTile && !dismissTileDrop) {
-            auto draggingTile = scene->getDraggingTile();
+            if (tileOnCurrentSlot != nullptr && tileOnCurrentSlot != draggingTile) {
+                ObjectRegistry::removeTile(tileOnCurrentSlot);
+            }
             draggingTile->drop();
             cursor.unregisterDrag(draggingTile);
             isDraggingTile = false;

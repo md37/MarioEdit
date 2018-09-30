@@ -85,3 +85,11 @@ void Tile::snapToCenterPoint() {
     position.y = centerPoint.y-newHeight/2;
     sprite.setPosition(position);
 }
+
+bool Tile::isTypeOf(std::shared_ptr<Tile> tile) {
+    return imagePosition == tile->getImagePosition();
+}
+
+sf::Vector2u Tile::getImagePosition() {
+    return imagePosition;
+}

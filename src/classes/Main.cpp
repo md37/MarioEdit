@@ -63,6 +63,10 @@ void Main::initializeEventHandler() {
 }
 
 void Main::reInitializeWindow() {
+    sf::Image iconImage;
+    iconImage.loadFromFile("resources/icon.png");
+    window->setIcon(710, 710, iconImage.getPixelsPtr());
+
     window->setVerticalSyncEnabled(true);
     window->setFramerateLimit(100);
     window->setKeyRepeatEnabled(false);

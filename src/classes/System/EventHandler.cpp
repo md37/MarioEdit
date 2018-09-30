@@ -27,6 +27,8 @@ void EventHandler::handleEvents(std::shared_ptr<sf::RenderWindow> window) {
 
     sf::Event event;
     while (window->pollEvent(event)) {
+        cursor.resetPressState();
+
         lastEvent = event;
         switch (event.type) {
             case sf::Event::Closed: {
@@ -44,9 +46,11 @@ void EventHandler::handleEvents(std::shared_ptr<sf::RenderWindow> window) {
                 handleEvent(Event::ResizeWindow);
             } break;
             case sf::Event::MouseButtonPressed: {
+                cursor.mousePress(true);
                 cursor.click(true);
             } break;
             case sf::Event::MouseButtonReleased: {
+                cursor.mouseRelease(true);
                 cursor.click(false);
             } break;
             case sf::Event::MouseMoved: {

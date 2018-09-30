@@ -48,6 +48,8 @@ void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
     textureRect.top = (y * (config.tileHeight+config.separatorY)) + config.offsetY;
     textureRect.left = (x * (config.tileWidth+config.separatorX)) + config.offsetX;
     sprite.setTextureRect(textureRect);
+
+    imagePosition = sf::Vector2u(x, y);
 }
 
 void Tile::setPosition(sf::Vector2f position) {

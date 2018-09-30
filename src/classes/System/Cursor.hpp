@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include <SFML/Config.hpp>
+#include <SFML/System/Time.hpp>
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 
@@ -17,9 +18,14 @@ public:
 
     void draw(std::shared_ptr<sf::RenderWindow> window);
     bool isOver(std::shared_ptr<Tile> tile);
+    bool isClickOn(std::shared_ptr<Tile> tile);
 
     bool isClick();
     void click(bool click);
+    bool isMousePressed();
+    void mousePress(bool mouseDown);
+    bool isMouseReleased();
+    void mouseRelease(bool mouseUp);
 
     void registerOver(std::shared_ptr<Tile> tile);
     void unregisterOver(std::shared_ptr<Tile> tile);
@@ -31,6 +37,9 @@ public:
 
     void handleRegisteredDrags();
 
+    void resetPressState();
+    sf::Time getClickDuration();
+
 private:
 
     static std::shared_ptr<sf::RenderWindow> window;
@@ -41,6 +50,10 @@ private:
     std::vector<std::shared_ptr<DynamicTile>> registeredDragOnTiles;
 
     bool clickFlag;
+    bool mousePressedFlag = false;
+    bool mouseReleasedFlag = false;
+    sf::Clock clickClock;
+    sf::Time clickDuration;
 
     void updatePosition();
 };

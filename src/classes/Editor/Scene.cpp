@@ -70,10 +70,23 @@ void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
 
     auto highlightedTiles = ObjectRegistry::getHighlightedTiles();
     for (auto const &tile : highlightedTiles) {
+        if (tile->isDragging()) {
+            continue;
+        }
         tile->draw(window);
     }
 }
 
 std::shared_ptr<Grid> Scene::getGrid() {
     return grid;
+}
+
+std::shared_ptr<DynamicTile> Scene::getDraggingTile() {
+    auto dynamicTiles = ObjectRegistry::getDynamicTiles();
+    for (auto const &tile : dynamicTiles) {
+        if (tile->isDragging()) {
+            return tile;
+        }
+    }
+    return nullptr;
 }

@@ -12,7 +12,6 @@ SceneGenerator::SceneGenerator(std::shared_ptr<TileFactory> tileFactory, std::sh
 
 void SceneGenerator::generate() {
     generateBackground();
-    generateForeground();
 }
 
 void SceneGenerator::generateBackground() {
@@ -34,23 +33,4 @@ void SceneGenerator::createClouds() {
 void SceneGenerator::createHills() {
     auto hill = std::make_shared<Hill>(tileFactory, grid, sf::Vector2i(7, 2), 2);
     ObjectRegistry::registerFigure(hill);
-}
-
-void SceneGenerator::generateForeground() {
-    auto stone = tileFactory->createDynamicTile(0, 0);
-    stone->setGrid(grid);
-    stone->snapToGrid(sf::Vector2u(2, 5));
-
-    auto brick = tileFactory->createDynamicTile(5, 0);
-    brick->setGrid(grid);
-    brick->snapToGrid(sf::Vector2u(5, 5));
-
-    auto stair = tileFactory->createDynamicTile(2, 2);
-    stair->setGrid(grid);
-    stair->snapToGrid(sf::Vector2u(8, 5));
-
-    auto questionMark = tileFactory->createDynamicTile(0, 11);
-    questionMark->isBlinking = true;
-    questionMark->setGrid(grid);
-    questionMark->snapToGrid(sf::Vector2u(11, 5));
 }

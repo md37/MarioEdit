@@ -12,7 +12,7 @@ void ButtonTile::draw(std::shared_ptr<sf::RenderWindow> window) {
 }
 
 void ButtonTile::mouseEnter() {
-
+    border.setFillColor(sf::Color(255, 255, 0));
 }
 
 void ButtonTile::mouseOver() {
@@ -20,7 +20,7 @@ void ButtonTile::mouseOver() {
 }
 
 void ButtonTile::mouseLeave() {
-
+    border.setFillColor(sf::Color(255, 255, 255));
 }
 
 bool ButtonTile::isMouseOver() {
@@ -41,4 +41,9 @@ void ButtonTile::drop() {
 
 bool ButtonTile::isDragging() {
     return isDraggingFlag;
+}
+
+std::shared_ptr<DynamicTile> ButtonTile::cloneToDynamicTile(std::shared_ptr<TileFactory> tileFactory) {
+    auto tile = tileFactory->createDynamicTile(imagePosition.x, imagePosition.y);
+    return tile;
 }

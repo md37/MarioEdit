@@ -21,6 +21,4 @@ private:
     void createClouds();
     void createHills();
 
-    void generateForeground();
-
 };

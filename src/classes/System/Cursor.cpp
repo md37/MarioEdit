@@ -45,6 +45,10 @@ bool Cursor::isOver(std::shared_ptr<Tile> tile) {
            posY <= tile->getPosition().y+tile->getSize().y;
 }
 
+bool Cursor::isClickOn(std::shared_ptr<Tile> tile) {
+    return this->isOver(tile) && this->isClick();
+}
+
 void Cursor::registerOver(std::shared_ptr<Tile> tile) {
     if (!isOverRegistered(tile)) {
         registeredOverOnTiles.push_back(tile);
@@ -101,4 +105,31 @@ void Cursor::handleRegisteredDrags() {
     for (auto dragOnTile : registeredDragOnTiles) {
         dragOnTile->drag();
     }
+}
+
+sf::Time Cursor::getClickDuration() {
+    return clickDuration;
+}
+
+void Cursor::resetPressState() {
+    mouseReleasedFlag = false;
+    mousePressedFlag = false;
+}
+
+bool Cursor::isMousePressed() {
+    return mousePressedFlag;
+}
+
+void Cursor::mousePress(bool mousePressed) {
+    mousePressedFlag = mousePressed;
+    clickClock.restart();
+}
+
+bool Cursor::isMouseReleased() {
+    return mouseReleasedFlag;
+}
+
+void Cursor::mouseRelease(bool mouseReleased) {
+    mouseReleasedFlag = mouseReleased;
+    clickDuration = clickClock.getElapsedTime();
 }

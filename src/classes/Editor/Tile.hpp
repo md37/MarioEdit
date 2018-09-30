@@ -44,6 +44,8 @@ protected:
     sf::RectangleShape border;
     sf::Uint8 borderSize;
 
+    sf::Vector2u imagePosition;
+
 private:
 
     TileConfig config;

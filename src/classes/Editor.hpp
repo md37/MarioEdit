@@ -26,7 +26,7 @@ private:
     std::shared_ptr<Navigation> navigation;
     std::shared_ptr<Scene> scene;
 
-    bool isDraggingTile = false;
+    bool isDraggingNewTile = false;
     bool dismissTileDrop = false;
     bool clickedOnTileButton = false;
     std::shared_ptr<ButtonTile> lastUsedTileButton;

@@ -121,6 +121,7 @@ void Editor::handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor) {
 
             if (insertTile) {
                 draggingTile->drop();
+                draggingTile->snapToGrid();
                 cursor.unregisterDrag(draggingTile);
                 createDynamicTileSnappedToCursor(cursor, lastUsedTileButton);
             }

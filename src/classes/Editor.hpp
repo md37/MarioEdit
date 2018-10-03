@@ -25,6 +25,7 @@ private:
     std::shared_ptr<TileFactory> tileFactory;
     std::shared_ptr<Navigation> navigation;
     std::shared_ptr<Scene> scene;
+    AnimationPerformer animationPerformer;
 
     bool isDraggingNewTile = false;
     bool dismissTileDrop = false;

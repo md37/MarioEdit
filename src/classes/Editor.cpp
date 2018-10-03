@@ -97,7 +97,7 @@ void Editor::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<Bu
     tilePosition.y -= dynamicTile->getSize().y/2;
 
     dynamicTile->setPosition(tilePosition);
-    dynamicTile->startDrag();
+    dynamicTile->startDrag(animationPerformer);
     cursor.registerDrag(dynamicTile);
 }
 
@@ -131,7 +131,7 @@ void Editor::performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile)
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
         if (cursor.isClick() && !cursor.isDragRegistered(tile) && isLeftClick) {
             cursor.registerDrag(tile);
-            tile->startDrag();
+            tile->startDrag(animationPerformer);
         } else if (!cursor.isClick() && cursor.isDragRegistered(tile)) {
             performDrop(cursor, tile);
         }
@@ -149,7 +149,7 @@ void Editor::performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
     }
 
     cursor.unregisterDrag(tile);
-    tile->drop();
+    tile->drop(animationPerformer);
 }
 
 void Editor::performHover(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
@@ -158,13 +158,13 @@ void Editor::performHover(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
     if (highlightedTiles.empty()) {
         if (cursor.isOver(tile) && !cursor.isOverRegistered(tile)) {
             cursor.registerOver(tile);
-            tile->mouseEnter();
+            tile->mouseEnter(animationPerformer);
         } else if (cursor.isOver(tile)) {
-            tile->mouseOver();
+            tile->mouseOver(animationPerformer);
         }
     } else if (!cursor.isOver(tile) && cursor.isOverRegistered(tile)) {
         cursor.unregisterOver(tile);
-        tile->mouseLeave();
+        tile->mouseLeave(animationPerformer);
     }
 }
 
@@ -184,7 +184,7 @@ void Editor::performLongClickDrop(Cursor &cursor) {
     }
 
     if (insertTile) {
-        draggingTile->drop();
+        draggingTile->drop(animationPerformer);
         draggingTile->snapToGrid();
         cursor.unregisterDrag(draggingTile);
         createDynamicTileSnappedToCursor(cursor, lastUsedTileButton);
@@ -205,7 +205,7 @@ void Editor::performQuickClickDrop(Cursor &cursor) {
     if (tileOnCurrentSlot != nullptr && tileOnCurrentSlot != draggingTile) {
         ObjectRegistry::removeTile(tileOnCurrentSlot);
     }
-    draggingTile->drop();
+    draggingTile->drop(animationPerformer);
     cursor.unregisterDrag(draggingTile);
     isDraggingNewTile = false;
 }

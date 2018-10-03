@@ -6,6 +6,10 @@
 DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite, config) {
     highlightAnimation = std::make_shared<HighlightAnimation>(this);
     undoHighlightAnimation = std::make_shared<UndoHighlightAnimation>(this);
+
+    undoHighlightAnimation->setFinishCallback([=]() mutable {
+        this->isReturning = false;
+    });
 }
 
 void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) {
@@ -16,35 +20,30 @@ bool DynamicTile::isMouseOver() {
     return isMouseOverFlag;
 }
 
-void DynamicTile::mouseEnter() {
+void DynamicTile::mouseEnter(AnimationPerformer& animationPerformer) {
     isMouseOverFlag = true;
-    if (undoHighlightAnimation->isRunning()) {
-        undoHighlightAnimation->stop();
-    }
-    if (!highlightAnimation->isRunning()) {
-        highlightAnimation->run();
-    }
+    undoHighlightAnimation->stop();
+
+    animationPerformer.add(highlightAnimation);
 }
 
-void DynamicTile::mouseOver() {
+void DynamicTile::mouseOver(AnimationPerformer& animationPerformer) {
 
 }
 
-void DynamicTile::mouseLeave() {
+void DynamicTile::mouseLeave(AnimationPerformer& animationPerformer) {
     isMouseOverFlag = false;
-    if (highlightAnimation->isRunning()) {
-        highlightAnimation->stop();
-    }
-    if (!undoHighlightAnimation->isRunning()) {
-        undoHighlightAnimation->run();
-    }
+    isReturning = true;
+    highlightAnimation->stop();
+
+    animationPerformer.add(undoHighlightAnimation);
 }
 
 bool DynamicTile::isDragging() {
     return isDraggingFlag;
 }
 
-void DynamicTile::startDrag() {
+void DynamicTile::startDrag(AnimationPerformer& animationPerformer) {
     auto cursorPosition = Cursor::getCurrentPosition();
     grid->setHighlightPosition(cursorPosition);
 
@@ -54,7 +53,7 @@ void DynamicTile::startDrag() {
     isDraggingFlag = true;
 }
 
-void DynamicTile::drag() {
+void DynamicTile::drag(AnimationPerformer& animationPerformer) {
     auto cursorPosition = Cursor::getCurrentPosition();
     grid->setHighlightPosition(cursorPosition);
 
@@ -64,7 +63,7 @@ void DynamicTile::drag() {
     correctCorners();
 }
 
-void DynamicTile::drop() {
+void DynamicTile::drop(AnimationPerformer& animationPerformer) {
     dragOffset = {0, 0};
 
     dropHighlightPlace = grid->getHighlightPlace();

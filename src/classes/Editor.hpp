@@ -41,9 +41,10 @@ private:
     void createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<ButtonTile> button);
 
     void performLongClickDrop(Cursor &cursor);
-    void performQuickDrop(Cursor &cursor);
+    void performQuickClickDrop(Cursor &cursor);
 
     void performHover(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
     void performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
     void performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
+    void cancelDragging(Cursor& cursor);
 };

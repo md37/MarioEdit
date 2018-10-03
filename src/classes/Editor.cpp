@@ -58,11 +58,14 @@ void Editor::handleButtonTilesEvents(Keyboard& keyboard, Cursor& cursor) {
                 break;
             }
         }
-    } else if (isDraggingNewTile) {
-        for (auto &button: buttons) {
-            if (cursor.isOver(button) && cursor.isMouseReleased()) {
-                dismissTileDrop = true;
-            }
+        return;
+    }
+
+    for (auto &button: buttons) {
+        if (cursor.isOver(button) && cursor.isMouseReleased()) {
+            dismissTileDrop = true;
+        } else if (cursor.isOver(button) && cursor.isMousePressed() && lastUsedTileButton != button) {
+            cancelDragging(cursor);
         }
     }
 }
@@ -100,10 +103,13 @@ void Editor::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<Bu
 
 void Editor::handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor) {
     if (isDraggingNewTile) {
+        bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
         if (cursor.isClick() && cursor.isLongClick() && !clickedOnTileButton) {
             performLongClickDrop(cursor);
-        } else if (cursor.isMouseReleased()) {
-            performQuickDrop(cursor);
+        } else if (cursor.isMouseReleased() && isLeftClick) {
+            performQuickClickDrop(cursor);
+        } else if (!isLeftClick) {
+            cancelDragging(cursor);
         }
     } else {
         auto tiles = ObjectRegistry::getDynamicTiles();
@@ -120,17 +126,14 @@ void Editor::handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor) {
 
 void Editor::performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
     if (cursor.isOver(tile) && cursor.isOverRegistered(tile)) {
-        if (cursor.isClick() && !cursor.isDragRegistered(tile)) {
+        bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
+        if (cursor.isClick() && !cursor.isDragRegistered(tile) && isLeftClick) {
             cursor.registerDrag(tile);
             tile->startDrag();
         } else if (!cursor.isClick() && cursor.isDragRegistered(tile)) {
             performDrop(cursor, tile);
         }
-    } else if (!cursor.isOver(tile) && cursor.isOverRegistered(tile)) {
-        if (cursor.isDragRegistered(tile)) {
-            performDrop(cursor, tile);
-        }
-    } else if (cursor.isDragRegistered(tile)) {
+    } else if (cursor.isOverRegistered(tile) && cursor.isDragRegistered(tile)) {
         performDrop(cursor, tile);
     }
 }
@@ -186,7 +189,7 @@ void Editor::performLongClickDrop(Cursor &cursor) {
     }
 }
 
-void Editor::performQuickDrop(Cursor &cursor) {
+void Editor::performQuickClickDrop(Cursor &cursor) {
     clickedOnTileButton = false;
     if (dismissTileDrop) {
         return;
@@ -202,5 +205,15 @@ void Editor::performQuickDrop(Cursor &cursor) {
     }
     draggingTile->drop();
     cursor.unregisterDrag(draggingTile);
+    isDraggingNewTile = false;
+}
+
+void Editor::cancelDragging(Cursor &cursor) {
+    auto draggingTile = scene->getDraggingTile();
+    cursor.unregisterDrag(draggingTile);
+    ObjectRegistry::removeTile(draggingTile);
+
+    auto grid = scene->getGrid();
+    grid->turnHighlightOff();
     isDraggingNewTile = false;
 }

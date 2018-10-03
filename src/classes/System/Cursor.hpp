@@ -4,6 +4,7 @@
 #include <vector>
 #include <SFML/Config.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 
@@ -21,7 +22,8 @@ public:
     bool isClickOn(std::shared_ptr<Tile> tile);
 
     bool isClick();
-    void click(bool click);
+    void click(bool click, sf::Mouse::Button type);
+    sf::Mouse::Button getClickType();
     bool isMousePressed();
     void mousePress(bool mouseDown);
     bool isMouseReleased();
@@ -52,6 +54,7 @@ private:
     std::vector<std::shared_ptr<DynamicTile>> registeredDragOnTiles;
 
     bool clickFlag;
+    sf::Mouse::Button clickType;
     bool mousePressedFlag = false;
     bool mouseReleasedFlag = false;
     sf::Clock clickClock;

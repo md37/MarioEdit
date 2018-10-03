@@ -47,11 +47,11 @@ void EventHandler::handleEvents(std::shared_ptr<sf::RenderWindow> window) {
             } break;
             case sf::Event::MouseButtonPressed: {
                 cursor.mousePress(true);
-                cursor.click(true);
+                cursor.click(true, event.mouseButton.button);
             } break;
             case sf::Event::MouseButtonReleased: {
                 cursor.mouseRelease(true);
-                cursor.click(false);
+                cursor.click(false, event.mouseButton.button);
             } break;
             case sf::Event::MouseMoved: {
                 cursor.handleRegisteredDrags();
@@ -65,7 +65,7 @@ void EventHandler::handleEvents(std::shared_ptr<sf::RenderWindow> window) {
 }
 
 void EventHandler::handleKeyboardEvents() {
-    if (keyboard.isPressed(sf::Keyboard::Escape) || keyboard.isPressed(sf::Keyboard::Q)) {
+    if (keyboard.isPressed(sf::Keyboard::Q)) {
         handleEvent(Event::QuitGame);
         return;
     }

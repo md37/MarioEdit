@@ -97,8 +97,9 @@ bool Cursor::isClick() {
     return clickFlag;
 }
 
-void Cursor::click(bool click) {
+void Cursor::click(bool click, sf::Mouse::Button type) {
     clickFlag = click;
+    clickType = type;
 }
 
 void Cursor::handleRegisteredDrags() {
@@ -135,4 +136,8 @@ void Cursor::mouseRelease(bool mouseReleased) {
 
 bool Cursor::isLongClick() {
     return getClickDuration().asMilliseconds() > 150;
+}
+
+sf::Mouse::Button Cursor::getClickType() {
+    return clickType;
 }

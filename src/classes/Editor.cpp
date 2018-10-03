@@ -104,11 +104,13 @@ void Editor::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<Bu
 void Editor::handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor) {
     if (isDraggingNewTile) {
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
+        bool isEscape = keyboard.isPressed(sf::Keyboard::Key::Escape);
+        
         if (cursor.isClick() && cursor.isLongClick() && !clickedOnTileButton) {
             performLongClickDrop(cursor);
         } else if (cursor.isMouseReleased() && isLeftClick) {
             performQuickClickDrop(cursor);
-        } else if (!isLeftClick) {
+        } else if (!isLeftClick || isEscape) {
             cancelDragging(cursor);
         }
     } else {

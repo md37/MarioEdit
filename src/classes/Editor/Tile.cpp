@@ -48,6 +48,8 @@ void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
     textureRect.top = (y * (config.tileHeight+config.separatorY)) + config.offsetY;
     textureRect.left = (x * (config.tileWidth+config.separatorX)) + config.offsetX;
     sprite.setTextureRect(textureRect);
+
+    imagePosition = sf::Vector2u(x, y);
 }
 
 void Tile::setPosition(sf::Vector2f position) {
@@ -82,4 +84,12 @@ void Tile::snapToCenterPoint() {
     position.x = centerPoint.x-newWidth/2;
     position.y = centerPoint.y-newHeight/2;
     sprite.setPosition(position);
+}
+
+bool Tile::isTypeOf(std::shared_ptr<Tile> tile) {
+    return imagePosition == tile->getImagePosition();
+}
+
+sf::Vector2u Tile::getImagePosition() {
+    return imagePosition;
 }

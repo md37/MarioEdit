@@ -1,6 +1,8 @@
 #pragma once
 
+#include <SFML/Graphics/RenderWindow.hpp>
 #include "classes/Editor/Tile.hpp"
+#include "classes/Editor/Scene/Grid.hpp"
 
 class GridTile : public Tile {
 
@@ -13,6 +15,7 @@ public:
     void snapToGrid(sf::Vector2u gridPosition);
 
     bool isOnIncompletePlace(sf::Vector2u dropPlace);
+    sf::Vector2u getGridPosition();
 
 protected:
 

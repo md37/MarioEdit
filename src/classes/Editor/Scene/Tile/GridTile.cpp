@@ -20,3 +20,7 @@ void GridTile::snapToGrid(sf::Vector2u gridPosition) {
 bool GridTile::isOnIncompletePlace(sf::Vector2u dropPlace) {
     return grid->hasIncompleteEnding() && dropPlace.x == grid->getCols();
 }
+
+sf::Vector2u GridTile::getGridPosition() {
+    return gridPosition;
+}

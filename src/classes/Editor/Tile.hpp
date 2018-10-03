@@ -4,11 +4,11 @@
 #include <memory>
 #include <functional>
 #include <SFML/Config.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "classes/System/TileConfig.hpp"
 #include "classes/System/Scale.hpp"
-#include "classes/Editor/Scene/Grid.hpp"
 
 class Tile {
 
@@ -30,6 +30,9 @@ public:
     void setBorder(sf::Uint8 size, sf::Color color=sf::Color(255, 255, 255, 255));
     void snapToCenterPoint();
 
+    bool isTypeOf(std::shared_ptr<Tile> tile);
+    sf::Vector2u getImagePosition();
+
 protected:
 
     static std::shared_ptr<sf::RenderWindow> window;
@@ -43,6 +46,8 @@ protected:
 
     sf::RectangleShape border;
     sf::Uint8 borderSize;
+
+    sf::Vector2u imagePosition;
 
 private:
 

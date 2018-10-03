@@ -71,3 +71,7 @@ std::shared_ptr<DynamicTile> ObjectRegistry::getTileOnGrid(sf::Vector2u position
     }
     return nullptr;
 }
+
+void ObjectRegistry::removeTile(std::shared_ptr<DynamicTile> tile) {
+    dynamicTiles.erase(std::remove(dynamicTiles.begin(), dynamicTiles.end(), tile), dynamicTiles.end());
+}

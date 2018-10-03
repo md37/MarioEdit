@@ -45,6 +45,10 @@ bool Cursor::isOver(std::shared_ptr<Tile> tile) {
            posY <= tile->getPosition().y+tile->getSize().y;
 }
 
+bool Cursor::isClickOn(std::shared_ptr<Tile> tile) {
+    return this->isOver(tile) && this->isClick();
+}
+
 void Cursor::registerOver(std::shared_ptr<Tile> tile) {
     if (!isOverRegistered(tile)) {
         registeredOverOnTiles.push_back(tile);
@@ -93,12 +97,47 @@ bool Cursor::isClick() {
     return clickFlag;
 }
 
-void Cursor::click(bool click) {
+void Cursor::click(bool click, sf::Mouse::Button type) {
     clickFlag = click;
+    clickType = type;
 }
 
 void Cursor::handleRegisteredDrags() {
     for (auto dragOnTile : registeredDragOnTiles) {
         dragOnTile->drag();
     }
+}
+
+sf::Time Cursor::getClickDuration() {
+    return clickClock.getElapsedTime();
+}
+
+void Cursor::resetPressState() {
+    mouseReleasedFlag = false;
+    mousePressedFlag = false;
+}
+
+bool Cursor::isMousePressed() {
+    return mousePressedFlag;
+}
+
+void Cursor::mousePress(bool mousePressed) {
+    mousePressedFlag = mousePressed;
+    clickClock.restart();
+}
+
+bool Cursor::isMouseReleased() {
+    return mouseReleasedFlag;
+}
+
+void Cursor::mouseRelease(bool mouseReleased) {
+    mouseReleasedFlag = mouseReleased;
+}
+
+bool Cursor::isLongClick() {
+    return getClickDuration().asMilliseconds() > 150;
+}
+
+sf::Mouse::Button Cursor::getClickType() {
+    return clickType;
 }

@@ -22,11 +22,29 @@ public:
 private:
 
     bool isStartedFlag = false;
+    std::shared_ptr<TileFactory> tileFactory;
     std::shared_ptr<Navigation> navigation;
     std::shared_ptr<Scene> scene;
+
+    bool isDraggingNewTile = false;
+    bool dismissTileDrop = false;
+    bool clickedOnTileButton = false;
+    std::shared_ptr<ButtonTile> lastUsedTileButton;
 
     void handleButtonTilesEvents(Keyboard& keyboard, Cursor& cursor);
     void handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor);
 
-    void performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) const;
+    void doButtonMouseOver(Cursor& cursor, std::shared_ptr<ButtonTile> button);
+    void doButtonMouseOut(Cursor& cursor, std::shared_ptr<ButtonTile> button);
+    void doButtonMouseClick(Cursor& cursor, std::shared_ptr<ButtonTile> button);
+
+    void createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<ButtonTile> button);
+
+    void performLongClickDrop(Cursor &cursor);
+    void performQuickClickDrop(Cursor &cursor);
+
+    void performHover(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
+    void performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
+    void performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
+    void cancelDragging(Cursor& cursor);
 };

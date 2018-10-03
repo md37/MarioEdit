@@ -9,8 +9,9 @@
 #include "classes/Editor/Scene/Tile/StaticTile.hpp"
 #include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 
-class TileFactory
-{
+class ButtonTile;
+
+class TileFactory {
 
 public:
 

@@ -27,6 +27,8 @@ void EventHandler::handleEvents(std::shared_ptr<sf::RenderWindow> window) {
 
     sf::Event event;
     while (window->pollEvent(event)) {
+        cursor.resetPressState();
+
         lastEvent = event;
         switch (event.type) {
             case sf::Event::Closed: {
@@ -44,10 +46,12 @@ void EventHandler::handleEvents(std::shared_ptr<sf::RenderWindow> window) {
                 handleEvent(Event::ResizeWindow);
             } break;
             case sf::Event::MouseButtonPressed: {
-                cursor.click(true);
+                cursor.mousePress(true);
+                cursor.click(true, event.mouseButton.button);
             } break;
             case sf::Event::MouseButtonReleased: {
-                cursor.click(false);
+                cursor.mouseRelease(true);
+                cursor.click(false, event.mouseButton.button);
             } break;
             case sf::Event::MouseMoved: {
                 cursor.handleRegisteredDrags();
@@ -61,7 +65,7 @@ void EventHandler::handleEvents(std::shared_ptr<sf::RenderWindow> window) {
 }
 
 void EventHandler::handleKeyboardEvents() {
-    if (keyboard.isPressed(sf::Keyboard::Escape) || keyboard.isPressed(sf::Keyboard::Q)) {
+    if (keyboard.isPressed(sf::Keyboard::Q)) {
         handleEvent(Event::QuitGame);
         return;
     }

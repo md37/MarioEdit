@@ -113,7 +113,3 @@ void DynamicTile::correctCorners() {
 sf::Vector2u DynamicTile::getDropHighlightPlace() {
     return dropHighlightPlace;
 }
-
-sf::Vector2u DynamicTile::getGridPosition() {
-    return gridPosition;
-}

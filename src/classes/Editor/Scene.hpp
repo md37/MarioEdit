@@ -19,6 +19,7 @@ public:
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
     std::shared_ptr<Grid> getGrid();
+    std::shared_ptr<DynamicTile> getDraggingTile();
 
 private:
 

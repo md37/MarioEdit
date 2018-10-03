@@ -25,7 +25,10 @@ std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Ui
     auto sprite = prepareSprite();
     auto tile = std::make_shared<DynamicTile>(sprite, config);
     tile->changeImage(x, y);
+    tile->rescale(scale);
     ObjectRegistry::registerTile(tile);
+
+    tile->isBlinking = x == 0 && y == 11;
 
     return tile;
 }

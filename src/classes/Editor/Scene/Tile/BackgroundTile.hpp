@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SFML/Graphics/RenderWindow.hpp>
 #include "classes/Editor/Tile.hpp"
 #include "classes/System/Interface/DrawableInterface.hpp"
 

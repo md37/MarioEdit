@@ -19,6 +19,7 @@ public:
     sf::Vector2u getSize();
     sf::Vector2f getPointOnGrid(sf::Vector2f pointOnScreen);
     sf::Vector2f pointOnGridToPosition(sf::Vector2u pointOnGrid);
+    sf::Vector2u positionToGridPlace(sf::Vector2f pointOnScreen);
     sf::Vector2f getCenter(sf::Vector2u pointOnGrid);
 
     void turnHighlightOn();

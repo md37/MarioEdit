@@ -4,7 +4,11 @@
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/System/Interface/DraggableInterface.hpp"
 #include "classes/System/Interface/HoverableInterface.hpp"
+#include "classes/System/TileFactory.hpp"
 #include "classes/Editor/Tile.hpp"
+#include "classes/Editor/Scene/Tile/DynamicTile.hpp"
+
+class TileFactory;
 
 class ButtonTile : public Tile, public DrawableInterface, public DraggableInterface, public HoverableInterface {
 
@@ -23,6 +27,8 @@ public:
     bool isDragging() override;
 
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
+
+    std::shared_ptr<DynamicTile> cloneToDynamicTile(std::shared_ptr<TileFactory> tileFactory);
 
 private:
 

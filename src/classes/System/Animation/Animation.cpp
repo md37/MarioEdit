@@ -32,6 +32,9 @@ void Animation::setStartCallback(std::function<void()> callback) {
 }
 
 void Animation::runStartCallback() {
+    if (startCallback == nullptr) {
+        return;
+    }
     startCallback();
 }
 
@@ -41,5 +44,8 @@ void Animation::setFinishCallback(std::function<void()> callback) {
 }
 
 void Animation::runFinishCallback() {
+    if (finishCallback == nullptr) {
+        return;
+    }
     finishCallback();
 }

@@ -30,8 +30,8 @@ protected:
     bool isStopped = false;
     bool isRepeatingFlag = false;
 
-    std::function<void()> startCallback;
-    std::function<void()> finishCallback;
+    std::function<void()> startCallback = nullptr;
+    std::function<void()> finishCallback = nullptr;
     sf::Int32 getAnimationPointInTime() const;
 
 };

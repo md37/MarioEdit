@@ -13,13 +13,12 @@ public:
     bool isStarted() override;
 
     void add(std::shared_ptr<Animation> animation);
+    void remove(std::shared_ptr<Animation> animation);
     void process();
 
 private:
 
     bool isStartedFlag = false;
     std::vector<std::shared_ptr<Animation>> animations;
-
-    void removeAnimation(std::shared_ptr<Animation>);
 
 };

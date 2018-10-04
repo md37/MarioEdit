@@ -3,6 +3,8 @@
 
 #include "classes/System/Cursor.hpp"
 
+#include <iostream>
+
 DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite, config) {
     highlightAnimation = std::make_shared<HighlightAnimation>(this);
     undoHighlightAnimation = std::make_shared<UndoHighlightAnimation>(this);
@@ -22,8 +24,9 @@ bool DynamicTile::isMouseOver() {
 
 void DynamicTile::mouseEnter(AnimationPerformer& animationPerformer) {
     isMouseOverFlag = true;
-    undoHighlightAnimation->stop();
+    animationPerformer.remove(undoHighlightAnimation);
 
+    highlightAnimation = std::make_shared<HighlightAnimation>(this);
     animationPerformer.add(highlightAnimation);
 }
 
@@ -34,8 +37,9 @@ void DynamicTile::mouseOver(AnimationPerformer& animationPerformer) {
 void DynamicTile::mouseLeave(AnimationPerformer& animationPerformer) {
     isMouseOverFlag = false;
     isReturning = true;
-    highlightAnimation->stop();
+    animationPerformer.remove(highlightAnimation);
 
+    undoHighlightAnimation = std::make_shared<UndoHighlightAnimation>(this);
     animationPerformer.add(undoHighlightAnimation);
 }
 
@@ -53,7 +57,7 @@ void DynamicTile::startDrag(AnimationPerformer& animationPerformer) {
     isDraggingFlag = true;
 }
 
-void DynamicTile::drag(AnimationPerformer& animationPerformer) {
+void DynamicTile::drag() {
     auto cursorPosition = Cursor::getCurrentPosition();
     grid->setHighlightPosition(cursorPosition);
 

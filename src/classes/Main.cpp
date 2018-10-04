@@ -86,11 +86,11 @@ int Main::run() {
 
         if (editor->isStarted()) {
             editor->handleEvents(systemEventHandler->keyboard, systemEventHandler->cursor);
+            editor->runAnimations();
+            editor->draw(window);
         }
 
-        editor->draw(window);
         cursor.draw(window);
-
         window->display();
     }
     return 0;

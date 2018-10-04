@@ -9,7 +9,7 @@ class Editor : public RunnableInterface, public RescalableInterface, public Draw
 
 public:
 
-    Editor(std::shared_ptr<TileFactory> tileFactory);
+    explicit Editor(std::shared_ptr<TileFactory> tileFactory);
 
     void start() override;
     bool isStarted() override;
@@ -18,6 +18,7 @@ public:
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
     void handleEvents(Keyboard& keyboard, Cursor& cursor) override;
+    void runAnimations();
 
 private:
 

@@ -16,7 +16,7 @@ void UndoHighlightAnimation::animate() {
     if (animationPointInTime < 200) {
         tile->scalePromotion = downFunction->getValue(animationPointInTime);
     } else {
-        tile->scalePromotion = upFunction->getValue(animationPointInTime);
+        tile->scalePromotion = upFunction->getValue(animationPointInTime-200);
     }
     tile->snapToCenterPoint();
 

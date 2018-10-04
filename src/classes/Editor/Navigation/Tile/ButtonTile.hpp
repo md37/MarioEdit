@@ -22,7 +22,7 @@ public:
     bool isMouseOver() override;
 
     void startDrag(AnimationPerformer& animationPerformer) override;
-    void drag(AnimationPerformer& animationPerformer) override;
+    void drag() override;
     void drop(AnimationPerformer& animationPerformer) override;
     bool isDragging() override;
 

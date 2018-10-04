@@ -4,7 +4,7 @@
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 #include "classes/System/Animation/EasingFunction/SmoothStepFunction.hpp"
 
-HighlightAnimation::HighlightAnimation(DynamicTile* tile) : Animation(300, false) {
+HighlightAnimation::HighlightAnimation(DynamicTile* tile) : Animation(600, false) {
     this->tile = tile;
 
     upFunction = std::make_shared<SmoothStepFunction>(200, tile->scalePromotion, 1.8f);
@@ -17,7 +17,7 @@ void HighlightAnimation::animate() {
     if (animationPointInTime < 200) {
         tile->scalePromotion = upFunction->getValue(animationPointInTime);
     } else {
-        tile->scalePromotion = downFunction->getValue(animationPointInTime);
+        tile->scalePromotion = downFunction->getValue(animationPointInTime-200);
     }
 
     tile->snapToCenterPoint();

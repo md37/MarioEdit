@@ -31,7 +31,7 @@ void ButtonTile::startDrag(AnimationPerformer& animationPerformer) {
     isDraggingFlag = true;
 }
 
-void ButtonTile::drag(AnimationPerformer& animationPerformer) {
+void ButtonTile::drag() {
 
 }
 

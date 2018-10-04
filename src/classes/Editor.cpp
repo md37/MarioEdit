@@ -9,8 +9,8 @@ Editor::Editor(std::shared_ptr<TileFactory> tileFactory) {
 }
 
 void Editor::start() {
+    animationPerformer.start();
     isStartedFlag = true;
-    scene->startTasks();
 }
 
 void Editor::rescale(std::shared_ptr<Scale> scale) {

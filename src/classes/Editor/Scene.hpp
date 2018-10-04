@@ -15,7 +15,6 @@ public:
     explicit Scene(std::shared_ptr<TileFactory> tileFactory);
 
     void rescale(std::shared_ptr<Scale> scale) override;
-    void startTasks();
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
     std::shared_ptr<Grid> getGrid();

@@ -1,6 +1,9 @@
 #include "AnimationPerformer.hpp"
 
+#include "classes/Editor/Scene/Animation/SpecialBlockBlinkAnimation.hpp"
+
 void AnimationPerformer::start() {
+    add(std::make_shared<SpecialBlockBlinkAnimation>());
     isStartedFlag = true;
 }
 

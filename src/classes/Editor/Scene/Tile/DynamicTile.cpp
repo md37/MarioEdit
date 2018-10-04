@@ -3,15 +3,8 @@
 
 #include "classes/System/Cursor.hpp"
 
-#include <iostream>
-
 DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite, config) {
-    highlightAnimation = std::make_shared<HighlightAnimation>(this);
-    undoHighlightAnimation = std::make_shared<UndoHighlightAnimation>(this);
 
-    undoHighlightAnimation->setFinishCallback([=]() mutable {
-        this->isReturning = false;
-    });
 }
 
 void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) {
@@ -24,7 +17,9 @@ bool DynamicTile::isMouseOver() {
 
 void DynamicTile::mouseEnter(AnimationPerformer& animationPerformer) {
     isMouseOverFlag = true;
-    animationPerformer.remove(undoHighlightAnimation);
+    if (undoHighlightAnimation.use_count()) {
+        undoHighlightAnimation->stop();
+    }
 
     highlightAnimation = std::make_shared<HighlightAnimation>(this);
     animationPerformer.add(highlightAnimation);
@@ -37,7 +32,9 @@ void DynamicTile::mouseOver(AnimationPerformer& animationPerformer) {
 void DynamicTile::mouseLeave(AnimationPerformer& animationPerformer) {
     isMouseOverFlag = false;
     isReturning = true;
-    animationPerformer.remove(highlightAnimation);
+    if (highlightAnimation.use_count()) {
+        highlightAnimation->stop();
+    }
 
     undoHighlightAnimation = std::make_shared<UndoHighlightAnimation>(this);
     animationPerformer.add(undoHighlightAnimation);

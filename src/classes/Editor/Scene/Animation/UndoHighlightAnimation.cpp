@@ -8,6 +8,10 @@ UndoHighlightAnimation::UndoHighlightAnimation(DynamicTile *tile) : Animation(30
 
     downFunction = std::make_shared<SmoothStepFunction>(200, tile->scalePromotion, 0.9f);
     upFunction = std::make_shared<SmoothStepFunction>(100, 0.9f, 1.0f);
+
+    this->setFinishCallback([=]() mutable {
+        tile->isReturning = false;
+    });
 }
 
 void UndoHighlightAnimation::animate() {

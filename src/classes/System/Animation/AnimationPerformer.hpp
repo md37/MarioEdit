@@ -13,7 +13,7 @@ public:
     bool isStarted() override;
 
     void add(std::shared_ptr<Animation> animation);
-    void remove(std::shared_ptr<Animation> animation);
+    void remove(std::vector<std::shared_ptr<Animation>>::iterator& animationIterator);
     void process();
 
 private:

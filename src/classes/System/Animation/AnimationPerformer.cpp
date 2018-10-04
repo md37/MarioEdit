@@ -1,7 +1,5 @@
 #include "AnimationPerformer.hpp"
 
-#include <iostream>
-
 void AnimationPerformer::start() {
     isStartedFlag = true;
 }
@@ -16,17 +14,17 @@ void AnimationPerformer::add(std::shared_ptr<Animation> animation) {
 }
 
 void AnimationPerformer::process() {
-    for (auto &animation: animations) {
-        animation->animate();
+    for (auto it=animations.begin(); it != animations.end();) {
+        (*it)->animate();
+        if ((*it)->isFinished()) {
+            remove(it);
+            continue;
+        }
+        it++;
     }
 }
 
-void AnimationPerformer::remove(std::shared_ptr<Animation> animation) {
-    auto existingAnimation = std::find(animations.begin(), animations.end(), animation);
-    if (existingAnimation == animations.end()) {
-        return;
-    }
-
-    animation->runFinishCallback();
-    animations.erase(existingAnimation, animations.end());
+void AnimationPerformer::remove(std::vector<std::shared_ptr<Animation>>::iterator& animationIterator) {
+    (*animationIterator)->runFinishCallback();
+    animationIterator = animations.erase(animationIterator);
 }

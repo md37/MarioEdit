@@ -1,13 +1,13 @@
 #pragma once
 
-#include "classes/System/Animation/FrameAnimation.hpp"
+#include "classes/System/Animation/Animation.hpp"
 
-class DynamicTile;
-
-class SpecialBlockBlinkAnimation : public FrameAnimation {
+class SpecialBlockBlinkAnimation : public Animation {
 
 public:
 
     SpecialBlockBlinkAnimation();
+
+    void animate() override;
 
 };

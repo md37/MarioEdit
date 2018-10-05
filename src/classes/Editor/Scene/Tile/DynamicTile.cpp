@@ -4,8 +4,7 @@
 #include "classes/System/Cursor.hpp"
 
 DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite, config) {
-    highlightAnimation = std::make_shared<HighlightAnimation>(this);
-    undoHighlightAnimation = std::make_shared<UndoHighlightAnimation>(this);
+
 }
 
 void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) {
@@ -16,35 +15,36 @@ bool DynamicTile::isMouseOver() {
     return isMouseOverFlag;
 }
 
-void DynamicTile::mouseEnter() {
+void DynamicTile::mouseEnter(AnimationPerformer& animationPerformer) {
     isMouseOverFlag = true;
-    if (undoHighlightAnimation->isRunning()) {
+    if (undoHighlightAnimation.use_count()) {
         undoHighlightAnimation->stop();
     }
-    if (!highlightAnimation->isRunning()) {
-        highlightAnimation->run();
-    }
+
+    highlightAnimation = std::make_shared<HighlightAnimation>(this);
+    animationPerformer.add(highlightAnimation);
 }
 
-void DynamicTile::mouseOver() {
+void DynamicTile::mouseOver(AnimationPerformer& animationPerformer) {
 
 }
 
-void DynamicTile::mouseLeave() {
+void DynamicTile::mouseLeave(AnimationPerformer& animationPerformer) {
     isMouseOverFlag = false;
-    if (highlightAnimation->isRunning()) {
+    isReturning = true;
+    if (highlightAnimation.use_count()) {
         highlightAnimation->stop();
     }
-    if (!undoHighlightAnimation->isRunning()) {
-        undoHighlightAnimation->run();
-    }
+
+    undoHighlightAnimation = std::make_shared<UndoHighlightAnimation>(this);
+    animationPerformer.add(undoHighlightAnimation);
 }
 
 bool DynamicTile::isDragging() {
     return isDraggingFlag;
 }
 
-void DynamicTile::startDrag() {
+void DynamicTile::startDrag(AnimationPerformer& animationPerformer) {
     auto cursorPosition = Cursor::getCurrentPosition();
     grid->setHighlightPosition(cursorPosition);
 
@@ -64,7 +64,7 @@ void DynamicTile::drag() {
     correctCorners();
 }
 
-void DynamicTile::drop() {
+void DynamicTile::drop(AnimationPerformer& animationPerformer) {
     dragOffset = {0, 0};
 
     dropHighlightPlace = grid->getHighlightPlace();

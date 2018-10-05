@@ -7,12 +7,6 @@ Scene::Scene(std::shared_ptr<TileFactory> tileFactory) {
     grid = std::make_shared<Grid>();
     sceneGenerator = std::make_shared<SceneGenerator>(tileFactory, grid);
     sceneGenerator->generate();
-
-    blinkAnimation = std::make_shared<SpecialBlockBlinkAnimation>();
-}
-
-void Scene::startTasks() {
-    blinkAnimation->run();
 }
 
 void Scene::rescale(std::shared_ptr<Scale> scale) {

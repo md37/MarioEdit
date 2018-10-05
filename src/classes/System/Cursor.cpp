@@ -103,7 +103,7 @@ void Cursor::click(bool click, sf::Mouse::Button type) {
 }
 
 void Cursor::handleRegisteredDrags() {
-    for (auto dragOnTile : registeredDragOnTiles) {
+    for (auto &dragOnTile : registeredDragOnTiles) {
         dragOnTile->drag();
     }
 }

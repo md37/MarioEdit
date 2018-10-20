@@ -5,24 +5,22 @@
 #include <mutex>
 #include <SFML/System/Clock.hpp>
 #include "classes/System/Animation/EasingFunction.hpp"
-#include "classes/System/Animation/SmoothAnimation.hpp"
+#include "classes/System/Animation/Animation.hpp"
+#include "classes/System/Animation/EasingFunction/SmoothStepFunction.hpp"
 
 class DynamicTile;
 
-class UndoHighlightAnimation : public SmoothAnimation {
+class UndoHighlightAnimation : public Animation {
 
 public:
 
     explicit UndoHighlightAnimation(DynamicTile* tile);
-    void run() override;
+    void animate() override;
 
 private:
 
     DynamicTile* tile;
-    sf::Clock clock;
-    std::thread thread;
-    std::mutex mutex;
-
-    void animate(sf::Int32 duration, EasingFunction& function);
+    std::shared_ptr<SmoothStepFunction> downFunction;
+    std::shared_ptr<SmoothStepFunction> upFunction;
 
 };

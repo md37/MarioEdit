@@ -9,8 +9,8 @@ Editor::Editor(std::shared_ptr<TileFactory> tileFactory) {
 }
 
 void Editor::start() {
+    animationPerformer.start();
     isStartedFlag = true;
-    scene->startTasks();
 }
 
 void Editor::rescale(std::shared_ptr<Scale> scale) {
@@ -73,15 +73,15 @@ void Editor::handleButtonTilesEvents(Keyboard& keyboard, Cursor& cursor) {
 void Editor::doButtonMouseOver(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
     if (!cursor.isOverRegistered(button)) {
         cursor.registerOver(button);
-        button->mouseEnter();
+        button->mouseEnter(animationPerformer);
     } else {
-        button->mouseOver();
+        button->mouseOver(animationPerformer);
     }
 }
 
 void Editor::doButtonMouseOut(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
     cursor.unregisterOver(button);
-    button->mouseLeave();
+    button->mouseLeave(animationPerformer);
 }
 
 void Editor::doButtonMouseClick(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
@@ -97,7 +97,7 @@ void Editor::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<Bu
     tilePosition.y -= dynamicTile->getSize().y/2;
 
     dynamicTile->setPosition(tilePosition);
-    dynamicTile->startDrag();
+    dynamicTile->startDrag(animationPerformer);
     cursor.registerDrag(dynamicTile);
 }
 
@@ -130,8 +130,8 @@ void Editor::performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile)
     if (cursor.isOver(tile) && cursor.isOverRegistered(tile)) {
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
         if (cursor.isClick() && !cursor.isDragRegistered(tile) && isLeftClick) {
+            tile->startDrag(animationPerformer);
             cursor.registerDrag(tile);
-            tile->startDrag();
         } else if (!cursor.isClick() && cursor.isDragRegistered(tile)) {
             performDrop(cursor, tile);
         }
@@ -149,7 +149,7 @@ void Editor::performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
     }
 
     cursor.unregisterDrag(tile);
-    tile->drop();
+    tile->drop(animationPerformer);
 }
 
 void Editor::performHover(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
@@ -158,13 +158,13 @@ void Editor::performHover(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
     if (highlightedTiles.empty()) {
         if (cursor.isOver(tile) && !cursor.isOverRegistered(tile)) {
             cursor.registerOver(tile);
-            tile->mouseEnter();
+            tile->mouseEnter(animationPerformer);
         } else if (cursor.isOver(tile)) {
-            tile->mouseOver();
+            tile->mouseOver(animationPerformer);
         }
     } else if (!cursor.isOver(tile) && cursor.isOverRegistered(tile)) {
         cursor.unregisterOver(tile);
-        tile->mouseLeave();
+        tile->mouseLeave(animationPerformer);
     }
 }
 
@@ -184,7 +184,7 @@ void Editor::performLongClickDrop(Cursor &cursor) {
     }
 
     if (insertTile) {
-        draggingTile->drop();
+        draggingTile->drop(animationPerformer);
         draggingTile->snapToGrid();
         cursor.unregisterDrag(draggingTile);
         createDynamicTileSnappedToCursor(cursor, lastUsedTileButton);
@@ -205,7 +205,7 @@ void Editor::performQuickClickDrop(Cursor &cursor) {
     if (tileOnCurrentSlot != nullptr && tileOnCurrentSlot != draggingTile) {
         ObjectRegistry::removeTile(tileOnCurrentSlot);
     }
-    draggingTile->drop();
+    draggingTile->drop(animationPerformer);
     cursor.unregisterDrag(draggingTile);
     isDraggingNewTile = false;
 }
@@ -218,4 +218,8 @@ void Editor::cancelDragging(Cursor &cursor) {
     auto grid = scene->getGrid();
     grid->turnHighlightOff();
     isDraggingNewTile = false;
+}
+
+void Editor::runAnimations() {
+    animationPerformer.process();
 }

@@ -6,9 +6,9 @@ class HoverableInterface {
 
 public:
 
-    virtual void mouseEnter(AnimationPerformer& animationPerformer)=0;
-    virtual void mouseOver(AnimationPerformer& animationPerformer)=0;
-    virtual void mouseLeave(AnimationPerformer& animationPerformer)=0;
+    virtual void mouseEnter(std::shared_ptr<AnimationPerformer> animationPerformer)=0;
+    virtual void mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer)=0;
+    virtual void mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer)=0;
 
     virtual bool isMouseOver()=0;
 

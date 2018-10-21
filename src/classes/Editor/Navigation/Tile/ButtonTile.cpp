@@ -11,15 +11,15 @@ void ButtonTile::draw(std::shared_ptr<sf::RenderWindow> window) {
     window->draw(sprite);
 }
 
-void ButtonTile::mouseEnter(AnimationPerformer& animationPerformer) {
+void ButtonTile::mouseEnter(std::shared_ptr<AnimationPerformer> animationPerformer) {
     border.setFillColor(sf::Color(255, 255, 0));
 }
 
-void ButtonTile::mouseOver(AnimationPerformer& animationPerformer) {
+void ButtonTile::mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) {
 
 }
 
-void ButtonTile::mouseLeave(AnimationPerformer& animationPerformer) {
+void ButtonTile::mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) {
     border.setFillColor(sf::Color(255, 255, 255));
 }
 
@@ -27,7 +27,7 @@ bool ButtonTile::isMouseOver() {
     return isMouseOverFlag;
 }
 
-void ButtonTile::startDrag(AnimationPerformer& animationPerformer) {
+void ButtonTile::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isDraggingFlag = true;
 }
 
@@ -35,7 +35,7 @@ void ButtonTile::drag() {
 
 }
 
-void ButtonTile::drop(AnimationPerformer& animationPerformer) {
+void ButtonTile::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isDraggingFlag = false;
 }
 

@@ -15,21 +15,21 @@ bool DynamicTile::isMouseOver() {
     return isMouseOverFlag;
 }
 
-void DynamicTile::mouseEnter(AnimationPerformer& animationPerformer) {
+void DynamicTile::mouseEnter(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isMouseOverFlag = true;
     if (undoHighlightAnimation.use_count()) {
         undoHighlightAnimation->stop();
     }
 
     highlightAnimation = std::make_shared<HighlightAnimation>(this);
-    animationPerformer.add(highlightAnimation);
+    animationPerformer->add(highlightAnimation);
 }
 
-void DynamicTile::mouseOver(AnimationPerformer& animationPerformer) {
+void DynamicTile::mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) {
 
 }
 
-void DynamicTile::mouseLeave(AnimationPerformer& animationPerformer) {
+void DynamicTile::mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isMouseOverFlag = false;
     isReturning = true;
     if (highlightAnimation.use_count()) {
@@ -37,14 +37,14 @@ void DynamicTile::mouseLeave(AnimationPerformer& animationPerformer) {
     }
 
     undoHighlightAnimation = std::make_shared<UndoHighlightAnimation>(this);
-    animationPerformer.add(undoHighlightAnimation);
+    animationPerformer->add(undoHighlightAnimation);
 }
 
 bool DynamicTile::isDragging() {
     return isDraggingFlag;
 }
 
-void DynamicTile::startDrag(AnimationPerformer& animationPerformer) {
+void DynamicTile::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
     auto cursorPosition = Cursor::getCurrentPosition();
     grid->setHighlightPosition(cursorPosition);
 
@@ -64,7 +64,7 @@ void DynamicTile::drag() {
     correctCorners();
 }
 
-void DynamicTile::drop(AnimationPerformer& animationPerformer) {
+void DynamicTile::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
     dragOffset = {0, 0};
 
     dropHighlightPlace = grid->getHighlightPlace();

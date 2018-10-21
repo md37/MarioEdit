@@ -89,7 +89,8 @@ int Main::run() {
             editor->runAnimations();
             editor->draw(window);
         }
-
+        
+        cursor.mouseMove(false);
         cursor.draw(window);
         window->display();
     }

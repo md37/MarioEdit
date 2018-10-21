@@ -54,7 +54,7 @@ void EventHandler::handleEvents(std::shared_ptr<sf::RenderWindow> window) {
                 cursor.click(false, event.mouseButton.button);
             } break;
             case sf::Event::MouseMoved: {
-                cursor.handleRegisteredDrags();
+                cursor.mouseMove(true);
             } break;
         }
     }

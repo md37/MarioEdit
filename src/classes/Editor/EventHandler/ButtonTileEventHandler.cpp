@@ -6,8 +6,9 @@ ButtonTileEventHandler::ButtonTileEventHandler(
     std::shared_ptr<EventState> eventState,
     std::shared_ptr<AnimationPerformer> animationPerformer,
     std::shared_ptr<Scene> scene,
-    std::shared_ptr<TileFactory> tileFactory
-) : AbstractTileEventHandler(eventState, animationPerformer, scene, tileFactory) {
+    std::shared_ptr<TileFactory> tileFactory,
+    std::shared_ptr<TileEventRegistry> tileEventRegistry
+) : AbstractTileEventHandler(eventState, animationPerformer, scene, tileFactory, tileEventRegistry) {
 
 }
 
@@ -22,7 +23,7 @@ void ButtonTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
                     doMouseClick(cursor, button);
                 }
                 break;
-            } else if (cursor.isOverRegistered(button)) {
+            } else if (tileEventRegistry->isOverRegistered(button)) {
                 doMouseOut(cursor, button);
                 break;
             }
@@ -40,8 +41,8 @@ void ButtonTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
 }
 
 void ButtonTileEventHandler::doMouseOver(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
-    if (!cursor.isOverRegistered(button)) {
-        cursor.registerOver(button);
+    if (!tileEventRegistry->isOverRegistered(button)) {
+        tileEventRegistry->registerOver(button);
         button->mouseEnter(animationPerformer);
     } else {
         button->mouseOver(animationPerformer);
@@ -49,7 +50,7 @@ void ButtonTileEventHandler::doMouseOver(Cursor &cursor, std::shared_ptr<ButtonT
 }
 
 void ButtonTileEventHandler::doMouseOut(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
-    cursor.unregisterOver(button);
+    tileEventRegistry->unregisterOver(button);
     button->mouseLeave(animationPerformer);
 }
 

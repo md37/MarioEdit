@@ -6,12 +6,14 @@ AbstractTileEventHandler::AbstractTileEventHandler(
     std::shared_ptr<EventState> eventState,
     std::shared_ptr<AnimationPerformer> animationPerformer,
     std::shared_ptr<Scene> scene,
-    std::shared_ptr<TileFactory> tileFactory
+    std::shared_ptr<TileFactory> tileFactory,
+    std::shared_ptr<TileEventRegistry> tileEventRegistry
 ) {
     this->eventState = eventState;
     this->animationPerformer = animationPerformer;
     this->scene = scene;
     this->tileFactory = tileFactory;
+    this->tileEventRegistry = tileEventRegistry;
 }
 
 void AbstractTileEventHandler::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
@@ -24,12 +26,12 @@ void AbstractTileEventHandler::createDynamicTileSnappedToCursor(Cursor &cursor, 
 
     dynamicTile->setPosition(tilePosition);
     dynamicTile->startDrag(animationPerformer);
-    cursor.registerDrag(dynamicTile);
+    tileEventRegistry->registerDrag(dynamicTile);
 }
 
 void AbstractTileEventHandler::cancelDragging(Cursor &cursor) {
     auto draggingTile = scene->getDraggingTile();
-    cursor.unregisterDrag(draggingTile);
+    tileEventRegistry->unregisterDrag(draggingTile);
     ObjectRegistry::removeTile(draggingTile);
 
     auto grid = scene->getGrid();

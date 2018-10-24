@@ -49,6 +49,12 @@ void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
 
     grid->draw(window);
 
+    for (auto const &figure : figures) {
+        if (figure->isMouseOver()) {
+            figure->drawFrame(window);
+        }
+    }
+
     auto dynamicTiles = ObjectRegistry::getDynamicTiles();
     for (auto const &tile : dynamicTiles) {
         if (tile->isMouseOver() || tile->isDragging() || tile->isReturning) {

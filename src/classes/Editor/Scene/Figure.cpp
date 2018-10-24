@@ -1,6 +1,7 @@
 #include "Figure.hpp"
 
 #include <iostream>
+#include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
 Figure::Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid, sf::Vector2i position) {
     this->tileFactory = tileFactory;
@@ -12,6 +13,28 @@ void Figure::draw(std::shared_ptr<sf::RenderWindow> window) {
     for (auto &tile : tiles) {
         tile->draw(window);
     }
+}
+
+void Figure::drawFrame(std::shared_ptr<sf::RenderWindow> window) {
+    if (!isFrameCreated) {
+        createFrame();
+    }
+    window->draw(frame);
+}
+
+void Figure::createFrame() {
+    auto thickness = grid->getLineThickness();
+    auto size = this->getSize();
+
+    frame.setSize(sf::Vector2f(size));
+    frame.setFillColor(sf::Color(255, 255, 255, 0));
+    frame.setOutlineThickness(thickness*4);
+    frame.setOutlineColor(sf::Color(255, 255, 255, 128));
+    frame.setFillColor(sf::Color(255, 255, 255, 20));
+
+    auto framePosition = this->getPosition();
+    framePosition.y -= this->getSize().y;
+    frame.setPosition(framePosition);
 }
 
 void Figure::rescale(std::shared_ptr<Scale> scale) {
@@ -32,7 +55,6 @@ bool Figure::isMouseOver() {
 
 void Figure::mouseEnter(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isMouseOverFlag = true;
-    std::cout << "MouseEnter" << std::endl;
 }
 
 void Figure::mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) {
@@ -41,7 +63,6 @@ void Figure::mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) {
 
 void Figure::mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isMouseOverFlag = false;
-    std::cout << "MouseLeave" << std::endl;
 }
 
 sf::Vector2f Figure::getPosition() {
@@ -63,10 +84,10 @@ sf::Vector2u Figure::getSize() {
 }
 
 std::shared_ptr<StaticTile> Figure::findMostLeftTile() {
-    // if (tiles.size() == 0) {
-    //     EmptyFigureFoundException e;
-    //     throw e;
-    // }
+     if (tiles.size() == 0) {
+         EmptyFigureFoundException e;
+         throw e;
+     }
 
     auto mostLeftTile = tiles.at(0);
     auto mostLeftTilePosition = mostLeftTile->getPosition();
@@ -81,10 +102,10 @@ std::shared_ptr<StaticTile> Figure::findMostLeftTile() {
 }
 
 std::shared_ptr<StaticTile> Figure::findMostRightTile() {
-    // if (tiles.size() == 0) {
-    //     EmptyFigureFoundException e;
-    //     throw e;
-    // }
+     if (tiles.size() == 0) {
+         EmptyFigureFoundException e;
+         throw e;
+     }
 
     auto mostRightTile = tiles.at(0);
     auto mostRightTilePosition = mostRightTile->getPosition();
@@ -99,10 +120,10 @@ std::shared_ptr<StaticTile> Figure::findMostRightTile() {
 }
 
 std::shared_ptr<StaticTile> Figure::findMostTopTile() {
-    // if (tiles.size() == 0) {
-    //     EmptyFigureFoundException e;
-    //     throw e;
-    // }
+     if (tiles.size() == 0) {
+         EmptyFigureFoundException e;
+         throw e;
+     }
 
     auto mostTopTile = tiles.at(0);
     auto mostTopTilePosition = mostTopTile->getPosition();
@@ -117,10 +138,10 @@ std::shared_ptr<StaticTile> Figure::findMostTopTile() {
 }
 
 std::shared_ptr<StaticTile> Figure::findMostBottomTile() {
-    // if (tiles.size() == 0) {
-    //     EmptyFigureFoundException e;
-    //     throw e;
-    // }
+     if (tiles.size() == 0) {
+         EmptyFigureFoundException e;
+         throw e;
+     }
 
     auto mostBottomTile = tiles.at(0);
     auto mostBottomTilePosition = mostBottomTile->getPosition();

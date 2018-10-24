@@ -47,7 +47,7 @@ void Grid::draw(std::shared_ptr<sf::RenderWindow> window) {
 
 void Grid::drawHorizontalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window) {
     sf::RectangleShape line;
-    line.setPosition(sf::Vector2f(col*lineDistance, row*lineDistance-lineThickness));
+    line.setPosition(sf::Vector2f(col*lineDistance+((float)lineThickness/2), row*lineDistance-((float)lineThickness/2)));
     line.setFillColor(lineColor);
     line.setSize(sf::Vector2f(lineDistance-lineThickness, lineThickness));
 
@@ -56,7 +56,7 @@ void Grid::drawHorizontalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf
 
 void Grid::drawVerticalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window) {
     sf::RectangleShape line;
-    line.setPosition(sf::Vector2f(col*lineDistance-lineThickness, row*lineDistance));
+    line.setPosition(sf::Vector2f(col*lineDistance-((float)lineThickness/2), row*lineDistance));
     line.setFillColor(lineColor);
     line.setSize(sf::Vector2f(lineThickness, lineDistance));
 
@@ -115,4 +115,8 @@ sf::Vector2u Grid::positionToGridPlace(sf::Vector2f pointOnScreen) {
     retval.x = ((int)(pointOnScreen.x/lineDistance));
     retval.y = ((int)(pointOnScreen.y/lineDistance));
     return retval;
+}
+
+sf::Uint32 Grid::getLineThickness() {
+    return lineThickness;
 }

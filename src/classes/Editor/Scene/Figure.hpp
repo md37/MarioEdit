@@ -17,6 +17,8 @@ public:
     void rescale(std::shared_ptr<Scale> scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
+    void drawFrame(std::shared_ptr<sf::RenderWindow> window);
+
     bool isMouseOver() override;
     void mouseEnter(std::shared_ptr<AnimationPerformer> animationPerformer) override;
     void mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) override;
@@ -35,6 +37,11 @@ protected:
     std::vector<std::shared_ptr<StaticTile>> tiles;
 
 private:
+
+    bool isFrameCreated = false;
+    sf::RectangleShape frame;
+
+    void createFrame();
 
     std::shared_ptr<StaticTile> findMostLeftTile();
     std::shared_ptr<StaticTile> findMostRightTile();

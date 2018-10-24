@@ -34,7 +34,7 @@ Hill::Hill(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid,
         auto endLine = tileFactory->createStaticTile(2, 1);
         endLine->setGrid(grid);
         endLine->snapToGrid(sf::Vector2u(position));
-        position.y++;
+        position.y--;
         lineStartPosX++;
         position.x = lineStartPosX;
         tiles.push_back(endLine);

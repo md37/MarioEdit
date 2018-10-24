@@ -4,6 +4,8 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
 
+#include <iostream>
+
 std::shared_ptr<sf::RenderWindow> Cursor::window;
 
 void Cursor::reinitialize(std::shared_ptr<sf::RenderWindow> &window) {
@@ -53,8 +55,22 @@ bool Cursor::isOver(std::shared_ptr<Tile> tile) {
            posY <= tile->getPosition().y+tile->getSize().y;
 }
 
+bool Cursor::isOver(std::shared_ptr<Figure> figure) {
+    auto mousePosition = sf::Mouse::getPosition(*(Cursor::window));
+    int posX = mousePosition.x;
+    int posY = mousePosition.y;
+
+    return posX >= figure->getPosition().x && posY <= figure->getPosition().y &&
+           posX <= figure->getPosition().x+figure->getSize().x &&
+           posY >= figure->getPosition().y-figure->getSize().y;
+}
+
 bool Cursor::isClickOn(std::shared_ptr<Tile> tile) {
     return this->isOver(tile) && this->isClick();
+}
+
+bool Cursor::isClickOn(std::shared_ptr<Figure> figure) {
+    return this->isOver(figure) && this->isClick();
 }
 
 bool Cursor::isClick() {

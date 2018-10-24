@@ -6,7 +6,7 @@
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 
-class Figure : public DrawableInterface, RescalableInterface, HoverableInterface {
+class Figure : public DrawableInterface, RescalableInterface, HoverableInterface, SizeableInterface {
 
 public:
 
@@ -22,6 +22,9 @@ public:
     void mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) override;
     void mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) override;
 
+    sf::Vector2f getPosition() override;
+    sf::Vector2u getSize() override;
+
 protected:
 
     bool isMouseOverFlag = false;
@@ -30,5 +33,12 @@ protected:
 
     sf::Vector2i position;
     std::vector<std::shared_ptr<StaticTile>> tiles;
+
+private:
+
+    std::shared_ptr<StaticTile> findMostLeftTile();
+    std::shared_ptr<StaticTile> findMostRightTile();
+    std::shared_ptr<StaticTile> findMostTopTile();
+    std::shared_ptr<StaticTile> findMostBottomTile();
 
 };

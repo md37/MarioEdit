@@ -5,6 +5,7 @@
 #include <SFML/Config.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include "classes/Editor/Scene/Figure.hpp"
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 
@@ -19,7 +20,9 @@ public:
 
     void draw(std::shared_ptr<sf::RenderWindow> window);
     bool isOver(std::shared_ptr<Tile> tile);
+    bool isOver(std::shared_ptr<Figure> figure);
     bool isClickOn(std::shared_ptr<Tile> tile);
+    bool isClickOn(std::shared_ptr<Figure> figure);
 
     bool isClick();
     void click(bool click, sf::Mouse::Button type);

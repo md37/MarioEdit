@@ -7,6 +7,7 @@ EditorEventHandler::EditorEventHandler(
 ) {
     currentState = std::make_shared<EventState>();
     tileEventRegistry = std::make_shared<TileEventRegistry>();
+    figureEventRegistry = std::make_shared<FigureEventRegistry>();
 
     buttonTileEventHandler = std::make_shared<ButtonTileEventHandler>(
         currentState, animationPerformer, scene, tileFactory, tileEventRegistry
@@ -16,7 +17,9 @@ EditorEventHandler::EditorEventHandler(
         currentState, animationPerformer, scene, tileFactory, tileEventRegistry
     );
 
-    figureEventHandler = std::make_shared<FigureEventHandler>(animationPerformer);
+    figureEventHandler = std::make_shared<FigureEventHandler>(
+        animationPerformer, figureEventRegistry
+    );
 }
 
 void EditorEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {

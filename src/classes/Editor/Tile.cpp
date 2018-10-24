@@ -62,8 +62,8 @@ sf::Vector2f Tile::getPosition() {
     return sprite.getPosition();
 }
 
-sf::Vector2i Tile::getSize() {
-    return sf::Vector2i(
+sf::Vector2u Tile::getSize() {
+    return sf::Vector2u(
         sprite.getTextureRect().width * sprite.getScale().x,
         sprite.getTextureRect().height * sprite.getScale().y
     );

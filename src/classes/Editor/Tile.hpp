@@ -1,16 +1,14 @@
 #pragma once
 
-#include <map>
 #include <memory>
-#include <functional>
-#include <SFML/Config.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "classes/System/TileConfig.hpp"
 #include "classes/System/Scale.hpp"
+#include "classes/System/Interface/SizeableInterface.hpp"
 
-class Tile {
+class Tile : public SizeableInterface {
 
 public:
 
@@ -25,7 +23,7 @@ public:
 
     void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition();
-    sf::Vector2i getSize();
+    sf::Vector2u getSize();
 
     void setBorder(sf::Uint8 size, sf::Color color=sf::Color(255, 255, 255, 255));
     void snapToCenterPoint();

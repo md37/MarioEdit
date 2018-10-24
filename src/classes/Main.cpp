@@ -5,7 +5,7 @@
 
 Main::Main() {
     window = std::make_shared<sf::RenderWindow>(
-        sf::VideoMode(windowedWidth, windowedHeight), title, sf::Style::Default
+            sf::VideoMode(windowedWidth, windowedHeight), title, sf::Style::Default
     );
 
     scale = std::make_shared<Scale>(window->getSize());
@@ -89,7 +89,11 @@ int Main::run() {
             editor->runAnimations();
             editor->draw(window);
         }
-        
+
+        sf::RectangleShape rectangleShape;
+//        rectangleShape.setSize();
+        rectangleShape.setPosition({560, 720});
+
         cursor.mouseMove(false);
         cursor.draw(window);
         window->display();

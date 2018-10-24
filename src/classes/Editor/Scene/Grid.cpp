@@ -29,7 +29,6 @@ sf::Vector2f Grid::getPointOnGrid(sf::Vector2f pointOnScreen) {
 
 sf::Vector2f Grid::pointOnGridToPosition(sf::Vector2u pointOnGrid) {
     sf::Vector2f retval = sf::Vector2f(pointOnGrid) * lineDistance;
-    retval.y = lineDistance*(rows-1) - retval.y;
     return retval;
 }
 
@@ -87,7 +86,7 @@ void Grid::setHighlightPosition(sf::Vector2f cursorPosition) {
 
 sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) {
     sf::Vector2f retval(pointOnGrid);
-    retval.y = rows-retval.y;
+    retval.y = retval.y;
     retval *= lineDistance;
     retval.x += lineDistance/2;
     retval.y -= lineDistance/2;
@@ -96,7 +95,6 @@ sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) {
 
 sf::Vector2u Grid::getHighlightPlace() {
     sf::Vector2u retval(highlightPosition/lineDistance);
-    retval.y = rows-retval.y-1;
     return retval;
 }
 
@@ -115,6 +113,6 @@ void Grid::turnHighlightOff() {
 sf::Vector2u Grid::positionToGridPlace(sf::Vector2f pointOnScreen) {
     sf::Vector2u retval = {0, 0};
     retval.x = ((int)(pointOnScreen.x/lineDistance));
-    retval.y = rows-((int)(pointOnScreen.y/lineDistance))-1;
+    retval.y = ((int)(pointOnScreen.y/lineDistance));
     return retval;
 }

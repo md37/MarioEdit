@@ -30,4 +30,5 @@ private:
     std::shared_ptr<FigureEventHandler> figureEventHandler;
 
     std::shared_ptr<TileEventRegistry> tileEventRegistry;
+    std::shared_ptr<FigureEventRegistry> figureEventRegistry;
 };

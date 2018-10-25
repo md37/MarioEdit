@@ -50,7 +50,7 @@ private:
     sf::RectangleShape frame;
 
     bool isDraggingFlag = false;
-    sf::Vector2f startDragPoint;
+    sf::Vector2f dragPosition;
 
     void createFrame();
 

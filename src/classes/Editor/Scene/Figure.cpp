@@ -165,7 +165,7 @@ bool Figure::isDragging() {
 
 void Figure::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isDraggingFlag = true;
-    startDragPoint = Cursor::getCurrentPosition();
+    dragPosition = Cursor::getCurrentPosition();
 }
 
 void Figure::drag() {

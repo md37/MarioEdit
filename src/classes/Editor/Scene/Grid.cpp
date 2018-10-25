@@ -27,7 +27,7 @@ sf::Vector2f Grid::getPointOnGrid(sf::Vector2f pointOnScreen) {
     return retval;
 }
 
-sf::Vector2f Grid::pointOnGridToPosition(sf::Vector2u pointOnGrid) {
+sf::Vector2f Grid::pointOnGridToPosition(sf::Vector2i pointOnGrid) {
     sf::Vector2f retval = sf::Vector2f(pointOnGrid) * lineDistance;
     return retval;
 }
@@ -93,8 +93,8 @@ sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) {
     return retval;
 }
 
-sf::Vector2u Grid::getHighlightPlace() {
-    sf::Vector2u retval(highlightPosition/lineDistance);
+sf::Vector2i Grid::getHighlightPointOnGrid() {
+    sf::Vector2i retval(highlightPosition/lineDistance);
     return retval;
 }
 
@@ -110,8 +110,8 @@ void Grid::turnHighlightOff() {
     highlightFlag = false;
 }
 
-sf::Vector2u Grid::positionToGridPlace(sf::Vector2f pointOnScreen) {
-    sf::Vector2u retval = {0, 0};
+sf::Vector2i Grid::positionToPointOnGrid(sf::Vector2f pointOnScreen) {
+    sf::Vector2i retval = {0, 0};
     retval.x = ((int)(pointOnScreen.x/lineDistance));
     retval.y = ((int)(pointOnScreen.y/lineDistance));
     return retval;

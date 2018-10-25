@@ -6,7 +6,7 @@
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 
-class Figure : public DrawableInterface, RescalableInterface, HoverableInterface, DraggableInterface, SizeableInterface {
+class Figure : public DrawableInterface, RescalableInterface, HoverableInterface, DraggableInterface, LocatableInterface {
 
 public:
 

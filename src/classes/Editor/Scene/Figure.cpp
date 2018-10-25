@@ -70,8 +70,8 @@ void Figure::mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) 
 }
 
 sf::Vector2f Figure::getPosition() {
-    auto point = grid->pointOnGridToPosition(sf::Vector2u(position));
-    auto oneUnit = grid->pointOnGridToPosition(sf::Vector2u(1, 1));
+    auto point = grid->pointOnGridToPosition(sf::Vector2i(position));
+    auto oneUnit = grid->pointOnGridToPosition(sf::Vector2i(1, 1));
     point.y += oneUnit.y;
     return point;
 }

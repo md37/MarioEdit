@@ -2,7 +2,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-class SizeableInterface {
+class LocatableInterface {
 
 public:
 

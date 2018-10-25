@@ -49,7 +49,7 @@ void FigureEventHandler::performDragDrop(Cursor& cursor, std::shared_ptr<Figure>
 }
 
 void FigureEventHandler::performDrop(Cursor &cursor, std::shared_ptr<Figure> &figure) {
-//    auto dropHighlightPlace = scene->getGrid()->getHighlightPlace();
+//    auto dropHighlightPlace = scene->getGrid()->getHighlightPointOnGrid();
 
     figureEventRegistry->unregisterDrag(figure);
     figure->drop(animationPerformer);

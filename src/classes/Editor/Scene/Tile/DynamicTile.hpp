@@ -28,14 +28,14 @@ public:
 
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
-    sf::Vector2u getDropHighlightPlace();
+    sf::Vector2i getDropHighlightPlace();
 
     void correctCorners();
 
 private:
 
     sf::Vector2f dragOffset = {0.0f, 0.0f};
-    sf::Vector2u dropHighlightPlace = {0, 0};
+    sf::Vector2i dropHighlightPlace = {0, 0};
 
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;

@@ -59,7 +59,7 @@ void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<Dy
 }
 
 void DynamicTileEventHandler::performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
-    auto dropHighlightPlace = scene->getGrid()->getHighlightPlace();
+    auto dropHighlightPlace = scene->getGrid()->getHighlightPointOnGrid();
     auto tileOnThisPlace = ObjectRegistry::getTileOnGrid(dropHighlightPlace);
 
     if (tileOnThisPlace != nullptr && tileOnThisPlace != tile) {
@@ -88,7 +88,7 @@ void DynamicTileEventHandler::performHover(Cursor &cursor, std::shared_ptr<Dynam
 
 void DynamicTileEventHandler::performLongClickDrop(Cursor &cursor) {
     auto grid = scene->getGrid();
-    auto currentSlotGridPosition = grid->positionToGridPlace(cursor.getCurrentPosition());
+    auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getCurrentPosition());
     auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
 
     auto draggingTile = scene->getDraggingTile();
@@ -116,7 +116,7 @@ void DynamicTileEventHandler::performQuickClickDrop(Cursor &cursor) {
     }
 
     auto grid = scene->getGrid();
-    auto currentSlotGridPosition = grid->positionToGridPlace(cursor.getCurrentPosition());
+    auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getCurrentPosition());
     auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
 
     auto draggingTile = scene->getDraggingTile();

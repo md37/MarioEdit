@@ -3,8 +3,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "classes/Editor/Tile.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
+#include "classes/System/Interface/LocatableOnGridInterface.hpp"
 
-class GridTile : public Tile {
+class GridTile : public Tile, LocatableOnGridInterface {
 
 public:
 
@@ -12,14 +13,16 @@ public:
 
     void setGrid(std::shared_ptr<Grid> grid);
     void snapToGrid();
-    void snapToGrid(sf::Vector2u gridPosition);
+    void snapToGrid(sf::Vector2i pointOnGrid);
 
-    bool isOnIncompletePlace(sf::Vector2u dropPlace);
-    sf::Vector2u getGridPosition();
+    sf::Vector2i getPointOnGrid() override;
+    sf::Vector2u getSizeOnGrid() override;
+
+    bool isOnIncompletePoint(sf::Vector2i pointOnGrid);
 
 protected:
 
     std::shared_ptr<Grid> grid;
-    sf::Vector2u gridPosition;
+    sf::Vector2i pointOnGrid;
 
 };

@@ -12,7 +12,7 @@ Hill::Hill(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid,
     for (sf::Uint32 i=0; i<size; i++) {
         auto beginLine = tileFactory->createStaticTile(0, 1);
         beginLine->setGrid(grid);
-        beginLine->snapToGrid(sf::Vector2u(position));
+        beginLine->snapToGrid(sf::Vector2i(position));
         position.x++;
         tiles.push_back(beginLine);
 
@@ -25,7 +25,7 @@ Hill::Hill(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid,
                 middleLine = tileFactory->createStaticTile(1, 1);
             }
             middleLine->setGrid(grid);
-            middleLine->snapToGrid(sf::Vector2u(position));
+            middleLine->snapToGrid(sf::Vector2i(position));
             position.x++;
             tiles.push_back(middleLine);
         }
@@ -33,7 +33,7 @@ Hill::Hill(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid,
 
         auto endLine = tileFactory->createStaticTile(2, 1);
         endLine->setGrid(grid);
-        endLine->snapToGrid(sf::Vector2u(position));
+        endLine->snapToGrid(sf::Vector2i(position));
         position.y--;
         lineStartPosX++;
         position.x = lineStartPosX;
@@ -43,6 +43,6 @@ Hill::Hill(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid,
     position.x = lineStartPosX;
     auto top = tileFactory->createStaticTile(1, 0);
     top->setGrid(grid);
-    top->snapToGrid(sf::Vector2u(position));
+    top->snapToGrid(sf::Vector2i(position));
     tiles.push_back(top);
 }

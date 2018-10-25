@@ -67,7 +67,7 @@ void DynamicTile::drag() {
 void DynamicTile::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
     dragOffset = {0, 0};
 
-    dropHighlightPlace = grid->getHighlightPlace();
+    dropHighlightPlace = grid->getHighlightPointOnGrid();
     snapToGrid(dropHighlightPlace);
 
     sf::Vector2f positionOnGrid = grid->getHighlightPosition();
@@ -110,6 +110,6 @@ void DynamicTile::correctCorners() {
     sprite.setPosition(position);
 }
 
-sf::Vector2u DynamicTile::getDropHighlightPlace() {
+sf::Vector2i DynamicTile::getDropHighlightPlace() {
     return dropHighlightPlace;
 }

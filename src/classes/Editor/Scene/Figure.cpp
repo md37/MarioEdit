@@ -1,6 +1,7 @@
 #include "Figure.hpp"
 
 #include <iostream>
+#include "classes/System/Cursor.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
 Figure::Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid, sf::Vector2i position) {
@@ -35,6 +36,8 @@ void Figure::createFrame() {
     auto framePosition = this->getPosition();
     framePosition.y -= this->getSize().y;
     frame.setPosition(framePosition);
+
+    isFrameCreated = true;
 }
 
 void Figure::rescale(std::shared_ptr<Scale> scale) {
@@ -63,6 +66,7 @@ void Figure::mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) {
 
 void Figure::mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isMouseOverFlag = false;
+    isFrameCreated = false;
 }
 
 sf::Vector2f Figure::getPosition() {
@@ -153,4 +157,21 @@ std::shared_ptr<StaticTile> Figure::findMostBottomTile() {
         }
     }
     return mostBottomTile;
+}
+
+bool Figure::isDragging() {
+    return isDraggingFlag;
+}
+
+void Figure::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
+    isDraggingFlag = true;
+    startDragPoint = Cursor::getCurrentPosition();
+}
+
+void Figure::drag() {
+
+}
+
+void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
+    isDraggingFlag = false;
 }

@@ -10,8 +10,13 @@ public:
     void unregisterOver(std::shared_ptr<Figure> figure);
     bool isOverRegistered(std::shared_ptr<Figure> figure);
 
+    void registerDrag(std::shared_ptr<Figure> figure);
+    void unregisterDrag(std::shared_ptr<Figure> figure);
+    bool isDragRegistered(std::shared_ptr<Figure> figure);
+
 private:
 
     std::vector<std::shared_ptr<Figure>> registeredOverOnFigures;
+    std::vector<std::shared_ptr<Figure>> registeredDragOnFigures;
 
 };

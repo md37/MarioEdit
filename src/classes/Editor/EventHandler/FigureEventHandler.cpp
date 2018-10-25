@@ -16,6 +16,10 @@ void FigureEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     for (auto &figure : figures) {
         performHover(cursor, figure);
     }
+
+    for (auto &figure : figures) {
+        performDragDrop(cursor, figure);
+    }
 }
 
 void FigureEventHandler::performHover(Cursor &cursor, std::shared_ptr<Figure> &figure) {
@@ -28,4 +32,25 @@ void FigureEventHandler::performHover(Cursor &cursor, std::shared_ptr<Figure> &f
         figureEventRegistry->unregisterOver(figure);
         figure->mouseLeave(animationPerformer);
     }
+}
+
+void FigureEventHandler::performDragDrop(Cursor& cursor, std::shared_ptr<Figure> &figure) {
+    if (cursor.isOver(figure) && figureEventRegistry->isOverRegistered(figure)) {
+        bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
+        if (cursor.isClick() && !figureEventRegistry->isDragRegistered(figure) && isLeftClick) {
+            figure->startDrag(animationPerformer);
+            figureEventRegistry->registerDrag(figure);
+        } else if (!cursor.isClick() && figureEventRegistry->isDragRegistered(figure)) {
+            performDrop(cursor, figure);
+        }
+    } else if (figureEventRegistry->isOverRegistered(figure) && figureEventRegistry->isDragRegistered(figure)) {
+        performDrop(cursor, figure);
+    }
+}
+
+void FigureEventHandler::performDrop(Cursor &cursor, std::shared_ptr<Figure> &figure) {
+//    auto dropHighlightPlace = scene->getGrid()->getHighlightPlace();
+
+    figureEventRegistry->unregisterDrag(figure);
+    figure->drop(animationPerformer);
 }

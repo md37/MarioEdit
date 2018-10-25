@@ -6,7 +6,7 @@
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 
-class Figure : public DrawableInterface, RescalableInterface, HoverableInterface, SizeableInterface {
+class Figure : public DrawableInterface, RescalableInterface, HoverableInterface, DraggableInterface, SizeableInterface {
 
 public:
 
@@ -24,22 +24,33 @@ public:
     void mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) override;
     void mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) override;
 
+    bool isDragging() override;
+    void startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) override;
+    void drag() override;
+    void drop(std::shared_ptr<AnimationPerformer> animationPerformer) override;
+
+public:
+
     sf::Vector2f getPosition() override;
     sf::Vector2u getSize() override;
 
 protected:
 
-    bool isMouseOverFlag = false;
-    std::shared_ptr<TileFactory> tileFactory;
-    std::shared_ptr<Grid> grid;
-
-    sf::Vector2i position;
     std::vector<std::shared_ptr<StaticTile>> tiles;
 
 private:
 
+    std::shared_ptr<TileFactory> tileFactory;
+    std::shared_ptr<Grid> grid;
+
+    bool isMouseOverFlag = false;
     bool isFrameCreated = false;
+
+    sf::Vector2i position;
     sf::RectangleShape frame;
+
+    bool isDraggingFlag = false;
+    sf::Vector2f startDragPoint;
 
     void createFrame();
 

@@ -16,7 +16,8 @@ Tile::Tile(sf::Sprite sprite, TileConfig config) {
 
 void Tile::rescale(std::shared_ptr<Scale>& scale) {
     auto scaleRatio = scale->getRatio();
-    this->sprite.setPosition(position*scaleRatio);
+    auto position = getPosition();
+    sprite.setPosition(position*scaleRatio);
 
     this->scale = sf::Vector2f(scale->getCurrent(), scale->getCurrent());
     sprite.setScale(this->scale*scalePromotion);
@@ -36,6 +37,7 @@ void Tile::rescale(std::shared_ptr<Scale>& scale) {
 }
 
 void Tile::recalculateCenter() {
+    auto position = getPosition();
     centerPoint.x = position.x + getSize().x/2;
     centerPoint.y = position.y + getSize().y/2;
 }
@@ -53,7 +55,6 @@ void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
 }
 
 void Tile::setPosition(sf::Vector2f position) {
-    this->position = position;
     sprite.setPosition(position);
     recalculateCenter();
 }
@@ -81,6 +82,7 @@ void Tile::snapToCenterPoint() {
 
     sprite.setScale(newSpriteScale.x, newSpriteScale.y);
 
+    auto position = getPosition();
     position.x = centerPoint.x-newWidth/2;
     position.y = centerPoint.y-newHeight/2;
     sprite.setPosition(position);

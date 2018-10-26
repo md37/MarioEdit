@@ -106,8 +106,7 @@ void DynamicTile::correctCorners() {
         posY = windowHeight-height;
     }
 
-    position = sf::Vector2f(posX, posY);
-    sprite.setPosition(position);
+    sprite.setPosition(sf::Vector2f(posX, posY));
 }
 
 sf::Vector2i DynamicTile::getDropHighlightPlace() {

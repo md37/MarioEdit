@@ -36,7 +36,6 @@ protected:
     static std::shared_ptr<sf::RenderWindow> window;
 
     sf::Sprite sprite;
-    sf::Vector2f position;
     sf::Vector2f centerPoint;
 
     sf::RectangleShape border;

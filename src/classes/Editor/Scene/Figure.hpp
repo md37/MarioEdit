@@ -6,18 +6,23 @@
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 
-class Figure : public DrawableInterface, RescalableInterface, HoverableInterface, DraggableInterface, LocatableInterface {
+class Figure : public DrawableInterface, LocatableInterface, GridableInterface, RescalableInterface, HoverableInterface, DraggableInterface {
 
 public:
 
     Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid, sf::Vector2i position);
 
-    void snapToGrid();
-
     void rescale(std::shared_ptr<Scale> scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
     void drawFrame(std::shared_ptr<sf::RenderWindow> window);
+
+    sf::Vector2f getPosition() override;
+    sf::Vector2u getSize() override;
+
+    void setGrid(std::shared_ptr<Grid> grid) override;
+    void snapToGrid() override;
+    void snapToGrid(sf::Vector2i pointOnGrid) override;
 
     bool isMouseOver() override;
     void mouseEnter(std::shared_ptr<AnimationPerformer> animationPerformer) override;
@@ -28,11 +33,6 @@ public:
     void startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) override;
     void drag() override;
     void drop(std::shared_ptr<AnimationPerformer> animationPerformer) override;
-
-public:
-
-    sf::Vector2f getPosition() override;
-    sf::Vector2u getSize() override;
 
 protected:
 

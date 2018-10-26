@@ -28,7 +28,6 @@ void Figure::createFrame() {
     auto size = this->getSize();
 
     frame.setSize(sf::Vector2f(size));
-    frame.setFillColor(sf::Color(255, 255, 255, 0));
     frame.setOutlineThickness(thickness*4);
     frame.setOutlineColor(sf::Color(255, 255, 255, 128));
     frame.setFillColor(sf::Color(255, 255, 255, 20));
@@ -46,9 +45,19 @@ void Figure::rescale(std::shared_ptr<Scale> scale) {
     }
 }
 
+void Figure::setGrid(std::shared_ptr<Grid> grid) {
+    this->grid = grid;
+}
+
 void Figure::snapToGrid() {
     for (auto &tile : tiles) {
         tile->snapToGrid();
+    }
+}
+
+void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
+    for (auto &tile : tiles) {
+        tile->snapToGrid(pointOnGrid);
     }
 }
 
@@ -166,6 +175,8 @@ bool Figure::isDragging() {
 void Figure::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isDraggingFlag = true;
     dragPosition = Cursor::getCurrentPosition();
+    frame.setOutlineColor(sf::Color(255, 255, 0, 128));
+    frame.setFillColor(sf::Color(255, 255, 0, 20));
 }
 
 void Figure::drag() {
@@ -174,4 +185,6 @@ void Figure::drag() {
 
 void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isDraggingFlag = false;
+    frame.setOutlineColor(sf::Color(255, 255, 255, 128));
+    frame.setFillColor(sf::Color(255, 255, 255, 20));
 }

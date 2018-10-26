@@ -18,27 +18,24 @@ public:
 
     float scalePromotion = 1.0f;
 
+    sf::Vector2u getImagePosition();
     void changeImage(sf::Uint32 x, sf::Uint32 y);
     void rescale(std::shared_ptr<Scale>& scale);
 
     void setPosition(sf::Vector2f position);
-    sf::Vector2f getPosition();
-    sf::Vector2u getSize();
+    sf::Vector2f getPosition() override;
+    sf::Vector2u getSize() override;
 
     void setBorder(sf::Uint8 size, sf::Color color=sf::Color(255, 255, 255, 255));
     void snapToCenterPoint();
 
     bool isTypeOf(std::shared_ptr<Tile> tile);
-    sf::Vector2u getImagePosition();
 
 protected:
 
     static std::shared_ptr<sf::RenderWindow> window;
 
-    void recalculateCenter();
-
     sf::Sprite sprite;
-    sf::Vector2f scale = {1.0f, 1.0f};
     sf::Vector2f position;
     sf::Vector2f centerPoint;
 
@@ -49,6 +46,9 @@ protected:
 
 private:
 
+    sf::Vector2f scale = {1.0f, 1.0f};
     TileConfig config;
+
+    void recalculateCenter();
 
 };

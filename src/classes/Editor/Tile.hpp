@@ -18,7 +18,6 @@ public:
 
     float scalePromotion = 1.0f;
 
-    sf::Vector2u getImagePosition();
     void changeImage(sf::Uint32 x, sf::Uint32 y);
     void rescale(std::shared_ptr<Scale>& scale);
 

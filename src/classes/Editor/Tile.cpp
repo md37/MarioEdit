@@ -89,9 +89,5 @@ void Tile::snapToCenterPoint() {
 }
 
 bool Tile::isTypeOf(std::shared_ptr<Tile> tile) {
-    return imagePosition == tile->getImagePosition();
-}
-
-sf::Vector2u Tile::getImagePosition() {
-    return imagePosition;
+    return imagePosition == tile->imagePosition;
 }

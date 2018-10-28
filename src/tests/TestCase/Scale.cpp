@@ -54,3 +54,12 @@ TEST(ScaleTest, test_handle_rescalling_to_same_dimensions) {
     EXPECT_FLOAT_EQ(scale.getCurrent(), 4.1666665);
     EXPECT_FLOAT_EQ(scale.getRatio(), 1.0f);
 }
+
+TEST(ScaleTest, test_handle_two_times_rescalling) {
+    Scale scale(sf::Vector2u(1280, 800));
+    scale.change(sf::Vector2u(2560, 1600));
+    scale.change(sf::Vector2u(640, 400));
+
+    EXPECT_FLOAT_EQ(scale.getCurrent(), 2.0833333);
+    EXPECT_FLOAT_EQ(scale.getRatio(), 0.25f);
+}

@@ -90,10 +90,6 @@ int Main::run() {
             editor->draw(window);
         }
 
-        sf::RectangleShape rectangleShape;
-//        rectangleShape.setSize();
-        rectangleShape.setPosition({560, 720});
-
         cursor.mouseMove(false);
         cursor.draw(window);
         window->display();

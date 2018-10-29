@@ -16,6 +16,7 @@ public:
 
     explicit Tile(sf::Sprite sprite, TileConfig config=TileConfig());
 
+    sf::Vector2f positionPromotion = {0.0f, 0.0f};
     float scalePromotion = 1.0f;
 
     void changeImage(sf::Uint32 x, sf::Uint32 y);

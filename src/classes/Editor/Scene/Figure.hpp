@@ -67,4 +67,8 @@ private:
     std::shared_ptr<StaticTile> findMostBottomTile();
 
     void recalculateHighlightPosition();
+    void calculateDragOffset();
+    void moveTiles();
+
+    void updateFramePosition();
 };

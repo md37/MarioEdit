@@ -31,11 +31,15 @@ void Figure::createFrame() {
     frame.setOutlineColor(sf::Color(255, 255, 255, 128));
     frame.setFillColor(sf::Color(255, 255, 255, 20));
 
-    auto framePosition = this->getPosition();
-    framePosition.y -= this->getSize().y;
-    frame.setPosition(framePosition);
+    updateFramePosition();
 
     isFrameCreated = true;
+}
+
+void Figure::updateFramePosition() {
+    auto framePosition = getPosition();
+    framePosition.y -= getSize().y;
+    frame.setPosition(framePosition);
 }
 
 void Figure::rescale(std::shared_ptr<Scale> scale) {
@@ -193,19 +197,27 @@ void Figure::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
 
     grid->turnHighlightOn(getSizeOnGrid());
 
+    calculateDragOffset();
+    recalculateHighlightPosition();
+    moveTiles();
+}
+
+void Figure::calculateDragOffset() {
     auto cursorPosition = Cursor::getCurrentPosition();
     auto dragOffsetPartial = cursorPosition - getPosition();
     auto dragOffsetOnGrid = grid->positionToPointOnGrid(dragOffsetPartial);
 
     dragOffsetOnGrid = getPointOnGrid() - dragOffsetOnGrid;
     dragOffsetOnGrid.y--;
-    dragOffset = getPosition()-grid->pointOnGridToPosition(dragOffsetOnGrid);
-
-    recalculateHighlightPosition();
+    dragOffset = getPosition() - grid->pointOnGridToPosition(dragOffsetOnGrid);
 }
 
 void Figure::drag() {
     recalculateHighlightPosition();
+
+    moveTiles();
+    updateFramePosition();
+    frame.setPosition(grid->getHighlightPosition());
 }
 
 void Figure::recalculateHighlightPosition() {
@@ -216,10 +228,23 @@ void Figure::recalculateHighlightPosition() {
     grid->setHighlightPosition(highlightPosition);
 }
 
+void Figure::moveTiles() {
+    auto cursorPosition = Cursor::getCurrentPosition();
+    cursorPosition -= dragOffset;
+
+    for (auto &tile : tiles) {
+
+    }
+}
+
 void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isDraggingFlag = false;
+
+    position = grid->getHighlightPointOnGrid();
+    position.y += getSizeOnGrid().y-1;
+    grid->turnHighlightOff();
+
+    createFrame();
     frame.setOutlineColor(sf::Color(255, 255, 255, 128));
     frame.setFillColor(sf::Color(255, 255, 255, 20));
-
-    grid->turnHighlightOff();
 }

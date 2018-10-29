@@ -50,7 +50,7 @@ void DynamicTile::startDrag(std::shared_ptr<AnimationPerformer> animationPerform
 
     dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
 
-    grid->turnHighlightOn();
+    grid->turnHighlightOn(getSizeOnGrid());
     isDraggingFlag = true;
 }
 

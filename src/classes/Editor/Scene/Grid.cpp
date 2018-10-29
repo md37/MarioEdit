@@ -67,7 +67,8 @@ void Grid::drawHighlight(std::shared_ptr<sf::RenderWindow> window) {
     sf::RectangleShape line;
     line.setPosition(highlightPosition);
     line.setFillColor(lineColor);
-    line.setSize(sf::Vector2f(lineDistance, lineDistance));
+
+    line.setSize(sf::Vector2f(lineDistance*highlightSize.x, lineDistance*highlightSize.y));
 
     window->draw(line);
 }
@@ -102,8 +103,9 @@ bool Grid::hasIncompleteEnding() {
     return hasIncompleteEndingFlag;
 }
 
-void Grid::turnHighlightOn() {
+void Grid::turnHighlightOn(sf::Vector2u size) {
     highlightFlag = true;
+    highlightSize = size;
 }
 
 void Grid::turnHighlightOff() {

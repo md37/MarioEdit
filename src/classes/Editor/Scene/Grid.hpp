@@ -24,7 +24,7 @@ public:
 
     sf::Uint32 getLineThickness();
 
-    void turnHighlightOn();
+    void turnHighlightOn(sf::Vector2u size);
     void turnHighlightOff();
     bool hasIncompleteEnding();
     void setHighlightPosition(sf::Vector2f cursorPosition);
@@ -46,6 +46,7 @@ private:
     
     bool highlightFlag = false;
     sf::Vector2f highlightPosition;
+    sf::Vector2u highlightSize;
 
     void drawHorizontalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window);
     void drawVerticalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window);

@@ -188,18 +188,32 @@ bool Figure::isDragging() {
 
 void Figure::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isDraggingFlag = true;
-    dragPosition = Cursor::getCurrentPosition();
     frame.setOutlineColor(sf::Color(255, 255, 0, 128));
     frame.setFillColor(sf::Color(255, 255, 0, 20));
 
-    auto cursorPosition = Cursor::getCurrentPosition();
-    grid->setHighlightPosition(cursorPosition);
     grid->turnHighlightOn(getSizeOnGrid());
+
+    auto cursorPosition = Cursor::getCurrentPosition();
+    auto dragOffsetPartial = cursorPosition - getPosition();
+    auto dragOffsetOnGrid = grid->positionToPointOnGrid(dragOffsetPartial);
+
+    dragOffsetOnGrid = getPointOnGrid() - dragOffsetOnGrid;
+    dragOffsetOnGrid.y--;
+    dragOffset = getPosition()-grid->pointOnGridToPosition(dragOffsetOnGrid);
+
+    recalculateHighlightPosition();
 }
 
 void Figure::drag() {
-    auto cursorPosition = Cursor::getCurrentPosition();
-    grid->setHighlightPosition(cursorPosition);
+    recalculateHighlightPosition();
+}
+
+void Figure::recalculateHighlightPosition() {
+    auto highlightPosition = Cursor::getCurrentPosition();
+    highlightPosition.x -= dragOffset.x;
+    highlightPosition.y -= dragOffset.y;
+
+    grid->setHighlightPosition(highlightPosition);
 }
 
 void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {

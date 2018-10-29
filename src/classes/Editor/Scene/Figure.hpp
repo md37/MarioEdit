@@ -57,7 +57,7 @@ private:
     sf::RectangleShape frame;
 
     bool isDraggingFlag = false;
-    sf::Vector2f dragPosition;
+    sf::Vector2f dragOffset = {0.0f, 0.0f};
 
     void createFrame();
 
@@ -66,4 +66,5 @@ private:
     std::shared_ptr<StaticTile> findMostTopTile();
     std::shared_ptr<StaticTile> findMostBottomTile();
 
+    void recalculateHighlightPosition();
 };

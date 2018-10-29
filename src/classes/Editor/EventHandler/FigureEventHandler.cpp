@@ -11,8 +11,15 @@ FigureEventHandler::FigureEventHandler(
 }
 
 void FigureEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
-    auto figures = ObjectRegistry::getFigures();
 
+    if (cursor.isMouseMoved()) {
+        auto registeredDragOnFigures = figureEventRegistry->getRegisteredDragOnFigures();
+        for (auto &dragOnFigure : registeredDragOnFigures) {
+            dragOnFigure->drag();
+        }
+    }
+
+    auto figures = ObjectRegistry::getFigures();
     for (auto &figure : figures) {
         performHover(cursor, figure);
     }

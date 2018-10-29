@@ -6,7 +6,9 @@
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 
-class Figure : public DrawableInterface, LocatableInterface, GridableInterface, RescalableInterface, HoverableInterface, DraggableInterface {
+class Figure : public
+    DrawableInterface, LocatableInterface, GridableInterface, LocatableOnGridInterface,
+    RescalableInterface, HoverableInterface, DraggableInterface {
 
 public:
 
@@ -19,6 +21,11 @@ public:
 
     sf::Vector2f getPosition() override;
     sf::Vector2u getSize() override;
+
+    sf::Vector2i getPointOnGrid() override;
+    sf::Vector2u getSizeOnGrid() override;
+
+public:
 
     void setGrid(std::shared_ptr<Grid> grid) override;
     void snapToGrid() override;

@@ -1,6 +1,5 @@
 #include "Figure.hpp"
 
-#include <iostream>
 #include "classes/System/Cursor.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
@@ -96,6 +95,21 @@ sf::Vector2u Figure::getSize() {
     return {width, height};
 }
 
+sf::Vector2i Figure::getPointOnGrid() {
+    return position;
+}
+
+sf::Vector2u Figure::getSizeOnGrid() {
+    auto mostLeftTile = findMostLeftTile();
+    auto mostRightTile = findMostRightTile();
+    auto mostTopTile = findMostTopTile();
+    auto mostBottomTile = findMostBottomTile();
+
+    sf::Uint32 width = mostRightTile->getPointOnGrid().x - mostLeftTile->getPointOnGrid().x;
+    sf::Uint32 height = mostBottomTile->getPointOnGrid().y - mostTopTile->getPointOnGrid().y;
+    return {width+1, height+1};
+}
+
 std::shared_ptr<StaticTile> Figure::findMostLeftTile() {
      if (tiles.size() == 0) {
          EmptyFigureFoundException e;
@@ -177,14 +191,21 @@ void Figure::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
     dragPosition = Cursor::getCurrentPosition();
     frame.setOutlineColor(sf::Color(255, 255, 0, 128));
     frame.setFillColor(sf::Color(255, 255, 0, 20));
+
+    auto cursorPosition = Cursor::getCurrentPosition();
+    grid->setHighlightPosition(cursorPosition);
+    grid->turnHighlightOn(getSizeOnGrid());
 }
 
 void Figure::drag() {
-
+    auto cursorPosition = Cursor::getCurrentPosition();
+    grid->setHighlightPosition(cursorPosition);
 }
 
 void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isDraggingFlag = false;
     frame.setOutlineColor(sf::Color(255, 255, 255, 128));
     frame.setFillColor(sf::Color(255, 255, 255, 20));
+
+    grid->turnHighlightOff();
 }

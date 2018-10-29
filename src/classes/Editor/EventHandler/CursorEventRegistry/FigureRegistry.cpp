@@ -43,3 +43,7 @@ bool FigureEventRegistry::isDragRegistered(std::shared_ptr<Figure> figure) {
 
     return std::find(registeredDragOnFigures.begin(), registeredDragOnFigures.end(), figure) != registeredDragOnFigures.end();
 }
+
+std::vector<std::shared_ptr<Figure>> FigureEventRegistry::getRegisteredDragOnFigures() {
+    return registeredDragOnFigures;
+}

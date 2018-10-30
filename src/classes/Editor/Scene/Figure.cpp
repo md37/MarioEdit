@@ -1,6 +1,5 @@
 #include "Figure.hpp"
 
-#include <iostream>
 #include "classes/System/Cursor.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
@@ -223,6 +222,7 @@ void Figure::drag() {
     recalculateFramePosition();
 
     moveTiles();
+    position = frame.getPosition();
 }
 
 void Figure::recalculateHighlightPosition() {
@@ -239,7 +239,15 @@ void Figure::recalculateFramePosition() {
 }
 
 void Figure::moveTiles() {
+    auto oldPosition = position;
+    auto currentPosition = frame.getPosition();
+    auto positionDiff = currentPosition-oldPosition;
 
+    for (auto &tile : tiles) {
+        auto tileCurrentPosition = tile->getPosition();
+        tileCurrentPosition += positionDiff;
+        tile->setPosition(tileCurrentPosition);
+    }
 }
 
 void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
@@ -250,6 +258,7 @@ void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
     grid->turnHighlightOff();
 
     createFrame();
+    snapToGrid();
     dragOffset = {0.0f, 0.0f};
     dragOffsetForHighlight = {0.0f, 0.0f};
 }

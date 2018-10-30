@@ -20,7 +20,7 @@ public:
 private:
 
     DynamicTile* tile;
-    std::shared_ptr<SmoothStepFunction> downFunction;
-    std::shared_ptr<SmoothStepFunction> upFunction;
+    std::unique_ptr<SmoothStepFunction> downFunction;
+    std::unique_ptr<SmoothStepFunction> upFunction;
 
 };

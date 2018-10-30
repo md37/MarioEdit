@@ -58,6 +58,7 @@ private:
 
     bool isDraggingFlag = false;
     sf::Vector2f dragOffset = {0.0f, 0.0f};
+    sf::Vector2f dragOffsetForHighlight = {0.0f, 0.0f};
 
     void createFrame();
 
@@ -71,4 +72,5 @@ private:
     void moveTiles();
 
     void updateFramePosition();
+    void recalculateFramePosition();
 };

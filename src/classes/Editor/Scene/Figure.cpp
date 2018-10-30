@@ -1,5 +1,6 @@
 #include "Figure.hpp"
 
+#include <iostream>
 #include "classes/System/Cursor.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
@@ -204,37 +205,38 @@ void Figure::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
 
 void Figure::calculateDragOffset() {
     auto cursorPosition = Cursor::getCurrentPosition();
-    auto dragOffsetPartial = cursorPosition - getPosition();
-    auto dragOffsetOnGrid = grid->positionToPointOnGrid(dragOffsetPartial);
+    dragOffset = cursorPosition - getPosition();
 
+    auto dragOffsetOnGrid = grid->positionToPointOnGrid(dragOffset);
     dragOffsetOnGrid = getPointOnGrid() - dragOffsetOnGrid;
     dragOffsetOnGrid.y--;
-    dragOffset = getPosition() - grid->pointOnGridToPosition(dragOffsetOnGrid);
+    dragOffsetForHighlight = getPosition() - grid->pointOnGridToPosition(dragOffsetOnGrid);
 }
 
 void Figure::drag() {
     recalculateHighlightPosition();
+    recalculateFramePosition();
 
     moveTiles();
-    updateFramePosition();
-    frame.setPosition(grid->getHighlightPosition());
 }
 
 void Figure::recalculateHighlightPosition() {
     auto highlightPosition = Cursor::getCurrentPosition();
-    highlightPosition.x -= dragOffset.x;
-    highlightPosition.y -= dragOffset.y;
+    highlightPosition.x -= dragOffsetForHighlight.x;
+    highlightPosition.y -= dragOffsetForHighlight.y;
 
     grid->setHighlightPosition(highlightPosition);
 }
 
+void Figure::recalculateFramePosition() {
+    auto newFramePosition = Cursor::getCurrentPosition();
+    newFramePosition.x -= dragOffset.x;
+    newFramePosition.y -= getSize().y+dragOffset.y;
+    frame.setPosition(newFramePosition);
+}
+
 void Figure::moveTiles() {
-    auto cursorPosition = Cursor::getCurrentPosition();
-    cursorPosition -= dragOffset;
 
-    for (auto &tile : tiles) {
-
-    }
 }
 
 void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
@@ -245,6 +247,6 @@ void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
     grid->turnHighlightOff();
 
     createFrame();
-    frame.setOutlineColor(sf::Color(255, 255, 255, 128));
-    frame.setFillColor(sf::Color(255, 255, 255, 20));
+    dragOffset = {0.0f, 0.0f};
+    dragOffsetForHighlight = {0.0f, 0.0f};
 }

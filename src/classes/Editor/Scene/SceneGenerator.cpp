@@ -34,6 +34,6 @@ void SceneGenerator::createClouds() {
 
 void SceneGenerator::createHills() {
     auto hill = std::make_shared<Hill>(tileFactory, grid, 2);
-    hill->snapToGrid(sf::Vector2i(7, 9));
+    hill->snapToGrid(sf::Vector2i(7, 7));
     ObjectRegistry::registerFigure(hill);
 }

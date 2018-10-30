@@ -60,9 +60,9 @@ bool Cursor::isOver(std::shared_ptr<Figure> figure) {
     int posX = mousePosition.x;
     int posY = mousePosition.y;
 
-    return posX >= figure->getPosition().x && posY <= figure->getPosition().y &&
+    return posX >= figure->getPosition().x && posY >= figure->getPosition().y &&
            posX <= figure->getPosition().x+figure->getSize().x &&
-           posY >= figure->getPosition().y-figure->getSize().y;
+           posY <= figure->getPosition().y+figure->getSize().y;
 }
 
 bool Cursor::isClickOn(std::shared_ptr<Tile> tile) {

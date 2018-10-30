@@ -38,7 +38,6 @@ void Figure::createFrame() {
 
 void Figure::updateFramePosition() {
     auto framePosition = getPosition();
-    framePosition.y -= getSize().y;
     frame.setPosition(framePosition);
 }
 
@@ -62,11 +61,11 @@ void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
     this->position = grid->pointOnGridToPosition(pointOnGrid);
 
     auto mostLeftTile = findMostLeftTile();
-    auto mostBottomTile = findMostBottomTile();
+    auto mostTopTile = findMostTopTile();
 
     sf::Vector2i diff = {
         pointOnGrid.x-mostLeftTile->getPointOnGrid().x,
-        pointOnGrid.y-mostBottomTile->getPointOnGrid().y
+        pointOnGrid.y-mostTopTile->getPointOnGrid().y
     };
 
     for (auto &tile : tiles) {
@@ -216,7 +215,6 @@ void Figure::calculateDragOffset() {
 
     auto dragOffsetOnGrid = grid->positionToPointOnGrid(dragOffset);
     dragOffsetOnGrid = getPointOnGrid() - dragOffsetOnGrid;
-    dragOffsetOnGrid.y--;
     dragOffsetForHighlight = getPosition() - grid->pointOnGridToPosition(dragOffsetOnGrid);
 }
 
@@ -229,16 +227,14 @@ void Figure::drag() {
 
 void Figure::recalculateHighlightPosition() {
     auto highlightPosition = Cursor::getCurrentPosition();
-    highlightPosition.x -= dragOffsetForHighlight.x;
-    highlightPosition.y -= dragOffsetForHighlight.y;
+    highlightPosition -= dragOffsetForHighlight;
 
     grid->setHighlightPosition(highlightPosition);
 }
 
 void Figure::recalculateFramePosition() {
     auto newFramePosition = Cursor::getCurrentPosition();
-    newFramePosition.x -= dragOffset.x;
-    newFramePosition.y -= getSize().y+dragOffset.y;
+    newFramePosition -= dragOffset;
     frame.setPosition(newFramePosition);
 }
 
@@ -250,9 +246,7 @@ void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isDraggingFlag = false;
 
     pointOnGrid = grid->getHighlightPointOnGrid();
-    pointOnGrid.y--;
     position = grid->pointOnGridToPosition(pointOnGrid);
-    position.y += getSize().y;
     grid->turnHighlightOff();
 
     createFrame();

@@ -12,7 +12,7 @@ class Figure : public
 
 public:
 
-    Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid, sf::Vector2i position);
+    Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid);
 
     void rescale(std::shared_ptr<Scale> scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
@@ -44,6 +44,8 @@ public:
 protected:
 
     std::vector<std::shared_ptr<StaticTile>> tiles;
+    sf::Vector2f position = {0.0f, 0.0f};
+    sf::Vector2i pointOnGrid = {0, 0};
 
 private:
 
@@ -53,7 +55,6 @@ private:
     bool isMouseOverFlag = false;
     bool isFrameCreated = false;
 
-    sf::Vector2i position;
     sf::RectangleShape frame;
 
     bool isDraggingFlag = false;

@@ -4,10 +4,9 @@
 #include "classes/System/Cursor.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
-Figure::Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid, sf::Vector2i position) {
+Figure::Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid) {
     this->tileFactory = tileFactory;
     this->grid = grid;
-    this->position = position;
 }
 
 void Figure::draw(std::shared_ptr<sf::RenderWindow> window) {
@@ -60,8 +59,20 @@ void Figure::snapToGrid() {
 }
 
 void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
+    this->pointOnGrid = pointOnGrid;
+    this->position = grid->pointOnGridToPosition(pointOnGrid);
+    
+    auto mostLeftTile = findMostLeftTile();
+    auto mostBottomTile = findMostBottomTile();
+
+    sf::Vector2i diff = {
+        pointOnGrid.x-mostLeftTile->getPointOnGrid().x,
+        pointOnGrid.y-mostBottomTile->getPointOnGrid().y
+    };
+
     for (auto &tile : tiles) {
-        tile->snapToGrid(pointOnGrid);
+        auto currentPointOnGrid = tile->getPointOnGrid();
+        tile->snapToGrid(currentPointOnGrid+diff);
     }
 }
 
@@ -83,10 +94,7 @@ void Figure::mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) 
 }
 
 sf::Vector2f Figure::getPosition() {
-    auto point = grid->pointOnGridToPosition(sf::Vector2i(position));
-    auto oneUnit = grid->pointOnGridToPosition(sf::Vector2i(1, 1));
-    point.y += oneUnit.y;
-    return point;
+    return position;
 }
 
 sf::Vector2u Figure::getSize() {
@@ -101,7 +109,7 @@ sf::Vector2u Figure::getSize() {
 }
 
 sf::Vector2i Figure::getPointOnGrid() {
-    return position;
+    return grid->positionToPointOnGrid(position);
 }
 
 sf::Vector2u Figure::getSizeOnGrid() {
@@ -242,7 +250,7 @@ void Figure::moveTiles() {
 void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isDraggingFlag = false;
 
-    position = grid->getHighlightPointOnGrid();
+    position = grid->getHighlightPosition();
     position.y += getSizeOnGrid().y-1;
     grid->turnHighlightOff();
 

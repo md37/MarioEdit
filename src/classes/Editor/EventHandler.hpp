@@ -23,12 +23,12 @@ public:
 
 private:
 
-    std::shared_ptr<EventState> currentState;
+    std::unique_ptr<EventState> currentState;
 
-    std::shared_ptr<ButtonTileEventHandler> buttonTileEventHandler;
-    std::shared_ptr<DynamicTileEventHandler> dynamicTileEventHandler;
-    std::shared_ptr<FigureEventHandler> figureEventHandler;
+    std::unique_ptr<ButtonTileEventHandler> buttonTileEventHandler;
+    std::unique_ptr<DynamicTileEventHandler> dynamicTileEventHandler;
+    std::unique_ptr<FigureEventHandler> figureEventHandler;
 
-    std::shared_ptr<TileEventRegistry> tileEventRegistry;
-    std::shared_ptr<FigureEventRegistry> figureEventRegistry;
+    std::unique_ptr<TileEventRegistry> tileEventRegistry;
+    std::unique_ptr<FigureEventRegistry> figureEventRegistry;
 };

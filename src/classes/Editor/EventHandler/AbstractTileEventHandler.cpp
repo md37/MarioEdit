@@ -3,14 +3,13 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 
 AbstractTileEventHandler::AbstractTileEventHandler(
-    std::shared_ptr<EventState> eventState,
+    std::unique_ptr<EventState> &eventState,
     std::unique_ptr<AnimationPerformer> &animationPerformer,
     std::unique_ptr<Scene> &scene,
     std::unique_ptr<TileFactory> &tileFactory,
-    std::shared_ptr<TileEventRegistry> tileEventRegistry
-): tileFactory(tileFactory), scene(scene), animationPerformer(animationPerformer) {
-    this->eventState = eventState;
-    this->tileEventRegistry = tileEventRegistry;
+    std::unique_ptr<TileEventRegistry> &tileEventRegistry
+): tileFactory(tileFactory), scene(scene), animationPerformer(animationPerformer), eventState(eventState), tileEventRegistry(tileEventRegistry) {
+
 }
 
 void AbstractTileEventHandler::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<ButtonTile> button) {

@@ -10,11 +10,11 @@ class DynamicTileEventHandler: public EventReceiverableInterface, public Abstrac
 public:
 
     DynamicTileEventHandler(
-        std::shared_ptr<EventState> eventState,
+        std::unique_ptr<EventState> &eventState,
         std::unique_ptr<AnimationPerformer> &animationPerformer,
         std::unique_ptr<Scene> &scene,
         std::unique_ptr<TileFactory> &tileFactory,
-        std::shared_ptr<TileEventRegistry> tileEventRegistry
+        std::unique_ptr<TileEventRegistry> &tileEventRegistry
     );
     void handleEvents(Keyboard &keyboard, Cursor &cursor) override;
 

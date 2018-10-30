@@ -21,10 +21,8 @@ private:
     sf::RectangleShape box;
     sf::Uint32 boxWidth = 420;
     sf::Uint32 boxHeight = 120;
-    float lineThicknessDivider = 1200;
 
     std::unique_ptr<TileFactory> &tileFactory;
-    std::vector<std::shared_ptr<ButtonTile>> tiles;
 
     void generateBox();
     void generateTileButtons();

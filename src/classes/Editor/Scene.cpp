@@ -5,7 +5,7 @@
 
 Scene::Scene(std::unique_ptr<TileFactory> &tileFactory) {
     grid = std::make_shared<Grid>();
-    sceneGenerator = std::make_shared<SceneGenerator>(tileFactory, grid);
+    sceneGenerator = std::make_unique<SceneGenerator>(tileFactory, grid);
     sceneGenerator->generate();
 }
 

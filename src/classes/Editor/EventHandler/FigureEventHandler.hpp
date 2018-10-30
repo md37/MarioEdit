@@ -10,14 +10,15 @@ public:
 
     FigureEventHandler(
         std::unique_ptr<AnimationPerformer> &animationPerformer,
-        std::shared_ptr<FigureEventRegistry> figureEventRegistry
+        std::unique_ptr<FigureEventRegistry> &figureEventRegistry
     );
     void handleEvents(Keyboard &keyboard, Cursor &cursor) override;
 
 private:
 
     std::unique_ptr<AnimationPerformer> &animationPerformer;
-    std::shared_ptr<FigureEventRegistry> figureEventRegistry;
+    std::unique_ptr<FigureEventRegistry> &figureEventRegistry;
+
     void performHover(Cursor &cursor, std::shared_ptr<Figure> &figure);
     void performDragDrop(Cursor &cursor, std::shared_ptr<Figure> &figure);
     void performDrop(Cursor &cursor, std::shared_ptr<Figure> &figure);

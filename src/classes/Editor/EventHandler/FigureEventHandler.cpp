@@ -4,9 +4,9 @@
 
 FigureEventHandler::FigureEventHandler(
     std::unique_ptr<AnimationPerformer> &animationPerformer,
-    std::shared_ptr<FigureEventRegistry> figureEventRegistry
-): animationPerformer(animationPerformer) {
-    this->figureEventRegistry = figureEventRegistry;
+    std::unique_ptr<FigureEventRegistry> &figureEventRegistry
+): animationPerformer(animationPerformer), figureEventRegistry(figureEventRegistry) {
+
 }
 
 void FigureEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {

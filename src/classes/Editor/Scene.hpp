@@ -23,9 +23,7 @@ public:
 private:
 
     std::shared_ptr<Grid> grid;
-    std::shared_ptr<SceneGenerator> sceneGenerator;
-
-    std::shared_ptr<SpecialBlockBlinkAnimation> blinkAnimation;
+    std::unique_ptr<SceneGenerator> sceneGenerator;
 
     void reScaleTiles(std::unique_ptr<Scale> &scale);
     void reSnapTilesToGrid();

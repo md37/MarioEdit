@@ -14,28 +14,30 @@ Tile::Tile(sf::Sprite sprite, TileConfig config) {
     this->config = config;
 }
 
-void Tile::rescale(std::shared_ptr<Scale>& scale) {
-    auto scaleRatio = scale->getRatio();
-    this->sprite.setPosition(position*scaleRatio);
+void Tile::rescale(std::shared_ptr<Scale>& newScale) {
+    auto scaleRatio = newScale->getRatio();
+    auto position = getPosition();
+    sprite.setPosition(position*scaleRatio);
 
-    this->scale = sf::Vector2f(scale->getCurrent(), scale->getCurrent());
-    sprite.setScale(this->scale*scalePromotion);
+    scale = sf::Vector2f(newScale->getCurrent(), newScale->getCurrent());
+    sprite.setScale(scale*scalePromotion);
 
     if (borderSize > 0) {
-        auto borderSize = this->borderSize* scale->getCurrent()*scalePromotion;
+        auto newBorderSize = borderSize*newScale->getCurrent()*scalePromotion;
         auto borderSquareSize = sf::Vector2f(getSize());
-        borderSquareSize.x += 2*borderSize;
-        borderSquareSize.y += 2*borderSize;
+        borderSquareSize.x += 2*newBorderSize;
+        borderSquareSize.y += 2*newBorderSize;
         border.setSize(borderSquareSize);
 
         auto borderSquarePosition = sf::Vector2f(position*scaleRatio);
-        borderSquarePosition.x -= borderSize;
-        borderSquarePosition.y -= borderSize;
+        borderSquarePosition.x -= newBorderSize;
+        borderSquarePosition.y -= newBorderSize;
         border.setPosition(borderSquarePosition);
     }
 }
 
 void Tile::recalculateCenter() {
+    auto position = getPosition();
     centerPoint.x = position.x + getSize().x/2;
     centerPoint.y = position.y + getSize().y/2;
 }
@@ -53,7 +55,6 @@ void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
 }
 
 void Tile::setPosition(sf::Vector2f position) {
-    this->position = position;
     sprite.setPosition(position);
     recalculateCenter();
 }
@@ -62,8 +63,8 @@ sf::Vector2f Tile::getPosition() {
     return sprite.getPosition();
 }
 
-sf::Vector2i Tile::getSize() {
-    return sf::Vector2i(
+sf::Vector2u Tile::getSize() {
+    return sf::Vector2u(
         sprite.getTextureRect().width * sprite.getScale().x,
         sprite.getTextureRect().height * sprite.getScale().y
     );
@@ -81,15 +82,12 @@ void Tile::snapToCenterPoint() {
 
     sprite.setScale(newSpriteScale.x, newSpriteScale.y);
 
+    auto position = getPosition();
     position.x = centerPoint.x-newWidth/2;
     position.y = centerPoint.y-newHeight/2;
     sprite.setPosition(position);
 }
 
 bool Tile::isTypeOf(std::shared_ptr<Tile> tile) {
-    return imagePosition == tile->getImagePosition();
-}
-
-sf::Vector2u Tile::getImagePosition() {
-    return imagePosition;
+    return imagePosition == tile->imagePosition;
 }

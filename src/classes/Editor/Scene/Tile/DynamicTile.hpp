@@ -16,26 +16,26 @@ public:
     bool isBlinking = false;
     bool isReturning = false;
 
-    void mouseEnter(AnimationPerformer& animationPerformer) override;
-    void mouseOver(AnimationPerformer& animationPerformer) override;
-    void mouseLeave(AnimationPerformer& animationPerformer) override;
+    void mouseEnter(std::shared_ptr<AnimationPerformer> animationPerformer) override;
+    void mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) override;
+    void mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) override;
     bool isMouseOver() override;
 
-    void startDrag(AnimationPerformer& animationPerformer) override;
+    void startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) override;
     void drag() override;
-    void drop(AnimationPerformer& animationPerformer) override;
+    void drop(std::shared_ptr<AnimationPerformer> animationPerformer) override;
     bool isDragging() override;
 
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
-    sf::Vector2u getDropHighlightPlace();
+    sf::Vector2i getDropHighlightPlace();
 
     void correctCorners();
 
 private:
 
     sf::Vector2f dragOffset = {0.0f, 0.0f};
-    sf::Vector2u dropHighlightPlace = {0, 0};
+    sf::Vector2i dropHighlightPlace = {0, 0};
 
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;

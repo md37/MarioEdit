@@ -63,9 +63,9 @@ std::vector<std::shared_ptr<Figure>> ObjectRegistry::getFigures() {
     return figures;
 }
 
-std::shared_ptr<DynamicTile> ObjectRegistry::getTileOnGrid(sf::Vector2u position) {
+std::shared_ptr<DynamicTile> ObjectRegistry::getTileOnGrid(sf::Vector2i gridPoint) {
     for (auto &tile : dynamicTiles) {
-        if (tile->getGridPosition() == position) {
+        if (tile->getPointOnGrid() == gridPoint) {
             return tile;
         }
     }

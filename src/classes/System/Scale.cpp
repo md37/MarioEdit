@@ -14,6 +14,7 @@ void Scale::change(sf::Vector2u windowSize) {
     this->windowSize = windowSize;
     current = (float)windowSize.y / (float)(config.tileHeight*config.blocksOnHeight);
     ratio = current/original;
+    original = current;
 }
 
 float Scale::getCurrent() {

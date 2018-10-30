@@ -5,6 +5,7 @@
 #include <SFML/Config.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include "classes/Editor/Scene/Figure.hpp"
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 
@@ -19,25 +20,22 @@ public:
 
     void draw(std::shared_ptr<sf::RenderWindow> window);
     bool isOver(std::shared_ptr<Tile> tile);
+    bool isOver(std::shared_ptr<Figure> figure);
     bool isClickOn(std::shared_ptr<Tile> tile);
+    bool isClickOn(std::shared_ptr<Figure> figure);
 
     bool isClick();
     void click(bool click, sf::Mouse::Button type);
     sf::Mouse::Button getClickType();
+
+    bool isMouseMoved();
+    void mouseMove(bool mouseMove);
+
     bool isMousePressed();
     void mousePress(bool mouseDown);
+
     bool isMouseReleased();
     void mouseRelease(bool mouseUp);
-
-    void registerOver(std::shared_ptr<Tile> tile);
-    void unregisterOver(std::shared_ptr<Tile> tile);
-    bool isOverRegistered(std::shared_ptr<Tile> tile);
-
-    void registerDrag(std::shared_ptr<DynamicTile> tile);
-    void unregisterDrag(std::shared_ptr<DynamicTile> tile);
-    bool isDragRegistered(std::shared_ptr<DynamicTile> tile);
-
-    void handleRegisteredDrags();
 
     bool isLongClick();
 
@@ -50,8 +48,7 @@ private:
     std::shared_ptr<sf::Texture> texture;
     std::shared_ptr<sf::Sprite> sprite;
 
-    std::vector<std::shared_ptr<Tile>> registeredOverOnTiles;
-    std::vector<std::shared_ptr<DynamicTile>> registeredDragOnTiles;
+    bool moveFlag;
 
     bool clickFlag;
     sf::Mouse::Button clickType;

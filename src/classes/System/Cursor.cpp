@@ -4,6 +4,8 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
 
+#include <iostream>
+
 std::shared_ptr<sf::RenderWindow> Cursor::window;
 
 void Cursor::reinitialize(std::shared_ptr<sf::RenderWindow> &window) {
@@ -35,6 +37,14 @@ void Cursor::draw(std::shared_ptr<sf::RenderWindow> window) {
     window->draw(*sprite);
 }
 
+bool Cursor::isMouseMoved() {
+    return moveFlag;
+}
+
+void Cursor::mouseMove(bool mouseMove) {
+    moveFlag = mouseMove;
+}
+
 bool Cursor::isOver(std::shared_ptr<Tile> tile) {
     auto mousePosition = sf::Mouse::getPosition(*(Cursor::window));
     int posX = mousePosition.x;
@@ -45,52 +55,22 @@ bool Cursor::isOver(std::shared_ptr<Tile> tile) {
            posY <= tile->getPosition().y+tile->getSize().y;
 }
 
+bool Cursor::isOver(std::shared_ptr<Figure> figure) {
+    auto mousePosition = sf::Mouse::getPosition(*(Cursor::window));
+    int posX = mousePosition.x;
+    int posY = mousePosition.y;
+
+    return posX >= figure->getPosition().x && posY >= figure->getPosition().y &&
+           posX <= figure->getPosition().x+figure->getSize().x &&
+           posY <= figure->getPosition().y+figure->getSize().y;
+}
+
 bool Cursor::isClickOn(std::shared_ptr<Tile> tile) {
     return this->isOver(tile) && this->isClick();
 }
 
-void Cursor::registerOver(std::shared_ptr<Tile> tile) {
-    if (!isOverRegistered(tile)) {
-        registeredOverOnTiles.push_back(tile);
-    }
-}
-
-void Cursor::unregisterOver(std::shared_ptr<Tile> tile) {
-    if (isOverRegistered(tile)) {
-        registeredOverOnTiles.erase(
-                std::remove(registeredOverOnTiles.begin(), registeredOverOnTiles.end(), tile), registeredOverOnTiles.end()
-        );
-    }
-}
-
-bool Cursor::isOverRegistered(std::shared_ptr<Tile> tile) {
-    if (registeredOverOnTiles.empty()) {
-        return false;
-    }
-
-    return std::find(registeredOverOnTiles.begin(), registeredOverOnTiles.end(), tile) != registeredOverOnTiles.end();
-}
-
-void Cursor::registerDrag(std::shared_ptr<DynamicTile> tile) {
-    if (!isDragRegistered(tile)) {
-        registeredDragOnTiles.push_back(tile);
-    }
-}
-
-void Cursor::unregisterDrag(std::shared_ptr<DynamicTile> tile) {
-    if (isDragRegistered(tile)) {
-        registeredDragOnTiles.erase(
-                std::remove(registeredDragOnTiles.begin(), registeredDragOnTiles.end(), tile), registeredDragOnTiles.end()
-        );
-    }
-}
-
-bool Cursor::isDragRegistered(std::shared_ptr<DynamicTile> tile) {
-    if (registeredDragOnTiles.empty()) {
-        return false;
-    }
-
-    return std::find(this->registeredDragOnTiles.begin(), this->registeredDragOnTiles.end(), tile) != this->registeredDragOnTiles.end();
+bool Cursor::isClickOn(std::shared_ptr<Figure> figure) {
+    return this->isOver(figure) && this->isClick();
 }
 
 bool Cursor::isClick() {
@@ -100,12 +80,6 @@ bool Cursor::isClick() {
 void Cursor::click(bool click, sf::Mouse::Button type) {
     clickFlag = click;
     clickType = type;
-}
-
-void Cursor::handleRegisteredDrags() {
-    for (auto &dragOnTile : registeredDragOnTiles) {
-        dragOnTile->drag();
-    }
 }
 
 sf::Time Cursor::getClickDuration() {

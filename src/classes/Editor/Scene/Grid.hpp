@@ -18,16 +18,19 @@ public:
 
     sf::Vector2u getSize();
     sf::Vector2f getPointOnGrid(sf::Vector2f pointOnScreen);
-    sf::Vector2f pointOnGridToPosition(sf::Vector2u pointOnGrid);
-    sf::Vector2u positionToGridPlace(sf::Vector2f pointOnScreen);
+    sf::Vector2f pointOnGridToPosition(sf::Vector2i pointOnGrid);
+    sf::Vector2i positionToPointOnGrid(sf::Vector2f pointOnScreen);
     sf::Vector2f getCenter(sf::Vector2u pointOnGrid);
 
-    void turnHighlightOn();
+    sf::Uint32 getLineThickness();
+
+    void turnHighlightOn(sf::Vector2u size);
     void turnHighlightOff();
     bool hasIncompleteEnding();
     void setHighlightPosition(sf::Vector2f cursorPosition);
+
     sf::Vector2f getHighlightPosition();
-    sf::Vector2u getHighlightPlace();
+    sf::Vector2i getHighlightPointOnGrid();
 
 private:
 
@@ -43,6 +46,7 @@ private:
     
     bool highlightFlag = false;
     sf::Vector2f highlightPosition;
+    sf::Vector2u highlightSize;
 
     void drawHorizontalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window);
     void drawVerticalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window);

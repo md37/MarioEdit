@@ -4,6 +4,7 @@
 #include "classes/System/Interface/EventReceiverableInterface.hpp"
 #include "classes/Editor/Navigation.hpp"
 #include "classes/Editor/Scene.hpp"
+#include "classes/Editor/EventHandler.hpp"
 
 class Editor : public RunnableInterface, public RescalableInterface, public DrawableInterface, public EventReceiverableInterface {
 
@@ -26,27 +27,7 @@ private:
     std::shared_ptr<TileFactory> tileFactory;
     std::shared_ptr<Navigation> navigation;
     std::shared_ptr<Scene> scene;
-    AnimationPerformer animationPerformer;
+    std::shared_ptr<AnimationPerformer> animationPerformer;
 
-    bool isDraggingNewTile = false;
-    bool dismissTileDrop = false;
-    bool clickedOnTileButton = false;
-    std::shared_ptr<ButtonTile> lastUsedTileButton;
-
-    void handleButtonTilesEvents(Keyboard& keyboard, Cursor& cursor);
-    void handleSceneTilesEvents(Keyboard& keyboard, Cursor& cursor);
-
-    void doButtonMouseOver(Cursor& cursor, std::shared_ptr<ButtonTile> button);
-    void doButtonMouseOut(Cursor& cursor, std::shared_ptr<ButtonTile> button);
-    void doButtonMouseClick(Cursor& cursor, std::shared_ptr<ButtonTile> button);
-
-    void createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<ButtonTile> button);
-
-    void performLongClickDrop(Cursor &cursor);
-    void performQuickClickDrop(Cursor &cursor);
-
-    void performHover(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
-    void performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
-    void performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
-    void cancelDragging(Cursor& cursor);
+    std::shared_ptr<EditorEventHandler> eventHandler;
 };

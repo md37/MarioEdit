@@ -200,7 +200,7 @@ TEST(GridTest, test_center_0_0) {
     sf::Vector2f center = grid.getCenter(pointOnGrid);
 
     ASSERT_FLOAT_EQ(33, center.x);
-    ASSERT_FLOAT_EQ(759, center.y);
+    ASSERT_FLOAT_EQ(-33, center.y);
 }
 
 TEST(GridTest, test_center_2_1) {
@@ -210,5 +210,5 @@ TEST(GridTest, test_center_2_1) {
     sf::Vector2f center = grid.getCenter(pointOnGrid);
 
     ASSERT_FLOAT_EQ(165, center.x);
-    ASSERT_FLOAT_EQ(693, center.y);
+    ASSERT_FLOAT_EQ(33, center.y);
 }

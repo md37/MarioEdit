@@ -9,18 +9,22 @@ void GridTile::setGrid(std::shared_ptr<Grid> grid) {
 }
 
 void GridTile::snapToGrid() {
-    setPosition(grid->pointOnGridToPosition(gridPosition));
+    setPosition(grid->pointOnGridToPosition(pointOnGrid));
 }
 
-void GridTile::snapToGrid(sf::Vector2u gridPosition) {
-    this->gridPosition = gridPosition;
-    setPosition(grid->pointOnGridToPosition(gridPosition));
+void GridTile::snapToGrid(sf::Vector2i pointOnGrid) {
+    this->pointOnGrid = pointOnGrid;
+    setPosition(grid->pointOnGridToPosition(pointOnGrid));
 }
 
-bool GridTile::isOnIncompletePlace(sf::Vector2u dropPlace) {
-    return grid->hasIncompleteEnding() && dropPlace.x == grid->getCols();
+bool GridTile::isOnIncompletePoint(sf::Vector2i pointOnGrid) {
+    return grid->hasIncompleteEnding() && pointOnGrid.x == grid->getCols();
 }
 
-sf::Vector2u GridTile::getGridPosition() {
-    return gridPosition;
+sf::Vector2i GridTile::getPointOnGrid() {
+    return pointOnGrid;
+}
+
+sf::Vector2u GridTile::getSizeOnGrid() {
+    return {1, 1};
 }

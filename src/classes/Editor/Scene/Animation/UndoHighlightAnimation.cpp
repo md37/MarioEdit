@@ -25,7 +25,7 @@ void UndoHighlightAnimation::animate() {
     tile->snapToCenterPoint();
 
     auto dropPlace = tile->getDropHighlightPlace();
-    if (!tile->isOnIncompletePlace(dropPlace)) {
+    if (!tile->isOnIncompletePoint(dropPlace)) {
         tile->correctCorners();
     }
 }

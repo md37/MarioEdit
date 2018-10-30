@@ -46,6 +46,7 @@ void Figure::rescale(std::shared_ptr<Scale> scale) {
     for (auto &tile : tiles) {
         tile->rescale(scale);
     }
+    snapToGrid();
 }
 
 void Figure::setGrid(std::shared_ptr<Grid> grid) {
@@ -53,15 +54,13 @@ void Figure::setGrid(std::shared_ptr<Grid> grid) {
 }
 
 void Figure::snapToGrid() {
-    for (auto &tile : tiles) {
-        tile->snapToGrid();
-    }
+    this->snapToGrid(pointOnGrid);
 }
 
 void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
     this->pointOnGrid = pointOnGrid;
     this->position = grid->pointOnGridToPosition(pointOnGrid);
-    
+
     auto mostLeftTile = findMostLeftTile();
     auto mostBottomTile = findMostBottomTile();
 
@@ -250,8 +249,10 @@ void Figure::moveTiles() {
 void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
     isDraggingFlag = false;
 
-    position = grid->getHighlightPosition();
-    position.y += getSizeOnGrid().y-1;
+    pointOnGrid = grid->getHighlightPointOnGrid();
+    pointOnGrid.y--;
+    position = grid->pointOnGridToPosition(pointOnGrid);
+    position.y += getSize().y;
     grid->turnHighlightOff();
 
     createFrame();

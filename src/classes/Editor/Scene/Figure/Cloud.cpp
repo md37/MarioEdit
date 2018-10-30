@@ -1,6 +1,6 @@
 #include "Cloud.hpp"
 
-Cloud::Cloud(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure (tileFactory, grid) {
+Cloud::Cloud(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure (tileFactory, grid) {
     if (size < 2) {
         size = 2;
     }

@@ -3,8 +3,7 @@
 #include "classes/System/Cursor.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
-Figure::Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid) {
-    this->tileFactory = tileFactory;
+Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid): tileFactory(tileFactory) {
     this->grid = grid;
 }
 
@@ -40,7 +39,7 @@ void Figure::updateFramePosition() {
     frame.setPosition(framePosition);
 }
 
-void Figure::rescale(std::shared_ptr<Scale> scale) {
+void Figure::rescale(std::unique_ptr<Scale> &scale) {
     for (auto &tile : tiles) {
         tile->rescale(scale);
     }
@@ -77,15 +76,15 @@ bool Figure::isMouseOver() {
     return isMouseOverFlag;
 }
 
-void Figure::mouseEnter(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void Figure::mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = true;
 }
 
-void Figure::mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void Figure::mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) {
 
 }
 
-void Figure::mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void Figure::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = false;
     isFrameCreated = false;
 }
@@ -196,7 +195,7 @@ bool Figure::isDragging() {
     return isDraggingFlag;
 }
 
-void Figure::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void Figure::startDrag(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isDraggingFlag = true;
     frame.setOutlineColor(sf::Color(255, 255, 0, 128));
     frame.setFillColor(sf::Color(255, 255, 0, 20));
@@ -250,7 +249,7 @@ void Figure::moveTiles() {
     }
 }
 
-void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isDraggingFlag = false;
 
     pointOnGrid = grid->getHighlightPointOnGrid();

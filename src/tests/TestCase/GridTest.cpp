@@ -3,7 +3,7 @@
 #include "classes/Editor/Scene/Grid.hpp"
 
 sf::Vector2u windowSize(1280, 800);
-auto scale = std::make_shared<Scale>(windowSize);
+auto scale = std::make_unique<Scale>(windowSize);
 Grid grid;
 
 TEST(GridTest, test_size) {

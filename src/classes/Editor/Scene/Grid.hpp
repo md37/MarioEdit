@@ -11,7 +11,7 @@ class Grid : public RescalableInterface, public DrawableInterface {
 public:
 
     explicit Grid();
-    void rescale(std::shared_ptr<Scale> scale) override;
+    void rescale(std::unique_ptr<Scale>& scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
     sf::Uint32 getCols();

@@ -16,14 +16,14 @@ public:
     bool isBlinking = false;
     bool isReturning = false;
 
-    void mouseEnter(std::shared_ptr<AnimationPerformer> animationPerformer) override;
-    void mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) override;
-    void mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) override;
+    void mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
+    void mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
+    void mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     bool isMouseOver() override;
 
-    void startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) override;
+    void startDrag(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void drag() override;
-    void drop(std::shared_ptr<AnimationPerformer> animationPerformer) override;
+    void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     bool isDragging() override;
 
     void draw(std::shared_ptr<sf::RenderWindow> window) override;

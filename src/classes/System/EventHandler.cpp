@@ -3,8 +3,8 @@
 #include "classes/System/Scale.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
-EventHandler::EventHandler(Cursor& cursor, std::shared_ptr<Scale> scale) : cursor(cursor) {
-    this->scale = scale;
+EventHandler::EventHandler(Cursor& cursor, std::unique_ptr<Scale> &scale) : cursor(cursor), scale(scale) {
+
 }
 
 sf::Event EventHandler::getLastEvent() {

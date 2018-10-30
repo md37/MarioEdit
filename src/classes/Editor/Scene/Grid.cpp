@@ -7,7 +7,7 @@ Grid::Grid() : lineColor(0, 0, 0, 50) {
 
 }
 
-void Grid::rescale(std::shared_ptr<Scale> scale) {
+void Grid::rescale(std::unique_ptr<Scale>& scale) {
     auto windowSize = scale->getWindowSize();
 
     lineThickness = windowSize.y / lineThicknessDivider;

@@ -12,9 +12,9 @@ class Scene : public RescalableInterface, DrawableInterface {
 
 public:
 
-    explicit Scene(std::shared_ptr<TileFactory> tileFactory);
+    explicit Scene(std::unique_ptr<TileFactory> &tileFactory);
 
-    void rescale(std::shared_ptr<Scale> scale) override;
+    void rescale(std::unique_ptr<Scale> &scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
     std::shared_ptr<Grid> getGrid();
@@ -27,6 +27,6 @@ private:
 
     std::shared_ptr<SpecialBlockBlinkAnimation> blinkAnimation;
 
-    void reScaleTiles(std::shared_ptr<Scale> scale);
+    void reScaleTiles(std::unique_ptr<Scale> &scale);
     void reSnapTilesToGrid();
 };

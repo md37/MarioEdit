@@ -8,17 +8,17 @@ Main::Main() {
             sf::VideoMode(windowedWidth, windowedHeight), title, sf::Style::Default
     );
 
-    scale = std::make_shared<Scale>(window->getSize());
-    tileFactory = std::make_shared<TileFactory>("resources/tiles.png", scale);
-    editor = std::make_shared<Editor>(tileFactory);
-    game = std::make_shared<Game>();
+    scale = std::make_unique<Scale>(window->getSize());
+    tileFactory = std::make_unique<TileFactory>("resources/tiles.png", scale);
+    editor = std::make_unique<Editor>(tileFactory);
+    game = std::make_unique<Game>();
 
     initializeEventHandler();
     reInitializeWindow();
 }
 
 void Main::initializeEventHandler() {
-    systemEventHandler = std::make_shared<EventHandler>(cursor, scale);
+    systemEventHandler = std::make_unique<EventHandler>(cursor, scale);
 
     systemEventHandler->addEventHandler(EventHandler::QuitGame, [=]() {
         window->close();

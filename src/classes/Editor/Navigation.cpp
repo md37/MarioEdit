@@ -3,14 +3,12 @@
 #include <SFML/Graphics/Text.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
 
-Navigation::Navigation(std::shared_ptr<TileFactory> tileFactory) {
-    this->tileFactory = tileFactory;
-
+Navigation::Navigation(std::unique_ptr<TileFactory> &tileFactory): tileFactory(tileFactory) {
     generateBox();
     generateTileButtons();
 }
 
-void Navigation::rescale(std::shared_ptr<Scale> scale) {
+void Navigation::rescale(std::unique_ptr<Scale> &scale) {
     auto boxSize = box.getSize();
     if (boxSize.x == 0) {
         boxSize = sf::Vector2f(boxWidth, boxHeight);

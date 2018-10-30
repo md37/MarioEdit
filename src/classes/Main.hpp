@@ -30,16 +30,15 @@ private:
 
     Resolution resolution;
     std::shared_ptr<sf::RenderWindow> window;
-    std::shared_ptr<EventHandler> systemEventHandler;
+    std::unique_ptr<EventHandler> systemEventHandler;
 
-    std::shared_ptr<Scale> scale;
-    std::shared_ptr<TileFactory> tileFactory;
-    std::shared_ptr<Editor> editor;
-    std::shared_ptr<Game> game;
+    std::unique_ptr<Scale> scale;
+    std::unique_ptr<TileFactory> tileFactory;
+    std::unique_ptr<Editor> editor;
+    std::unique_ptr<Game> game;
 
     Cursor cursor;
 
     void initializeEventHandler();
-
     void reInitializeWindow();
 };

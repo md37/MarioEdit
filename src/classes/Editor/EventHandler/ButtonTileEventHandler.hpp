@@ -12,9 +12,9 @@ public:
 
     ButtonTileEventHandler(
         std::shared_ptr<EventState> eventState,
-        std::shared_ptr<AnimationPerformer> animationPerformer,
-        std::shared_ptr<Scene> scene,
-        std::shared_ptr<TileFactory> tileFactory,
+        std::unique_ptr<AnimationPerformer> &animationPerformer,
+        std::unique_ptr<Scene> &scene,
+        std::unique_ptr<TileFactory> &tileFactory,
         std::shared_ptr<TileEventRegistry> tileEventRegistry
     );
     void handleEvents(Keyboard &keyboard, Cursor &cursor) override;

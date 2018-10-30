@@ -8,12 +8,12 @@ class SceneGenerator {
 
 public:
 
-    SceneGenerator(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid);
+    SceneGenerator(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid);
     void generate();
 
 private:
 
-    std::shared_ptr<TileFactory> tileFactory;
+    std::unique_ptr<TileFactory> &tileFactory;
     std::shared_ptr<Grid> grid;
 
     void generateBackground();

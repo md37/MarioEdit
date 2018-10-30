@@ -2,12 +2,11 @@
 
 #include "classes/Editor/ObjectRegistry.hpp"
 
-Editor::Editor(std::shared_ptr<TileFactory> tileFactory) {
-    this->tileFactory = tileFactory;
-    navigation = std::make_shared<Navigation>(tileFactory);
-    scene = std::make_shared<Scene>(tileFactory);
-    animationPerformer = std::make_shared<AnimationPerformer>();
-    eventHandler = std::make_shared<EditorEventHandler>(animationPerformer, scene, tileFactory);
+Editor::Editor(std::unique_ptr<TileFactory> &tileFactory): tileFactory(tileFactory) {
+    navigation = std::make_unique<Navigation>(tileFactory);
+    scene = std::make_unique<Scene>(tileFactory);
+    animationPerformer = std::make_unique<AnimationPerformer>();
+    eventHandler = std::make_unique<EditorEventHandler>(animationPerformer, scene, tileFactory);
 }
 
 void Editor::start() {
@@ -15,7 +14,7 @@ void Editor::start() {
     isStartedFlag = true;
 }
 
-void Editor::rescale(std::shared_ptr<Scale> scale) {
+void Editor::rescale(std::unique_ptr<Scale>& scale) {
     scene->rescale(scale);
     navigation->rescale(scale);
 }

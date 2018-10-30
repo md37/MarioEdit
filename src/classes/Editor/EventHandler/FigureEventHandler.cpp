@@ -3,10 +3,9 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 
 FigureEventHandler::FigureEventHandler(
-    std::shared_ptr<AnimationPerformer> animationPerformer,
+    std::unique_ptr<AnimationPerformer> &animationPerformer,
     std::shared_ptr<FigureEventRegistry> figureEventRegistry
-) {
-    this->animationPerformer = animationPerformer;
+): animationPerformer(animationPerformer) {
     this->figureEventRegistry = figureEventRegistry;
 }
 

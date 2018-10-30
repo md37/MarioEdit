@@ -9,6 +9,6 @@ class RescalableInterface {
 
 public:
 
-    virtual void rescale(std::shared_ptr<Scale> scale)=0;
+    virtual void rescale(std::unique_ptr<Scale>& scale)=0;
 
 };

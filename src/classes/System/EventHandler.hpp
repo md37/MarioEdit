@@ -25,7 +25,7 @@ public:
     Cursor& cursor;
     Keyboard keyboard;
 
-    explicit EventHandler(Cursor& cursor, std::shared_ptr<Scale> scale);
+    explicit EventHandler(Cursor& cursor, std::unique_ptr<Scale> &scale);
 
     sf::Event getLastEvent();
     void addEventHandler(Event event, std::function<void()> callback);
@@ -34,7 +34,7 @@ public:
 private:
 
     sf::Event lastEvent;
-    std::shared_ptr<Scale> scale;
+    std::unique_ptr<Scale> &scale;
     std::map<Event, std::function<void()>> eventHandlers;
 
     void handleEvent(Event event);

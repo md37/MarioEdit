@@ -1,6 +1,6 @@
 #include "Hill.hpp"
 
-Hill::Hill(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure(tileFactory, grid) {
+Hill::Hill(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure(tileFactory, grid) {
     if (size < 1) {
         size = 1;
     }

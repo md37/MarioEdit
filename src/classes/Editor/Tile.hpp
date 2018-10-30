@@ -20,7 +20,7 @@ public:
     float scalePromotion = 1.0f;
 
     void changeImage(sf::Uint32 x, sf::Uint32 y);
-    void rescale(std::shared_ptr<Scale>& newScale);
+    void rescale(std::unique_ptr<Scale> &newScale);
 
     void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition() override;

@@ -4,10 +4,9 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 
-TileFactory::TileFactory(std::string filepath, std::shared_ptr<Scale> scale) {
+TileFactory::TileFactory(std::string filepath, std::unique_ptr<Scale> &scale) : scale(scale) {
     texture = std::make_shared<sf::Texture>();
     texture->loadFromFile(filepath);
-    this->scale = scale;
     this->setTileSeparators(1, 1);
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "classes/System/Interface/RunnableInterface.hpp"
 #include "classes/System/Interface/EventReceiverableInterface.hpp"
 #include "classes/Editor/Navigation.hpp"

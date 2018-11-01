@@ -1,8 +1,8 @@
 #include "Cloud.hpp"
 
 Cloud::Cloud(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure (tileFactory, grid) {
-    if (size < 2) {
-        size = 2;
+    if (size < 1) {
+        size = 1;
     }
 
     this->size = size;
@@ -21,7 +21,7 @@ Cloud::Cloud(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> gr
     tiles.push_back(beginTop);
 
 
-    for (int i=2; i<size; i++) {
+    for (int i=0; i<size; i++) {
         auto middleBottom = tileFactory->createStaticTile(1, 8);
         middleBottom->setGrid(grid);
         middleBottom->snapToGrid(pointOnGrid);

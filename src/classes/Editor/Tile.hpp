@@ -17,10 +17,12 @@ public:
     explicit Tile(sf::Sprite sprite, TileConfig config=TileConfig());
 
     sf::Vector2f positionPromotion = {0.0f, 0.0f};
-    float scalePromotion = 1.0f;
 
     void changeImage(sf::Uint32 x, sf::Uint32 y);
     void rescale(std::unique_ptr<Scale> &newScale);
+
+    void setScalePromotion(float scalePromotion);
+    float getScalePromotion();
 
     void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition() override;
@@ -43,11 +45,12 @@ protected:
 
     sf::Vector2u imagePosition;
 
+    void recalculateCenter();
+
 private:
 
     sf::Vector2f scale = {1.0f, 1.0f};
+    float scalePromotion = 1.0f;
     TileConfig config;
-
-    void recalculateCenter();
 
 };

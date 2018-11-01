@@ -58,6 +58,7 @@ void Main::initializeEventHandler() {
             sf::VideoMode mode(width, height);
             window->create(mode, title, sf::Style::Default);
         }
+
         reInitializeWindow();
     });
 }

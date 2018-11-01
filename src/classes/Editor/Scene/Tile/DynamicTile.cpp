@@ -69,12 +69,13 @@ void DynamicTile::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) 
 
     sf::Vector2f positionOnGrid = grid->getHighlightPosition();
     sf::Vector2f tileSize(getSize());
-    positionOnGrid -= (tileSize-(tileSize/scalePromotion))/2.0f;
+    positionOnGrid -= (tileSize-(tileSize/getScalePromotion()))/2.0f;
 
     setPosition(positionOnGrid);
 
     grid->turnHighlightOff();
 
+    recalculateCenter();
     correctCorners();
     isDraggingFlag = false;
 }

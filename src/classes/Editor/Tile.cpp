@@ -34,6 +34,19 @@ void Tile::rescale(std::unique_ptr<Scale> &newScale) {
         borderSquarePosition.y -= newBorderSize;
         border.setPosition(borderSquarePosition);
     }
+
+    recalculateCenter();
+}
+
+void Tile::setScalePromotion(float scalePromotion) {
+    this->scalePromotion = scalePromotion;
+
+    auto newSpriteScale = scale * scalePromotion;
+    sprite.setScale(newSpriteScale.x, newSpriteScale.y);
+}
+
+float Tile::getScalePromotion() {
+    return scalePromotion;
 }
 
 void Tile::recalculateCenter() {
@@ -56,7 +69,6 @@ void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
 
 void Tile::setPosition(sf::Vector2f position) {
     sprite.setPosition(position);
-    recalculateCenter();
 }
 
 sf::Vector2f Tile::getPosition() {
@@ -76,15 +88,10 @@ void Tile::setBorder(sf::Uint8 size, sf::Color color) {
 }
 
 void Tile::snapToCenterPoint() {
-    auto newSpriteScale = scale * scalePromotion;
-    auto newWidth = sprite.getTextureRect().width * newSpriteScale.x;
-    auto newHeight = sprite.getTextureRect().height * newSpriteScale.y;
-
-    sprite.setScale(newSpriteScale.x, newSpriteScale.y);
-
     auto position = getPosition();
-    position.x = centerPoint.x - newWidth / 2;
-    position.y = centerPoint.y - newHeight / 2;
+
+    position.x = centerPoint.x - getSize().x / 2;
+    position.y = centerPoint.y - getSize().y / 2;
     sprite.setPosition(position);
 }
 

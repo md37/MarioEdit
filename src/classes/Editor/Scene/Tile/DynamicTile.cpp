@@ -7,6 +7,11 @@ DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite
 
 }
 
+void DynamicTile::rescale(std::unique_ptr<Scale> &newScale) {
+    snapToCenterPoint();
+
+    Tile::rescale(newScale);
+}
 void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) {
     window->draw(sprite);
 }

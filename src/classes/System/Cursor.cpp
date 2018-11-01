@@ -4,8 +4,6 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
 
-#include <iostream>
-
 std::shared_ptr<sf::RenderWindow> Cursor::window;
 
 void Cursor::reinitialize(std::shared_ptr<sf::RenderWindow> &window) {

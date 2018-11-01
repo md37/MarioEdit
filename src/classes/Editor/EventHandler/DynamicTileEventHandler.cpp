@@ -69,7 +69,7 @@ void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<Dy
         } else if (!cursor.isClick() && tileEventRegistry->isDragRegistered(tile)) {
             performDrop(cursor, tile);
         }
-    } else if (tileEventRegistry->isOverRegistered(tile) && tileEventRegistry->isDragRegistered(tile)) {
+    } else if (tileEventRegistry->isDragRegistered(tile)) {
         performDrop(cursor, tile);
     }
 }

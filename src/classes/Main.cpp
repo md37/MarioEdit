@@ -87,7 +87,7 @@ int Main::run() {
 
         if (editor->isStarted()) {
             editor->runAnimations();
-            
+
             editor->handleEvents(systemEventHandler->keyboard, systemEventHandler->cursor);
             editor->draw(window);
         }

@@ -29,7 +29,8 @@ void FigureEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
 }
 
 void FigureEventHandler::performHover(Cursor &cursor, std::shared_ptr<Figure> &figure) {
-    if (cursor.isOver(figure) && !figureEventRegistry->isOverRegistered(figure)) {
+    bool isDraggingItem = cursor.draggedItem.has_value();
+    if (cursor.isOver(figure) && !figureEventRegistry->isOverRegistered(figure) && !isDraggingItem) {
         figureEventRegistry->registerOver(figure);
         figure->mouseEnter(animationPerformer);
     } else if (cursor.isOver(figure)) {

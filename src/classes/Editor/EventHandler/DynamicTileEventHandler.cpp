@@ -48,7 +48,8 @@ void DynamicTileEventHandler::performHover(Cursor &cursor, std::shared_ptr<Dynam
     auto highlightedTiles = ObjectRegistry::getHighlightedTiles();
 
     if (highlightedTiles.empty()) {
-        if (cursor.isOver(tile) && !tileEventRegistry->isOverRegistered(tile)) {
+        bool isDraggingItem = cursor.draggedItem.has_value();
+        if (cursor.isOver(tile) && !tileEventRegistry->isOverRegistered(tile) && !isDraggingItem) {
             tileEventRegistry->registerOver(tile);
             tile->mouseEnter(animationPerformer);
         } else if (cursor.isOver(tile)) {

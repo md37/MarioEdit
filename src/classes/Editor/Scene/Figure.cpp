@@ -244,7 +244,7 @@ bool Figure::checkForCollisions() {
         if (isMe) {
             continue;
         }
-        
+
         auto figureRect = figure->getRect();
         if (collision.checkCollision(figureRect) != Collision::None) {
             Log::out("Collision detected");

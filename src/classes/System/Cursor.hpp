@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include <any>
 #include <SFML/Config.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Mouse.hpp>
@@ -15,6 +16,8 @@ public:
 
     static void reinitialize(std::shared_ptr<sf::RenderWindow> &window);
     static sf::Vector2f getCurrentPosition();
+
+    std::any draggedItem;
 
     Cursor();
 

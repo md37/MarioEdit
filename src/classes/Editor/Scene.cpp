@@ -43,8 +43,18 @@ void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
     window->clear(sf::Color(92, 148, 252));
 
     auto figures = ObjectRegistry::getFigures();
+
     for (auto const &figure : figures) {
+        if (figure->isDragging()) {
+            continue;
+        }
         figure->draw(window);
+    }
+
+    for (auto const &figure : figures) {
+        if (figure->isDragging()) {
+            figure->draw(window);
+        }
     }
 
     grid->draw(window);

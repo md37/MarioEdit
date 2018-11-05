@@ -43,8 +43,10 @@ void FigureEventHandler::performHover(Cursor &cursor, std::shared_ptr<Figure> &f
 void FigureEventHandler::performDragDrop(Cursor& cursor, std::shared_ptr<Figure> &figure) {
     if (cursor.isOver(figure) && figureEventRegistry->isOverRegistered(figure)) {
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
-        if (cursor.isClick() && !figureEventRegistry->isDragRegistered(figure) && isLeftClick) {
+        bool isDraggingItem = cursor.draggedItem.has_value();
+        if (cursor.isClick() && !figureEventRegistry->isDragRegistered(figure) && isLeftClick && !isDraggingItem) {
             figure->startDrag(animationPerformer);
+            cursor.draggedItem = figure;
             figureEventRegistry->registerDrag(figure);
         } else if (!cursor.isClick() && figureEventRegistry->isDragRegistered(figure)) {
             performDrop(cursor, figure);
@@ -57,4 +59,5 @@ void FigureEventHandler::performDragDrop(Cursor& cursor, std::shared_ptr<Figure>
 void FigureEventHandler::performDrop(Cursor &cursor, std::shared_ptr<Figure> &figure) {
     figureEventRegistry->unregisterDrag(figure);
     figure->drop(animationPerformer);
+    cursor.draggedItem.reset();
 }

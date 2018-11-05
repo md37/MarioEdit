@@ -7,7 +7,7 @@ class Collision {
 public:
 
     enum Direction {
-        None, Top, Left, Bottom, Right
+        None=0, Top, Left, Bottom, Right
     };
 
     explicit Collision(sf::Rect<float> first);

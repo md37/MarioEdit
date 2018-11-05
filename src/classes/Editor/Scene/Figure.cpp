@@ -1,6 +1,9 @@
 #include "Figure.hpp"
 
+#include "classes/System/Log.hpp"
+#include "classes/System/Collision.hpp"
 #include "classes/System/Cursor.hpp"
+#include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
 Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid): tileFactory(tileFactory) {
@@ -204,7 +207,7 @@ void Figure::startDrag(std::unique_ptr<AnimationPerformer> &animationPerformer) 
 
     calculateDragOffset();
     recalculateHighlightPosition();
-    moveTiles();
+    moveTiles(position);
 }
 
 void Figure::calculateDragOffset() {
@@ -217,11 +220,48 @@ void Figure::calculateDragOffset() {
 }
 
 void Figure::drag() {
+    auto prevPosition = getPosition();
+    auto prevHighlightPosition = grid->getHighlightPosition();
+
     recalculateHighlightPosition();
     recalculateFramePosition();
-
-    moveTiles();
     position = frame.getPosition();
+
+    bool isCollision = checkCollisions();
+    if (isCollision) {
+        position = prevPosition;
+        frame.setPosition(prevPosition);
+        frame.setOutlineColor(sf::Color(255, 0, 0, 100));
+        grid->setHighlightPosition(prevHighlightPosition);
+        return;
+    }
+
+    moveTiles(prevPosition);
+    frame.setOutlineColor(sf::Color(255, 255, 0, 128));
+}
+
+bool Figure::checkCollisions() {
+    Collision collision(getRect());
+    auto figures = ObjectRegistry::getFigures();
+    for (auto figure: figures) {
+        if (figure->getPosition() == getPosition()) {
+            continue;
+        }
+        auto figureRect = figure->getRect();
+        if (collision.checkCollision(figureRect) != Collision::None) {
+            Log::out("Collision detected");
+            Log::out(getRect(), "Current rect");
+            Log::out(figureRect, "Figure rect");
+            Log::line();
+
+            return true;
+        }
+    }
+    return false;
+}
+
+sf::Rect<float> Figure::getRect() {
+    return sf::Rect<float>(getPosition(), sf::Vector2f(getSize()));
 }
 
 void Figure::recalculateHighlightPosition() {
@@ -237,10 +277,9 @@ void Figure::recalculateFramePosition() {
     frame.setPosition(newFramePosition);
 }
 
-void Figure::moveTiles() {
-    auto oldPosition = position;
+void Figure::moveTiles(sf::Vector2f prevPosition) {
     auto currentPosition = frame.getPosition();
-    auto positionDiff = currentPosition-oldPosition;
+    auto positionDiff = currentPosition-prevPosition;
 
     for (auto &tile : tiles) {
         auto tileCurrentPosition = tile->getPosition();

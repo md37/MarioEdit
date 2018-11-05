@@ -8,7 +8,7 @@ float height = 100.0f;
 sf::Rect<float> first(point.x, point.y, width, height);
 
 TEST(CollisionTest, test_dont_collide_from_top) {
-    sf::Rect<float> second(point.x, point.y-100-height, width, height);
+    sf::Rect<float> second(point.x, point.y-height-20, width, height);
 
     Collision collisionDetect(first);
     ASSERT_EQ(Collision::Direction::None, collisionDetect.checkCollision(second));
@@ -29,7 +29,7 @@ TEST(CollisionTest, test_collide_from_top_inside) {
 }
 
 TEST(CollisionTest, test_dont_collide_from_left) {
-    sf::Rect<float> second(point.x-100-width, point.y, width, height);
+    sf::Rect<float> second(point.x-width-20, point.y, width, height);
 
     Collision collisionDetect(first);
     ASSERT_EQ(Collision::Direction::None, collisionDetect.checkCollision(second));
@@ -50,7 +50,7 @@ TEST(CollisionTest, test_collide_from_left_inside) {
 }
 
 TEST(CollisionTest, test_dont_collide_from_bottom) {
-    sf::Rect<float> second(point.x, point.y+100+height, width, height);
+    sf::Rect<float> second(point.x, point.y+height+20, width, height);
 
     Collision collisionDetect(first);
     ASSERT_EQ(Collision::Direction::None, collisionDetect.checkCollision(second));
@@ -71,7 +71,7 @@ TEST(CollisionTest, test_collide_from_bottom_inside) {
 }
 
 TEST(CollisionTest, test_dont_collide_from_right) {
-    sf::Rect<float> second(point.x+100+width, point.y, width, height);
+    sf::Rect<float> second(point.x+width+20, point.y, width, height);
 
     Collision collisionDetect(first);
     ASSERT_EQ(Collision::Direction::None, collisionDetect.checkCollision(second));

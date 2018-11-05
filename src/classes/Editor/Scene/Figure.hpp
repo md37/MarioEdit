@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <classes/System/Collision.hpp>
 #include "classes/System/TileFactory.hpp"
 #include "classes/System/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
@@ -70,8 +71,12 @@ private:
 
     void recalculateHighlightPosition();
     void calculateDragOffset();
-    void moveTiles();
+    void moveTiles(sf::Vector2f prevPosition);
 
     void updateFramePosition();
     void recalculateFramePosition();
+
+    sf::Rect<float> getRect();
+
+    bool checkCollisions();
 };

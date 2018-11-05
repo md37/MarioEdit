@@ -10,13 +10,13 @@ Collision::Direction Collision::checkCollision(sf::Rect<float> second) {
 
     auto diff = centerFirst-centerSecond;
 
-    bool isOutsideX = abs((int)diff.x) >= first.width/2 + second.width;
-    bool isOutsideY = abs((int)diff.y) >= first.height/2 + second.height;
+    bool isOutsideX = abs((long int)diff.x) > first.width/2 + second.width/2;
+    bool isOutsideY = abs((long int)diff.y) > first.height/2 + second.height/2;
     if (isOutsideX || isOutsideY) {
         return Direction::None;
     }
 
-    bool isHorizontalPlacement = abs((int)diff.x) > abs((int)diff.y);
+    bool isHorizontalPlacement = abs((long int)diff.x) > abs((long int)diff.y);
     if (isHorizontalPlacement) {
         if (centerFirst.x > centerSecond.x) {
             return Direction::Left;

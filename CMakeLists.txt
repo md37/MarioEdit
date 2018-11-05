@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5.1)
-project(Mario::Edit)
+project(MarioEdit)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/lib)

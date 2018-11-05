@@ -78,5 +78,5 @@ private:
 
     sf::Rect<float> getRect();
 
-    bool checkCollisions();
+    bool checkForCollisions();
 };

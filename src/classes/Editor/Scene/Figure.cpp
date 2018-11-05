@@ -6,7 +6,7 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
-Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid): tileFactory(tileFactory) {
+Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid) : tileFactory(tileFactory) {
     this->grid = grid;
 }
 
@@ -28,7 +28,7 @@ void Figure::createFrame() {
     auto size = this->getSize();
 
     frame.setSize(sf::Vector2f(size));
-    frame.setOutlineThickness(thickness*4);
+    frame.setOutlineThickness(thickness * 4);
     frame.setOutlineColor(sf::Color(255, 255, 255, 128));
     frame.setFillColor(sf::Color(255, 255, 255, 20));
 
@@ -65,13 +65,13 @@ void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
     auto mostTopTile = findMostTopTile();
 
     sf::Vector2i diff = {
-        pointOnGrid.x-mostLeftTile->getPointOnGrid().x,
-        pointOnGrid.y-mostTopTile->getPointOnGrid().y
+            pointOnGrid.x - mostLeftTile->getPointOnGrid().x,
+            pointOnGrid.y - mostTopTile->getPointOnGrid().y
     };
 
     for (auto &tile : tiles) {
         auto currentPointOnGrid = tile->getPointOnGrid();
-        tile->snapToGrid(currentPointOnGrid+diff);
+        tile->snapToGrid(currentPointOnGrid + diff);
     }
 }
 
@@ -102,8 +102,8 @@ sf::Vector2u Figure::getSize() {
     auto mostTopTile = findMostTopTile();
     auto mostBottomTile = findMostBottomTile();
 
-    sf::Uint32 width = mostRightTile->getPosition().x+mostRightTile->getSize().x - mostLeftTile->getPosition().x;
-    sf::Uint32 height = (mostBottomTile->getPosition().y+mostBottomTile->getSize().y) - mostTopTile->getPosition().y;
+    sf::Uint32 width = mostRightTile->getPosition().x + mostRightTile->getSize().x - mostLeftTile->getPosition().x;
+    sf::Uint32 height = (mostBottomTile->getPosition().y + mostBottomTile->getSize().y) - mostTopTile->getPosition().y;
     return {width, height};
 }
 
@@ -119,14 +119,14 @@ sf::Vector2u Figure::getSizeOnGrid() {
 
     sf::Uint32 width = mostRightTile->getPointOnGrid().x - mostLeftTile->getPointOnGrid().x;
     sf::Uint32 height = mostBottomTile->getPointOnGrid().y - mostTopTile->getPointOnGrid().y;
-    return {width+1, height+1};
+    return {width + 1, height + 1};
 }
 
 std::shared_ptr<StaticTile> Figure::findMostLeftTile() {
-     if (tiles.size() == 0) {
-         EmptyFigureFoundException e;
-         throw e;
-     }
+    if (tiles.size() == 0) {
+        EmptyFigureFoundException e;
+        throw e;
+    }
 
     auto mostLeftTile = tiles.at(0);
     auto mostLeftTilePosition = mostLeftTile->getPosition();
@@ -141,10 +141,10 @@ std::shared_ptr<StaticTile> Figure::findMostLeftTile() {
 }
 
 std::shared_ptr<StaticTile> Figure::findMostRightTile() {
-     if (tiles.size() == 0) {
-         EmptyFigureFoundException e;
-         throw e;
-     }
+    if (tiles.size() == 0) {
+        EmptyFigureFoundException e;
+        throw e;
+    }
 
     auto mostRightTile = tiles.at(0);
     auto mostRightTilePosition = mostRightTile->getPosition();
@@ -159,10 +159,10 @@ std::shared_ptr<StaticTile> Figure::findMostRightTile() {
 }
 
 std::shared_ptr<StaticTile> Figure::findMostTopTile() {
-     if (tiles.size() == 0) {
-         EmptyFigureFoundException e;
-         throw e;
-     }
+    if (tiles.size() == 0) {
+        EmptyFigureFoundException e;
+        throw e;
+    }
 
     auto mostTopTile = tiles.at(0);
     auto mostTopTilePosition = mostTopTile->getPosition();
@@ -177,10 +177,10 @@ std::shared_ptr<StaticTile> Figure::findMostTopTile() {
 }
 
 std::shared_ptr<StaticTile> Figure::findMostBottomTile() {
-     if (tiles.size() == 0) {
-         EmptyFigureFoundException e;
-         throw e;
-     }
+    if (tiles.size() == 0) {
+        EmptyFigureFoundException e;
+        throw e;
+    }
 
     auto mostBottomTile = tiles.at(0);
     auto mostBottomTilePosition = mostBottomTile->getPosition();
@@ -220,33 +220,31 @@ void Figure::calculateDragOffset() {
 }
 
 void Figure::drag() {
-    auto prevPosition = getPosition();
     auto prevHighlightPosition = grid->getHighlightPosition();
 
     recalculateHighlightPosition();
     recalculateFramePosition();
+    moveTiles(position);
     position = frame.getPosition();
 
-    bool isCollision = checkCollisions();
+    bool isCollision = checkForCollisions();
     if (isCollision) {
-        position = prevPosition;
-        frame.setPosition(prevPosition);
         frame.setOutlineColor(sf::Color(255, 0, 0, 100));
         grid->setHighlightPosition(prevHighlightPosition);
-        return;
+    } else {
+        frame.setOutlineColor(sf::Color(255, 255, 0, 128));
     }
-
-    moveTiles(prevPosition);
-    frame.setOutlineColor(sf::Color(255, 255, 0, 128));
 }
 
-bool Figure::checkCollisions() {
+bool Figure::checkForCollisions() {
     Collision collision(getRect());
     auto figures = ObjectRegistry::getFigures();
     for (auto figure: figures) {
-        if (figure->getPosition() == getPosition()) {
+        bool isMe = figure->getPosition() == getPosition();
+        if (isMe) {
             continue;
         }
+        
         auto figureRect = figure->getRect();
         if (collision.checkCollision(figureRect) != Collision::None) {
             Log::out("Collision detected");
@@ -279,7 +277,7 @@ void Figure::recalculateFramePosition() {
 
 void Figure::moveTiles(sf::Vector2f prevPosition) {
     auto currentPosition = frame.getPosition();
-    auto positionDiff = currentPosition-prevPosition;
+    auto positionDiff = currentPosition - prevPosition;
 
     for (auto &tile : tiles) {
         auto tileCurrentPosition = tile->getPosition();

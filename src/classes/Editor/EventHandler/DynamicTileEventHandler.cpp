@@ -63,9 +63,11 @@ void DynamicTileEventHandler::performHover(Cursor &cursor, std::shared_ptr<Dynam
 void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
     if (cursor.isOver(tile) && tileEventRegistry->isOverRegistered(tile)) {
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
-        if (cursor.isClick() && !tileEventRegistry->isDragRegistered(tile) && isLeftClick) {
+        bool isDraggingItem = cursor.draggedItem.has_value();
+        if (cursor.isClick() && !tileEventRegistry->isDragRegistered(tile) && isLeftClick && !isDraggingItem) {
             tile->startDrag(animationPerformer);
             tileEventRegistry->registerDrag(tile);
+            cursor.draggedItem = tile;
         } else if (!cursor.isClick() && tileEventRegistry->isDragRegistered(tile)) {
             performDrop(cursor, tile);
         }
@@ -84,6 +86,7 @@ void DynamicTileEventHandler::performDrop(Cursor &cursor, std::shared_ptr<Dynami
 
     tileEventRegistry->unregisterDrag(tile);
     tile->drop(animationPerformer);
+    cursor.draggedItem.reset();
 }
 
 void DynamicTileEventHandler::performLongClickDrop(Cursor &cursor) {
@@ -93,6 +96,8 @@ void DynamicTileEventHandler::performLongClickDrop(Cursor &cursor) {
 
     auto draggingTile = scene->getDraggingTile();
     bool insertTile = tileOnCurrentSlot == nullptr || tileOnCurrentSlot == draggingTile;
+    cursor.draggedItem.reset();
+
     if (!insertTile) {
         bool tileIsSameType = tileOnCurrentSlot->isTypeOf(eventState->lastUsedTileButton);
         if (!tileIsSameType) {
@@ -126,4 +131,5 @@ void DynamicTileEventHandler::performQuickClickDrop(Cursor &cursor) {
     draggingTile->drop(animationPerformer);
     tileEventRegistry->unregisterDrag(draggingTile);
     eventState->isDraggingNewTile = false;
+    cursor.draggedItem.reset();
 }

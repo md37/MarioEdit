@@ -22,6 +22,7 @@ void AbstractTileEventHandler::createDynamicTileSnappedToCursor(Cursor &cursor, 
 
     dynamicTile->setPosition(tilePosition);
     dynamicTile->startDrag(animationPerformer);
+    cursor.draggedItem = dynamicTile;
     tileEventRegistry->registerDrag(dynamicTile);
 }
 
@@ -33,4 +34,5 @@ void AbstractTileEventHandler::cancelDragging(Cursor &cursor) {
     auto grid = scene->getGrid();
     grid->turnHighlightOff();
     eventState->isDraggingNewTile = false;
+    cursor.draggedItem.reset();
 }

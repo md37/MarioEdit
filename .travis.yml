@@ -3,17 +3,9 @@ sudo: false
 language: cpp
 compiler: gcc
 
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-6
-    - g++-6
-    - cmake
-
 before_script:
-  - sudo apt-get install -y libsndfile1-dev libxrandr-dev libudev-dev libopenal-dev build-essential
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+  - sudo apt-get install -y libsndfile1-dev libxrandr-dev libudev-dev libopenal-dev build-essential gcc-6 g++-6 cmake
 
 script:
   - sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc

@@ -6,7 +6,7 @@ compiler: gcc
 before_script:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update
-  - sudo apt-get install -y libsndfile1-dev libxrandr-dev libudev-dev libopenal-dev build-essential gcc-6 g++-6 cmake
+  - sudo apt-get install -y libsndfile1-dev libxrandr-dev libudev-dev libopenal-dev build-essential gcc-7 g++-7 cmake
   - gcc --version
 
 script:

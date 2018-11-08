@@ -21,7 +21,6 @@ public:
 private:
 
     const std::string title = "Mario::Edit";
-    sf::Uint32 minWindowHeight = 640;
     sf::Uint32 width = 1280;
     sf::Uint32 height = 960;
     sf::Uint32 windowedWidth = 1280;

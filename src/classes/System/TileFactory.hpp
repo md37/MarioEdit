@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <SFML/Config.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include "classes/System/Scale.hpp"
 #include "classes/System/TileConfig.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
@@ -28,7 +29,7 @@ private:
 
     std::unique_ptr<Scale> &scale;
     TileConfig config;
-    std::shared_ptr<sf::Texture> texture;
+    std::unique_ptr<sf::Texture> texture;
 
     sf::Sprite prepareSprite() const;
 };

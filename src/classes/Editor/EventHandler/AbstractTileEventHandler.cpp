@@ -21,7 +21,7 @@ void AbstractTileEventHandler::createDynamicTileSnappedToCursor(Cursor &cursor, 
     tilePosition.y -= dynamicTile->getSize().y/2;
 
     dynamicTile->setPosition(tilePosition);
-    dynamicTile->startDrag(animationPerformer);
+    dynamicTile->startDrag(cursor.getCurrentPosition(), animationPerformer);
     cursor.draggedItem = dynamicTile;
     tileEventRegistry->registerDrag(dynamicTile);
 }

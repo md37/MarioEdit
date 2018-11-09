@@ -21,17 +21,15 @@ Cursor::Cursor() {
     sprite->scale(scale, scale);
 }
 
-void Cursor::updatePosition() {
-    auto mousePosition = Cursor::getCurrentPosition();
-    sprite->setPosition(mousePosition.x, mousePosition.y);
+void Cursor::updatePosition(sf::Vector2f mousePosition) {
+    sprite->setPosition(mousePosition);
 }
 
 sf::Vector2f Cursor::getCurrentPosition() {
-    return sf::Vector2f(sf::Mouse::getPosition(*(window)));
+    return sprite->getPosition();
 }
 
 void Cursor::draw(std::shared_ptr<sf::RenderWindow> window) {
-    updatePosition();
     window->draw(*sprite);
 }
 

@@ -38,8 +38,8 @@ public:
     void mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
     bool isDragging() override;
-    void startDrag(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
-    void drag() override;
+    void startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) override;
+    void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
 protected:
@@ -69,12 +69,12 @@ private:
     std::shared_ptr<StaticTile> findMostTopTile();
     std::shared_ptr<StaticTile> findMostBottomTile();
 
-    void recalculateHighlightPosition();
-    void calculateDragOffset();
+    void recalculateHighlightPosition(sf::Vector2f cursorPosition);
+    void calculateDragOffset(sf::Vector2f cursorPosition);
     void moveTiles(sf::Vector2f prevPosition);
 
     void updateFramePosition();
-    void recalculateFramePosition();
+    void recalculateFramePosition(sf::Vector2f cursorPosition);
 
     sf::Rect<float> getRect();
 

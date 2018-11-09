@@ -27,11 +27,11 @@ bool ButtonTile::isMouseOver() {
     return isMouseOverFlag;
 }
 
-void ButtonTile::startDrag(std::unique_ptr<AnimationPerformer> &animationPerformer) {
+void ButtonTile::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isDraggingFlag = true;
 }
 
-void ButtonTile::drag() {
+void ButtonTile::drag(sf::Vector2f cursorPosition) {
 
 }
 

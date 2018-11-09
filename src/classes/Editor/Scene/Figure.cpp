@@ -198,20 +198,19 @@ bool Figure::isDragging() {
     return isDraggingFlag;
 }
 
-void Figure::startDrag(std::unique_ptr<AnimationPerformer> &animationPerformer) {
+void Figure::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isDraggingFlag = true;
     frame.setOutlineColor(sf::Color(255, 255, 0, 128));
     frame.setFillColor(sf::Color(255, 255, 0, 20));
 
     grid->turnHighlightOn(getSizeOnGrid());
 
-    calculateDragOffset();
-    recalculateHighlightPosition();
+    calculateDragOffset(cursorPosition);
+    recalculateHighlightPosition(cursorPosition);
     moveTiles(position);
 }
 
-void Figure::calculateDragOffset() {
-    auto cursorPosition = Cursor::getCurrentPosition();
+void Figure::calculateDragOffset(sf::Vector2f cursorPosition) {
     dragOffset = cursorPosition - getPosition();
 
     auto dragOffsetOnGrid = grid->positionToPointOnGrid(dragOffset);
@@ -219,11 +218,11 @@ void Figure::calculateDragOffset() {
     dragOffsetForHighlight = getPosition() - grid->pointOnGridToPosition(dragOffsetOnGrid);
 }
 
-void Figure::drag() {
+void Figure::drag(sf::Vector2f cursorPosition) {
     auto prevHighlightPosition = grid->getHighlightPosition();
 
-    recalculateHighlightPosition();
-    recalculateFramePosition();
+    recalculateHighlightPosition(cursorPosition);
+    recalculateFramePosition(cursorPosition);
     moveTiles(position);
     position = frame.getPosition();
 
@@ -262,15 +261,15 @@ sf::Rect<float> Figure::getRect() {
     return sf::Rect<float>(getPosition(), sf::Vector2f(getSize()));
 }
 
-void Figure::recalculateHighlightPosition() {
-    auto highlightPosition = Cursor::getCurrentPosition();
+void Figure::recalculateHighlightPosition(sf::Vector2f cursorPosition) {
+    auto highlightPosition = cursorPosition;
     highlightPosition -= dragOffsetForHighlight;
 
     grid->setHighlightPosition(highlightPosition);
 }
 
-void Figure::recalculateFramePosition() {
-    auto newFramePosition = Cursor::getCurrentPosition();
+void Figure::recalculateFramePosition(sf::Vector2f cursorPosition) {
+    auto newFramePosition = cursorPosition;
     newFramePosition -= dragOffset;
     frame.setPosition(newFramePosition);
 }

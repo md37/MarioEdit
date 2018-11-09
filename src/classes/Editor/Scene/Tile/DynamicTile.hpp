@@ -23,8 +23,8 @@ public:
     void mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     bool isMouseOver() override;
 
-    void startDrag(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
-    void drag() override;
+    void startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) override;
+    void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     bool isDragging() override;
 

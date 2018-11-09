@@ -15,7 +15,8 @@ class Cursor {
 public:
 
     static void reinitialize(std::shared_ptr<sf::RenderWindow> &window);
-    static sf::Vector2f getCurrentPosition();
+    void updatePosition(sf::Vector2f currentPosition);
+    sf::Vector2f getCurrentPosition();
 
     std::any draggedItem;
 
@@ -58,6 +59,4 @@ private:
     bool mousePressedFlag = false;
     bool mouseReleasedFlag = false;
     sf::Clock clickClock;
-
-    void updatePosition();
 };

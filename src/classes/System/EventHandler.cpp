@@ -54,6 +54,8 @@ void EventHandler::handleEvents(std::shared_ptr<sf::RenderWindow> window) {
                 cursor.click(false, event.mouseButton.button);
             } break;
             case sf::Event::MouseMoved: {
+                auto currentPosition = sf::Mouse::getPosition(*(window));
+                cursor.updatePosition(sf::Vector2f(currentPosition));
                 cursor.mouseMove(true);
             } break;
         }

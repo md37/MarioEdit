@@ -16,7 +16,7 @@ void DynamicTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     if (cursor.isMouseMoved()) {
         auto registeredDragOnTiles = tileEventRegistry->getRegisteredDragOnTiles();
         for (auto &dragOnTile : registeredDragOnTiles) {
-            dragOnTile->drag(cursor.getCurrentPosition());
+            dragOnTile->drag(cursor.getPosition());
         }
     }
 
@@ -66,7 +66,7 @@ void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<Dy
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
         bool isDraggingItem = cursor.draggedItem.has_value();
         if (cursor.isClick() && !tileEventRegistry->isDragRegistered(tile) && isLeftClick && !isDraggingItem) {
-            tile->startDrag(cursor.getCurrentPosition(), animationPerformer);
+            tile->startDrag(cursor.getPosition(), animationPerformer);
             tileEventRegistry->registerDrag(tile);
             cursor.draggedItem = tile;
         } else if (!cursor.isClick() && tileEventRegistry->isDragRegistered(tile)) {
@@ -92,7 +92,7 @@ void DynamicTileEventHandler::performDrop(Cursor &cursor, std::shared_ptr<Dynami
 
 void DynamicTileEventHandler::performLongClickDrop(Cursor &cursor) {
     auto grid = scene->getGrid();
-    auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getCurrentPosition());
+    auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getPosition());
     auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
 
     auto draggingTile = scene->getDraggingTile();
@@ -122,7 +122,7 @@ void DynamicTileEventHandler::performQuickClickDrop(Cursor &cursor) {
     }
 
     auto grid = scene->getGrid();
-    auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getCurrentPosition());
+    auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getPosition());
     auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
 
     auto draggingTile = scene->getDraggingTile();

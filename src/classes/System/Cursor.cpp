@@ -12,10 +12,10 @@ void Cursor::reinitialize(std::shared_ptr<sf::RenderWindow> &window) {
 }
 
 Cursor::Cursor() {
-    this->texture = std::make_shared<sf::Texture>();
+    this->texture = std::make_unique<sf::Texture>();
     this->texture->loadFromFile("resources/cursor.png");
 
-    sprite = std::make_shared<sf::Sprite>(*(texture));
+    sprite = std::make_unique<sf::Sprite>(*(texture));
 
     float scale = 0.15;
     sprite->scale(scale, scale);
@@ -25,7 +25,7 @@ void Cursor::updatePosition(sf::Vector2f mousePosition) {
     sprite->setPosition(mousePosition);
 }
 
-sf::Vector2f Cursor::getCurrentPosition() {
+sf::Vector2f Cursor::getPosition() {
     return sprite->getPosition();
 }
 
@@ -42,9 +42,9 @@ void Cursor::mouseMove(bool mouseMove) {
 }
 
 bool Cursor::isOver(std::shared_ptr<Tile> tile) {
-    auto mousePosition = sf::Mouse::getPosition(*(Cursor::window));
-    int posX = mousePosition.x;
-    int posY = mousePosition.y;
+    auto mousePosition = getPosition();
+    float posX = mousePosition.x;
+    float posY = mousePosition.y;
 
     return posX >= tile->getPosition().x && posY >= tile->getPosition().y &&
            posX <= tile->getPosition().x+tile->getSize().x &&
@@ -52,21 +52,13 @@ bool Cursor::isOver(std::shared_ptr<Tile> tile) {
 }
 
 bool Cursor::isOver(std::shared_ptr<Figure> figure) {
-    auto mousePosition = sf::Mouse::getPosition(*(Cursor::window));
-    int posX = mousePosition.x;
-    int posY = mousePosition.y;
+    auto mousePosition = getPosition();
+    float posX = mousePosition.x;
+    float posY = mousePosition.y;
 
     return posX >= figure->getPosition().x && posY >= figure->getPosition().y &&
            posX <= figure->getPosition().x+figure->getSize().x &&
            posY <= figure->getPosition().y+figure->getSize().y;
-}
-
-bool Cursor::isClickOn(std::shared_ptr<Tile> tile) {
-    return this->isOver(tile) && this->isClick();
-}
-
-bool Cursor::isClickOn(std::shared_ptr<Figure> figure) {
-    return this->isOver(figure) && this->isClick();
 }
 
 bool Cursor::isClick() {

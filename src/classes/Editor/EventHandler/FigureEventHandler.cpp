@@ -14,7 +14,7 @@ void FigureEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     if (cursor.isMouseMoved()) {
         auto registeredDragOnFigures = figureEventRegistry->getRegisteredDragOnFigures();
         for (auto &dragOnFigure : registeredDragOnFigures) {
-            dragOnFigure->drag(cursor.getCurrentPosition());
+            dragOnFigure->drag(cursor.getPosition());
         }
     }
 
@@ -46,7 +46,7 @@ void FigureEventHandler::performDragDrop(Cursor& cursor, std::shared_ptr<Figure>
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
         bool isDraggingItem = cursor.draggedItem.has_value();
         if (cursor.isClick() && !figureEventRegistry->isDragRegistered(figure) && isLeftClick && !isDraggingItem) {
-            figure->startDrag(cursor.getCurrentPosition(), animationPerformer);
+            figure->startDrag(cursor.getPosition(), animationPerformer);
             cursor.draggedItem = figure;
             figureEventRegistry->registerDrag(figure);
         } else if (!cursor.isClick() && figureEventRegistry->isDragRegistered(figure)) {

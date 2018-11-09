@@ -16,12 +16,12 @@ void AbstractTileEventHandler::createDynamicTileSnappedToCursor(Cursor &cursor, 
     auto dynamicTile = button->cloneToDynamicTile(tileFactory);
     dynamicTile->setGrid(scene->getGrid());
 
-    auto tilePosition = cursor.getCurrentPosition();
+    auto tilePosition = cursor.getPosition();
     tilePosition.x -= dynamicTile->getSize().x/2;
     tilePosition.y -= dynamicTile->getSize().y/2;
 
     dynamicTile->setPosition(tilePosition);
-    dynamicTile->startDrag(cursor.getCurrentPosition(), animationPerformer);
+    dynamicTile->startDrag(cursor.getPosition(), animationPerformer);
     cursor.draggedItem = dynamicTile;
     tileEventRegistry->registerDrag(dynamicTile);
 }

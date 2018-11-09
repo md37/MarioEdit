@@ -16,7 +16,7 @@ public:
 
     static void reinitialize(std::shared_ptr<sf::RenderWindow> &window);
     void updatePosition(sf::Vector2f currentPosition);
-    sf::Vector2f getCurrentPosition();
+    sf::Vector2f getPosition();
 
     std::any draggedItem;
 
@@ -25,8 +25,6 @@ public:
     void draw(std::shared_ptr<sf::RenderWindow> window);
     bool isOver(std::shared_ptr<Tile> tile);
     bool isOver(std::shared_ptr<Figure> figure);
-    bool isClickOn(std::shared_ptr<Tile> tile);
-    bool isClickOn(std::shared_ptr<Figure> figure);
 
     bool isClick();
     void click(bool click, sf::Mouse::Button type);
@@ -49,8 +47,8 @@ public:
 private:
 
     static std::shared_ptr<sf::RenderWindow> window;
-    std::shared_ptr<sf::Texture> texture;
-    std::shared_ptr<sf::Sprite> sprite;
+    std::unique_ptr<sf::Texture> texture;
+    std::unique_ptr<sf::Sprite> sprite;
 
     bool moveFlag;
 

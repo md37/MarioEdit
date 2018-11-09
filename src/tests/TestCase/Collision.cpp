@@ -18,7 +18,7 @@ TEST(CollisionTest, test_collide_from_top_on_bound) {
     sf::Rect<float> second(point.x, point.y-height, width, height);
 
     Collision collisionDetect(first);
-    ASSERT_EQ(Collision::Direction::Top, collisionDetect.checkCollision(second));
+    ASSERT_EQ(Collision::Direction::None, collisionDetect.checkCollision(second));
 }
 
 TEST(CollisionTest, test_collide_from_top_inside) {
@@ -39,7 +39,7 @@ TEST(CollisionTest, test_collide_from_left_on_bound) {
     sf::Rect<float> second(point.x-width, point.y, width, height);
 
     Collision collisionDetect(first);
-    ASSERT_EQ(Collision::Direction::Left, collisionDetect.checkCollision(second));
+    ASSERT_EQ(Collision::Direction::None, collisionDetect.checkCollision(second));
 }
 
 TEST(CollisionTest, test_collide_from_left_inside) {
@@ -60,7 +60,7 @@ TEST(CollisionTest, test_collide_from_bottom_on_bound) {
     sf::Rect<float> second(point.x, point.y+height, width, height);
 
     Collision collisionDetect(first);
-    ASSERT_EQ(Collision::Direction::Bottom, collisionDetect.checkCollision(second));
+    ASSERT_EQ(Collision::Direction::None, collisionDetect.checkCollision(second));
 }
 
 TEST(CollisionTest, test_collide_from_bottom_inside) {
@@ -81,7 +81,7 @@ TEST(CollisionTest, test_collide_from_right_on_bound) {
     sf::Rect<float> second(point.x+width, point.y, width, height);
 
     Collision collisionDetect(first);
-    ASSERT_EQ(Collision::Direction::Right, collisionDetect.checkCollision(second));
+    ASSERT_EQ(Collision::Direction::None, collisionDetect.checkCollision(second));
 }
 
 TEST(CollisionTest, test_collide_from_right_inside) {

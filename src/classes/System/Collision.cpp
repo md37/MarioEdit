@@ -10,8 +10,8 @@ Collision::Direction Collision::checkCollision(sf::Rect<float> second) {
 
     auto diff = centerFirst-centerSecond;
 
-    bool isOutsideX = abs((long int)diff.x) > first.width/2 + second.width/2;
-    bool isOutsideY = abs((long int)diff.y) > first.height/2 + second.height/2;
+    bool isOutsideX = abs((long int)diff.x) >= first.width/2 + second.width/2;
+    bool isOutsideY = abs((long int)diff.y) >= first.height/2 + second.height/2;
     if (isOutsideX || isOutsideY) {
         return Direction::None;
     }

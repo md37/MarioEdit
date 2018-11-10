@@ -100,3 +100,123 @@ TEST(CursorTest, test_reset_press_state) {
     EXPECT_FALSE(cursor.isMousePressed());
     EXPECT_FALSE(cursor.isMouseReleased());
 }
+
+TEST(CursorTest, test_is_not_over_position_from_left) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(100, 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(50, 150));
+
+    EXPECT_FALSE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_not_over_position_from_top) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(100, 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(150, 50));
+
+    EXPECT_FALSE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_not_over_position_from_right) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(100, 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(250, 150));
+
+    EXPECT_FALSE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_not_over_position_from_bottom) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(150, 250);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(0, 0));
+
+    EXPECT_FALSE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_over_position_bound_from_left) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(100, 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(100, 150));
+
+    EXPECT_TRUE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_over_position_bound_from_top) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(100, 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(150, 100));
+
+    EXPECT_TRUE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_over_position_bound_from_right) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(100, 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(200, 150));
+
+    EXPECT_TRUE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_over_position_bound_from_bottom) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(100, 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(150, 200));
+
+    EXPECT_TRUE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_over_position_from_left) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(100, 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(102, 150));
+
+    EXPECT_TRUE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_over_position_from_top) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(100, 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(150, 102));
+
+    EXPECT_TRUE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_over_position_from_right) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(100, 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(198, 150));
+
+    EXPECT_TRUE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_over_position_from_bottom) {
+    sf::Vector2f position(100, 100);
+    sf::Vector2u size(100, 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(150, 198));
+
+    EXPECT_TRUE(cursor.isOver(position, size));
+}

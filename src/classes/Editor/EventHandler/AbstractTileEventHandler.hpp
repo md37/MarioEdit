@@ -1,6 +1,6 @@
 #pragma once
 
-#include "classes/System/Cursor.hpp"
+#include "classes/Infrastructure/Cursor.hpp"
 #include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 #include "classes/Editor/Scene.hpp"
 #include "classes/Editor/EventState.hpp"

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "classes/System/Interface/HoverableInterface.hpp"
-#include "classes/System/Interface/DraggableInterface.hpp"
-#include "classes/System/Interface/DrawableInterface.hpp"
+#include "classes/Infrastructure/Interface/HoverableInterface.hpp"
+#include "classes/Infrastructure/Interface/DraggableInterface.hpp"
+#include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Tile/GridTile.hpp"
 #include "classes/Editor/Scene/Animation/HighlightAnimation.hpp"
 #include "classes/Editor/Scene/Animation/UndoHighlightAnimation.hpp"

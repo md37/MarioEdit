@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "classes/System/Interface/DraggableInterface.hpp"
-#include "classes/System/Interface/HoverableInterface.hpp"
+#include "classes/Infrastructure/Interface/DraggableInterface.hpp"
+#include "classes/Infrastructure/Interface/HoverableInterface.hpp"
 #include "classes/Editor/Scene/Figure.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 #include "classes/Editor/Navigation/Tile/ButtonTile.hpp"

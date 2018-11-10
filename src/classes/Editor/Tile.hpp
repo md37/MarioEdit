@@ -4,9 +4,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include "classes/System/TileConfig.hpp"
-#include "classes/System/Scale.hpp"
-#include "classes/System/Interface/LocatableInterface.hpp"
+#include "classes/Infrastructure/TileConfig.hpp"
+#include "classes/Infrastructure/Scale.hpp"
+#include "classes/Infrastructure/Interface/LocatableInterface.hpp"
 
 class Tile : public LocatableInterface {
 

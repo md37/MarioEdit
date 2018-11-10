@@ -1,6 +1,6 @@
 #pragma once
 
-#include "classes/System/Interface/EventReceiverableInterface.hpp"
+#include "classes/Infrastructure/Interface/EventReceiverableInterface.hpp"
 #include "classes/Editor/Scene/Figure.hpp"
 #include "classes/Editor/EventHandler/CursorEventRegistry/FigureRegistry.hpp"
 

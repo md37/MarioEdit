@@ -1,8 +1,8 @@
 #pragma once
 
 #include <memory>
-#include "classes/System/Scale.hpp"
-#include "classes/System/TileFactory.hpp"
+#include "classes/Infrastructure/Scale.hpp"
+#include "classes/Infrastructure/TileFactory.hpp"
 #include "classes/Editor/Navigation.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 #include "classes/Editor/Scene/SceneGenerator.hpp"

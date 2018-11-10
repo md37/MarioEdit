@@ -3,8 +3,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "classes/Editor/Tile.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
-#include "classes/System/Interface/GridableInterface.hpp"
-#include "classes/System/Interface/LocatableOnGridInterface.hpp"
+#include "classes/Infrastructure/Interface/GridableInterface.hpp"
+#include "classes/Infrastructure/Interface/LocatableOnGridInterface.hpp"
 
 class GridTile : public Tile, GridableInterface, LocatableOnGridInterface {
 

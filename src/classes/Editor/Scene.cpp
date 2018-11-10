@@ -1,6 +1,6 @@
 #include "Scene.hpp"
 
-#include "classes/System/Scale.hpp"
+#include "classes/Infrastructure/Scale.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
 Scene::Scene(std::unique_ptr<TileFactory> &tileFactory) {

@@ -1,7 +1,7 @@
 #include "Main.hpp"
 
 #include <SFML/Window/Event.hpp>
-#include "classes/System/Cursor.hpp"
+#include "classes/Infrastructure/Cursor.hpp"
 
 Main::Main() {
     window = std::make_shared<sf::RenderWindow>(

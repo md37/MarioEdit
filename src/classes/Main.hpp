@@ -4,9 +4,9 @@
 #include <SFML/Config.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "classes/Editor/Scene.hpp"
-#include "classes/System/EventHandler.hpp"
-#include "classes/System/Cursor.hpp"
-#include "classes/System/Resolution.hpp"
+#include "classes/Infrastructure/EventHandler.hpp"
+#include "classes/Infrastructure/Cursor.hpp"
+#include "classes/Infrastructure/Resolution.hpp"
 #include "classes/Editor.hpp"
 #include "classes/Game.hpp"
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "classes/System/Interface/EventReceiverableInterface.hpp"
+#include "classes/Infrastructure/Interface/EventReceiverableInterface.hpp"
 #include "classes/Editor/EventHandler/AbstractTileEventHandler.hpp"
 #include "classes/Editor/EventState.hpp"
 #include "classes/Editor/Scene.hpp"

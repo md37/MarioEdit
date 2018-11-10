@@ -3,7 +3,7 @@
 #include "classes/Editor/EventState.hpp"
 #include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 #include "classes/Editor/Scene.hpp"
-#include "classes/System/Interface/EventReceiverableInterface.hpp"
+#include "classes/Infrastructure/Interface/EventReceiverableInterface.hpp"
 #include "AbstractTileEventHandler.hpp"
 
 class ButtonTileEventHandler : public EventReceiverableInterface, public AbstractTileEventHandler {

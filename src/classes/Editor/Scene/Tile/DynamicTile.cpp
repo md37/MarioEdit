@@ -1,7 +1,7 @@
 #include "DynamicTile.hpp"
 
 #include "classes/Editor/ObjectRegistry.hpp"
-#include "classes/System/Cursor.hpp"
+#include "classes/Infrastructure/Cursor.hpp"
 
 DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite, config) {
 

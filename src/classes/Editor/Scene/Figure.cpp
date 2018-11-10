@@ -1,8 +1,8 @@
 #include "Figure.hpp"
 
-#include "classes/System/Log.hpp"
-#include "classes/System/Collision.hpp"
-#include "classes/System/Cursor.hpp"
+#include "classes/Infrastructure/Log.hpp"
+#include "classes/Infrastructure/Collision.hpp"
+#include "classes/Infrastructure/Cursor.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 

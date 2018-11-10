@@ -1,10 +1,10 @@
 #pragma once
 
 #include <SFML/Graphics/RectangleShape.hpp>
-#include "classes/System/Interface/DrawableInterface.hpp"
-#include "classes/System/Interface/DraggableInterface.hpp"
-#include "classes/System/Interface/HoverableInterface.hpp"
-#include "classes/System/TileFactory.hpp"
+#include "classes/Infrastructure/Interface/DrawableInterface.hpp"
+#include "classes/Infrastructure/Interface/DraggableInterface.hpp"
+#include "classes/Infrastructure/Interface/HoverableInterface.hpp"
+#include "classes/Infrastructure/TileFactory.hpp"
 #include "classes/Editor/Tile.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 

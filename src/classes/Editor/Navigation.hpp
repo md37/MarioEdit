@@ -3,9 +3,9 @@
 #include <memory>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "classes/System/TileFactory.hpp"
-#include "classes/System/Interface/RescalableInterface.hpp"
-#include "classes/System/Interface/DrawableInterface.hpp"
+#include "classes/Infrastructure/TileFactory.hpp"
+#include "classes/Infrastructure/Interface/RescalableInterface.hpp"
+#include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 
 class Navigation : public RescalableInterface, public DrawableInterface {

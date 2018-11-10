@@ -1,8 +1,8 @@
 #pragma once
 
 #include <memory>
-#include "classes/System/Interface/RunnableInterface.hpp"
-#include "classes/System/Interface/EventReceiverableInterface.hpp"
+#include "classes/Infrastructure/Interface/RunnableInterface.hpp"
+#include "classes/Infrastructure/Interface/EventReceiverableInterface.hpp"
 #include "classes/Editor/Navigation.hpp"
 #include "classes/Editor/Scene.hpp"
 #include "classes/Editor/EventHandler.hpp"

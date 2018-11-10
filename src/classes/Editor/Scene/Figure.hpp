@@ -2,9 +2,9 @@
 
 #include <memory>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <classes/System/Collision.hpp>
-#include "classes/System/TileFactory.hpp"
-#include "classes/System/Interface/DrawableInterface.hpp"
+#include "classes/Infrastructure/Collision.hpp"
+#include "classes/Infrastructure/TileFactory.hpp"
+#include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 
 class Figure : public

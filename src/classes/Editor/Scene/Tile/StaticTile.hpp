@@ -1,7 +1,7 @@
 #pragma once
 
 #include "classes/Editor/Scene/Tile/GridTile.hpp"
-#include "classes/System/Interface/DrawableInterface.hpp"
+#include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 
 class StaticTile : public GridTile, public DrawableInterface {
 

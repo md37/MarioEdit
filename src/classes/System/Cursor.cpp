@@ -19,6 +19,7 @@ Cursor::Cursor() {
 
     float scale = 0.15;
     sprite->scale(scale, scale);
+    sprite->setPosition(sf::Vector2f(0, 0));
 }
 
 void Cursor::updatePosition(sf::Vector2f mousePosition) {
@@ -70,13 +71,8 @@ void Cursor::click(bool click, sf::Mouse::Button type) {
     clickType = type;
 }
 
-sf::Time Cursor::getClickDuration() {
-    return clickClock.getElapsedTime();
-}
-
-void Cursor::resetPressState() {
-    mouseReleasedFlag = false;
-    mousePressedFlag = false;
+sf::Mouse::Button Cursor::getClickType() {
+    return clickType;
 }
 
 bool Cursor::isMousePressed() {
@@ -96,10 +92,15 @@ void Cursor::mouseRelease(bool mouseReleased) {
     mouseReleasedFlag = mouseReleased;
 }
 
-bool Cursor::isLongClick() {
-    return getClickDuration().asMilliseconds() > 150;
+void Cursor::resetPressState() {
+    mouseReleasedFlag = false;
+    mousePressedFlag = false;
 }
 
-sf::Mouse::Button Cursor::getClickType() {
-    return clickType;
+sf::Time Cursor::getClickDuration() {
+    return clickClock.getElapsedTime();
+}
+
+bool Cursor::isLongClick() {
+    return getClickDuration().asMilliseconds() > 150;
 }

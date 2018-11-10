@@ -73,7 +73,6 @@ int Main::run() {
             editor->draw(window);
         }
 
-        cursor.mouseMove(false);
         cursor.draw(window);
         window->display();
     }

@@ -50,10 +50,10 @@ private:
     std::unique_ptr<sf::Texture> texture;
     std::unique_ptr<sf::Sprite> sprite;
 
-    bool moveFlag;
+    bool moveFlag = false;
 
-    bool clickFlag;
-    sf::Mouse::Button clickType;
+    bool clickFlag = false;
+    sf::Mouse::Button clickType = sf::Mouse::Button::Left;
     bool mousePressedFlag = false;
     bool mouseReleasedFlag = false;
     sf::Clock clickClock;

@@ -1,11 +1,12 @@
 #include <gtest/gtest.h>
 
+#include "tests/macros.hpp"
 #include <SFML/System/Vector2.hpp>
 #include "classes/System/Resolution.hpp"
 
-#ifndef CI
-
 TEST(ResolutionTest, test_max_resolution) {
+    SKIP_CI
+
     auto modes = sf::VideoMode::getFullscreenModes();
     auto maxHeightMode = modes[0];
     for (auto mode : modes) {
@@ -17,5 +18,3 @@ TEST(ResolutionTest, test_max_resolution) {
     Resolution resolution;
     ASSERT_EQ(resolution.findHighestResolutionMode(), maxHeightMode);
 }
-
-#endif

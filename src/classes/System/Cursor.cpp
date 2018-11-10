@@ -12,9 +12,6 @@ void Cursor::reinitialize(std::shared_ptr<sf::RenderWindow> &window) {
 }
 
 Cursor::Cursor() {
-    this->texture = std::make_unique<sf::Texture>();
-    this->texture->loadFromFile("resources/cursor.png");
-
     sprite = std::make_unique<sf::Sprite>(*(texture));
 
     float scale = 0.15;
@@ -31,6 +28,10 @@ sf::Vector2f Cursor::getPosition() {
 }
 
 void Cursor::draw(std::shared_ptr<sf::RenderWindow> window) {
+    if (this->texture == nullptr) {
+        this->texture = std::make_unique<sf::Texture>();
+        this->texture->loadFromFile("resources/cursor.png");
+    }
     window->draw(*sprite);
 }
 

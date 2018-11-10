@@ -3,6 +3,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "classes/System/Resolution.hpp"
 
+#ifndef CI
 
 TEST(ResolutionTest, test_max_resolution) {
     auto modes = sf::VideoMode::getFullscreenModes();
@@ -16,3 +17,5 @@ TEST(ResolutionTest, test_max_resolution) {
     Resolution resolution;
     ASSERT_EQ(resolution.findHighestResolutionMode(), maxHeightMode);
 }
+
+#endif

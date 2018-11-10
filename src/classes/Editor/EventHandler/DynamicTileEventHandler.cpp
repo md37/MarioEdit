@@ -46,23 +46,27 @@ void DynamicTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
 
 void DynamicTileEventHandler::performHover(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
     auto highlightedTiles = ObjectRegistry::getHighlightedTiles();
+    auto tilePosition = tile->getPosition();
+    auto tileSize = tile->getSize();
 
     if (highlightedTiles.empty()) {
         bool isDraggingItem = cursor.draggedItem.has_value();
-        if (cursor.isOver(tile) && !tileEventRegistry->isOverRegistered(tile) && !isDraggingItem) {
+        if (cursor.isOver(tilePosition, tileSize) && !tileEventRegistry->isOverRegistered(tile) && !isDraggingItem) {
             tileEventRegistry->registerOver(tile);
             tile->mouseEnter(animationPerformer);
-        } else if (cursor.isOver(tile)) {
+        } else if (cursor.isOver(tilePosition, tileSize)) {
             tile->mouseOver(animationPerformer);
         }
-    } else if (!cursor.isOver(tile) && tileEventRegistry->isOverRegistered(tile)) {
+    } else if (!cursor.isOver(tilePosition, tileSize) && tileEventRegistry->isOverRegistered(tile)) {
         tileEventRegistry->unregisterOver(tile);
         tile->mouseLeave(animationPerformer);
     }
 }
 
 void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
-    if (cursor.isOver(tile) && tileEventRegistry->isOverRegistered(tile)) {
+    auto tilePosition = tile->getPosition();
+    auto tileSize = tile->getSize();
+    if (cursor.isOver(tilePosition, tileSize) && tileEventRegistry->isOverRegistered(tile)) {
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
         bool isDraggingItem = cursor.draggedItem.has_value();
         if (cursor.isClick() && !tileEventRegistry->isDragRegistered(tile) && isLeftClick && !isDraggingItem) {

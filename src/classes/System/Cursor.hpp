@@ -23,8 +23,7 @@ public:
     Cursor();
 
     void draw(std::shared_ptr<sf::RenderWindow> window);
-    bool isOver(std::shared_ptr<Tile> tile);
-    bool isOver(std::shared_ptr<Figure> figure);
+    bool isOver(sf::Vector2f position, sf::Vector2u size);
 
     bool isClick();
     void click(bool click, sf::Mouse::Button type);

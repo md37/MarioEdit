@@ -30,10 +30,13 @@ void FigureEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
 
 void FigureEventHandler::performHover(Cursor &cursor, std::shared_ptr<Figure> &figure) {
     bool isDraggingItem = cursor.draggedItem.has_value();
-    if (cursor.isOver(figure) && !figureEventRegistry->isOverRegistered(figure) && !isDraggingItem) {
+    auto figurePosition = figure->getPosition();
+    auto figureSize = figure->getSize();
+
+    if (cursor.isOver(figurePosition, figureSize) && !figureEventRegistry->isOverRegistered(figure) && !isDraggingItem) {
         figureEventRegistry->registerOver(figure);
         figure->mouseEnter(animationPerformer);
-    } else if (cursor.isOver(figure)) {
+    } else if (cursor.isOver(figurePosition, figureSize)) {
         figure->mouseOver(animationPerformer);
     } else if (figureEventRegistry->isOverRegistered(figure)) {
         figureEventRegistry->unregisterOver(figure);
@@ -42,7 +45,10 @@ void FigureEventHandler::performHover(Cursor &cursor, std::shared_ptr<Figure> &f
 }
 
 void FigureEventHandler::performDragDrop(Cursor& cursor, std::shared_ptr<Figure> &figure) {
-    if (cursor.isOver(figure) && figureEventRegistry->isOverRegistered(figure)) {
+    auto figurePosition = figure->getPosition();
+    auto figureSize = figure->getSize();
+
+    if (cursor.isOver(figurePosition, figureSize) && figureEventRegistry->isOverRegistered(figure)) {
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
         bool isDraggingItem = cursor.draggedItem.has_value();
         if (cursor.isClick() && !figureEventRegistry->isDragRegistered(figure) && isLeftClick && !isDraggingItem) {

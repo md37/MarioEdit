@@ -42,24 +42,14 @@ void Cursor::mouseMove(bool mouseMove) {
     moveFlag = mouseMove;
 }
 
-bool Cursor::isOver(std::shared_ptr<Tile> tile) {
+bool Cursor::isOver(sf::Vector2f position, sf::Vector2u size) {
     auto mousePosition = getPosition();
-    float posX = mousePosition.x;
-    float posY = mousePosition.y;
+    auto posX = mousePosition.x;
+    auto posY = mousePosition.y;
 
-    return posX >= tile->getPosition().x && posY >= tile->getPosition().y &&
-           posX <= tile->getPosition().x+tile->getSize().x &&
-           posY <= tile->getPosition().y+tile->getSize().y;
-}
-
-bool Cursor::isOver(std::shared_ptr<Figure> figure) {
-    auto mousePosition = getPosition();
-    float posX = mousePosition.x;
-    float posY = mousePosition.y;
-
-    return posX >= figure->getPosition().x && posY >= figure->getPosition().y &&
-           posX <= figure->getPosition().x+figure->getSize().x &&
-           posY <= figure->getPosition().y+figure->getSize().y;
+    return posX >= position.x && posY >= position.y &&
+           posX <= position.x+size.x &&
+           posY <= position.y+size.y;
 }
 
 bool Cursor::isClick() {
@@ -73,6 +63,14 @@ void Cursor::click(bool click, sf::Mouse::Button type) {
 
 sf::Mouse::Button Cursor::getClickType() {
     return clickType;
+}
+
+sf::Time Cursor::getClickDuration() {
+    return clickClock.getElapsedTime();
+}
+
+bool Cursor::isLongClick() {
+    return getClickDuration().asMilliseconds() > 150;
 }
 
 bool Cursor::isMousePressed() {
@@ -95,12 +93,4 @@ void Cursor::mouseRelease(bool mouseReleased) {
 void Cursor::resetPressState() {
     mouseReleasedFlag = false;
     mousePressedFlag = false;
-}
-
-sf::Time Cursor::getClickDuration() {
-    return clickClock.getElapsedTime();
-}
-
-bool Cursor::isLongClick() {
-    return getClickDuration().asMilliseconds() > 150;
 }

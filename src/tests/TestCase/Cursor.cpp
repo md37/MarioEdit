@@ -61,6 +61,12 @@ TEST(CursorTest, test_mouse_move) {
     EXPECT_FALSE(cursor.isMouseMoved());
 }
 
+TEST(CursorTest, test_mouse_default_press_duration) {
+    Cursor cursor;
+    cursor.mousePress(true);
+    EXPECT_LE(0.0f, cursor.getClickDuration().asMilliseconds());
+}
+
 TEST(CursorTest, test_mouse_press_duration) {
     Cursor cursor;
     cursor.mousePress(true);
@@ -86,7 +92,11 @@ TEST(CursorTest, test_reset_press_state) {
     Cursor cursor;
     cursor.mousePress(true);
     EXPECT_TRUE(cursor.isMousePressed());
-    
+
+    cursor.mouseRelease(true);
+    EXPECT_TRUE(cursor.isMouseReleased());
+
     cursor.resetPressState();
     EXPECT_FALSE(cursor.isMousePressed());
+    EXPECT_FALSE(cursor.isMouseReleased());
 }

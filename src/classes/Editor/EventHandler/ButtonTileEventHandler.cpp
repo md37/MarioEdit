@@ -16,7 +16,9 @@ void ButtonTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     auto buttons = ObjectRegistry::getButtonTiles();
     if (!eventState->isDraggingNewTile) {
         for (auto &button: buttons) {
-            if (cursor.isOver(button)) {
+            auto buttonPosition = button->getPosition();
+            auto buttonSize = button->getSize();
+            if (cursor.isOver(buttonPosition, buttonSize)) {
                 doMouseOver(cursor, button);
 
                 if (cursor.isMousePressed()) {
@@ -32,9 +34,11 @@ void ButtonTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     }
 
     for (auto &button: buttons) {
-        if (cursor.isOver(button) && cursor.isMouseReleased()) {
+        auto buttonPosition = button->getPosition();
+        auto buttonSize = button->getSize();
+        if (cursor.isOver(buttonPosition, buttonSize) && cursor.isMouseReleased()) {
             eventState->dismissTileDrop = true;
-        } else if (cursor.isOver(button) && cursor.isMousePressed() && eventState->lastUsedTileButton != button) {
+        } else if (cursor.isOver(buttonPosition, buttonSize) && cursor.isMousePressed() && eventState->lastUsedTileButton != button) {
             cancelDragging(cursor);
         }
     }

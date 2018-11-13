@@ -7,6 +7,7 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
+#include "classes/Infrastructure/Circle.hpp"
 #include "classes/Editor/Scene/Figure.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 
@@ -24,6 +25,7 @@ public:
 
     void draw(std::shared_ptr<sf::RenderWindow> window);
     bool isOver(sf::Vector2f position, sf::Vector2u size);
+    bool isOver(Circle circle);
 
     bool isClick();
     void click(bool click, sf::Mouse::Button type);

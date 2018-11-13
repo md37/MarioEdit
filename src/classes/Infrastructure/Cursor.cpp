@@ -1,5 +1,7 @@
 #include "Cursor.hpp"
 
+#include <iostream>
+#include <cmath>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
@@ -52,6 +54,16 @@ bool Cursor::isOver(sf::Vector2f position, sf::Vector2u size) {
     return posX >= position.x && posY >= position.y &&
            posX <= position.x+size.x &&
            posY <= position.y+size.y;
+}
+
+bool Cursor::isOver(Circle circle) {
+    auto mousePosition = getPosition();
+
+    auto diff = mousePosition-circle.getPosition();
+    auto diagonal = sqrt(diff.x*diff.x + diff.y*diff.y);
+
+    std::cout << circle.getRadius() << std::endl;
+    return diagonal <= circle.getRadius();
 }
 
 bool Cursor::isClick() {

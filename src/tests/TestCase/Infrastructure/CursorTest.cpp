@@ -101,7 +101,7 @@ TEST(CursorTest, test_reset_press_state) {
     EXPECT_FALSE(cursor.isMouseReleased());
 }
 
-TEST(CursorTest, test_is_not_over_position_from_left) {
+TEST(CursorTest, test_is_not_over_square_position_from_left) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(100, 100);
 
@@ -111,7 +111,7 @@ TEST(CursorTest, test_is_not_over_position_from_left) {
     EXPECT_FALSE(cursor.isOver(position, size));
 }
 
-TEST(CursorTest, test_is_not_over_position_from_top) {
+TEST(CursorTest, test_is_not_over_square_position_from_top) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(100, 100);
 
@@ -121,7 +121,7 @@ TEST(CursorTest, test_is_not_over_position_from_top) {
     EXPECT_FALSE(cursor.isOver(position, size));
 }
 
-TEST(CursorTest, test_is_not_over_position_from_right) {
+TEST(CursorTest, test_is_not_over_square_position_from_right) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(100, 100);
 
@@ -131,7 +131,7 @@ TEST(CursorTest, test_is_not_over_position_from_right) {
     EXPECT_FALSE(cursor.isOver(position, size));
 }
 
-TEST(CursorTest, test_is_not_over_position_from_bottom) {
+TEST(CursorTest, test_is_not_over_square_position_from_bottom) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(150, 250);
 
@@ -141,7 +141,7 @@ TEST(CursorTest, test_is_not_over_position_from_bottom) {
     EXPECT_FALSE(cursor.isOver(position, size));
 }
 
-TEST(CursorTest, test_is_over_position_bound_from_left) {
+TEST(CursorTest, test_is_over_square_position_bound_from_left) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(100, 100);
 
@@ -151,7 +151,7 @@ TEST(CursorTest, test_is_over_position_bound_from_left) {
     EXPECT_TRUE(cursor.isOver(position, size));
 }
 
-TEST(CursorTest, test_is_over_position_bound_from_top) {
+TEST(CursorTest, test_is_over_square_position_bound_from_top) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(100, 100);
 
@@ -161,7 +161,7 @@ TEST(CursorTest, test_is_over_position_bound_from_top) {
     EXPECT_TRUE(cursor.isOver(position, size));
 }
 
-TEST(CursorTest, test_is_over_position_bound_from_right) {
+TEST(CursorTest, test_is_over_square_position_bound_from_right) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(100, 100);
 
@@ -171,7 +171,7 @@ TEST(CursorTest, test_is_over_position_bound_from_right) {
     EXPECT_TRUE(cursor.isOver(position, size));
 }
 
-TEST(CursorTest, test_is_over_position_bound_from_bottom) {
+TEST(CursorTest, test_is_over_square_position_bound_from_bottom) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(100, 100);
 
@@ -181,7 +181,7 @@ TEST(CursorTest, test_is_over_position_bound_from_bottom) {
     EXPECT_TRUE(cursor.isOver(position, size));
 }
 
-TEST(CursorTest, test_is_over_position_from_left) {
+TEST(CursorTest, test_is_over_square_position_from_left) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(100, 100);
 
@@ -191,7 +191,7 @@ TEST(CursorTest, test_is_over_position_from_left) {
     EXPECT_TRUE(cursor.isOver(position, size));
 }
 
-TEST(CursorTest, test_is_over_position_from_top) {
+TEST(CursorTest, test_is_over_square_position_from_top) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(100, 100);
 
@@ -201,7 +201,7 @@ TEST(CursorTest, test_is_over_position_from_top) {
     EXPECT_TRUE(cursor.isOver(position, size));
 }
 
-TEST(CursorTest, test_is_over_position_from_right) {
+TEST(CursorTest, test_is_over_square_position_from_right) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(100, 100);
 
@@ -211,7 +211,7 @@ TEST(CursorTest, test_is_over_position_from_right) {
     EXPECT_TRUE(cursor.isOver(position, size));
 }
 
-TEST(CursorTest, test_is_over_position_from_bottom) {
+TEST(CursorTest, test_is_over_square_position_from_bottom) {
     sf::Vector2f position(100, 100);
     sf::Vector2u size(100, 100);
 
@@ -219,4 +219,31 @@ TEST(CursorTest, test_is_over_position_from_bottom) {
     cursor.updatePosition(sf::Vector2f(150, 198));
 
     EXPECT_TRUE(cursor.isOver(position, size));
+}
+
+TEST(CursorTest, test_is_not_over_circle) {
+    Circle circle(sf::Vector2f(200, 200), 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(99, 200));
+
+    EXPECT_FALSE(cursor.isOver(circle));
+}
+
+TEST(CursorTest, test_is_over_circle_bound) {
+    Circle circle(sf::Vector2f(200, 200), 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(100, 200));
+
+    EXPECT_TRUE(cursor.isOver(circle));
+}
+
+TEST(CursorTest, test_is_over_circle_inside) {
+    Circle circle(sf::Vector2f(200, 200), 100);
+
+    Cursor cursor;
+    cursor.updatePosition(sf::Vector2f(101, 200));
+
+    EXPECT_TRUE(cursor.isOver(circle));
 }

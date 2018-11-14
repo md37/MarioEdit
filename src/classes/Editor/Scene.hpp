@@ -3,6 +3,7 @@
 #include <memory>
 #include "classes/Infrastructure/Scale.hpp"
 #include "classes/Infrastructure/TileFactory.hpp"
+#include "classes/Editor/Scene/ResizeIndicator.hpp"
 #include "classes/Editor/Navigation.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 #include "classes/Editor/Scene/SceneGenerator.hpp"

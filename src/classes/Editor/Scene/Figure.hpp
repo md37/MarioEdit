@@ -8,7 +8,7 @@
 #include "classes/Editor/Scene/Grid.hpp"
 
 class Figure : public
-    DrawableInterface, LocatableInterface, GridableInterface, LocatableOnGridInterface,
+    DrawableInterface, SquareableInterface, GridableInterface, SquareableOnGridInterface,
     RescalableInterface, HoverableInterface, DraggableInterface {
 
 public:

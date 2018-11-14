@@ -6,9 +6,9 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "classes/Infrastructure/TileConfig.hpp"
 #include "classes/Infrastructure/Scale.hpp"
-#include "classes/Infrastructure/Interface/LocatableInterface.hpp"
+#include "classes/Infrastructure/Interface/SquareableInterface.hpp"
 
-class Tile : public LocatableInterface {
+class Tile : public SquareableInterface {
 
 public:
 

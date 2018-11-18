@@ -9,21 +9,21 @@ void ObjectRegistry::clear() {
     dynamicTiles.clear();
 }
 
-void ObjectRegistry::registerTile(std::shared_ptr<Tile> tile) {
+void ObjectRegistry::add(std::shared_ptr<Tile> tile) {
     allTiles.push_back(tile);
 }
 
-void ObjectRegistry::registerTile(std::shared_ptr<DynamicTile> tile) {
+void ObjectRegistry::add(std::shared_ptr<DynamicTile> tile) {
     allTiles.push_back(tile);
     dynamicTiles.push_back(tile);
 }
 
-void ObjectRegistry::registerTile(std::shared_ptr<ButtonTile> tile) {
+void ObjectRegistry::add(std::shared_ptr<ButtonTile> tile) {
     allTiles.push_back(tile);
     buttonTiles.push_back(tile);
 }
 
-void ObjectRegistry::registerFigure(std::shared_ptr<Figure> figure) {
+void ObjectRegistry::add(std::shared_ptr<Figure> figure) {
     figures.push_back(figure);
 }
 

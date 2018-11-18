@@ -25,7 +25,7 @@ std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Ui
     auto tile = std::make_shared<DynamicTile>(sprite, config);
     tile->changeImage(x, y);
     tile->rescale(scale);
-    ObjectRegistry::registerTile(tile);
+    ObjectRegistry::add(tile);
 
     tile->isBlinking = x == 0 && y == 11;
 
@@ -36,7 +36,7 @@ std::shared_ptr<StaticTile> TileFactory::createStaticTile(sf::Uint32 x, sf::Uint
     auto sprite = prepareSprite();
     auto tile = std::make_shared<StaticTile>(sprite, config);
     tile->changeImage(x, y);
-    ObjectRegistry::registerTile(tile);
+    ObjectRegistry::add(tile);
 
     return tile;
 }
@@ -45,7 +45,7 @@ std::shared_ptr<ButtonTile> TileFactory::createButtonTile(sf::Uint32 x, sf::Uint
     auto sprite = prepareSprite();
     auto tile = std::make_shared<ButtonTile>(sprite, config);
     tile->changeImage(x, y);
-    ObjectRegistry::registerTile(tile);
+    ObjectRegistry::add(tile);
 
     return tile;
 }

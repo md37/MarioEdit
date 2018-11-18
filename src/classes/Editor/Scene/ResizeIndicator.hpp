@@ -21,18 +21,8 @@ public:
         Right,
     };
 
-    enum MoveDirection {
-        Horizontal=1,
-        Vertical,
-        DiagonalUp,
-        DiagonalDown,
-    };
-
     ResizeIndicator(
-        sf::Rect<float> figureArea,
-        IndicatorSide side,
-        MoveDirection moveDirection,
-        std::function<void()> action
+        sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action
     );
 
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
@@ -57,7 +47,6 @@ private:
 
     sf::Rect<float> figureArea;
     IndicatorSide side;
-    MoveDirection moveDirection;
     std::function<void()> action;
 
     sf::RectangleShape area;

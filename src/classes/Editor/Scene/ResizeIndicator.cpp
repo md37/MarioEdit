@@ -3,14 +3,10 @@
 #include <iostream>
 
 ResizeIndicator::ResizeIndicator(
-    sf::Rect<float> figureArea,
-    IndicatorSide side,
-    MoveDirection moveDirection,
-    std::function<void()> action
+    sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action
 ) {
     this->figureArea = figureArea;
     this->side = side;
-    this->moveDirection = moveDirection;
     this->action = action;
 
     prepareArea();

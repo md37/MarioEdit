@@ -2,21 +2,42 @@
 
 #include "classes/Editor/ObjectRegistry.hpp"
 
+class DragVisitator {
+
+public:
+
+    explicit DragVisitator(Cursor &cursor) : cursor(cursor) {
+
+    }
+
+    void operator()(std::shared_ptr<DynamicTile>& tile) {
+        tile->drag(cursor.getPosition());
+    }
+
+    void operator()(std::shared_ptr<Figure>& figure) {}
+
+private:
+
+    Cursor &cursor;
+
+};
+
 DynamicTileEventHandler::DynamicTileEventHandler(
     std::unique_ptr<EventState> &eventState,
     std::unique_ptr<AnimationPerformer> &animationPerformer,
     std::unique_ptr<Scene> &scene,
     std::unique_ptr<TileFactory> &tileFactory,
-    std::unique_ptr<TileEventRegistry> &tileEventRegistry
-) : AbstractTileEventHandler(eventState, animationPerformer, scene, tileFactory, tileEventRegistry) {
+    std::unique_ptr<EventRegistry> &eventRegistry
+) : AbstractTileEventHandler(eventState, animationPerformer, scene, tileFactory, eventRegistry) {
 
 }
 
 void DynamicTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     if (cursor.isMouseMoved()) {
-        auto registeredDragOnTiles = tileEventRegistry->getRegisteredDragOnTiles();
-        for (auto &dragOnTile : registeredDragOnTiles) {
-            dragOnTile->drag(cursor.getPosition());
+        auto registeredDragOnTiles = eventRegistry->getRegisteredDrags();
+        for (auto &dragOnItem : registeredDragOnTiles) {
+            DragVisitator visitator(cursor);
+            std::visit(visitator, dragOnItem);
         }
     }
 
@@ -51,14 +72,14 @@ void DynamicTileEventHandler::performHover(Cursor &cursor, std::shared_ptr<Dynam
 
     if (highlightedTiles.empty()) {
         bool isDraggingItem = cursor.draggedItem.has_value();
-        if (cursor.isOver(tilePosition, tileSize) && !tileEventRegistry->isOverRegistered(tile) && !isDraggingItem) {
-            tileEventRegistry->registerOver(tile);
+        if (cursor.isOver(tilePosition, tileSize) && !eventRegistry->isOverRegistered(tile) && !isDraggingItem) {
+            eventRegistry->registerOver(tile);
             tile->mouseEnter(animationPerformer);
         } else if (cursor.isOver(tilePosition, tileSize)) {
             tile->mouseOver(animationPerformer);
         }
-    } else if (!cursor.isOver(tilePosition, tileSize) && tileEventRegistry->isOverRegistered(tile)) {
-        tileEventRegistry->unregisterOver(tile);
+    } else if (!cursor.isOver(tilePosition, tileSize) && eventRegistry->isOverRegistered(tile)) {
+        eventRegistry->unregisterOver(tile);
         tile->mouseLeave(animationPerformer);
     }
 }
@@ -66,17 +87,17 @@ void DynamicTileEventHandler::performHover(Cursor &cursor, std::shared_ptr<Dynam
 void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
     auto tilePosition = tile->getPosition();
     auto tileSize = tile->getSize();
-    if (cursor.isOver(tilePosition, tileSize) && tileEventRegistry->isOverRegistered(tile)) {
+    if (cursor.isOver(tilePosition, tileSize) && eventRegistry->isOverRegistered(tile)) {
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
         bool isDraggingItem = cursor.draggedItem.has_value();
-        if (cursor.isClick() && !tileEventRegistry->isDragRegistered(tile) && isLeftClick && !isDraggingItem) {
+        if (cursor.isClick() && !eventRegistry->isDragRegistered(tile) && isLeftClick && !isDraggingItem) {
             tile->startDrag(cursor.getPosition(), animationPerformer);
-            tileEventRegistry->registerDrag(tile);
+            eventRegistry->registerDrag(tile);
             cursor.draggedItem = tile;
-        } else if (!cursor.isClick() && tileEventRegistry->isDragRegistered(tile)) {
+        } else if (!cursor.isClick() && eventRegistry->isDragRegistered(tile)) {
             performDrop(cursor, tile);
         }
-    } else if (tileEventRegistry->isDragRegistered(tile)) {
+    } else if (eventRegistry->isDragRegistered(tile)) {
         performDrop(cursor, tile);
     }
 }
@@ -89,7 +110,7 @@ void DynamicTileEventHandler::performDrop(Cursor &cursor, std::shared_ptr<Dynami
         ObjectRegistry::removeTile(tileOnThisPlace);
     }
 
-    tileEventRegistry->unregisterDrag(tile);
+    eventRegistry->unregisterDrag(tile);
     tile->drop(animationPerformer);
     cursor.draggedItem.reset();
 }
@@ -114,7 +135,7 @@ void DynamicTileEventHandler::performLongClickDrop(Cursor &cursor) {
     if (insertTile) {
         draggingTile->drop(animationPerformer);
         draggingTile->snapToGrid();
-        tileEventRegistry->unregisterDrag(draggingTile);
+        eventRegistry->unregisterDrag(draggingTile);
         createDynamicTileSnappedToCursor(cursor, eventState->lastUsedTileButton);
     }
 }
@@ -134,7 +155,7 @@ void DynamicTileEventHandler::performQuickClickDrop(Cursor &cursor) {
         ObjectRegistry::removeTile(tileOnCurrentSlot);
     }
     draggingTile->drop(animationPerformer);
-    tileEventRegistry->unregisterDrag(draggingTile);
+    eventRegistry->unregisterDrag(draggingTile);
     eventState->isDraggingNewTile = false;
     cursor.draggedItem.reset();
 }

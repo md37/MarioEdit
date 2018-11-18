@@ -1,6 +1,6 @@
 #pragma once
 
-#include "classes/Editor/EventHandler/CursorEventRegistry/TileRegistry.hpp"
+#include "classes/Editor/EventHandler/EventRegistry.hpp"
 #include "classes/Editor/EventState.hpp"
 #include "classes/Editor/Scene.hpp"
 #include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
@@ -29,6 +29,5 @@ private:
     std::unique_ptr<DynamicTileEventHandler> dynamicTileEventHandler;
     std::unique_ptr<FigureEventHandler> figureEventHandler;
 
-    std::unique_ptr<TileEventRegistry> tileEventRegistry;
-    std::unique_ptr<FigureEventRegistry> figureEventRegistry;
+    std::unique_ptr<EventRegistry> eventRegistry;
 };

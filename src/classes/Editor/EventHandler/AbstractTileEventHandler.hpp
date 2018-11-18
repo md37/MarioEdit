@@ -4,7 +4,7 @@
 #include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 #include "classes/Editor/Scene.hpp"
 #include "classes/Editor/EventState.hpp"
-#include "classes/Editor/EventHandler/CursorEventRegistry/TileRegistry.hpp"
+#include "classes/Editor/EventHandler/EventRegistry.hpp"
 
 class AbstractTileEventHandler {
 
@@ -15,7 +15,7 @@ public:
         std::unique_ptr<AnimationPerformer> &animationPerformer,
         std::unique_ptr<Scene> &scene,
         std::unique_ptr<TileFactory> &tileFactory,
-        std::unique_ptr<TileEventRegistry> &tileEventRegistry
+        std::unique_ptr<EventRegistry> &eventRegistry
     );
 
 protected:
@@ -24,7 +24,7 @@ protected:
     std::unique_ptr<AnimationPerformer> &animationPerformer;
     std::unique_ptr<Scene> &scene;
     std::unique_ptr<TileFactory> &tileFactory;
-    std::unique_ptr<TileEventRegistry> &tileEventRegistry;
+    std::unique_ptr<EventRegistry> &eventRegistry;
 
     void createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<ButtonTile> button);
     void cancelDragging(Cursor& cursor);

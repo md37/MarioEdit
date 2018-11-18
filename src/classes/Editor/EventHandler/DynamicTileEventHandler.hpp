@@ -14,7 +14,7 @@ public:
         std::unique_ptr<AnimationPerformer> &animationPerformer,
         std::unique_ptr<Scene> &scene,
         std::unique_ptr<TileFactory> &tileFactory,
-        std::unique_ptr<TileEventRegistry> &tileEventRegistry
+        std::unique_ptr<EventRegistry> &eventRegistry
     );
     void handleEvents(Keyboard &keyboard, Cursor &cursor) override;
 

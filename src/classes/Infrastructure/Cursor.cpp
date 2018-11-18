@@ -24,7 +24,7 @@ void Cursor::updatePosition(sf::Vector2f mousePosition) {
     sprite->setPosition(mousePosition);
 }
 
-sf::Vector2f Cursor::getPosition() {
+sf::Vector2f Cursor::getPosition() const {
     return sprite->getPosition();
 }
 

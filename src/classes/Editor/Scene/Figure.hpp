@@ -48,6 +48,8 @@ protected:
     sf::Vector2f position = {0.0f, 0.0f};
     sf::Vector2i pointOnGrid = {0, 0};
 
+    sf::RectangleShape frame;
+
 private:
 
     std::unique_ptr<TileFactory> &tileFactory;
@@ -55,8 +57,6 @@ private:
 
     bool isMouseOverFlag = false;
     bool isFrameCreated = false;
-
-    sf::RectangleShape frame;
 
     bool isDraggingFlag = false;
     sf::Vector2f dragOffset = {0.0f, 0.0f};

@@ -17,7 +17,7 @@ public:
 
     static void reinitialize(std::shared_ptr<sf::RenderWindow> &window);
     void updatePosition(sf::Vector2f currentPosition);
-    sf::Vector2f getPosition();
+    sf::Vector2f getPosition() const;
 
     std::any draggedItem;
 

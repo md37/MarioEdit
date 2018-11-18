@@ -6,19 +6,18 @@ EditorEventHandler::EditorEventHandler(
     std::unique_ptr<TileFactory> &tileFactory
 ) {
     currentState = std::make_unique<EventState>();
-    tileEventRegistry = std::make_unique<TileEventRegistry>();
-    figureEventRegistry = std::make_unique<FigureEventRegistry>();
+    eventRegistry = std::make_unique<EventRegistry>();
 
     buttonTileEventHandler = std::make_unique<ButtonTileEventHandler>(
-        currentState, animationPerformer, scene, tileFactory, tileEventRegistry
+        currentState, animationPerformer, scene, tileFactory, eventRegistry
     );
 
     dynamicTileEventHandler = std::make_unique<DynamicTileEventHandler>(
-        currentState, animationPerformer, scene, tileFactory, tileEventRegistry
+        currentState, animationPerformer, scene, tileFactory, eventRegistry
     );
 
     figureEventHandler = std::make_unique<FigureEventHandler>(
-        animationPerformer, figureEventRegistry
+        animationPerformer, eventRegistry
     );
 }
 

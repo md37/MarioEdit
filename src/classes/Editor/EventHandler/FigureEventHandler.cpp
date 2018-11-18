@@ -4,17 +4,21 @@
 
 FigureEventHandler::FigureEventHandler(
     std::unique_ptr<AnimationPerformer> &animationPerformer,
-    std::unique_ptr<FigureEventRegistry> &figureEventRegistry
+    std::unique_ptr<EventRegistry> &figureEventRegistry
 ): animationPerformer(animationPerformer), figureEventRegistry(figureEventRegistry) {
 
 }
 
 void FigureEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
-
     if (cursor.isMouseMoved()) {
-        auto registeredDragOnFigures = figureEventRegistry->getRegisteredDragOnFigures();
-        for (auto &dragOnFigure : registeredDragOnFigures) {
-            dragOnFigure->drag(cursor.getPosition());
+        auto registeredDragOnFigures = figureEventRegistry->getRegisteredDrags();
+        for (auto &dragOnItem : registeredDragOnFigures) {
+            std::visit([&cursor](auto &item) {
+                using T = std::decay_t<decltype(item)>;
+                if constexpr (std::is_same_v<T, std::shared_ptr<Figure>>) {
+                    item->drag(cursor.getPosition());
+                }
+            }, dragOnItem);
         }
     }
 

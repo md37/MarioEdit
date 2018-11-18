@@ -1,44 +1,64 @@
 #include "ResizeIndicator.hpp"
 
-ResizeIndicator::ResizeIndicator(sf::Vector2f position, sf::Uint32 radius) {
-    auto borderPosition = position;
-    borderPosition.x -= radius;
-    borderPosition.y -= radius;
+#include <iostream>
 
-    auto dotPosition = borderPosition;
-    dotPosition.x += radius-dotCircleRadiusMultiplier*radius;
-    dotPosition.y += radius-dotCircleRadiusMultiplier*radius;
+ResizeIndicator::ResizeIndicator(
+    sf::Rect<float> figureArea,
+    IndicatorSide side,
+    MoveDirection moveDirection,
+    std::function<void()> action
+) {
+    this->figureArea = figureArea;
+    this->side = side;
+    this->moveDirection = moveDirection;
+    this->action = action;
 
-    this->position = dotPosition;
-    this->radius = radius;
-
-    changeColor(sf::Color::White);
-    borderCircle.setFillColor(sf::Color::Transparent);
-    borderCircle.setOutlineThickness(5);
-    borderCircle.setRadius(radius);
-    borderCircle.setPosition(borderPosition);
-    dotCircle.setRadius(dotCircleRadiusMultiplier*radius);
-    dotCircle.setPosition(dotPosition);
+    prepareArea();
 }
 
-Circle ResizeIndicator::getCircle() {
-    return Circle(position, radius);
+void ResizeIndicator::prepareArea() {
+    sf::Vector2f areaPosition;
+    sf::Vector2f areaSize;
+
+    switch (side) {
+        case Top: {
+            areaPosition = {figureArea.left, figureArea.top};
+            areaSize = {figureArea.width, figureArea.height * sizeMultiplier};
+
+        } break;
+        case Left: {
+            areaPosition = {figureArea.left, figureArea.top};
+            areaSize = {figureArea.width * sizeMultiplier, figureArea.height};
+        } break;
+        case Bottom: {
+            auto posY = figureArea.top+figureArea.height;
+            posY -= figureArea.height * sizeMultiplier;
+            areaPosition = {figureArea.left, posY};
+
+            areaSize = {figureArea.width, figureArea.height * sizeMultiplier};
+        } break;
+        case Right: {
+            auto posX = figureArea.left+figureArea.width;
+            posX -= figureArea.width * sizeMultiplier;
+            areaPosition = {posX, figureArea.top};
+
+            areaSize = {figureArea.width * sizeMultiplier, figureArea.height};
+        } break;
+    }
+
+    area.setPosition(areaPosition);
+    area.setSize(areaSize);
+    area.setFillColor(sf::Color(255, 255, 255, 100));
 }
 
 void ResizeIndicator::draw(std::shared_ptr<sf::RenderWindow> window) {
-    window->draw(borderCircle);
-    window->draw(dotCircle);
+    if (isMouseOver()) {
+        window->draw(area);
+    }
 }
 
 void ResizeIndicator::rescale(std::unique_ptr<Scale> &scale) {
-    auto ratio = scale->getRatio();
 
-    borderCircle.setPosition(borderCircle.getPosition()*ratio);
-    borderCircle.setRadius(borderCircle.getRadius()*ratio);
-    borderCircle.setOutlineThickness(borderCircle.getOutlineThickness()*ratio);
-
-    dotCircle.setRadius(dotCircle.getRadius()*ratio);
-    dotCircle.setPosition(dotCircle.getPosition()*ratio);
 }
 
 bool ResizeIndicator::isMouseOver() {
@@ -46,7 +66,6 @@ bool ResizeIndicator::isMouseOver() {
 }
 
 void ResizeIndicator::mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    changeColor(sf::Color::White);
     isMouseOverFlag = true;
 }
 
@@ -55,7 +74,6 @@ void ResizeIndicator::mouseOver(std::unique_ptr<AnimationPerformer> &animationPe
 }
 
 void ResizeIndicator::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    changeColor(sf::Color(255, 255, 255, 100));
     isMouseOverFlag = false;
 }
 
@@ -64,8 +82,8 @@ bool ResizeIndicator::isDragging() {
 }
 
 void ResizeIndicator::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    color = sf::Color::Yellow;
     isDraggingFlag = true;
+    area.setFillColor(sf::Color(255, 255, 0, 128));
 }
 
 void ResizeIndicator::drag(sf::Vector2f cursorPosition) {
@@ -73,11 +91,10 @@ void ResizeIndicator::drag(sf::Vector2f cursorPosition) {
 }
 
 void ResizeIndicator::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    changeColor(sf::Color::White);
     isDraggingFlag = false;
+    area.setFillColor(sf::Color(255, 255, 255, 100));
 }
 
-void ResizeIndicator::changeColor(sf::Color color) {
-    borderCircle.setOutlineColor(color);
-    dotCircle.setFillColor(color);
+void ResizeIndicator::runAction() {
+    action();
 }

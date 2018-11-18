@@ -1,19 +1,39 @@
 #pragma once
 
+#include <functional>
 #include <SFML/Config.hpp>
-#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Rect.hpp>
 #include "classes/Infrastructure/Interface/CircleableInterface.hpp"
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Infrastructure/Interface/RescalableInterface.hpp"
 #include "classes/Infrastructure/Interface/HoverableInterface.hpp"
 #include "classes/Infrastructure/Interface/DraggableInterface.hpp"
 
-class ResizeIndicator : public CircleableInterface, DrawableInterface, RescalableInterface, HoverableInterface, DraggableInterface {
+class ResizeIndicator : public DrawableInterface, RescalableInterface, HoverableInterface, DraggableInterface {
 
 public:
 
-    ResizeIndicator(sf::Vector2f position, sf::Uint32 radius);
-    Circle getCircle() override;
+    enum IndicatorSide {
+        Top=1,
+        Left,
+        Bottom,
+        Right,
+    };
+
+    enum MoveDirection {
+        Horizontal=1,
+        Vertical,
+        DiagonalUp,
+        DiagonalDown,
+    };
+
+    ResizeIndicator(
+        sf::Rect<float> figureArea,
+        IndicatorSide side,
+        MoveDirection moveDirection,
+        std::function<void()> action
+    );
 
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
@@ -29,19 +49,21 @@ public:
     void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
+    void runAction();
+
 private:
 
-    sf::Color color;
-    sf::Vector2f position = {0, 0};
-    sf::Uint32 radius = 30;
+    float sizeMultiplier = 0.12;
+
+    sf::Rect<float> figureArea;
+    IndicatorSide side;
+    MoveDirection moveDirection;
+    std::function<void()> action;
+
+    sf::RectangleShape area;
 
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;
 
-    sf::CircleShape borderCircle;
-    sf::CircleShape dotCircle;
-    float dotCircleRadiusMultiplier = 0.25f;
-
-    void changeColor(sf::Color color);
-
+    void prepareArea();
 };

@@ -7,8 +7,8 @@ AbstractTileEventHandler::AbstractTileEventHandler(
     std::unique_ptr<AnimationPerformer> &animationPerformer,
     std::unique_ptr<Scene> &scene,
     std::unique_ptr<TileFactory> &tileFactory,
-    std::unique_ptr<TileEventRegistry> &tileEventRegistry
-): tileFactory(tileFactory), scene(scene), animationPerformer(animationPerformer), eventState(eventState), tileEventRegistry(tileEventRegistry) {
+    std::unique_ptr<EventRegistry> &eventRegistry
+): tileFactory(tileFactory), scene(scene), animationPerformer(animationPerformer), eventState(eventState), eventRegistry(eventRegistry) {
 
 }
 
@@ -23,12 +23,12 @@ void AbstractTileEventHandler::createDynamicTileSnappedToCursor(Cursor &cursor, 
     dynamicTile->setPosition(tilePosition);
     dynamicTile->startDrag(cursor.getPosition(), animationPerformer);
     cursor.draggedItem = dynamicTile;
-    tileEventRegistry->registerDrag(dynamicTile);
+    eventRegistry->registerDrag(dynamicTile);
 }
 
 void AbstractTileEventHandler::cancelDragging(Cursor &cursor) {
     auto draggingTile = scene->getDraggingTile();
-    tileEventRegistry->unregisterDrag(draggingTile);
+    eventRegistry->unregisterDrag(draggingTile);
     ObjectRegistry::removeTile(draggingTile);
 
     auto grid = scene->getGrid();

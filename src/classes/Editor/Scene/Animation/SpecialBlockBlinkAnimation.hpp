@@ -1,6 +1,6 @@
 #pragma once
 
-#include "classes/System/Animation/Animation.hpp"
+#include "classes/Infrastructure/Animation/Animation.hpp"
 
 class SpecialBlockBlinkAnimation : public Animation {
 

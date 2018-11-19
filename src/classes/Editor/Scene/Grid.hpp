@@ -3,15 +3,15 @@
 #include <memory>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "classes/System/Interface/RescalableInterface.hpp"
-#include "classes/System/Interface/DrawableInterface.hpp"
+#include "classes/Infrastructure/Interface/RescalableInterface.hpp"
+#include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 
 class Grid : public RescalableInterface, public DrawableInterface {
 
 public:
 
     explicit Grid();
-    void rescale(std::shared_ptr<Scale> scale) override;
+    void rescale(std::unique_ptr<Scale>& scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
     sf::Uint32 getCols();

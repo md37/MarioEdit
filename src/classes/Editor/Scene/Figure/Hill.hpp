@@ -6,7 +6,7 @@ class Hill : public Figure {
 
 public:
 
-    Hill(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size);
+    Hill(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size);
 
 private:
 

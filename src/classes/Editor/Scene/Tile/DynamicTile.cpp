@@ -1,12 +1,17 @@
-#include <classes/Editor/ObjectRegistry.hpp>
 #include "DynamicTile.hpp"
 
-#include "classes/System/Cursor.hpp"
+#include "classes/Editor/ObjectRegistry.hpp"
+#include "classes/Infrastructure/Cursor.hpp"
 
 DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite, config) {
 
 }
 
+void DynamicTile::rescale(std::unique_ptr<Scale> &newScale) {
+    snapToCenterPoint();
+
+    Tile::rescale(newScale);
+}
 void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) {
     window->draw(sprite);
 }
@@ -15,7 +20,7 @@ bool DynamicTile::isMouseOver() {
     return isMouseOverFlag;
 }
 
-void DynamicTile::mouseEnter(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void DynamicTile::mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = true;
     if (undoHighlightAnimation.use_count()) {
         undoHighlightAnimation->stop();
@@ -25,11 +30,11 @@ void DynamicTile::mouseEnter(std::shared_ptr<AnimationPerformer> animationPerfor
     animationPerformer->add(highlightAnimation);
 }
 
-void DynamicTile::mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void DynamicTile::mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) {
 
 }
 
-void DynamicTile::mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void DynamicTile::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = false;
     isReturning = true;
     if (highlightAnimation.use_count()) {
@@ -44,8 +49,7 @@ bool DynamicTile::isDragging() {
     return isDraggingFlag;
 }
 
-void DynamicTile::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
-    auto cursorPosition = Cursor::getCurrentPosition();
+void DynamicTile::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
     grid->setHighlightPosition(cursorPosition);
 
     dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
@@ -54,17 +58,13 @@ void DynamicTile::startDrag(std::shared_ptr<AnimationPerformer> animationPerform
     isDraggingFlag = true;
 }
 
-void DynamicTile::drag() {
-    auto cursorPosition = Cursor::getCurrentPosition();
+void DynamicTile::drag(sf::Vector2f cursorPosition) {
     grid->setHighlightPosition(cursorPosition);
 
-    cursorPosition -= dragOffset;
-    sprite.setPosition(sf::Vector2f(cursorPosition));
-
-    correctCorners();
+    setPosition(sf::Vector2f(cursorPosition-dragOffset));
 }
 
-void DynamicTile::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void DynamicTile::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     dragOffset = {0, 0};
 
     dropHighlightPlace = grid->getHighlightPointOnGrid();
@@ -72,12 +72,13 @@ void DynamicTile::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
 
     sf::Vector2f positionOnGrid = grid->getHighlightPosition();
     sf::Vector2f tileSize(getSize());
-    positionOnGrid -= (tileSize-(tileSize/scalePromotion))/2.0f;
+    positionOnGrid -= (tileSize-(tileSize/getScalePromotion()))/2.0f;
 
     setPosition(positionOnGrid);
 
     grid->turnHighlightOff();
 
+    recalculateCenter();
     correctCorners();
     isDraggingFlag = false;
 }

@@ -3,11 +3,11 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 
 ButtonTileEventHandler::ButtonTileEventHandler(
-    std::shared_ptr<EventState> eventState,
-    std::shared_ptr<AnimationPerformer> animationPerformer,
-    std::shared_ptr<Scene> scene,
-    std::shared_ptr<TileFactory> tileFactory,
-    std::shared_ptr<TileEventRegistry> tileEventRegistry
+    std::unique_ptr<EventState> &eventState,
+    std::unique_ptr<AnimationPerformer> &animationPerformer,
+    std::unique_ptr<Scene> &scene,
+    std::unique_ptr<TileFactory> &tileFactory,
+    std::unique_ptr<EventRegistry> &tileEventRegistry
 ) : AbstractTileEventHandler(eventState, animationPerformer, scene, tileFactory, tileEventRegistry) {
 
 }
@@ -16,14 +16,16 @@ void ButtonTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     auto buttons = ObjectRegistry::getButtonTiles();
     if (!eventState->isDraggingNewTile) {
         for (auto &button: buttons) {
-            if (cursor.isOver(button)) {
+            auto buttonPosition = button->getPosition();
+            auto buttonSize = button->getSize();
+            if (cursor.isOver(buttonPosition, buttonSize)) {
                 doMouseOver(cursor, button);
 
                 if (cursor.isMousePressed()) {
                     doMouseClick(cursor, button);
                 }
                 break;
-            } else if (tileEventRegistry->isOverRegistered(button)) {
+            } else if (eventRegistry->isOverRegistered(button)) {
                 doMouseOut(cursor, button);
                 break;
             }
@@ -32,17 +34,19 @@ void ButtonTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     }
 
     for (auto &button: buttons) {
-        if (cursor.isOver(button) && cursor.isMouseReleased()) {
+        auto buttonPosition = button->getPosition();
+        auto buttonSize = button->getSize();
+        if (cursor.isOver(buttonPosition, buttonSize) && cursor.isMouseReleased()) {
             eventState->dismissTileDrop = true;
-        } else if (cursor.isOver(button) && cursor.isMousePressed() && eventState->lastUsedTileButton != button) {
+        } else if (cursor.isOver(buttonPosition, buttonSize) && cursor.isMousePressed() && eventState->lastUsedTileButton != button) {
             cancelDragging(cursor);
         }
     }
 }
 
 void ButtonTileEventHandler::doMouseOver(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
-    if (!tileEventRegistry->isOverRegistered(button)) {
-        tileEventRegistry->registerOver(button);
+    if (!eventRegistry->isOverRegistered(button)) {
+        eventRegistry->registerOver(button);
         button->mouseEnter(animationPerformer);
     } else {
         button->mouseOver(animationPerformer);
@@ -50,7 +54,7 @@ void ButtonTileEventHandler::doMouseOver(Cursor &cursor, std::shared_ptr<ButtonT
 }
 
 void ButtonTileEventHandler::doMouseOut(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
-    tileEventRegistry->unregisterOver(button);
+    eventRegistry->unregisterOver(button);
     button->mouseLeave(animationPerformer);
 }
 

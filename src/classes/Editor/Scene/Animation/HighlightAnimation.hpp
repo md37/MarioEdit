@@ -4,9 +4,9 @@
 #include <thread>
 #include <mutex>
 #include <SFML/System/Clock.hpp>
-#include <classes/System/Animation/EasingFunction/SmoothStepFunction.hpp>
-#include "classes/System/Animation/EasingFunction.hpp"
-#include "classes/System/Animation/Animation.hpp"
+#include <classes/Infrastructure/Animation/EasingFunction/SmoothStepFunction.hpp>
+#include "classes/Infrastructure/Animation/EasingFunction.hpp"
+#include "classes/Infrastructure/Animation/Animation.hpp"
 
 class DynamicTile;
 
@@ -20,6 +20,6 @@ public:
 private:
 
     DynamicTile* tile;
-    std::shared_ptr<SmoothStepFunction> upFunction;
-    std::shared_ptr<SmoothStepFunction> downFunction;
+    std::unique_ptr<SmoothStepFunction> upFunction;
+    std::unique_ptr<SmoothStepFunction> downFunction;
 };

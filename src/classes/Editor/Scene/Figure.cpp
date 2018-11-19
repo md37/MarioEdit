@@ -1,10 +1,12 @@
 #include "Figure.hpp"
 
-#include "classes/System/Cursor.hpp"
+#include "classes/Infrastructure/Log.hpp"
+#include "classes/Infrastructure/Collision.hpp"
+#include "classes/Infrastructure/Cursor.hpp"
+#include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
-Figure::Figure(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid) {
-    this->tileFactory = tileFactory;
+Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid) : tileFactory(tileFactory) {
     this->grid = grid;
 }
 
@@ -26,7 +28,7 @@ void Figure::createFrame() {
     auto size = this->getSize();
 
     frame.setSize(sf::Vector2f(size));
-    frame.setOutlineThickness(thickness*4);
+    frame.setOutlineThickness(thickness * 4);
     frame.setOutlineColor(sf::Color(255, 255, 255, 128));
     frame.setFillColor(sf::Color(255, 255, 255, 20));
 
@@ -40,7 +42,7 @@ void Figure::updateFramePosition() {
     frame.setPosition(framePosition);
 }
 
-void Figure::rescale(std::shared_ptr<Scale> scale) {
+void Figure::rescale(std::unique_ptr<Scale> &scale) {
     for (auto &tile : tiles) {
         tile->rescale(scale);
     }
@@ -63,13 +65,13 @@ void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
     auto mostTopTile = findMostTopTile();
 
     sf::Vector2i diff = {
-        pointOnGrid.x-mostLeftTile->getPointOnGrid().x,
-        pointOnGrid.y-mostTopTile->getPointOnGrid().y
+            pointOnGrid.x - mostLeftTile->getPointOnGrid().x,
+            pointOnGrid.y - mostTopTile->getPointOnGrid().y
     };
 
     for (auto &tile : tiles) {
         auto currentPointOnGrid = tile->getPointOnGrid();
-        tile->snapToGrid(currentPointOnGrid+diff);
+        tile->snapToGrid(currentPointOnGrid + diff);
     }
 }
 
@@ -77,15 +79,15 @@ bool Figure::isMouseOver() {
     return isMouseOverFlag;
 }
 
-void Figure::mouseEnter(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void Figure::mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = true;
 }
 
-void Figure::mouseOver(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void Figure::mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) {
 
 }
 
-void Figure::mouseLeave(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void Figure::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = false;
     isFrameCreated = false;
 }
@@ -100,8 +102,8 @@ sf::Vector2u Figure::getSize() {
     auto mostTopTile = findMostTopTile();
     auto mostBottomTile = findMostBottomTile();
 
-    sf::Uint32 width = mostRightTile->getPosition().x+mostRightTile->getSize().x - mostLeftTile->getPosition().x;
-    sf::Uint32 height = (mostBottomTile->getPosition().y+mostBottomTile->getSize().y) - mostTopTile->getPosition().y;
+    sf::Uint32 width = mostRightTile->getPosition().x + mostRightTile->getSize().x - mostLeftTile->getPosition().x;
+    sf::Uint32 height = (mostBottomTile->getPosition().y + mostBottomTile->getSize().y) - mostTopTile->getPosition().y;
     return {width, height};
 }
 
@@ -117,14 +119,14 @@ sf::Vector2u Figure::getSizeOnGrid() {
 
     sf::Uint32 width = mostRightTile->getPointOnGrid().x - mostLeftTile->getPointOnGrid().x;
     sf::Uint32 height = mostBottomTile->getPointOnGrid().y - mostTopTile->getPointOnGrid().y;
-    return {width+1, height+1};
+    return {width + 1, height + 1};
 }
 
 std::shared_ptr<StaticTile> Figure::findMostLeftTile() {
-     if (tiles.size() == 0) {
-         EmptyFigureFoundException e;
-         throw e;
-     }
+    if (tiles.size() == 0) {
+        EmptyFigureFoundException e;
+        throw e;
+    }
 
     auto mostLeftTile = tiles.at(0);
     auto mostLeftTilePosition = mostLeftTile->getPosition();
@@ -139,10 +141,10 @@ std::shared_ptr<StaticTile> Figure::findMostLeftTile() {
 }
 
 std::shared_ptr<StaticTile> Figure::findMostRightTile() {
-     if (tiles.size() == 0) {
-         EmptyFigureFoundException e;
-         throw e;
-     }
+    if (tiles.size() == 0) {
+        EmptyFigureFoundException e;
+        throw e;
+    }
 
     auto mostRightTile = tiles.at(0);
     auto mostRightTilePosition = mostRightTile->getPosition();
@@ -157,10 +159,10 @@ std::shared_ptr<StaticTile> Figure::findMostRightTile() {
 }
 
 std::shared_ptr<StaticTile> Figure::findMostTopTile() {
-     if (tiles.size() == 0) {
-         EmptyFigureFoundException e;
-         throw e;
-     }
+    if (tiles.size() == 0) {
+        EmptyFigureFoundException e;
+        throw e;
+    }
 
     auto mostTopTile = tiles.at(0);
     auto mostTopTilePosition = mostTopTile->getPosition();
@@ -175,10 +177,10 @@ std::shared_ptr<StaticTile> Figure::findMostTopTile() {
 }
 
 std::shared_ptr<StaticTile> Figure::findMostBottomTile() {
-     if (tiles.size() == 0) {
-         EmptyFigureFoundException e;
-         throw e;
-     }
+    if (tiles.size() == 0) {
+        EmptyFigureFoundException e;
+        throw e;
+    }
 
     auto mostBottomTile = tiles.at(0);
     auto mostBottomTilePosition = mostBottomTile->getPosition();
@@ -196,20 +198,19 @@ bool Figure::isDragging() {
     return isDraggingFlag;
 }
 
-void Figure::startDrag(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void Figure::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isDraggingFlag = true;
     frame.setOutlineColor(sf::Color(255, 255, 0, 128));
     frame.setFillColor(sf::Color(255, 255, 0, 20));
 
     grid->turnHighlightOn(getSizeOnGrid());
 
-    calculateDragOffset();
-    recalculateHighlightPosition();
-    moveTiles();
+    calculateDragOffset(cursorPosition);
+    recalculateHighlightPosition(cursorPosition);
+    moveTiles(position);
 }
 
-void Figure::calculateDragOffset() {
-    auto cursorPosition = Cursor::getCurrentPosition();
+void Figure::calculateDragOffset(sf::Vector2f cursorPosition) {
     dragOffset = cursorPosition - getPosition();
 
     auto dragOffsetOnGrid = grid->positionToPointOnGrid(dragOffset);
@@ -217,31 +218,65 @@ void Figure::calculateDragOffset() {
     dragOffsetForHighlight = getPosition() - grid->pointOnGridToPosition(dragOffsetOnGrid);
 }
 
-void Figure::drag() {
-    recalculateHighlightPosition();
-    recalculateFramePosition();
+void Figure::drag(sf::Vector2f cursorPosition) {
+    auto prevHighlightPosition = grid->getHighlightPosition();
 
-    moveTiles();
+    recalculateHighlightPosition(cursorPosition);
+    recalculateFramePosition(cursorPosition);
+    moveTiles(position);
     position = frame.getPosition();
+
+    bool isCollision = checkForCollisions();
+    if (isCollision) {
+        frame.setOutlineColor(sf::Color(255, 0, 0, 100));
+        grid->setHighlightPosition(prevHighlightPosition);
+    } else {
+        frame.setOutlineColor(sf::Color(255, 255, 0, 128));
+    }
 }
 
-void Figure::recalculateHighlightPosition() {
-    auto highlightPosition = Cursor::getCurrentPosition();
+bool Figure::checkForCollisions() {
+    Collision collision(getRect());
+    auto figures = ObjectRegistry::getFigures();
+    for (auto figure: figures) {
+        bool isMe = figure->getPosition() == getPosition();
+        if (isMe) {
+            continue;
+        }
+
+        auto figureRect = figure->getRect();
+        if (collision.checkCollision(figureRect) != Collision::None) {
+            Log::out("Collision detected");
+            Log::out(getRect(), "Current rect");
+            Log::out(figureRect, "Figure rect");
+            Log::line();
+
+            return true;
+        }
+    }
+    return false;
+}
+
+sf::Rect<float> Figure::getRect() {
+    return sf::Rect<float>(getPosition(), sf::Vector2f(getSize()));
+}
+
+void Figure::recalculateHighlightPosition(sf::Vector2f cursorPosition) {
+    auto highlightPosition = cursorPosition;
     highlightPosition -= dragOffsetForHighlight;
 
     grid->setHighlightPosition(highlightPosition);
 }
 
-void Figure::recalculateFramePosition() {
-    auto newFramePosition = Cursor::getCurrentPosition();
+void Figure::recalculateFramePosition(sf::Vector2f cursorPosition) {
+    auto newFramePosition = cursorPosition;
     newFramePosition -= dragOffset;
     frame.setPosition(newFramePosition);
 }
 
-void Figure::moveTiles() {
-    auto oldPosition = position;
+void Figure::moveTiles(sf::Vector2f prevPosition) {
     auto currentPosition = frame.getPosition();
-    auto positionDiff = currentPosition-oldPosition;
+    auto positionDiff = currentPosition - prevPosition;
 
     for (auto &tile : tiles) {
         auto tileCurrentPosition = tile->getPosition();
@@ -250,7 +285,7 @@ void Figure::moveTiles() {
     }
 }
 
-void Figure::drop(std::shared_ptr<AnimationPerformer> animationPerformer) {
+void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isDraggingFlag = false;
 
     pointOnGrid = grid->getHighlightPointOnGrid();

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "classes/System/Interface/RunnableInterface.hpp"
-#include "classes/System/Interface/EventReceiverableInterface.hpp"
+#include "classes/Infrastructure/Interface/RunnableInterface.hpp"
+#include "classes/Infrastructure/Interface/EventReceiverableInterface.hpp"
 
 class Game : public RunnableInterface, public EventReceiverableInterface {
 

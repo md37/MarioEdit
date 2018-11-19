@@ -93,6 +93,10 @@ MODE=$1
 
 if [[ ${MODE} == "build" ]]; then
     build_all
+elif [[ ${MODE} == "build-sfml" ]]; then
+    build_sfml
+elif [[ ${MODE} == "build-gtest" ]]; then
+    build_gtest
 elif [[ ${MODE} == "run" ]]; then
     run
 elif [[ ${MODE} == "test" ]]; then

@@ -1,21 +1,21 @@
 #include "Scene.hpp"
 
-#include "classes/System/Scale.hpp"
+#include "classes/Infrastructure/Scale.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
-Scene::Scene(std::shared_ptr<TileFactory> tileFactory) {
+Scene::Scene(std::unique_ptr<TileFactory> &tileFactory) {
     grid = std::make_shared<Grid>();
-    sceneGenerator = std::make_shared<SceneGenerator>(tileFactory, grid);
+    sceneGenerator = std::make_unique<SceneGenerator>(tileFactory, grid);
     sceneGenerator->generate();
 }
 
-void Scene::rescale(std::shared_ptr<Scale> scale) {
+void Scene::rescale(std::unique_ptr<Scale> &scale) {
     grid->rescale(scale);
     reScaleTiles(scale);
     reSnapTilesToGrid();
 }
 
-void Scene::reScaleTiles(std::shared_ptr<Scale> scale) {
+void Scene::reScaleTiles(std::unique_ptr<Scale> &scale) {
     auto dynamicTiles = ObjectRegistry::getDynamicTiles();
     for (auto const &tile : dynamicTiles) {
         tile->rescale(scale);
@@ -43,8 +43,18 @@ void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
     window->clear(sf::Color(92, 148, 252));
 
     auto figures = ObjectRegistry::getFigures();
+
     for (auto const &figure : figures) {
+        if (figure->isDragging()) {
+            continue;
+        }
         figure->draw(window);
+    }
+
+    for (auto const &figure : figures) {
+        if (figure->isDragging()) {
+            figure->draw(window);
+        }
     }
 
     grid->draw(window);

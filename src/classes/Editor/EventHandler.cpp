@@ -1,24 +1,23 @@
 #include "EventHandler.hpp"
 
 EditorEventHandler::EditorEventHandler(
-    std::shared_ptr<AnimationPerformer> animationPerformer,
-    std::shared_ptr<Scene> scene,
-    std::shared_ptr<TileFactory> tileFactory
+    std::unique_ptr<AnimationPerformer> &animationPerformer,
+    std::unique_ptr<Scene> &scene,
+    std::unique_ptr<TileFactory> &tileFactory
 ) {
-    currentState = std::make_shared<EventState>();
-    tileEventRegistry = std::make_shared<TileEventRegistry>();
-    figureEventRegistry = std::make_shared<FigureEventRegistry>();
+    currentState = std::make_unique<EventState>();
+    eventRegistry = std::make_unique<EventRegistry>();
 
-    buttonTileEventHandler = std::make_shared<ButtonTileEventHandler>(
-        currentState, animationPerformer, scene, tileFactory, tileEventRegistry
+    buttonTileEventHandler = std::make_unique<ButtonTileEventHandler>(
+        currentState, animationPerformer, scene, tileFactory, eventRegistry
     );
 
-    dynamicTileEventHandler = std::make_shared<DynamicTileEventHandler>(
-        currentState, animationPerformer, scene, tileFactory, tileEventRegistry
+    dynamicTileEventHandler = std::make_unique<DynamicTileEventHandler>(
+        currentState, animationPerformer, scene, tileFactory, eventRegistry
     );
 
-    figureEventHandler = std::make_shared<FigureEventHandler>(
-        animationPerformer, figureEventRegistry
+    figureEventHandler = std::make_unique<FigureEventHandler>(
+        animationPerformer, eventRegistry
     );
 }
 

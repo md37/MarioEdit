@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "classes/Editor/Tile.hpp"
-#include "classes/System/Interface/DrawableInterface.hpp"
+#include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 
 class BackgroundTile : public Tile, public DrawableInterface {
 

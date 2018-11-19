@@ -1,8 +1,8 @@
 #include "Bush.hpp"
 
-Bush::Bush(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure(tileFactory, grid) {
-    if (size < 2) {
-        size = 2;
+Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure(tileFactory, grid) {
+    if (size < 1) {
+        size = 1;
     }
 
     this->size = size;
@@ -13,7 +13,7 @@ Bush::Bush(std::shared_ptr<TileFactory> tileFactory, std::shared_ptr<Grid> grid,
     pointOnGrid.x++;
     tiles.push_back(begin);
 
-    for (int i=2; i<size; i++) {
+    for (int i=0; i<size; i++) {
         auto middle = tileFactory->createStaticTile(3, 0);
         middle->setGrid(grid);
         middle->snapToGrid(pointOnGrid);

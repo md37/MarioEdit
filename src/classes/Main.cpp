@@ -1,46 +1,27 @@
 #include "Main.hpp"
 
 #include <SFML/Window/Event.hpp>
-#include "classes/System/Cursor.hpp"
+#include "classes/Infrastructure/Cursor.hpp"
 
 Main::Main() {
     window = std::make_shared<sf::RenderWindow>(
-            sf::VideoMode(windowedWidth, windowedHeight), title, sf::Style::Default
+            sf::VideoMode(windowedWidth, windowedHeight), title, sf::Style::Titlebar | sf::Style::Close
     );
 
-    scale = std::make_shared<Scale>(window->getSize());
-    tileFactory = std::make_shared<TileFactory>("resources/tiles.png", scale);
-    editor = std::make_shared<Editor>(tileFactory);
-    game = std::make_shared<Game>();
+    scale = std::make_unique<Scale>(window->getSize());
+    tileFactory = std::make_unique<TileFactory>("resources/tiles.png", scale);
+    editor = std::make_unique<Editor>(tileFactory);
+    game = std::make_unique<Game>();
 
     initializeEventHandler();
     reInitializeWindow();
 }
 
 void Main::initializeEventHandler() {
-    systemEventHandler = std::make_shared<EventHandler>(cursor, scale);
+    systemEventHandler = std::make_unique<EventHandler>(cursor, scale);
 
     systemEventHandler->addEventHandler(EventHandler::QuitGame, [=]() {
         window->close();
-    });
-
-    systemEventHandler->addEventHandler(EventHandler::ResizeWindow, [=]() {
-        sf::Event event = systemEventHandler->getLastEvent();
-
-        width = event.size.width;
-        height = event.size.height;
-        windowedWidth = event.size.width;
-        windowedHeight = event.size.height;
-
-        if (event.size.height < minWindowHeight) {
-            window->setSize(sf::Vector2u(event.size.width, minWindowHeight));
-            height = minWindowHeight;
-            windowedHeight = minWindowHeight;
-        }
-
-        window->setView(sf::View(sf::FloatRect(0, 0, width, height)));
-        scale->change(window->getSize());
-        editor->rescale(scale);
     });
 
     systemEventHandler->addEventHandler(EventHandler::ToggleFullScreen, [=]() {
@@ -56,8 +37,9 @@ void Main::initializeEventHandler() {
             height = windowedHeight;
 
             sf::VideoMode mode(width, height);
-            window->create(mode, title, sf::Style::Default);
+            window->create(mode, title, sf::Style::Titlebar | sf::Style::Close);
         }
+
         reInitializeWindow();
     });
 }
@@ -85,12 +67,12 @@ int Main::run() {
         systemEventHandler->handleEvents(window);
 
         if (editor->isStarted()) {
-            editor->handleEvents(systemEventHandler->keyboard, systemEventHandler->cursor);
             editor->runAnimations();
+
+            editor->handleEvents(systemEventHandler->keyboard, systemEventHandler->cursor);
             editor->draw(window);
         }
 
-        cursor.mouseMove(false);
         cursor.draw(window);
         window->display();
     }

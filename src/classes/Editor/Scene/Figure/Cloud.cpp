@@ -86,13 +86,13 @@ void Cloud::reCreateIndicators() {
     sf::Rect figureRect(getPosition(), sf::Vector2f(getSize()));
 
     leftIndicator = std::make_unique<ResizeIndicator>(
-        figureRect, ResizeIndicator::IndicatorSide::Left, ResizeIndicator::MoveDirection::Horizontal, [=]() mutable {
+        figureRect, ResizeIndicator::IndicatorSide::Left, [=]() mutable {
             resizeToLeft();
         }
     );
 
     rightIndicator = std::make_unique<ResizeIndicator>(
-        figureRect, ResizeIndicator::IndicatorSide::Right, ResizeIndicator::MoveDirection::Horizontal, [=]() mutable {
+        figureRect, ResizeIndicator::IndicatorSide::Right, [=]() mutable {
             resizeToRight();
         }
     );

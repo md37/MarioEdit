@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "classes/Editor/ObjectRegistry.hpp"
+#include "classes/Editor/EventHandler/DragVisitator.hpp"
 
 FigureEventHandler::FigureEventHandler(
     std::unique_ptr<AnimationPerformer> &animationPerformer,

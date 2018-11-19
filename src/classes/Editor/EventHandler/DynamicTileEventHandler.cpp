@@ -1,26 +1,7 @@
 #include "DynamicTileEventHandler.hpp"
 
 #include "classes/Editor/ObjectRegistry.hpp"
-
-class DragVisitator {
-
-public:
-
-    explicit DragVisitator(Cursor &cursor) : cursor(cursor) {
-
-    }
-
-    void operator()(std::shared_ptr<DynamicTile>& tile) {
-        tile->drag(cursor.getPosition());
-    }
-
-    void operator()(std::shared_ptr<Figure>& figure) {}
-
-private:
-
-    Cursor &cursor;
-
-};
+#include "classes/Editor/EventHandler/DragVisitator.hpp"
 
 DynamicTileEventHandler::DynamicTileEventHandler(
     std::unique_ptr<EventState> &eventState,

@@ -1,26 +1,8 @@
 #include "FigureEventHandler.hpp"
 
+#include <iostream>
 #include "classes/Editor/ObjectRegistry.hpp"
-
-class DragVisitator {
-
-public:
-
-    explicit DragVisitator(Cursor &cursor) : cursor(cursor) {
-
-    }
-
-    void operator()(std::shared_ptr<Figure>& figure) {
-        figure->drag(cursor.getPosition());
-    }
-
-    void operator()(std::shared_ptr<DynamicTile>& tile) {}
-
-private:
-
-    Cursor &cursor;
-
-};
+#include "classes/Editor/EventHandler/DragVisitator.hpp"
 
 FigureEventHandler::FigureEventHandler(
     std::unique_ptr<AnimationPerformer> &animationPerformer,
@@ -70,6 +52,7 @@ void FigureEventHandler::performDragDrop(Cursor& cursor, std::shared_ptr<Figure>
     if (cursor.isOver(figurePosition, figureSize) && figureEventRegistry->isOverRegistered(figure)) {
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
         bool isDraggingItem = cursor.draggedItem.has_value();
+
         if (cursor.isClick() && !figureEventRegistry->isDragRegistered(figure) && isLeftClick && !isDraggingItem) {
             figure->startDrag(cursor.getPosition(), animationPerformer);
             cursor.draggedItem = figure;

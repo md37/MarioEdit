@@ -36,8 +36,7 @@ void DynamicTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     if (cursor.isMouseMoved()) {
         auto registeredDragOnTiles = eventRegistry->getRegisteredDrags();
         for (auto &dragOnItem : registeredDragOnTiles) {
-            DragVisitator visitator(cursor);
-            std::visit(visitator, dragOnItem);
+            std::visit(DragVisitator(cursor), dragOnItem);
         }
     }
 

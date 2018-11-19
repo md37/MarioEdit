@@ -2,6 +2,26 @@
 
 #include "classes/Editor/ObjectRegistry.hpp"
 
+class DragVisitator {
+
+public:
+
+    explicit DragVisitator(Cursor &cursor) : cursor(cursor) {
+
+    }
+
+    void operator()(std::shared_ptr<Figure>& figure) {
+        figure->drag(cursor.getPosition());
+    }
+
+    void operator()(std::shared_ptr<DynamicTile>& tile) {}
+
+private:
+
+    Cursor &cursor;
+
+};
+
 FigureEventHandler::FigureEventHandler(
     std::unique_ptr<AnimationPerformer> &animationPerformer,
     std::unique_ptr<EventRegistry> &figureEventRegistry
@@ -13,12 +33,7 @@ void FigureEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     if (cursor.isMouseMoved()) {
         auto registeredDragOnFigures = figureEventRegistry->getRegisteredDrags();
         for (auto &dragOnItem : registeredDragOnFigures) {
-            std::visit([&cursor](auto &item) {
-                using T = std::decay_t<decltype(item)>;
-                if constexpr (std::is_same_v<T, std::shared_ptr<Figure>>) {
-                    item->drag(cursor.getPosition());
-                }
-            }, dragOnItem);
+            std::visit(DragVisitator(cursor), dragOnItem);
         }
     }
 

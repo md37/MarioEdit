@@ -122,7 +122,6 @@ void DynamicTileEventHandler::performLongClickDrop(Cursor &cursor) {
 
     auto draggingTile = scene->getDraggingTile();
     bool insertTile = tileOnCurrentSlot == nullptr || tileOnCurrentSlot == draggingTile;
-    cursor.draggedItem.reset();
 
     if (!insertTile) {
         bool tileIsSameType = tileOnCurrentSlot->isTypeOf(eventState->lastUsedTileButton);

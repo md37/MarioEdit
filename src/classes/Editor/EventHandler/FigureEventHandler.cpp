@@ -1,5 +1,6 @@
 #include "FigureEventHandler.hpp"
 
+#include <iostream>
 #include "classes/Editor/ObjectRegistry.hpp"
 
 FigureEventHandler::FigureEventHandler(
@@ -55,6 +56,7 @@ void FigureEventHandler::performDragDrop(Cursor& cursor, std::shared_ptr<Figure>
     if (cursor.isOver(figurePosition, figureSize) && figureEventRegistry->isOverRegistered(figure)) {
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
         bool isDraggingItem = cursor.draggedItem.has_value();
+
         if (cursor.isClick() && !figureEventRegistry->isDragRegistered(figure) && isLeftClick && !isDraggingItem) {
             figure->startDrag(cursor.getPosition(), animationPerformer);
             cursor.draggedItem = figure;

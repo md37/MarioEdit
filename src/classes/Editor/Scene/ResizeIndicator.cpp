@@ -3,58 +3,84 @@
 #include <iostream>
 
 ResizeIndicator::ResizeIndicator(
-    sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action
+    sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action, bool enabled
 ) {
     this->figureArea = figureArea;
     this->side = side;
     this->action = action;
+    this->enabled = enabled;
 
-    prepareArea();
+    sf::Color fillColor = enabled ? enabledColor : disabledColor;
+    area.setFillColor(fillColor);
+    area.setSize(size);
+
+    auto position = calculatePosition();
+    area.setPosition(position);
 }
 
-void ResizeIndicator::prepareArea() {
-    sf::Vector2f areaPosition;
-    sf::Vector2f areaSize;
+sf::Vector2f ResizeIndicator::calculatePosition() {
+    sf::Vector2f position = {0.0f, 0.0f};
 
     switch (side) {
-        case Top: {
-            areaPosition = {figureArea.left, figureArea.top};
-            areaSize = {figureArea.width, figureArea.height * sizeMultiplier};
-
+        case TopEdge: {
+            position = {
+                figureArea.left+figureArea.width/2-size.x,
+                figureArea.top,
+            };
         } break;
-        case Left: {
-            areaPosition = {figureArea.left, figureArea.top};
-            areaSize = {figureArea.width * sizeMultiplier, figureArea.height};
+        case BottomEdge: {
+            position = {
+                figureArea.left+figureArea.width/2-size.x,
+                figureArea.top+figureArea.height-size.y,
+            };
         } break;
-        case Bottom: {
-            auto posY = figureArea.top+figureArea.height;
-            posY -= figureArea.height * sizeMultiplier;
-            areaPosition = {figureArea.left, posY};
-
-            areaSize = {figureArea.width, figureArea.height * sizeMultiplier};
+        case LeftEdge: {
+            position = {
+                figureArea.left,
+                figureArea.top+figureArea.height/2-size.y/2,
+            };
         } break;
-        case Right: {
-            auto posX = figureArea.left+figureArea.width;
-            posX -= figureArea.width * sizeMultiplier;
-            areaPosition = {posX, figureArea.top};
-
-            areaSize = {figureArea.width * sizeMultiplier, figureArea.height};
+        case RightEdge: {
+            position = {
+                figureArea.left+figureArea.width-size.x,
+                figureArea.top+figureArea.height/2-size.y/2,
+            };
+        } break;
+        case LeftTopCorner: {
+            position = {
+                figureArea.left,
+                figureArea.top,
+            };
+        } break;
+        case LeftBottomCorner: {
+            position = {
+                figureArea.left,
+                figureArea.top+figureArea.height-size.y,
+            };
+        } break;
+        case RightTopCorner: {
+            position = {
+                figureArea.left+figureArea.width-size.x,
+                figureArea.top,
+            };
+        } break;
+        case RightBottomCorner: {
+            position = {
+                figureArea.left+figureArea.width-size.x,
+                figureArea.top+figureArea.height-size.y,
+            };
         } break;
     }
-
-    area.setPosition(areaPosition);
-    area.setSize(areaSize);
-    area.setFillColor(sf::Color(255, 255, 255, 100));
+    return position;
 }
 
 void ResizeIndicator::draw(std::shared_ptr<sf::RenderWindow> window) {
-    if (isMouseOver()) {
-        window->draw(area);
-    }
+    window->draw(area);
 }
 
 void ResizeIndicator::rescale(std::unique_ptr<Scale> &scale) {
-
+    auto newScale = sf::Vector2f(scale->getCurrent(), scale->getCurrent());
+    area.setScale(newScale);
 }
 
 bool ResizeIndicator::isMouseOver() {

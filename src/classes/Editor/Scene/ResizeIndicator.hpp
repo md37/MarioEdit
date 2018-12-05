@@ -15,14 +15,18 @@ class ResizeIndicator : public DrawableInterface, RescalableInterface, Hoverable
 public:
 
     enum IndicatorSide {
-        Top=1,
-        Left,
-        Bottom,
-        Right,
+        TopEdge=1,
+        BottomEdge,
+        LeftEdge,
+        LeftTopCorner,
+        LeftBottomCorner,
+        RightEdge,
+        RightTopCorner,
+        RightBottomCorner,
     };
 
     ResizeIndicator(
-        sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action
+        sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action, bool enabled
     );
 
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
@@ -43,16 +47,19 @@ public:
 
 private:
 
-    float sizeMultiplier = 0.12;
+    sf::Color enabledColor = sf::Color(255, 255, 0, 180);
+    sf::Color disabledColor = sf::Color(255, 255, 255, 100);
+    sf::Vector2f size = {50.0f, 50.0f};
 
     sf::Rect<float> figureArea;
     IndicatorSide side;
     std::function<void()> action;
+    bool enabled;
 
     sf::RectangleShape area;
 
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;
 
-    void prepareArea();
+    sf::Vector2f calculatePosition();
 };

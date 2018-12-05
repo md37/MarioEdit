@@ -44,6 +44,8 @@ public:
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
     void runAction();
+    void recalculatePosition();
+    void setFigureArea(sf::Rect<float> figureArea);
 
 private:
 
@@ -61,6 +63,5 @@ private:
 
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;
-
     sf::Vector2f calculatePosition();
 };

@@ -1,7 +1,6 @@
 #include "ResizeIndicator.hpp"
 
 #include <iostream>
-#include "classes/Infrastructure/Log.hpp"
 
 ResizeIndicator::ResizeIndicator(
     sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action, bool enabled
@@ -15,6 +14,10 @@ ResizeIndicator::ResizeIndicator(
     area.setFillColor(fillColor);
     area.setSize(size);
 
+    recalculatePosition();
+}
+
+void ResizeIndicator::recalculatePosition() {
     auto position = calculatePosition();
     area.setPosition(position);
 }
@@ -85,9 +88,6 @@ void ResizeIndicator::draw(std::shared_ptr<sf::RenderWindow> window) {
 }
 
 void ResizeIndicator::rescale(std::unique_ptr<Scale> &scale) {
-    Log::line();
-    Log::out(scale, "Rescalling");
-
     scaleRatio = scale->getRatio();
     auto newScale = sf::Vector2f(scale->getCurrent(), scale->getCurrent());
     area.setScale(newScale);
@@ -132,4 +132,8 @@ void ResizeIndicator::runAction() {
     if (!enabled) {
         action();
     }
+}
+
+void ResizeIndicator::setFigureArea(sf::Rect<float> figureArea) {
+    this->figureArea = figureArea;
 }

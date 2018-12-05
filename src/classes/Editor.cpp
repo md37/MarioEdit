@@ -1,6 +1,7 @@
 #include "Editor.hpp"
 
 #include "classes/Editor/ObjectRegistry.hpp"
+#include "classes/Infrastructure/Log.hpp"
 
 Editor::Editor(std::unique_ptr<TileFactory> &tileFactory): tileFactory(tileFactory) {
     navigation = std::make_unique<Navigation>(tileFactory);
@@ -15,6 +16,8 @@ void Editor::start() {
 }
 
 void Editor::rescale(std::unique_ptr<Scale>& scale) {
+    Log::line();
+    Log::out(scale, "Rescalling");
     scene->rescale(scale);
     navigation->rescale(scale);
 }

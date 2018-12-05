@@ -110,4 +110,11 @@ void Cloud::resizeToRight() {
 
 void Cloud::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     Figure::drop(animationPerformer);
+
+    sf::Rect figureRect(getPosition(), sf::Vector2f(getSize()));
+    leftIndicator->setFigureArea(figureRect);
+    leftIndicator->recalculatePosition();
+
+    rightIndicator->setFigureArea(figureRect);
+    rightIndicator->recalculatePosition();
 }

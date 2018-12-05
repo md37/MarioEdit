@@ -47,9 +47,10 @@ public:
 
 private:
 
+    float scaleRatio = 1.0f;
     sf::Color enabledColor = sf::Color(255, 255, 0, 180);
     sf::Color disabledColor = sf::Color(255, 255, 255, 100);
-    sf::Vector2f size = {50.0f, 50.0f};
+    sf::Vector2f size = {5.0f, 5.0f};
 
     sf::Rect<float> figureArea;
     IndicatorSide side;

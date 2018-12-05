@@ -4,7 +4,9 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
-Cloud::Cloud(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure (tileFactory, grid) {
+Cloud::Cloud(
+    std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure (tileFactory, grid
+) {
     if (size < 1) {
         size = 1;
     }
@@ -108,5 +110,4 @@ void Cloud::resizeToRight() {
 
 void Cloud::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     Figure::drop(animationPerformer);
-    reCreateIndicators();
 }

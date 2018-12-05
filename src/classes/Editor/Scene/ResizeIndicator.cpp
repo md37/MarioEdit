@@ -1,6 +1,7 @@
 #include "ResizeIndicator.hpp"
 
 #include <iostream>
+#include "classes/Infrastructure/Log.hpp"
 
 ResizeIndicator::ResizeIndicator(
     sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action, bool enabled
@@ -20,6 +21,11 @@ ResizeIndicator::ResizeIndicator(
 
 sf::Vector2f ResizeIndicator::calculatePosition() {
     sf::Vector2f position = {0.0f, 0.0f};
+
+    auto scale = area.getScale();
+    auto size = area.getSize();
+    size.x *= scale.x;
+    size.y *= scale.y;
 
     switch (side) {
         case TopEdge: {
@@ -79,8 +85,15 @@ void ResizeIndicator::draw(std::shared_ptr<sf::RenderWindow> window) {
 }
 
 void ResizeIndicator::rescale(std::unique_ptr<Scale> &scale) {
+    Log::line();
+    Log::out(scale, "Rescalling");
+
+    scaleRatio = scale->getRatio();
     auto newScale = sf::Vector2f(scale->getCurrent(), scale->getCurrent());
     area.setScale(newScale);
+
+    auto position = calculatePosition();
+    area.setPosition(position);
 }
 
 bool ResizeIndicator::isMouseOver() {
@@ -105,7 +118,6 @@ bool ResizeIndicator::isDragging() {
 
 void ResizeIndicator::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isDraggingFlag = true;
-    area.setFillColor(sf::Color(255, 255, 0, 128));
 }
 
 void ResizeIndicator::drag(sf::Vector2f cursorPosition) {
@@ -114,9 +126,10 @@ void ResizeIndicator::drag(sf::Vector2f cursorPosition) {
 
 void ResizeIndicator::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isDraggingFlag = false;
-    area.setFillColor(sf::Color(255, 255, 255, 100));
 }
 
 void ResizeIndicator::runAction() {
-    action();
+    if (!enabled) {
+        action();
+    }
 }

@@ -1,5 +1,7 @@
 #include "ObjectRegistry.hpp"
 
+#include "classes/Editor/Scene/Figure.hpp"
+
 std::vector<std::shared_ptr<Tile>> ObjectRegistry::allTiles;
 std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::dynamicTiles;
 std::vector<std::shared_ptr<ButtonTile>> ObjectRegistry::buttonTiles;

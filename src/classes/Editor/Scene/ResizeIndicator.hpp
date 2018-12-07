@@ -4,6 +4,7 @@
 #include <SFML/Config.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include "defines.hpp"
 #include "classes/Infrastructure/Interface/CircleableInterface.hpp"
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Infrastructure/Interface/RescalableInterface.hpp"
@@ -15,14 +16,14 @@ class ResizeIndicator : public DrawableInterface, RescalableInterface, Hoverable
 public:
 
     enum IndicatorSide {
-        TopEdge=1,
-        BottomEdge,
-        LeftEdge,
-        LeftTopCorner,
-        LeftBottomCorner,
-        RightEdge,
-        RightTopCorner,
-        RightBottomCorner,
+        TopEdge = BIT(0),
+        BottomEdge = BIT(1),
+        LeftEdge = BIT(2),
+        LeftTopCorner = BIT(3),
+        LeftBottomCorner = BIT(4),
+        RightEdge = BIT(5),
+        RightTopCorner = BIT(6),
+        RightBottomCorner = BIT(7),
     };
 
     ResizeIndicator(
@@ -51,7 +52,7 @@ private:
 
     float scaleRatio = 1.0f;
     sf::Color enabledColor = sf::Color(255, 255, 0, 180);
-    sf::Color disabledColor = sf::Color(255, 255, 255, 100);
+    sf::Color disabledColor = sf::Color(120, 120, 120, 100);
     sf::Vector2f size = {5.0f, 5.0f};
 
     sf::Rect<float> figureArea;

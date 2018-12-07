@@ -21,11 +21,4 @@ protected:
 private:
 
     sf::Uint8 size;
-
-    std::unique_ptr<ResizeIndicator> leftIndicator;
-    std::unique_ptr<ResizeIndicator> rightIndicator;
-
-    void reCreateIndicators();
-    void resizeToLeft();
-    void resizeToRight();
 };

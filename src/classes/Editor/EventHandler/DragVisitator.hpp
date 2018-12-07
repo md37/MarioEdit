@@ -1,6 +1,7 @@
 #pragma once
 
 #include "classes/Infrastructure/Cursor.hpp"
+class Figure;
 
 class DragVisitator {
 

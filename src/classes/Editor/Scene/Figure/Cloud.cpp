@@ -14,7 +14,7 @@ Cloud::Cloud(
     this->size = size;
 
     generate(tileFactory, grid, size);
-    reCreateIndicators();
+    activeResizeIndicators = ResizeIndicator::LeftEdge | ResizeIndicator::RightEdge;
 }
 
 void Cloud::generate(
@@ -65,56 +65,18 @@ void Cloud::generate(
 
 void Cloud::draw(std::shared_ptr<sf::RenderWindow> window) {
     Figure::draw(window);
-
-    if (isMouseOver() && !isDragging()) {
-        leftIndicator->draw(window);
-        rightIndicator->draw(window);
-    }
 }
 
 void Cloud::rescale(std::unique_ptr<Scale> &scale) {
     Figure::rescale(scale);
-    reCreateIndicators();
-
-    leftIndicator->rescale(scale);
-    rightIndicator->rescale(scale);
 }
 
 void Cloud::snapToGrid(sf::Vector2i pointOnGrid) {
     Figure::snapToGrid(pointOnGrid);
 }
 
-void Cloud::reCreateIndicators() {
-    sf::Rect figureRect(getPosition(), sf::Vector2f(getSize()));
-
-    leftIndicator = std::make_unique<ResizeIndicator>(
-        figureRect, ResizeIndicator::IndicatorSide::RightTopCorner, [=]() mutable {
-            resizeToLeft();
-        }, true
-    );
-
-    rightIndicator = std::make_unique<ResizeIndicator>(
-        figureRect, ResizeIndicator::IndicatorSide::RightBottomCorner, [=]() mutable {
-            resizeToRight();
-        }, false
-    );
-}
-
-void Cloud::resizeToLeft() {
-
-}
-
-void Cloud::resizeToRight() {
-
-}
-
 void Cloud::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     Figure::drop(animationPerformer);
 
     sf::Rect figureRect(getPosition(), sf::Vector2f(getSize()));
-    leftIndicator->setFigureArea(figureRect);
-    leftIndicator->recalculatePosition();
-
-    rightIndicator->setFigureArea(figureRect);
-    rightIndicator->recalculatePosition();
 }

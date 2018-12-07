@@ -1,5 +1,7 @@
 #pragma once
 
+#define BIT(x) (1 << x)
+
 #include <variant>
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 #include "classes/Editor/Scene/Figure.hpp"

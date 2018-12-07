@@ -33,13 +33,13 @@ sf::Vector2f ResizeIndicator::calculatePosition() {
     switch (side) {
         case TopEdge: {
             position = {
-                figureArea.left+figureArea.width/2-size.x,
+                figureArea.left+figureArea.width/2-size.x/2,
                 figureArea.top,
             };
         } break;
         case BottomEdge: {
             position = {
-                figureArea.left+figureArea.width/2-size.x,
+                figureArea.left+figureArea.width/2-size.x/2,
                 figureArea.top+figureArea.height-size.y,
             };
         } break;

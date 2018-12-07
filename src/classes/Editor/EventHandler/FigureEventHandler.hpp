@@ -1,8 +1,9 @@
 #pragma once
 
 #include "classes/Infrastructure/Interface/EventReceiverableInterface.hpp"
-#include "classes/Editor/Scene/Figure.hpp"
 #include "classes/Editor/EventHandler/EventRegistry.hpp"
+
+class Figure;
 
 class FigureEventHandler : public EventReceiverableInterface {
 

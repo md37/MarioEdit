@@ -1,5 +1,7 @@
 #include "DragVisitator.hpp"
 
+#include "classes/Editor/Scene/Figure.hpp"
+
 DragVisitator::DragVisitator(Cursor &cursor): cursor(cursor) {
 
 }

@@ -6,9 +6,9 @@
 #include <SFML/Config.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Infrastructure/Circle.hpp"
-#include "classes/Editor/Scene/Figure.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 
 class Cursor {

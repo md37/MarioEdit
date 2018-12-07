@@ -53,7 +53,7 @@ void Figure::createFrame() {
     auto size = this->getSize();
 
     frame.setSize(sf::Vector2f(size));
-    frame.setOutlineThickness(thickness * 4);
+    frame.setOutlineThickness(thickness * 1.5);
     frame.setOutlineColor(sf::Color(255, 255, 255, 128));
     frame.setFillColor(sf::Color(255, 255, 255, 20));
 

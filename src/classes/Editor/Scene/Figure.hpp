@@ -65,6 +65,9 @@ private:
     sf::Vector2f dragOffset = {0.0f, 0.0f};
     sf::Vector2f dragOffsetForHighlight = {0.0f, 0.0f};
 
+    sf::Color frameColorNormal = sf::Color(255, 255, 255, 30);
+    sf::Color frameColorError = sf::Color(255, 0, 0, 100);
+
     bool resizeIndicatorsGenerated = false;
     std::vector<std::shared_ptr<ResizeIndicator>> resizeIndicators;
 
@@ -86,6 +89,5 @@ private:
     sf::Rect<float> getRect();
 
     bool checkForCollisions();
-
     void moveResizeIndicators();
 };

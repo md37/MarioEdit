@@ -23,11 +23,13 @@ void Figure::drawFrame(std::shared_ptr<sf::RenderWindow> window) {
     }
     window->draw(frame);
 
-    if (!resizeIndicatorsGenerated) {
-        reCreateResizeIndicators();
-    }
-    for (auto &indicator: resizeIndicators) {
-        indicator->draw(window);
+    if (!isDragging()) {
+        if (!resizeIndicatorsGenerated) {
+            reCreateResizeIndicators();
+        }
+        for (auto &indicator: resizeIndicators) {
+            indicator->draw(window);
+        }
     }
 }
 
@@ -38,6 +40,7 @@ void Figure::reCreateResizeIndicators() {
     for (int i=0; i<indicatorsCount; i++) {
         auto indicatorSide = (ResizeIndicator::IndicatorSide )(1 << i);
         bool isIndicatorActive = (activeResizeIndicators & indicatorSide) != 0;
+
         auto figureRect = getRect();
         auto callback = [=]() mutable {};
         auto indicator = std::make_shared<ResizeIndicator>(
@@ -49,13 +52,11 @@ void Figure::reCreateResizeIndicators() {
 }
 
 void Figure::createFrame() {
-    auto thickness = grid->getLineThickness();
     auto size = this->getSize();
 
     frame.setSize(sf::Vector2f(size));
-    frame.setOutlineThickness(thickness * 1.5);
-    frame.setOutlineColor(sf::Color(255, 255, 255, 128));
-    frame.setFillColor(sf::Color(255, 255, 255, 20));
+    frame.setOutlineThickness(0);
+    frame.setFillColor(frameColorNormal);
 
     updateFramePosition();
 
@@ -230,8 +231,7 @@ bool Figure::isDragging() {
 
 void Figure::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isDraggingFlag = true;
-    frame.setOutlineColor(sf::Color(255, 255, 0, 128));
-    frame.setFillColor(sf::Color(255, 255, 0, 20));
+    frame.setFillColor(frameColorNormal);
 
     grid->turnHighlightOn(getSizeOnGrid());
 
@@ -258,10 +258,10 @@ void Figure::drag(sf::Vector2f cursorPosition) {
 
     bool isCollision = checkForCollisions();
     if (isCollision) {
-        frame.setOutlineColor(sf::Color(255, 0, 0, 100));
+        frame.setFillColor(frameColorError);
         grid->setHighlightPosition(prevHighlightPosition);
     } else {
-        frame.setOutlineColor(sf::Color(255, 255, 0, 128));
+        frame.setFillColor(frameColorNormal);
     }
 
     moveResizeIndicators();

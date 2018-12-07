@@ -2,6 +2,7 @@
 
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Infrastructure/Cursor.hpp"
+#include "classes/Infrastructure/Log.hpp"
 
 DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite, config) {
 
@@ -50,6 +51,9 @@ bool DynamicTile::isDragging() {
 }
 
 void DynamicTile::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
+    Log::out("Drag tile");
+    Log::line();
+
     grid->setHighlightPosition(cursorPosition);
 
     dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
@@ -65,6 +69,8 @@ void DynamicTile::drag(sf::Vector2f cursorPosition) {
 }
 
 void DynamicTile::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
+    Log::out("Drop tile");
+    Log::line();
     dragOffset = {0, 0};
 
     dropHighlightPlace = grid->getHighlightPointOnGrid();

@@ -230,6 +230,8 @@ bool Figure::isDragging() {
 }
 
 void Figure::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
+    Log::line();
+    Log::out("Drag figure");
     isDraggingFlag = true;
     frame.setFillColor(frameColorNormal);
 
@@ -278,10 +280,10 @@ bool Figure::checkForCollisions() {
 
         auto figureRect = figure->getRect();
         if (collision.checkCollision(figureRect) != Collision::None) {
+            Log::line();
             Log::out("Collision detected");
             Log::out(getRect(), "Current rect");
             Log::out(figureRect, "Figure rect");
-            Log::line();
 
             return true;
         }
@@ -318,6 +320,9 @@ void Figure::moveTiles(sf::Vector2f prevPosition) {
 }
 
 void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
+    Log::line();
+    Log::out("Drop figure");
+
     isDraggingFlag = false;
 
     pointOnGrid = grid->getHighlightPointOnGrid();

@@ -11,7 +11,7 @@
 #include "classes/Infrastructure/Interface/HoverableInterface.hpp"
 #include "classes/Infrastructure/Interface/DraggableInterface.hpp"
 
-class ResizeIndicator : public DrawableInterface, RescalableInterface, HoverableInterface, DraggableInterface {
+class ResizeIndicator : public DrawableInterface, RescalableInterface, SquareableInterface, HoverableInterface, DraggableInterface {
 
 public:
 
@@ -27,12 +27,16 @@ public:
     };
 
     ResizeIndicator(
-        sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action, bool enabled
+        sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action, bool isActive
     );
 
-    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+    bool isActive();
 
+    void draw(std::shared_ptr<sf::RenderWindow> window) override;
     void rescale(std::unique_ptr<Scale> &scale) override;
+
+    sf::Vector2f getPosition() override;
+    sf::Vector2u getSize() override;
 
     bool isMouseOver() override;
     void mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
@@ -52,13 +56,14 @@ private:
 
     float scaleRatio = 1.0f;
     sf::Color enabledColor = sf::Color(255, 255, 255, 240);
+    sf::Color hoverColor = sf::Color(255, 255, 0, 240);
     sf::Color disabledColor = sf::Color(255, 255, 255, 70);
-    sf::Vector2f size = {2.0f, 2.0f};
+    sf::Vector2f size = {5.0f, 5.0f};
 
     sf::Rect<float> figureArea;
     IndicatorSide side;
     std::function<void()> action;
-    bool enabled;
+    bool isActiveFlag;
 
     sf::RectangleShape area;
 

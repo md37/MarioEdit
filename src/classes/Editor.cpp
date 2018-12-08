@@ -16,7 +16,6 @@ void Editor::start() {
 }
 
 void Editor::rescale(std::unique_ptr<Scale>& scale) {
-    Log::line();
     Log::out(scale, "Rescalling");
     scene->rescale(scale);
     navigation->rescale(scale);

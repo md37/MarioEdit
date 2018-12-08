@@ -1,16 +1,17 @@
 #include "ResizeIndicator.hpp"
 
 #include <iostream>
+#include "classes/Infrastructure/Log.hpp"
 
 ResizeIndicator::ResizeIndicator(
-    sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action, bool enabled
+    sf::Rect<float> figureArea, IndicatorSide side, std::function<void()> action, bool isActive
 ) {
     this->figureArea = figureArea;
     this->side = side;
     this->action = action;
-    this->enabled = enabled;
+    this->isActiveFlag = isActive;
 
-    sf::Color fillColor = enabled ? enabledColor : disabledColor;
+    sf::Color fillColor = isActive ? enabledColor : disabledColor;
     area.setFillColor(fillColor);
     area.setSize(size);
 
@@ -102,14 +103,20 @@ bool ResizeIndicator::isMouseOver() {
 
 void ResizeIndicator::mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = true;
+    area.setFillColor(hoverColor);
+
+    Log::out("Indicator MouseEnter");
 }
 
 void ResizeIndicator::mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-
+    area.setFillColor(hoverColor);
 }
 
 void ResizeIndicator::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = false;
+    area.setFillColor(enabledColor);
+;
+    Log::out("Indicator MouseLeave");
 }
 
 bool ResizeIndicator::isDragging() {
@@ -129,11 +136,23 @@ void ResizeIndicator::drop(std::unique_ptr<AnimationPerformer> &animationPerform
 }
 
 void ResizeIndicator::runAction() {
-    if (!enabled) {
+    if (!isActiveFlag) {
         action();
     }
 }
 
 void ResizeIndicator::setFigureArea(sf::Rect<float> figureArea) {
     this->figureArea = figureArea;
+}
+
+bool ResizeIndicator::isActive() {
+    return isActiveFlag;
+}
+
+sf::Vector2f ResizeIndicator::getPosition() {
+    return area.getPosition();
+}
+
+sf::Vector2u ResizeIndicator::getSize() {
+    return sf::Vector2u(area.getSize().x * area.getScale().x, area.getSize().y * area.getScale().y);
 }

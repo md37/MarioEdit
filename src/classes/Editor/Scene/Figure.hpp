@@ -44,6 +44,8 @@ public:
     void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
+    std::vector<std::shared_ptr<ResizeIndicator>> getActiveResizeIndicators();
+
 protected:
 
     std::vector<std::shared_ptr<StaticTile>> tiles;

@@ -112,6 +112,8 @@ bool Figure::isMouseOver() {
 
 void Figure::mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = true;
+
+    Log::out("Figure MouseEnter");
 }
 
 void Figure::mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) {
@@ -121,6 +123,8 @@ void Figure::mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) 
 void Figure::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = false;
     isFrameCreated = false;
+
+    Log::out("Figure MouseLeave");
 }
 
 sf::Vector2f Figure::getPosition() {
@@ -230,7 +234,6 @@ bool Figure::isDragging() {
 }
 
 void Figure::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    Log::line();
     Log::out("Drag figure");
     isDraggingFlag = true;
     frame.setFillColor(frameColorNormal);
@@ -280,7 +283,6 @@ bool Figure::checkForCollisions() {
 
         auto figureRect = figure->getRect();
         if (collision.checkCollision(figureRect) != Collision::None) {
-            Log::line();
             Log::out("Collision detected");
             Log::out(getRect(), "Current rect");
             Log::out(figureRect, "Figure rect");
@@ -320,7 +322,6 @@ void Figure::moveTiles(sf::Vector2f prevPosition) {
 }
 
 void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    Log::line();
     Log::out("Drop figure");
 
     isDraggingFlag = false;
@@ -342,4 +343,14 @@ void Figure::moveResizeIndicators() {
         indicator->setFigureArea(getRect());
         indicator->recalculatePosition();
     }
+}
+
+std::vector<std::shared_ptr<ResizeIndicator>> Figure::getActiveResizeIndicators() {
+    std::vector<std::shared_ptr<ResizeIndicator>> activeIndicators;
+    for (auto &indicator : resizeIndicators) {
+        if (indicator->isActive()) {
+            activeIndicators.push_back(indicator);
+        }
+    }
+    return activeIndicators;
 }

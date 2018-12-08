@@ -18,7 +18,7 @@ public:
 private:
 
     std::unique_ptr<AnimationPerformer> &animationPerformer;
-    std::unique_ptr<EventRegistry> &figureEventRegistry;
+    std::unique_ptr<EventRegistry> &eventRegistry;
 
     void performHover(Cursor &cursor, std::shared_ptr<Figure> &figure);
     void performDragDrop(Cursor &cursor, std::shared_ptr<Figure> &figure);

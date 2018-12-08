@@ -58,7 +58,7 @@ private:
     sf::Color enabledColor = sf::Color(255, 255, 255, 240);
     sf::Color hoverColor = sf::Color(255, 255, 0, 240);
     sf::Color disabledColor = sf::Color(255, 255, 255, 70);
-    sf::Vector2f size = {5.0f, 5.0f};
+    sf::Vector2f size = {3.0f, 3.0f};
 
     sf::Rect<float> figureArea;
     IndicatorSide side;

@@ -234,7 +234,7 @@ bool Figure::isDragging() {
 }
 
 void Figure::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    Log::out("Drag figure");
+    Log::out("Figure StartDrag");
     isDraggingFlag = true;
     frame.setFillColor(frameColorNormal);
 
@@ -322,7 +322,7 @@ void Figure::moveTiles(sf::Vector2f prevPosition) {
 }
 
 void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    Log::out("Drop figure");
+    Log::out("Figure Drop");
 
     isDraggingFlag = false;
 

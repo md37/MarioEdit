@@ -51,7 +51,7 @@ bool DynamicTile::isDragging() {
 }
 
 void DynamicTile::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    Log::out("Drag tile");
+    Log::out("Tile StartDrag");
 
     grid->setHighlightPosition(cursorPosition);
 
@@ -68,7 +68,7 @@ void DynamicTile::drag(sf::Vector2f cursorPosition) {
 }
 
 void DynamicTile::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    Log::out("Drop tile");
+    Log::out("Tile Drop");
     dragOffset = {0, 0};
 
     dropHighlightPlace = grid->getHighlightPointOnGrid();

@@ -61,6 +61,8 @@ private:
     sf::Vector2f size = {3.0f, 3.0f};
 
     sf::Rect<float> figureArea;
+    sf::Vector2f startDragAreaPosition;
+    sf::Vector2f dragOffset;
     IndicatorSide side;
     std::function<void()> action;
     bool isActiveFlag;

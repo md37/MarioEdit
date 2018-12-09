@@ -15,5 +15,6 @@ typedef std::variant<
 
 typedef std::variant<
     std::shared_ptr<DynamicTile>,
-    std::shared_ptr<Figure>
+    std::shared_ptr<Figure>,
+    std::shared_ptr<ResizeIndicator>
 > DraggableItem;

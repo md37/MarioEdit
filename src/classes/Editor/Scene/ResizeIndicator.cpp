@@ -1,5 +1,6 @@
 #include "ResizeIndicator.hpp"
 
+#include <cmath>
 #include <iostream>
 #include "classes/Infrastructure/Log.hpp"
 
@@ -114,7 +115,9 @@ void ResizeIndicator::mouseOver(std::unique_ptr<AnimationPerformer> &animationPe
 
 void ResizeIndicator::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = false;
-    area.setFillColor(enabledColor);
+    if (!isDragging()) {
+        area.setFillColor(enabledColor);
+    }
 ;
     Log::out("Indicator MouseLeave");
 }
@@ -125,14 +128,75 @@ bool ResizeIndicator::isDragging() {
 
 void ResizeIndicator::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isDraggingFlag = true;
+    startDragAreaPosition = area.getPosition();
+    dragOffset = startDragAreaPosition-cursorPosition;
+
+    Log::out("Indicator StartDrag");
 }
 
 void ResizeIndicator::drag(sf::Vector2f cursorPosition) {
+    auto newPosition = area.getPosition();
+    auto positionDiff = cursorPosition - startDragAreaPosition;
+    switch (side) {
+        case LeftEdge:
+        case RightEdge: {
+            newPosition.x = cursorPosition.x + dragOffset.x;
+        } break;
+        case TopEdge:
+        case BottomEdge: {
+            newPosition.y = cursorPosition.y + dragOffset.y;
+        }
+        break;
+        case LeftTopCorner: {
+            if (abs(positionDiff.x) < abs(positionDiff.y)) {
+                newPosition.x = startDragAreaPosition.x + positionDiff.x + dragOffset.x;
+                newPosition.y = startDragAreaPosition.y + positionDiff.x + dragOffset.y;
+            } else {
+                newPosition.x = startDragAreaPosition.x + positionDiff.y + dragOffset.x;
+                newPosition.y = startDragAreaPosition.y + positionDiff.y + dragOffset.y;
+            }
+        }
+        break;
+        case RightBottomCorner: {
+            if (positionDiff.x > positionDiff.y) {
+                newPosition.x = startDragAreaPosition.x + positionDiff.x + dragOffset.x;
+                newPosition.y = startDragAreaPosition.y + positionDiff.x + dragOffset.y;
+            } else {
+                newPosition.x = startDragAreaPosition.x + positionDiff.y + dragOffset.x;
+                newPosition.y = startDragAreaPosition.y + positionDiff.y + dragOffset.y;
+            }
+        }
+        break;
+        case LeftBottomCorner: {
+            if (positionDiff.x > positionDiff.y) {
+                newPosition.x = startDragAreaPosition.x + positionDiff.x;
+                newPosition.y = startDragAreaPosition.y - positionDiff.x;
+            } else {
+                newPosition.x = startDragAreaPosition.x + positionDiff.y;
+                newPosition.y = startDragAreaPosition.y - positionDiff.y;
+            }
+        }
+        break;
+        case RightTopCorner: {
+            if (positionDiff.x > positionDiff.y) {
+                newPosition.x = startDragAreaPosition.x - positionDiff.x;
+                newPosition.y = startDragAreaPosition.y + positionDiff.x;
+            } else {
+                newPosition.x = startDragAreaPosition.x - positionDiff.y;
+                newPosition.y = startDragAreaPosition.y + positionDiff.y;
+            }
+        }
+        break;
+    }
 
+    area.setPosition(newPosition);
 }
 
 void ResizeIndicator::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isDraggingFlag = false;
+    area.setFillColor(enabledColor);
+    
+    Log::out("Indicator Drop");
 }
 
 void ResizeIndicator::runAction() {

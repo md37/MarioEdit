@@ -26,8 +26,6 @@ public:
     sf::Vector2i getPointOnGrid() override;
     sf::Vector2u getSizeOnGrid() override;
 
-public:
-
     void setGrid(std::shared_ptr<Grid> grid) override;
     void snapToGrid() override;
     void snapToGrid(sf::Vector2i pointOnGrid) override;
@@ -42,7 +40,12 @@ public:
     void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
+    virtual void changeVariant(sf::Uint8 variant)=0;
+
 protected:
+
+    std::unique_ptr<TileFactory> &tileFactory;
+    std::shared_ptr<Grid> grid;
 
     std::vector<std::shared_ptr<StaticTile>> tiles;
     sf::Vector2f position = {0.0f, 0.0f};
@@ -50,10 +53,9 @@ protected:
 
     sf::RectangleShape frame;
 
-private:
+    void resetFrame();
 
-    std::unique_ptr<TileFactory> &tileFactory;
-    std::shared_ptr<Grid> grid;
+private:
 
     bool isMouseOverFlag = false;
     bool isFrameCreated = false;
@@ -64,8 +66,6 @@ private:
 
     sf::Color frameColorNormal = sf::Color(255, 255, 255, 30);
     sf::Color frameColorError = sf::Color(255, 0, 0, 100);
-
-    void createFrame();
 
     std::shared_ptr<StaticTile> findMostLeftTile();
     std::shared_ptr<StaticTile> findMostRightTile();

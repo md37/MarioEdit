@@ -9,9 +9,30 @@ void Keyboard::release(sf::Keyboard::Key key) {
 }
 
 bool Keyboard::isPressed(sf::Keyboard::Key key) {
-    std::map<sf::Keyboard::Key, bool>::iterator it = keys.find(key);
+    auto it = keys.find(key);
     if (it != keys.end()) {
        return it->second;
     }
     return false;
+}
+
+bool Keyboard::isNumericKeyPressed() {
+    return isPressed(sf::Keyboard::Key::Num0) || isPressed(sf::Keyboard::Key::Num1) ||
+           isPressed(sf::Keyboard::Key::Num2) || isPressed(sf::Keyboard::Key::Num3) ||
+           isPressed(sf::Keyboard::Key::Num4) || isPressed(sf::Keyboard::Key::Num5) ||
+           isPressed(sf::Keyboard::Key::Num6) || isPressed(sf::Keyboard::Key::Num7) ||
+           isPressed(sf::Keyboard::Key::Num8) || isPressed(sf::Keyboard::Key::Num9);
+}
+
+std::optional<sf::Uint8> Keyboard::getPressedNumeric() {
+    for (auto key: keys) {
+        if (!key.second) {
+            continue;
+        }
+
+        if (key.first >= sf::Keyboard::Key::Num0 && key.first <= sf::Keyboard::Key::Num9) {
+            return key.first-sf::Keyboard::Key::Num0;
+        }
+    }
+    return {};
 }

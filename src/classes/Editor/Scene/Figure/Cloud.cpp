@@ -11,14 +11,12 @@ Cloud::Cloud(
 
     this->size = size;
 
-    generate(tileFactory, grid, size);
+    generate();
 }
 
-void Cloud::generate(
-    std::unique_ptr<TileFactory> &tileFactory,
-    std::shared_ptr<Grid> &grid,
-    sf::Uint8 size
-) {
+void Cloud::generate() {
+    auto pointOnGrid = this->pointOnGrid;
+
     auto beginBottom = tileFactory->createStaticTile(0, 8);
     beginBottom->setGrid(grid);
     beginBottom->snapToGrid(pointOnGrid);
@@ -58,4 +56,22 @@ void Cloud::generate(
     endTop->setGrid(grid);
     endTop->snapToGrid(pointOnGrid);
     tiles.push_back(endTop);
+}
+
+void Cloud::changeVariant(sf::Uint8 variant) {
+    if (variant < 1 || variant > 2 || variant == size) {
+        return;
+    }
+
+    size = variant;
+    tiles.clear();
+
+    pointOnGrid = grid->getHighlightPointOnGrid();
+    pointOnGrid.y++;
+    position = grid->getHighlightPosition();
+
+    generate();
+
+    grid->turnHighlightOn(getSizeOnGrid());
+    resetFrame();
 }

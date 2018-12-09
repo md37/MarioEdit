@@ -8,9 +8,11 @@ public:
 
     Cloud(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size);
 
+    void changeVariant(sf::Uint8 variant) override;
+
 protected:
 
-    void generate(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> &grid, sf::Uint8 size);
+    void generate();
 
 private:
 

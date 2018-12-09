@@ -6,6 +6,11 @@ Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
     }
 
     this->size = size;
+    generate();
+}
+
+void Bush::generate() {
+    auto pointOnGrid = this->pointOnGrid;
 
     auto begin = tileFactory->createStaticTile(2, 0);
     begin->setGrid(grid);
@@ -25,4 +30,20 @@ Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
     end->setGrid(grid);
     end->snapToGrid(pointOnGrid);
     tiles.push_back(end);
+}
+
+void Bush::changeVariant(sf::Uint8 variant) {
+    if (variant < 1 || variant > 2 || variant == size) {
+        return;
+    }
+
+    size = variant;
+    tiles.clear();
+
+    pointOnGrid = grid->getHighlightPointOnGrid();
+    position = grid->getHighlightPosition();
+    generate();
+
+    grid->turnHighlightOn(getSizeOnGrid());
+    resetFrame();
 }

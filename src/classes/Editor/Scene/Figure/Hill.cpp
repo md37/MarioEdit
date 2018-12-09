@@ -6,17 +6,24 @@ Hill::Hill(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
     }
     this->size = size;
 
-    sf::Uint32 lineStartPosX = pointOnGrid.x;
-    sf::Uint32 filledWidth = size*2-1;
+    generate();
 
-    for (sf::Uint32 i=0; i<size; i++) {
+}
+
+void Hill::generate() {
+    auto pointOnGrid = this->pointOnGrid;
+
+    sf::Uint32 lineStartPosX = pointOnGrid.x;
+    sf::Uint32 filledWidth = size * 2 - 1;
+
+    for (sf::Uint32 i=0; i < size; i++) {
         auto beginLine = tileFactory->createStaticTile(0, 1);
         beginLine->setGrid(grid);
         beginLine->snapToGrid(pointOnGrid);
         pointOnGrid.x++;
         tiles.push_back(beginLine);
 
-        for (sf::Uint32 j=0; j<filledWidth; j++) {
+        for (sf::Uint32 j=0; j < filledWidth; j++) {
             auto middleLine = tileFactory->createStaticTile(3, 1);
             bool lastTwoLines = size < 3 || i > size-3;
             bool firstOrLastInLine = j == 0 || j == filledWidth-1;
@@ -45,4 +52,22 @@ Hill::Hill(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
     top->setGrid(grid);
     top->snapToGrid(pointOnGrid);
     tiles.push_back(top);
+}
+
+void Hill::changeVariant(sf::Uint8 variant) {
+    if (variant < 1 || variant > 2 || variant == size) {
+        return;
+    }
+
+    size = variant;
+    tiles.clear();
+
+    pointOnGrid = grid->getHighlightPointOnGrid();
+    pointOnGrid.y += variant;
+    position = grid->getHighlightPosition();
+
+    generate();
+
+    grid->turnHighlightOn(getSizeOnGrid());
+    resetFrame();
 }

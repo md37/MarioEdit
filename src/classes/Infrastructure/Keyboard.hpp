@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <optional>
 #include <SFML/Window/Keyboard.hpp>
 
 class Keyboard {
@@ -11,6 +12,9 @@ public:
     void release(sf::Keyboard::Key key);
 
     bool isPressed(sf::Keyboard::Key key);
+    bool isNumericKeyPressed();
+
+    std::optional<sf::Uint8> getPressedNumeric();
 
 private:
 

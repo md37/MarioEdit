@@ -18,12 +18,12 @@ void Figure::draw(std::shared_ptr<sf::RenderWindow> window) {
 
 void Figure::drawFrame(std::shared_ptr<sf::RenderWindow> window) {
     if (!isFrameCreated) {
-        createFrame();
+        resetFrame();
     }
     window->draw(frame);
 }
 
-void Figure::createFrame() {
+void Figure::resetFrame() {
     auto size = this->getSize();
 
     frame.setSize(sf::Vector2f(size));
@@ -295,7 +295,7 @@ void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     position = grid->pointOnGridToPosition(pointOnGrid);
     grid->turnHighlightOff();
 
-    createFrame();
+    resetFrame();
     snapToGrid();
     dragOffset = {0.0f, 0.0f};
     dragOffsetForHighlight = {0.0f, 0.0f};

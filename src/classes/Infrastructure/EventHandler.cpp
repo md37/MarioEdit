@@ -76,3 +76,5 @@ void EventHandler::handleKeyboardEvents() {
         handleEvent(Event::ToggleFullScreen);
     }
 }
+
+

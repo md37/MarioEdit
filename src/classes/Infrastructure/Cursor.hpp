@@ -2,14 +2,18 @@
 
 #include <memory>
 #include <vector>
-#include <any>
+#include <variant>
 #include <SFML/Config.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <optional>
+#include "classes/Editor/Scene/Figure/Bush.hpp"
+#include "classes/Editor/Scene/Figure/Cloud.hpp"
+#include "classes/Editor/Scene/Figure/Hill.hpp"
+#include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Infrastructure/Circle.hpp"
-#include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 
 class Cursor {
 
@@ -19,7 +23,12 @@ public:
     void updatePosition(sf::Vector2f currentPosition);
     sf::Vector2f getPosition() const;
 
-    std::any draggedItem;
+    std::optional<
+        std::variant<
+            std::shared_ptr<DynamicTile>,
+            std::shared_ptr<Figure>
+        >
+    >draggedItem;
 
     Cursor();
 

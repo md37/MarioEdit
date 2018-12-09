@@ -53,21 +53,22 @@ bool DynamicTile::isDragging() {
 void DynamicTile::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
     Log::out("Tile StartDrag");
 
+    dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
+
+    grid->turnHighlightOn(getSizeOnGrid());
     std::optional<Highlight>& highlight = grid->getHighlight();
+
     if (highlight.has_value()) {
         highlight->setPosition(cursorPosition);
-
-        dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
-
-        grid->turnHighlightOn(getSizeOnGrid());
-        isDraggingFlag = true;
     }
+
+    isDraggingFlag = true;
 }
 
 void DynamicTile::drag(sf::Vector2f cursorPosition) {
-    auto hightlight = grid->getHighlight();
-    if (hightlight.has_value()) {
-        hightlight->setPosition(cursorPosition);
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        highlight->setPosition(cursorPosition);
         setPosition(sf::Vector2f(cursorPosition-dragOffset));
     }
 }

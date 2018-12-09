@@ -1,6 +1,5 @@
 #include "FigureEventHandler.hpp"
 
-#include <iostream>
 #include "classes/Infrastructure/Log.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Editor/Scene/Figure.hpp"

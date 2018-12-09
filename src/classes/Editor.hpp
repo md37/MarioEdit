@@ -14,7 +14,7 @@ public:
     explicit Editor(std::unique_ptr<TileFactory> &tileFactory);
 
     void start() override;
-    bool isStarted() override;
+    bool isStarted() const override;
 
     void rescale(std::unique_ptr<Scale>& scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;

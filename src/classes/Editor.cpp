@@ -15,6 +15,10 @@ void Editor::start() {
     isStartedFlag = true;
 }
 
+bool Editor::isStarted() const {
+    return isStartedFlag;
+}
+
 void Editor::rescale(std::unique_ptr<Scale>& scale) {
     Log::out(scale, "Rescalling");
     scene->rescale(scale);
@@ -30,10 +34,6 @@ void Editor::draw(std::shared_ptr<sf::RenderWindow> window) const {
     if (isDraggingTile) {
         draggingTile->draw(window);
     }
-}
-
-bool Editor::isStarted() {
-    return isStartedFlag;
 }
 
 void Editor::handleEvents(Keyboard& keyboard, Cursor& cursor) {

@@ -17,7 +17,7 @@ void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->draw(sprite);
 }
 
-bool DynamicTile::isMouseOver() {
+bool DynamicTile::isMouseOver() const {
     return isMouseOverFlag;
 }
 

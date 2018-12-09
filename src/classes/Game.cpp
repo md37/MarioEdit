@@ -4,7 +4,7 @@ void Game::start() {
     isStartedFlag = true;
 }
 
-bool Game::isStarted() {
+bool Game::isStarted() const {
     return isStartedFlag;
 }
 

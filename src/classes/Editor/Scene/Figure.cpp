@@ -69,7 +69,7 @@ void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
     }
 }
 
-bool Figure::isMouseOver() {
+bool Figure::isMouseOver() const {
     return isMouseOverFlag;
 }
 

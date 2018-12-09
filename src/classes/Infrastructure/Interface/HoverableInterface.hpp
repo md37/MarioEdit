@@ -10,6 +10,6 @@ public:
     virtual void mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer)=0;
     virtual void mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer)=0;
 
-    virtual bool isMouseOver()=0;
+    virtual bool isMouseOver() const=0;
 
 };

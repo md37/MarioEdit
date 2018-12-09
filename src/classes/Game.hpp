@@ -8,7 +8,7 @@ class Game : public RunnableInterface, public EventReceiverableInterface {
 public:
 
     void start() override;
-    bool isStarted() override;
+    bool isStarted() const override;
 
     void handleEvents(Keyboard& keyboard, Cursor& cursor) override;
 

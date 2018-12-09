@@ -29,7 +29,7 @@ void ButtonTile::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerfor
     Log::out("ButtonTile MouseLeave");
 }
 
-bool ButtonTile::isMouseOver() {
+bool ButtonTile::isMouseOver() const {
     return isMouseOverFlag;
 }
 

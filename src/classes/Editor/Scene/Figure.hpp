@@ -29,7 +29,7 @@ public:
     void snapToGrid() override;
     void snapToGrid(sf::Vector2i pointOnGrid) override;
 
-    bool isMouseOver() override;
+    bool isMouseOver() const override;
     void mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) override;

@@ -21,7 +21,7 @@ public:
     void mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
-    bool isMouseOver() override;
+    bool isMouseOver() const override;
 
     void startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void drag(sf::Vector2f cursorPosition) override;

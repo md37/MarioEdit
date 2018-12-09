@@ -7,7 +7,7 @@ void AnimationPerformer::start() {
     isStartedFlag = true;
 }
 
-bool AnimationPerformer::isStarted() {
+bool AnimationPerformer::isStarted() const {
     return isStartedFlag;
 }
 

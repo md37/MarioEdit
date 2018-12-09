@@ -3,10 +3,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
 
-Grid::Grid() : lineColor(0, 0, 0, 50) {
-
-}
-
 void Grid::rescale(std::unique_ptr<Scale>& scale) {
     auto windowSize = scale->getWindowSize();
 
@@ -14,6 +10,10 @@ void Grid::rescale(std::unique_ptr<Scale>& scale) {
     lineDistance = windowSize.y / rows;
     cols = sf::Uint32(windowSize.x / lineDistance);
     hasIncompleteEndingFlag = windowSize.x > cols*lineDistance;
+
+    if (highlight.has_value()) {
+        highlight->setLineDistance(lineDistance);
+    }
 }
 
 sf::Vector2u Grid::getSize() {
@@ -40,8 +40,8 @@ void Grid::draw(std::shared_ptr<sf::RenderWindow> window) {
         }
     }
 
-    if (highlightFlag) {
-        drawHighlight(window);
+    if (highlight.has_value()) {
+        highlight->draw(window);
     }
 }
 
@@ -63,26 +63,8 @@ void Grid::drawVerticalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf::
     window->draw(line);
 }
 
-void Grid::drawHighlight(std::shared_ptr<sf::RenderWindow> window) {
-    sf::RectangleShape line;
-    line.setPosition(highlightPosition);
-    line.setFillColor(lineColor);
-
-    line.setSize(sf::Vector2f(lineDistance*highlightSize.x, lineDistance*highlightSize.y));
-
-    window->draw(line);
-}
-
 sf::Uint32 Grid::getCols() {
     return cols;
-}
-
-sf::Vector2f Grid::getHighlightPosition() {
-    return highlightPosition;
-}
-
-void Grid::setHighlightPosition(sf::Vector2f cursorPosition) {
-    highlightPosition = getPointOnGrid(cursorPosition);
 }
 
 sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) {
@@ -94,22 +76,17 @@ sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) {
     return retval;
 }
 
-sf::Vector2i Grid::getHighlightPointOnGrid() {
-    sf::Vector2i retval(highlightPosition/lineDistance);
-    return retval;
-}
-
 bool Grid::hasIncompleteEnding() {
     return hasIncompleteEndingFlag;
 }
 
 void Grid::turnHighlightOn(sf::Vector2u size) {
-    highlightFlag = true;
-    highlightSize = size;
+    highlight.emplace(Highlight(lineColor, lineDistance));
+    highlight->setSize(size);
 }
 
 void Grid::turnHighlightOff() {
-    highlightFlag = false;
+    highlight.reset();
 }
 
 sf::Vector2i Grid::positionToPointOnGrid(sf::Vector2f pointOnScreen) {
@@ -119,6 +96,6 @@ sf::Vector2i Grid::positionToPointOnGrid(sf::Vector2f pointOnScreen) {
     return retval;
 }
 
-sf::Uint32 Grid::getLineThickness() {
-    return lineThickness;
+std::optional<Highlight>& Grid::getHighlight() {
+    return highlight;
 }

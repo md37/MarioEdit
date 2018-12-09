@@ -217,7 +217,7 @@ void Figure::calculateDragOffset(sf::Vector2f cursorPosition) {
 }
 
 void Figure::drag(sf::Vector2f cursorPosition) {
-    auto prevHighlightPosition = grid->getHighlightPosition();
+    auto prevHighlightPosition = grid->getHighlight()->getPosition();
 
     recalculateHighlightPosition(cursorPosition);
     recalculateFramePosition(cursorPosition);
@@ -227,7 +227,7 @@ void Figure::drag(sf::Vector2f cursorPosition) {
     bool isCollision = checkForCollisions();
     if (isCollision) {
         frame.setFillColor(frameColorError);
-        grid->setHighlightPosition(prevHighlightPosition);
+        grid->getHighlight()->setPosition(prevHighlightPosition);
     } else {
         frame.setFillColor(frameColorNormal);
     }
@@ -262,7 +262,7 @@ void Figure::recalculateHighlightPosition(sf::Vector2f cursorPosition) {
     auto highlightPosition = cursorPosition;
     highlightPosition -= dragOffsetForHighlight;
 
-    grid->setHighlightPosition(highlightPosition);
+    grid->getHighlight()->setPosition(highlightPosition);
 }
 
 void Figure::recalculateFramePosition(sf::Vector2f cursorPosition) {
@@ -287,7 +287,7 @@ void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
 
     isDraggingFlag = false;
 
-    pointOnGrid = grid->getHighlightPointOnGrid();
+    pointOnGrid = grid->getHighlight()->getPointOnGrid();
     position = grid->pointOnGridToPosition(pointOnGrid);
     grid->turnHighlightOff();
 

@@ -62,9 +62,9 @@ void Cloud::changeVariant(sf::Uint8 variant) {
     size = variant;
     tiles.clear();
 
-    pointOnGrid = grid->getHighlightPointOnGrid();
+    pointOnGrid = grid->getHighlight()->getPointOnGrid();
     pointOnGrid.y++;
-    position = grid->getHighlightPosition();
+    position = grid->getHighlight()->getPosition();
 
     generate();
 

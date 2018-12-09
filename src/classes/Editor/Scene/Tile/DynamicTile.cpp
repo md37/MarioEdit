@@ -53,7 +53,7 @@ bool DynamicTile::isDragging() {
 void DynamicTile::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
     Log::out("Tile StartDrag");
 
-    grid->setHighlightPosition(cursorPosition);
+    grid->getHighlight()->setPosition(cursorPosition);
 
     dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
 
@@ -62,7 +62,7 @@ void DynamicTile::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<Animati
 }
 
 void DynamicTile::drag(sf::Vector2f cursorPosition) {
-    grid->setHighlightPosition(cursorPosition);
+    grid->getHighlight()->setPosition(cursorPosition);
 
     setPosition(sf::Vector2f(cursorPosition-dragOffset));
 }
@@ -71,10 +71,10 @@ void DynamicTile::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) 
     Log::out("Tile Drop");
     dragOffset = {0, 0};
 
-    dropHighlightPlace = grid->getHighlightPointOnGrid();
+    dropHighlightPlace = grid->getHighlight()->getPointOnGrid();
     snapToGrid(dropHighlightPlace);
 
-    sf::Vector2f positionOnGrid = grid->getHighlightPosition();
+    sf::Vector2f positionOnGrid = grid->getHighlight()->getPosition();
     sf::Vector2f tileSize(getSize());
     positionOnGrid -= (tileSize-(tileSize/getScalePromotion()))/2.0f;
 

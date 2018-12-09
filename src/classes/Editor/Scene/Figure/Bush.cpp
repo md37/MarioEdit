@@ -41,8 +41,8 @@ void Bush::changeVariant(sf::Uint8 variant) {
     size = variant;
     tiles.clear();
 
-    pointOnGrid = grid->getHighlightPointOnGrid();
-    position = grid->getHighlightPosition();
+    pointOnGrid = grid->getHighlight()->getPointOnGrid();
+    position = grid->getHighlight()->getPosition();
     generate();
 
     grid->turnHighlightOn(getSizeOnGrid());

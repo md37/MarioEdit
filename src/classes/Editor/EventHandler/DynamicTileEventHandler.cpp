@@ -83,7 +83,7 @@ void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<Dy
 }
 
 void DynamicTileEventHandler::performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
-    auto dropHighlightPlace = scene->getGrid()->getHighlightPointOnGrid();
+    auto dropHighlightPlace = scene->getGrid()->getHighlight()->getPointOnGrid();
     auto tileOnThisPlace = ObjectRegistry::getTileOnGrid(dropHighlightPlace);
 
     if (tileOnThisPlace != nullptr && tileOnThisPlace != tile) {

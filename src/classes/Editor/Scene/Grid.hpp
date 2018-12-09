@@ -1,8 +1,10 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "classes/Editor/Scene/Highlight.hpp"
 #include "classes/Infrastructure/Interface/RescalableInterface.hpp"
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 
@@ -10,7 +12,6 @@ class Grid : public RescalableInterface, public DrawableInterface {
 
 public:
 
-    explicit Grid();
     void rescale(std::unique_ptr<Scale>& scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
@@ -22,15 +23,11 @@ public:
     sf::Vector2i positionToPointOnGrid(sf::Vector2f pointOnScreen);
     sf::Vector2f getCenter(sf::Vector2u pointOnGrid);
 
-    sf::Uint32 getLineThickness();
-
     void turnHighlightOn(sf::Vector2u size);
     void turnHighlightOff();
     bool hasIncompleteEnding();
-    void setHighlightPosition(sf::Vector2f cursorPosition);
 
-    sf::Vector2f getHighlightPosition();
-    sf::Vector2i getHighlightPointOnGrid();
+    std::optional<Highlight>& getHighlight();
 
 private:
 
@@ -38,17 +35,13 @@ private:
     sf::Uint32 cols;
     float lineDistance;
     bool hasIncompleteEndingFlag = false;
-    
+
+    sf::Color lineColor = sf::Color(0, 0, 0, 50);
     sf::Uint32 lineThickness;
     sf::Uint32 lineThicknessDivider = 400;
-    
-    sf::Color lineColor;
-    
-    bool highlightFlag = false;
-    sf::Vector2f highlightPosition;
-    sf::Vector2u highlightSize;
+
+    std::optional<Highlight> highlight;
 
     void drawHorizontalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window);
     void drawVerticalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window);
-    void drawHighlight(std::shared_ptr<sf::RenderWindow> window);
 };

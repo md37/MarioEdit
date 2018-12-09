@@ -1,7 +1,5 @@
 #include "Cloud.hpp"
 
-#include <iostream>
-
 #include <SFML/Graphics/Rect.hpp>
 
 Cloud::Cloud(
@@ -14,7 +12,6 @@ Cloud::Cloud(
     this->size = size;
 
     generate(tileFactory, grid, size);
-    activeResizeIndicators = ResizeIndicator::LeftEdge | ResizeIndicator::RightEdge;
 }
 
 void Cloud::generate(
@@ -61,22 +58,4 @@ void Cloud::generate(
     endTop->setGrid(grid);
     endTop->snapToGrid(pointOnGrid);
     tiles.push_back(endTop);
-}
-
-void Cloud::draw(std::shared_ptr<sf::RenderWindow> window) {
-    Figure::draw(window);
-}
-
-void Cloud::rescale(std::unique_ptr<Scale> &scale) {
-    Figure::rescale(scale);
-}
-
-void Cloud::snapToGrid(sf::Vector2i pointOnGrid) {
-    Figure::snapToGrid(pointOnGrid);
-}
-
-void Cloud::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    Figure::drop(animationPerformer);
-
-    sf::Rect figureRect(getPosition(), sf::Vector2f(getSize()));
 }

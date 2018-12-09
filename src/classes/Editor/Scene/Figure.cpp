@@ -4,7 +4,6 @@
 #include "classes/Infrastructure/Collision.hpp"
 #include "classes/Infrastructure/Cursor.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
-#include "classes/Editor/Scene/ResizeIndicator.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
 Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid) : tileFactory(tileFactory) {
@@ -22,33 +21,6 @@ void Figure::drawFrame(std::shared_ptr<sf::RenderWindow> window) {
         createFrame();
     }
     window->draw(frame);
-
-    if (!isDragging()) {
-        if (!resizeIndicatorsGenerated) {
-            reCreateResizeIndicators();
-        }
-        for (auto &indicator: resizeIndicators) {
-            indicator->draw(window);
-        }
-    }
-}
-
-void Figure::reCreateResizeIndicators() {
-    auto indicatorsCount = 8;
-
-    resizeIndicators.clear();
-    for (int i=0; i<indicatorsCount; i++) {
-        auto indicatorSide = (ResizeIndicator::IndicatorSide )(1 << i);
-        bool isIndicatorActive = (activeResizeIndicators & indicatorSide) != 0;
-
-        auto figureRect = getRect();
-        auto callback = [=]() mutable {};
-        auto indicator = std::make_shared<ResizeIndicator>(
-            figureRect, indicatorSide, callback, isIndicatorActive
-        );
-        resizeIndicators.push_back(indicator);
-    }
-    resizeIndicatorsGenerated = true;
 }
 
 void Figure::createFrame() {
@@ -73,11 +45,6 @@ void Figure::rescale(std::unique_ptr<Scale> &scale) {
         tile->rescale(scale);
     }
     snapToGrid();
-
-    reCreateResizeIndicators();
-    for (auto &indicator : resizeIndicators) {
-        indicator->rescale(scale);
-    }
 }
 
 void Figure::setGrid(std::shared_ptr<Grid> grid) {
@@ -268,8 +235,6 @@ void Figure::drag(sf::Vector2f cursorPosition) {
     } else {
         frame.setFillColor(frameColorNormal);
     }
-
-    moveResizeIndicators();
 }
 
 bool Figure::checkForCollisions() {
@@ -334,23 +299,4 @@ void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     snapToGrid();
     dragOffset = {0.0f, 0.0f};
     dragOffsetForHighlight = {0.0f, 0.0f};
-
-    moveResizeIndicators();
-}
-
-void Figure::moveResizeIndicators() {
-    for (auto &indicator : resizeIndicators) {
-        indicator->setFigureArea(getRect());
-        indicator->recalculatePosition();
-    }
-}
-
-std::vector<std::shared_ptr<ResizeIndicator>> Figure::getActiveResizeIndicators() {
-    std::vector<std::shared_ptr<ResizeIndicator>> activeIndicators;
-    for (auto &indicator : resizeIndicators) {
-        if (indicator->isActive()) {
-            activeIndicators.push_back(indicator);
-        }
-    }
-    return activeIndicators;
 }

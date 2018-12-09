@@ -1,4 +1,3 @@
-#include <classes/Editor/Scene/ResizeIndicator.hpp>
 #include "Hill.hpp"
 
 Hill::Hill(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure(tileFactory, grid) {
@@ -6,8 +5,6 @@ Hill::Hill(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
         size = 1;
     }
     this->size = size;
-    activeResizeIndicators = ResizeIndicator::LeftTopCorner | ResizeIndicator::LeftBottomCorner |
-            ResizeIndicator::RightTopCorner | ResizeIndicator::RightBottomCorner;
 
     sf::Uint32 lineStartPosX = pointOnGrid.x;
     sf::Uint32 filledWidth = size*2-1;

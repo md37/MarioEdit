@@ -1,13 +1,9 @@
 #include "Bush.hpp"
 
-#include "classes/Editor/Scene/ResizeIndicator.hpp"
-
 Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure(tileFactory, grid) {
     if (size < 1) {
         size = 1;
     }
-
-    activeResizeIndicators = ResizeIndicator::LeftEdge | ResizeIndicator::RightEdge;
 
     this->size = size;
 

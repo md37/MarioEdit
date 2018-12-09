@@ -7,8 +7,6 @@
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Editor/Scene/Grid.hpp"
 
-class ResizeIndicator;
-
 class Figure : public
     DrawableInterface, SquareableInterface, GridableInterface, SquareableOnGridInterface,
     RescalableInterface, HoverableInterface, DraggableInterface {
@@ -44,8 +42,6 @@ public:
     void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
-    std::vector<std::shared_ptr<ResizeIndicator>> getActiveResizeIndicators();
-
 protected:
 
     std::vector<std::shared_ptr<StaticTile>> tiles;
@@ -53,7 +49,6 @@ protected:
     sf::Vector2i pointOnGrid = {0, 0};
 
     sf::RectangleShape frame;
-    sf::Uint8 activeResizeIndicators;
 
 private:
 
@@ -70,11 +65,7 @@ private:
     sf::Color frameColorNormal = sf::Color(255, 255, 255, 30);
     sf::Color frameColorError = sf::Color(255, 0, 0, 100);
 
-    bool resizeIndicatorsGenerated = false;
-    std::vector<std::shared_ptr<ResizeIndicator>> resizeIndicators;
-
     void createFrame();
-    void reCreateResizeIndicators();
 
     std::shared_ptr<StaticTile> findMostLeftTile();
     std::shared_ptr<StaticTile> findMostRightTile();
@@ -91,5 +82,4 @@ private:
     sf::Rect<float> getRect();
 
     bool checkForCollisions();
-    void moveResizeIndicators();
 };

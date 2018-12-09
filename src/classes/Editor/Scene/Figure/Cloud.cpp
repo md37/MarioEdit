@@ -62,12 +62,15 @@ void Cloud::changeVariant(sf::Uint8 variant) {
     size = variant;
     tiles.clear();
 
-    pointOnGrid = grid->getHighlight()->getPointOnGrid();
-    pointOnGrid.y++;
-    position = grid->getHighlight()->getPosition();
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        pointOnGrid = highlight->getPointOnGrid();
+        pointOnGrid.y++;
+        position = highlight->getPosition();
 
-    generate();
+        generate();
 
-    grid->turnHighlightOn(getSizeOnGrid());
-    resetFrame();
+        grid->turnHighlightOn(getSizeOnGrid());
+        resetFrame();
+    }
 }

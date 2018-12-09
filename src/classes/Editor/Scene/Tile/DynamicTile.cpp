@@ -53,38 +53,46 @@ bool DynamicTile::isDragging() {
 void DynamicTile::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
     Log::out("Tile StartDrag");
 
-    grid->getHighlight()->setPosition(cursorPosition);
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        highlight->setPosition(cursorPosition);
 
-    dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
+        dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
 
-    grid->turnHighlightOn(getSizeOnGrid());
-    isDraggingFlag = true;
+        grid->turnHighlightOn(getSizeOnGrid());
+        isDraggingFlag = true;
+    }
 }
 
 void DynamicTile::drag(sf::Vector2f cursorPosition) {
-    grid->getHighlight()->setPosition(cursorPosition);
-
-    setPosition(sf::Vector2f(cursorPosition-dragOffset));
+    auto hightlight = grid->getHighlight();
+    if (hightlight.has_value()) {
+        hightlight->setPosition(cursorPosition);
+        setPosition(sf::Vector2f(cursorPosition-dragOffset));
+    }
 }
 
 void DynamicTile::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     Log::out("Tile Drop");
-    dragOffset = {0, 0};
 
-    dropHighlightPlace = grid->getHighlight()->getPointOnGrid();
-    snapToGrid(dropHighlightPlace);
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        dragOffset = {0, 0};
+        dropHighlightPlace = highlight->getPointOnGrid();
+        snapToGrid(dropHighlightPlace);
 
-    sf::Vector2f positionOnGrid = grid->getHighlight()->getPosition();
-    sf::Vector2f tileSize(getSize());
-    positionOnGrid -= (tileSize-(tileSize/getScalePromotion()))/2.0f;
+        sf::Vector2f positionOnGrid = highlight->getPosition();
+        sf::Vector2f tileSize(getSize());
+        positionOnGrid -= (tileSize-(tileSize/getScalePromotion()))/2.0f;
 
-    setPosition(positionOnGrid);
+        setPosition(positionOnGrid);
 
-    grid->turnHighlightOff();
+        grid->turnHighlightOff();
 
-    recalculateCenter();
-    correctCorners();
-    isDraggingFlag = false;
+        recalculateCenter();
+        correctCorners();
+        isDraggingFlag = false;
+    }
 }
 
 void DynamicTile::correctCorners() {

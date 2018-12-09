@@ -217,19 +217,22 @@ void Figure::calculateDragOffset(sf::Vector2f cursorPosition) {
 }
 
 void Figure::drag(sf::Vector2f cursorPosition) {
-    auto prevHighlightPosition = grid->getHighlight()->getPosition();
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        auto prevHighlightPosition = highlight->getPosition();
 
-    recalculateHighlightPosition(cursorPosition);
-    recalculateFramePosition(cursorPosition);
-    moveTiles(position);
-    position = frame.getPosition();
+        recalculateHighlightPosition(cursorPosition);
+        recalculateFramePosition(cursorPosition);
+        moveTiles(position);
+        position = frame.getPosition();
 
-    bool isCollision = checkForCollisions();
-    if (isCollision) {
-        frame.setFillColor(frameColorError);
-        grid->getHighlight()->setPosition(prevHighlightPosition);
-    } else {
-        frame.setFillColor(frameColorNormal);
+        bool isCollision = checkForCollisions();
+        if (isCollision) {
+            frame.setFillColor(frameColorError);
+            highlight->setPosition(prevHighlightPosition);
+        } else {
+            frame.setFillColor(frameColorNormal);
+        }
     }
 }
 
@@ -259,10 +262,13 @@ sf::Rect<float> Figure::getRect() {
 }
 
 void Figure::recalculateHighlightPosition(sf::Vector2f cursorPosition) {
-    auto highlightPosition = cursorPosition;
-    highlightPosition -= dragOffsetForHighlight;
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        auto highlightPosition = cursorPosition;
+        highlightPosition -= dragOffsetForHighlight;
 
-    grid->getHighlight()->setPosition(highlightPosition);
+        highlight->setPosition(highlightPosition);
+    }
 }
 
 void Figure::recalculateFramePosition(sf::Vector2f cursorPosition) {
@@ -287,9 +293,12 @@ void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
 
     isDraggingFlag = false;
 
-    pointOnGrid = grid->getHighlight()->getPointOnGrid();
-    position = grid->pointOnGridToPosition(pointOnGrid);
-    grid->turnHighlightOff();
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        pointOnGrid = highlight->getPointOnGrid();
+        position = grid->pointOnGridToPosition(pointOnGrid);
+        grid->turnHighlightOff();
+    }
 
     resetFrame();
     snapToGrid();

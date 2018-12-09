@@ -83,16 +83,19 @@ void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<Dy
 }
 
 void DynamicTileEventHandler::performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
-    auto dropHighlightPlace = scene->getGrid()->getHighlight()->getPointOnGrid();
-    auto tileOnThisPlace = ObjectRegistry::getTileOnGrid(dropHighlightPlace);
+    std::optional<Highlight>& highlight = scene->getGrid()->getHighlight();
+    if (highlight.has_value()) {
+        auto dropHighlightPlace = highlight->getPointOnGrid();
+        auto tileOnThisPlace = ObjectRegistry::getTileOnGrid(dropHighlightPlace);
 
-    if (tileOnThisPlace != nullptr && tileOnThisPlace != tile) {
-        ObjectRegistry::removeTile(tileOnThisPlace);
+        if (tileOnThisPlace != nullptr && tileOnThisPlace != tile) {
+            ObjectRegistry::removeTile(tileOnThisPlace);
+        }
+
+        eventRegistry->unregisterDrag(tile);
+        tile->drop(animationPerformer);
+        cursor.draggedItem.reset();
     }
-
-    eventRegistry->unregisterDrag(tile);
-    tile->drop(animationPerformer);
-    cursor.draggedItem.reset();
 }
 
 void DynamicTileEventHandler::performLongClickDrop(Cursor &cursor) {

@@ -45,7 +45,7 @@ void Tile::setScalePromotion(float scalePromotion) {
     sprite.setScale(newSpriteScale.x, newSpriteScale.y);
 }
 
-float Tile::getScalePromotion() {
+float Tile::getScalePromotion() const {
     return scalePromotion;
 }
 
@@ -95,6 +95,6 @@ void Tile::snapToCenterPoint() {
     sprite.setPosition(position);
 }
 
-bool Tile::isTypeOf(std::shared_ptr<Tile> tile) {
+bool Tile::isTypeOf(std::shared_ptr<Tile> tile) const {
     return imagePosition == tile->imagePosition;
 }

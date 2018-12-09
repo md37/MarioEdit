@@ -6,7 +6,7 @@ BiasFunction::BiasFunction(float deviation, sf::Int32 duration, float startValue
     this->deviation = deviation;
 }
 
-float BiasFunction::getValue(sf::Int32 time) {
+float BiasFunction::getValue(sf::Int32 time) const {
     float timePart = (float)time/(float)duration;
     float value = pow(timePart, log(deviation)/log(0.5f));
     value *= targetValue-startValue;

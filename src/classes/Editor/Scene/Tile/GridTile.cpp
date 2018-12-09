@@ -13,7 +13,7 @@ void GridTile::snapToGrid(sf::Vector2i pointOnGrid) {
     setPosition(grid->pointOnGridToPosition(pointOnGrid));
 }
 
-bool GridTile::isOnIncompletePoint(sf::Vector2i pointOnGrid) {
+bool GridTile::isOnIncompletePoint(sf::Vector2i pointOnGrid) const {
     return grid->hasIncompleteEnding() && pointOnGrid.x == grid->getCols();
 }
 

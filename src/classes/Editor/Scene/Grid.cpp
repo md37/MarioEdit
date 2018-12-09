@@ -16,20 +16,8 @@ void Grid::rescale(std::unique_ptr<Scale>& scale) {
     }
 }
 
-sf::Vector2u Grid::getSize() {
+sf::Vector2u Grid::getSize() const {
     return {cols, rows};
-}
-
-sf::Vector2f Grid::getPointOnGrid(sf::Vector2f pointOnScreen) {
-    sf::Vector2f retval = {0, 0};
-    retval.x = ((int)(pointOnScreen.x/lineDistance))*lineDistance;
-    retval.y = ((int)(pointOnScreen.y/lineDistance))*lineDistance;
-    return retval;
-}
-
-sf::Vector2f Grid::pointOnGridToPosition(sf::Vector2i pointOnGrid) {
-    sf::Vector2f retval = sf::Vector2f(pointOnGrid) * lineDistance;
-    return retval;
 }
 
 void Grid::draw(std::shared_ptr<sf::RenderWindow> window) {
@@ -45,7 +33,7 @@ void Grid::draw(std::shared_ptr<sf::RenderWindow> window) {
     }
 }
 
-void Grid::drawHorizontalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window) {
+void Grid::drawHorizontalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window) const {
     sf::RectangleShape line;
     line.setPosition(sf::Vector2f(col*lineDistance+((float)lineThickness/2), row*lineDistance-((float)lineThickness/2)));
     line.setFillColor(lineColor);
@@ -54,7 +42,7 @@ void Grid::drawHorizontalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf
     window->draw(line);
 }
 
-void Grid::drawVerticalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window) {
+void Grid::drawVerticalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window) const {
     sf::RectangleShape line;
     line.setPosition(sf::Vector2f(col*lineDistance-((float)lineThickness/2), row*lineDistance));
     line.setFillColor(lineColor);
@@ -63,20 +51,11 @@ void Grid::drawVerticalLine(sf::Uint32 row, sf::Uint32 col, std::shared_ptr<sf::
     window->draw(line);
 }
 
-sf::Uint32 Grid::getCols() {
+sf::Uint32 Grid::getCols() const {
     return cols;
 }
 
-sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) {
-    sf::Vector2f retval(pointOnGrid);
-    retval.y = retval.y;
-    retval *= lineDistance;
-    retval.x += lineDistance/2;
-    retval.y -= lineDistance/2;
-    return retval;
-}
-
-bool Grid::hasIncompleteEnding() {
+bool Grid::hasIncompleteEnding() const {
     return hasIncompleteEndingFlag;
 }
 
@@ -89,13 +68,34 @@ void Grid::turnHighlightOff() {
     highlight.reset();
 }
 
-sf::Vector2i Grid::positionToPointOnGrid(sf::Vector2f pointOnScreen) {
+std::optional<Highlight>& Grid::getHighlight() {
+    return highlight;
+}
+
+sf::Vector2i Grid::positionToPointOnGrid(sf::Vector2f pointOnScreen) const {
     sf::Vector2i retval = {0, 0};
     retval.x = ((int)(pointOnScreen.x/lineDistance));
     retval.y = ((int)(pointOnScreen.y/lineDistance));
     return retval;
 }
 
-std::optional<Highlight>& Grid::getHighlight() {
-    return highlight;
+sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) const {
+    sf::Vector2f retval(pointOnGrid);
+    retval.y = retval.y;
+    retval *= lineDistance;
+    retval.x += lineDistance/2;
+    retval.y -= lineDistance/2;
+    return retval;
+}
+
+sf::Vector2f Grid::getPointOnGrid(sf::Vector2f pointOnScreen) const {
+    sf::Vector2f retval = {0, 0};
+    retval.x = ((int)(pointOnScreen.x/lineDistance))*lineDistance;
+    retval.y = ((int)(pointOnScreen.y/lineDistance))*lineDistance;
+    return retval;
+}
+
+sf::Vector2f Grid::pointOnGridToPosition(sf::Vector2i pointOnGrid) const {
+    sf::Vector2f retval = sf::Vector2f(pointOnGrid) * lineDistance;
+    return retval;
 }

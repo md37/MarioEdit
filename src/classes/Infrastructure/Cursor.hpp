@@ -15,7 +15,7 @@
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Infrastructure/Circle.hpp"
 
-class Cursor {
+class Cursor : DrawableInterface {
 
 public:
 
@@ -24,35 +24,32 @@ public:
     sf::Vector2f getPosition() const;
 
     std::optional<
-        std::variant<
-            std::shared_ptr<DynamicTile>,
-            std::shared_ptr<Figure>
-        >
+        std::variant<std::shared_ptr<DynamicTile>, std::shared_ptr<Figure>>
     >draggedItem;
 
     Cursor();
 
-    void draw(std::shared_ptr<sf::RenderWindow> window);
-    bool isOver(sf::Vector2f position, sf::Vector2u size);
-    bool isOver(Circle circle);
+    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+    bool isOver(sf::Vector2f position, sf::Vector2u size) const;
+    bool isOver(Circle circle) const;
 
-    bool isClick();
+    bool isClick() const;
     void click(bool click, sf::Mouse::Button type);
-    sf::Mouse::Button getClickType();
+    sf::Mouse::Button getClickType() const;
 
-    bool isMouseMoved();
+    bool isMouseMoved() const;
     void mouseMove(bool mouseMove);
 
-    bool isMousePressed();
+    bool isMousePressed() const;
     void mousePress(bool mouseDown);
 
-    bool isMouseReleased();
+    bool isMouseReleased() const;
     void mouseRelease(bool mouseUp);
 
-    bool isLongClick();
+    bool isLongClick() const;
 
     void resetPressState();
-    sf::Time getClickDuration();
+    sf::Time getClickDuration() const;
 
 private:
 

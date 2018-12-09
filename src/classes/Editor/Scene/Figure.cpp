@@ -257,11 +257,11 @@ bool Figure::checkForCollisions() {
     return false;
 }
 
-sf::Rect<float> Figure::getRect() {
+sf::Rect<float> Figure::getRect() const {
     return sf::Rect<float>(getPosition(), sf::Vector2f(getSize()));
 }
 
-void Figure::recalculateHighlightPosition(sf::Vector2f cursorPosition) {
+void Figure::recalculateHighlightPosition(sf::Vector2f cursorPosition) const {
     std::optional<Highlight>& highlight = grid->getHighlight();
     if (highlight.has_value()) {
         auto highlightPosition = cursorPosition;

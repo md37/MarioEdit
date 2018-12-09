@@ -12,9 +12,9 @@ public:
 
     void change(sf::Vector2u windowSize);
 
-    float getCurrent();
-    float getRatio();
-    sf::Vector2u getWindowSize();
+    float getCurrent() const;
+    float getRatio() const;
+    sf::Vector2u getWindowSize() const;
 
 private:
 

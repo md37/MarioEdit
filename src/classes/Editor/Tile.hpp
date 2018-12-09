@@ -22,7 +22,7 @@ public:
     void rescale(std::unique_ptr<Scale> &newScale);
 
     void setScalePromotion(float scalePromotion);
-    float getScalePromotion();
+    float getScalePromotion() const;
 
     void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition() override;
@@ -31,7 +31,7 @@ public:
     void setBorder(sf::Uint8 size, sf::Color color=sf::Color(255, 255, 255, 255));
     void snapToCenterPoint();
 
-    bool isTypeOf(std::shared_ptr<Tile> tile);
+    bool isTypeOf(std::shared_ptr<Tile> tile) const;
 
 protected:
 

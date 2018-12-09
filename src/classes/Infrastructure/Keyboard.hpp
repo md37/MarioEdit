@@ -11,10 +11,10 @@ public:
     void press(sf::Keyboard::Key key);
     void release(sf::Keyboard::Key key);
 
-    bool isPressed(sf::Keyboard::Key key);
-    bool isNumericKeyPressed();
+    bool isPressed(sf::Keyboard::Key key) const;
+    bool isNumericKeyPressed() const;
 
-    std::optional<sf::Uint8> getPressedNumeric();
+    std::optional<sf::Uint8> getPressedNumeric() const;
 
 private:
 

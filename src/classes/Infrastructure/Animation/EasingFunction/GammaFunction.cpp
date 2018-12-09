@@ -6,7 +6,7 @@ GammaFunction::GammaFunction(float deviation, sf::Int32 duration, float startVal
     this->deviation = deviation;
 }
 
-float GammaFunction::getValue(sf::Int32 time) {
+float GammaFunction::getValue(sf::Int32 time) const {
     float timePart = (float)time/(float)duration;
     float value = pow(timePart, 1.0f/deviation);
     value *= targetValue-startValue;

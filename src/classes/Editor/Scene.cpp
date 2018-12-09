@@ -92,7 +92,7 @@ std::unique_ptr<Grid>& Scene::getGrid() {
     return grid;
 }
 
-std::shared_ptr<DynamicTile> Scene::getDraggingTile() {
+std::shared_ptr<DynamicTile> Scene::getDraggingTile() const {
     auto dynamicTiles = ObjectRegistry::getDynamicTiles();
     for (auto const &tile : dynamicTiles) {
         if (tile->isDragging()) {

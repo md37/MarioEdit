@@ -8,7 +8,7 @@ public:
 
     EasingFunction(sf::Int32 duration, float startValue, float targetValue);
 
-    virtual float getValue(sf::Int32 time)=0;
+    virtual float getValue(sf::Int32 time) const=0;
 
 protected:
 

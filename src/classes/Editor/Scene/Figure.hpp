@@ -71,14 +71,14 @@ private:
     std::shared_ptr<StaticTile> findMostTopTile();
     std::shared_ptr<StaticTile> findMostBottomTile();
 
-    void recalculateHighlightPosition(sf::Vector2f cursorPosition);
+    void recalculateHighlightPosition(sf::Vector2f cursorPosition) const;
     void calculateDragOffset(sf::Vector2f cursorPosition);
     void moveTiles(sf::Vector2f prevPosition);
 
     void updateFramePosition();
     void recalculateFramePosition(sf::Vector2f cursorPosition);
 
-    sf::Rect<float> getRect();
+    sf::Rect<float> getRect() const;
 
     bool checkForCollisions();
 };

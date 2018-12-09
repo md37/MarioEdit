@@ -6,6 +6,6 @@ class Resolution {
 
 public:
 
-    sf::VideoMode findHighestResolutionMode();
+    sf::VideoMode findHighestResolutionMode() const;
 
 };

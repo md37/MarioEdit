@@ -4,7 +4,7 @@ QuadraticFunction::QuadraticFunction(sf::Int32 duration, float startValue, float
 
 }
 
-float QuadraticFunction::getValue(sf::Int32 time) {
+float QuadraticFunction::getValue(sf::Int32 time) const {
     float timePart = (float)time/(float)duration;
     float value = timePart*timePart;
     value *= targetValue-startValue;

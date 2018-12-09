@@ -15,19 +15,19 @@ public:
     void rescale(std::unique_ptr<Scale>& scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
-    sf::Uint32 getCols();
-
-    sf::Vector2u getSize();
-    sf::Vector2f getPointOnGrid(sf::Vector2f pointOnScreen);
-    sf::Vector2f pointOnGridToPosition(sf::Vector2i pointOnGrid);
-    sf::Vector2i positionToPointOnGrid(sf::Vector2f pointOnScreen);
-    sf::Vector2f getCenter(sf::Vector2u pointOnGrid);
+    sf::Uint32 getCols() const;
+    sf::Vector2u getSize() const;
 
     void turnHighlightOn(sf::Vector2u size);
     void turnHighlightOff();
-    bool hasIncompleteEnding();
+    bool hasIncompleteEnding() const;
 
     std::optional<Highlight>& getHighlight();
+
+    sf::Vector2f getPointOnGrid(sf::Vector2f pointOnScreen) const;
+    sf::Vector2f pointOnGridToPosition(sf::Vector2i pointOnGrid) const;
+    sf::Vector2i positionToPointOnGrid(sf::Vector2f pointOnScreen) const;
+    sf::Vector2f getCenter(sf::Vector2u pointOnGrid) const;
 
 private:
 
@@ -42,6 +42,6 @@ private:
 
     std::optional<Highlight> highlight;
 
-    void drawHorizontalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window);
-    void drawVerticalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window);
+    void drawHorizontalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window) const;
+    void drawVerticalLine(sf::Uint32 number, sf::Uint32 col, std::shared_ptr<sf::RenderWindow> window) const;
 };

@@ -18,7 +18,7 @@ public:
     sf::Vector2i getPointOnGrid() override;
     sf::Vector2u getSizeOnGrid() override;
 
-    bool isOnIncompletePoint(sf::Vector2i pointOnGrid);
+    bool isOnIncompletePoint(sf::Vector2i pointOnGrid) const;
 
 protected:
 

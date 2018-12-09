@@ -6,7 +6,7 @@ class Bush : public Figure {
 
 public:
 
-    Bush(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size);
+    Bush(std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid>& grid, sf::Uint8 size);
 
     void changeVariant(sf::Uint8 variant) override;
 

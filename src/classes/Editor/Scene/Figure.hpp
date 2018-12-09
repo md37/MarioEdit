@@ -13,7 +13,7 @@ class Figure : public
 
 public:
 
-    Figure(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid);
+    Figure(std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid> &grid);
 
     void rescale(std::unique_ptr<Scale> &scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
@@ -26,7 +26,6 @@ public:
     sf::Vector2i getPointOnGrid() override;
     sf::Vector2u getSizeOnGrid() override;
 
-    void setGrid(std::shared_ptr<Grid> grid) override;
     void snapToGrid() override;
     void snapToGrid(sf::Vector2i pointOnGrid) override;
 
@@ -45,7 +44,7 @@ public:
 protected:
 
     std::unique_ptr<TileFactory> &tileFactory;
-    std::shared_ptr<Grid> grid;
+    std::unique_ptr<Grid>& grid;
 
     std::vector<std::shared_ptr<StaticTile>> tiles;
     sf::Vector2f position = {0.0f, 0.0f};

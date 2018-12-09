@@ -6,8 +6,8 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
-Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid) : tileFactory(tileFactory) {
-    this->grid = grid;
+Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid> &grid) : tileFactory(tileFactory), grid(grid) {
+
 }
 
 void Figure::draw(std::shared_ptr<sf::RenderWindow> window) {
@@ -45,10 +45,6 @@ void Figure::rescale(std::unique_ptr<Scale> &scale) {
         tile->rescale(scale);
     }
     snapToGrid();
-}
-
-void Figure::setGrid(std::shared_ptr<Grid> grid) {
-    this->grid = grid;
 }
 
 void Figure::snapToGrid() {

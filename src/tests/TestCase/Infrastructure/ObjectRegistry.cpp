@@ -13,7 +13,8 @@ TEST(ObjectRegistryTest, test_get_dynamic_tiles_but_one_tile) {
     ObjectRegistry::clear();
 
     sf::Sprite sprite;
-    auto tile = std::make_shared<DynamicTile>(sprite, TileConfig());
+    std::unique_ptr<Grid> grid = std::make_unique<Grid>();
+    auto tile = std::make_shared<DynamicTile>(sprite, grid, TileConfig());
 
     ObjectRegistry::add(tile);
     ASSERT_EQ(1, ObjectRegistry::getDynamicTiles().size());
@@ -24,7 +25,8 @@ TEST(ObjectRegistryTest, test_get_dynamic_tiles_but_two_tiles) {
 
     for (int i=0; i<2; i++) {
         sf::Sprite sprite;
-        auto tile = std::make_shared<DynamicTile>(sprite, TileConfig());
+        std::unique_ptr<Grid> grid = std::make_unique<Grid>();
+        auto tile = std::make_shared<DynamicTile>(sprite, grid, TileConfig());
         ObjectRegistry::add(tile);
     }
 

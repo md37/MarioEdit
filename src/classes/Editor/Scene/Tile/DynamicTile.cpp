@@ -4,7 +4,7 @@
 #include "classes/Infrastructure/Cursor.hpp"
 #include "classes/Infrastructure/Log.hpp"
 
-DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite, config) {
+DynamicTile::DynamicTile(sf::Sprite sprite, std::unique_ptr<Grid>& grid, TileConfig config) : GridTile(sprite, grid, config) {
 
 }
 

@@ -17,12 +17,12 @@ public:
     void rescale(std::unique_ptr<Scale> &scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
-    std::shared_ptr<Grid> getGrid();
+    std::unique_ptr<Grid>& getGrid();
     std::shared_ptr<DynamicTile> getDraggingTile();
 
 private:
 
-    std::shared_ptr<Grid> grid;
+    std::unique_ptr<Grid> grid;
     std::unique_ptr<SceneGenerator> sceneGenerator;
 
     void reScaleTiles(std::unique_ptr<Scale> &scale);

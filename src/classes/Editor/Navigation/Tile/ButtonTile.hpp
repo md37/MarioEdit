@@ -28,7 +28,9 @@ public:
 
     void draw(std::shared_ptr<sf::RenderWindow> window) override;
 
-    std::shared_ptr<DynamicTile> cloneToDynamicTile(std::unique_ptr<TileFactory> &tileFactory);
+    std::shared_ptr<DynamicTile> cloneToDynamicTile(
+        std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid> &grid
+    );
 
 private:
 

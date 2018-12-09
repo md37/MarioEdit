@@ -53,7 +53,9 @@ bool ButtonTile::isDragging() {
     return isDraggingFlag;
 }
 
-std::shared_ptr<DynamicTile> ButtonTile::cloneToDynamicTile(std::unique_ptr<TileFactory> &tileFactory) {
-    auto tile = tileFactory->createDynamicTile(imagePosition.x, imagePosition.y);
+std::shared_ptr<DynamicTile> ButtonTile::cloneToDynamicTile(
+    std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid> &grid
+) {
+    auto tile = tileFactory->createDynamicTile(imagePosition.x, imagePosition.y, grid);
     return tile;
 }

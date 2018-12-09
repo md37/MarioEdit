@@ -20,9 +20,9 @@ void TileFactory::setTileOffset(sf::Uint32 offsetX, sf::Uint32 offsetY) {
     config.offsetY = offsetY;
 }
 
-std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Uint32 y) {
+std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Uint32 y, std::unique_ptr<Grid>& grid) {
     auto sprite = prepareSprite();
-    auto tile = std::make_shared<DynamicTile>(sprite, config);
+    auto tile = std::make_shared<DynamicTile>(sprite, grid, config);
     tile->changeImage(x, y);
     tile->rescale(scale);
     ObjectRegistry::add(tile);
@@ -32,9 +32,9 @@ std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Ui
     return tile;
 }
 
-std::shared_ptr<StaticTile> TileFactory::createStaticTile(sf::Uint32 x, sf::Uint32 y) {
+std::shared_ptr<StaticTile> TileFactory::createStaticTile(sf::Uint32 x, sf::Uint32 y, std::unique_ptr<Grid>& grid) {
     auto sprite = prepareSprite();
-    auto tile = std::make_shared<StaticTile>(sprite, config);
+    auto tile = std::make_shared<StaticTile>(sprite, grid, config);
     tile->changeImage(x, y);
     ObjectRegistry::add(tile);
 

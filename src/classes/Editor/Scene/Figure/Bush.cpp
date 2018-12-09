@@ -2,7 +2,7 @@
 
 #include "classes/Infrastructure/Log.hpp"
 
-Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure(tileFactory, grid) {
+Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid>& grid, sf::Uint8 size) : Figure(tileFactory, grid) {
     if (size < 1) {
         size = 1;
     }
@@ -14,22 +14,19 @@ Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
 void Bush::generate() {
     auto pointOnGrid = this->pointOnGrid;
 
-    auto begin = tileFactory->createStaticTile(2, 0);
-    begin->setGrid(grid);
+    auto begin = tileFactory->createStaticTile(2, 0, grid);
     begin->snapToGrid(pointOnGrid);
     pointOnGrid.x++;
     tiles.push_back(begin);
 
     for (int i=0; i<size; i++) {
-        auto middle = tileFactory->createStaticTile(3, 0);
-        middle->setGrid(grid);
+        auto middle = tileFactory->createStaticTile(3, 0, grid);
         middle->snapToGrid(pointOnGrid);
         pointOnGrid.x++;
         tiles.push_back(middle);
     }
 
-    auto end = tileFactory->createStaticTile(4, 0);
-    end->setGrid(grid);
+    auto end = tileFactory->createStaticTile(4, 0, grid);
     end->snapToGrid(pointOnGrid);
     tiles.push_back(end);
 }

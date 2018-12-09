@@ -1,11 +1,7 @@
 #include "GridTile.hpp"
 
-GridTile::GridTile(sf::Sprite sprite, TileConfig config) : Tile(sprite, config) {
+GridTile::GridTile(sf::Sprite sprite, std::unique_ptr<Grid>& grid, TileConfig config) : Tile(sprite, config), grid(grid) {
 
-}
-
-void GridTile::setGrid(std::shared_ptr<Grid> grid) {
-    this->grid = grid;
 }
 
 void GridTile::snapToGrid() {

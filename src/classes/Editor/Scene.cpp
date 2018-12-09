@@ -5,7 +5,7 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 
 Scene::Scene(std::unique_ptr<TileFactory> &tileFactory) {
-    grid = std::make_shared<Grid>();
+    grid = std::make_unique<Grid>();
     sceneGenerator = std::make_unique<SceneGenerator>(tileFactory, grid);
     sceneGenerator->generate();
 }
@@ -88,7 +88,7 @@ void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
     }
 }
 
-std::shared_ptr<Grid> Scene::getGrid() {
+std::unique_ptr<Grid>& Scene::getGrid() {
     return grid;
 }
 

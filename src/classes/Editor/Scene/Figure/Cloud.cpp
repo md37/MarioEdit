@@ -1,6 +1,7 @@
 #include "Cloud.hpp"
 
 #include <SFML/Graphics/Rect.hpp>
+#include "classes/Infrastructure/Log.hpp"
 
 Cloud::Cloud(
     std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure (tileFactory, grid
@@ -62,6 +63,8 @@ void Cloud::changeVariant(sf::Uint8 variant) {
     if (variant < 1 || variant > 2 || variant == size) {
         return;
     }
+
+    Log::out("Change Figure Variant");
 
     size = variant;
     tiles.clear();

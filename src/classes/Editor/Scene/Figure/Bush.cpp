@@ -1,5 +1,7 @@
 #include "Bush.hpp"
 
+#include "classes/Infrastructure/Log.hpp"
+
 Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure(tileFactory, grid) {
     if (size < 1) {
         size = 1;
@@ -36,6 +38,8 @@ void Bush::changeVariant(sf::Uint8 variant) {
     if (variant < 1 || variant > 2 || variant == size) {
         return;
     }
+
+    Log::out("Change Figure Variant");
 
     size = variant;
     tiles.clear();

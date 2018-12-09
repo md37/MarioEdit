@@ -6,7 +6,7 @@ ButtonTile::ButtonTile(sf::Sprite sprite, TileConfig config) : Tile(sprite, conf
 
 }
 
-void ButtonTile::draw(std::shared_ptr<sf::RenderWindow> window) {
+void ButtonTile::draw(std::shared_ptr<sf::RenderWindow> window) const {
     if (border.getSize().x > 0 && border.getSize().y > 0) {
         window->draw(border);
     }
@@ -49,7 +49,7 @@ void ButtonTile::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     Log::out("ButtonTile Drop");
 }
 
-bool ButtonTile::isDragging() {
+bool ButtonTile::isDragging() const {
     return isDraggingFlag;
 }
 

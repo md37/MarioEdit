@@ -16,15 +16,15 @@ public:
     Figure(std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid> &grid);
 
     void rescale(std::unique_ptr<Scale> &scale) override;
-    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+    void draw(std::shared_ptr<sf::RenderWindow> window) const override;
 
     void drawFrame(std::shared_ptr<sf::RenderWindow> window);
 
-    sf::Vector2f getPosition() override;
-    sf::Vector2u getSize() override;
+    sf::Vector2f getPosition() const override;
+    sf::Vector2u getSize() const override;
 
-    sf::Vector2i getPointOnGrid() override;
-    sf::Vector2u getSizeOnGrid() override;
+    sf::Vector2i getPointOnGrid() const override;
+    sf::Vector2u getSizeOnGrid() const override;
 
     void snapToGrid() override;
     void snapToGrid(sf::Vector2i pointOnGrid) override;
@@ -34,7 +34,7 @@ public:
     void mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
-    bool isDragging() override;
+    bool isDragging() const override;
     void startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
@@ -66,10 +66,10 @@ private:
     sf::Color frameColorNormal = sf::Color(255, 255, 255, 30);
     sf::Color frameColorError = sf::Color(255, 0, 0, 100);
 
-    std::shared_ptr<StaticTile> findMostLeftTile();
-    std::shared_ptr<StaticTile> findMostRightTile();
-    std::shared_ptr<StaticTile> findMostTopTile();
-    std::shared_ptr<StaticTile> findMostBottomTile();
+    std::shared_ptr<StaticTile> findMostLeftTile() const;
+    std::shared_ptr<StaticTile> findMostRightTile() const;
+    std::shared_ptr<StaticTile> findMostTopTile() const;
+    std::shared_ptr<StaticTile> findMostBottomTile() const;
 
     void recalculateHighlightPosition(sf::Vector2f cursorPosition) const;
     void calculateDragOffset(sf::Vector2f cursorPosition);

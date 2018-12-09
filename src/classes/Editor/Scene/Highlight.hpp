@@ -12,24 +12,24 @@ public:
 
     explicit Highlight(sf::Color color, float lineDistance);
 
-    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+    void draw(std::shared_ptr<sf::RenderWindow> window) const override;
 
     void setPosition(sf::Vector2f position);
-    sf::Vector2f getPosition() override;
+    sf::Vector2f getPosition() const override;
 
     void setSize(sf::Vector2u size);
-    sf::Vector2u getSize() override;
+    sf::Vector2u getSize() const override;
 
-    sf::Vector2i getPointOnGrid() override;
-    sf::Vector2u getSizeOnGrid() override;
+    sf::Vector2i getPointOnGrid() const override;
+    sf::Vector2u getSizeOnGrid() const override;
 
     void setLineDistance(float lineDistance);
 
 private:
 
     sf::RectangleShape area;
-    sf::Vector2f position;
     sf::Vector2u size;
     float lineDistance;
 
+    void recalculateSize();
 };

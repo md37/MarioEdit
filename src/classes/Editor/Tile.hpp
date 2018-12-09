@@ -25,8 +25,8 @@ public:
     float getScalePromotion() const;
 
     void setPosition(sf::Vector2f position);
-    sf::Vector2f getPosition() override;
-    sf::Vector2u getSize() override;
+    sf::Vector2f getPosition() const override;
+    sf::Vector2u getSize() const override;
 
     void setBorder(sf::Uint8 size, sf::Color color=sf::Color(255, 255, 255, 255));
     void snapToCenterPoint();

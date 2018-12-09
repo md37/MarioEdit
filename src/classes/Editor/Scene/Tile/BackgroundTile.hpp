@@ -8,7 +8,7 @@ class BackgroundTile : public Tile, public DrawableInterface {
 
 public:
 
-    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+    void draw(std::shared_ptr<sf::RenderWindow> window) const override;
     void setTransparency(sf::Uint8 transparency);
 
 private:

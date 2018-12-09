@@ -4,6 +4,6 @@ StaticTile::StaticTile(sf::Sprite sprite, std::unique_ptr<Grid>& grid, TileConfi
 
 }
 
-void StaticTile::draw(std::shared_ptr<sf::RenderWindow> window) {
+void StaticTile::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->draw(sprite);
 }

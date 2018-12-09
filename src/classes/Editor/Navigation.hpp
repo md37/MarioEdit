@@ -14,7 +14,7 @@ public:
 
     explicit Navigation(std::unique_ptr<TileFactory> &tileFactory);
     void rescale(std::unique_ptr<Scale>& scale) override;
-    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+    void draw(std::shared_ptr<sf::RenderWindow> window) const override;
 
 private:
 

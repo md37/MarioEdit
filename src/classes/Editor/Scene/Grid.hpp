@@ -13,7 +13,7 @@ class Grid : public RescalableInterface, public DrawableInterface {
 public:
 
     void rescale(std::unique_ptr<Scale>& scale) override;
-    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+    void draw(std::shared_ptr<sf::RenderWindow> window) const override;
 
     sf::Uint32 getCols() const;
     sf::Vector2u getSize() const;

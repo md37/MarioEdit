@@ -20,7 +20,7 @@ sf::Vector2u Grid::getSize() const {
     return {cols, rows};
 }
 
-void Grid::draw(std::shared_ptr<sf::RenderWindow> window) {
+void Grid::draw(std::shared_ptr<sf::RenderWindow> window) const {
     for (int i=0; i<rows+1; i++) {
         for (int j=0; j<cols+1; j++) {
             drawHorizontalLine(i, j, window);

@@ -71,11 +71,11 @@ void Tile::setPosition(sf::Vector2f position) {
     sprite.setPosition(position);
 }
 
-sf::Vector2f Tile::getPosition() {
+sf::Vector2f Tile::getPosition() const {
     return sprite.getPosition();
 }
 
-sf::Vector2u Tile::getSize() {
+sf::Vector2u Tile::getSize() const {
     return sf::Vector2u(
             sprite.getTextureRect().width * sprite.getScale().x,
             sprite.getTextureRect().height * sprite.getScale().y

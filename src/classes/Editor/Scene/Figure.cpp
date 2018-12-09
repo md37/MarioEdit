@@ -10,7 +10,7 @@ Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid> 
 
 }
 
-void Figure::draw(std::shared_ptr<sf::RenderWindow> window) {
+void Figure::draw(std::shared_ptr<sf::RenderWindow> window) const {
     for (auto &tile : tiles) {
         tile->draw(window);
     }
@@ -90,11 +90,11 @@ void Figure::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer)
     Log::out("Figure MouseLeave");
 }
 
-sf::Vector2f Figure::getPosition() {
+sf::Vector2f Figure::getPosition() const {
     return position;
 }
 
-sf::Vector2u Figure::getSize() {
+sf::Vector2u Figure::getSize() const {
     auto mostLeftTile = findMostLeftTile();
     auto mostRightTile = findMostRightTile();
     auto mostTopTile = findMostTopTile();
@@ -105,11 +105,11 @@ sf::Vector2u Figure::getSize() {
     return {width, height};
 }
 
-sf::Vector2i Figure::getPointOnGrid() {
+sf::Vector2i Figure::getPointOnGrid() const {
     return grid->positionToPointOnGrid(position);
 }
 
-sf::Vector2u Figure::getSizeOnGrid() {
+sf::Vector2u Figure::getSizeOnGrid() const {
     auto mostLeftTile = findMostLeftTile();
     auto mostRightTile = findMostRightTile();
     auto mostTopTile = findMostTopTile();
@@ -120,7 +120,7 @@ sf::Vector2u Figure::getSizeOnGrid() {
     return {width + 1, height + 1};
 }
 
-std::shared_ptr<StaticTile> Figure::findMostLeftTile() {
+std::shared_ptr<StaticTile> Figure::findMostLeftTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -138,7 +138,7 @@ std::shared_ptr<StaticTile> Figure::findMostLeftTile() {
     return mostLeftTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostRightTile() {
+std::shared_ptr<StaticTile> Figure::findMostRightTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -156,7 +156,7 @@ std::shared_ptr<StaticTile> Figure::findMostRightTile() {
     return mostRightTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostTopTile() {
+std::shared_ptr<StaticTile> Figure::findMostTopTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -174,7 +174,7 @@ std::shared_ptr<StaticTile> Figure::findMostTopTile() {
     return mostTopTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostBottomTile() {
+std::shared_ptr<StaticTile> Figure::findMostBottomTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -192,7 +192,7 @@ std::shared_ptr<StaticTile> Figure::findMostBottomTile() {
     return mostBottomTile;
 }
 
-bool Figure::isDragging() {
+bool Figure::isDragging() const {
     return isDraggingFlag;
 }
 

@@ -40,7 +40,7 @@ void Scene::reSnapTilesToGrid() {
     }
 }
 
-void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
+void Scene::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->clear(sf::Color(92, 148, 252));
 
     auto figures = ObjectRegistry::getFigures();

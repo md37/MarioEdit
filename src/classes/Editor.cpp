@@ -21,7 +21,7 @@ void Editor::rescale(std::unique_ptr<Scale>& scale) {
     navigation->rescale(scale);
 }
 
-void Editor::draw(std::shared_ptr<sf::RenderWindow> window) {
+void Editor::draw(std::shared_ptr<sf::RenderWindow> window) const {
     scene->draw(window);
     navigation->draw(window);
 

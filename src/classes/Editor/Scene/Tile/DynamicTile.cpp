@@ -13,7 +13,7 @@ void DynamicTile::rescale(std::unique_ptr<Scale> &newScale) {
 
     Tile::rescale(newScale);
 }
-void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) {
+void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->draw(sprite);
 }
 
@@ -46,7 +46,7 @@ void DynamicTile::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerfo
     animationPerformer->add(undoHighlightAnimation);
 }
 
-bool DynamicTile::isDragging() {
+bool DynamicTile::isDragging() const {
     return isDraggingFlag;
 }
 
@@ -123,6 +123,6 @@ void DynamicTile::correctCorners() {
     sprite.setPosition(sf::Vector2f(posX, posY));
 }
 
-sf::Vector2i DynamicTile::getDropHighlightPlace() {
+sf::Vector2i DynamicTile::getDropHighlightPlace() const {
     return dropHighlightPlace;
 }

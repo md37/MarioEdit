@@ -51,7 +51,7 @@ void Navigation::generateTileButtons() {
     questionMark->setBorder(1);
 }
 
-void Navigation::draw(std::shared_ptr<sf::RenderWindow> window) {
+void Navigation::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->draw(box);
     drawTileButtons(window);
 }

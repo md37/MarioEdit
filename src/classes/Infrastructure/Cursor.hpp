@@ -12,10 +12,9 @@
 #include "classes/Editor/Scene/Figure/Cloud.hpp"
 #include "classes/Editor/Scene/Figure/Hill.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
-#include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Infrastructure/Circle.hpp"
 
-class Cursor : DrawableInterface {
+class Cursor {
 
 public:
 
@@ -29,7 +28,7 @@ public:
 
     Cursor();
 
-    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+    void draw(std::shared_ptr<sf::RenderWindow> window);
     bool isOver(sf::Vector2f position, sf::Vector2u size) const;
     bool isOver(Circle circle) const;
 

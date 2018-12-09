@@ -26,11 +26,11 @@ public:
     void startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
-    bool isDragging() override;
+    bool isDragging() const override;
 
-    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+    void draw(std::shared_ptr<sf::RenderWindow> window) const override;
 
-    sf::Vector2i getDropHighlightPlace();
+    sf::Vector2i getDropHighlightPlace() const;
 
     void correctCorners();
 

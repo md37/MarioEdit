@@ -15,8 +15,8 @@ public:
     void snapToGrid() override;
     void snapToGrid(sf::Vector2i pointOnGrid) override;
 
-    sf::Vector2i getPointOnGrid() override;
-    sf::Vector2u getSizeOnGrid() override;
+    sf::Vector2i getPointOnGrid() const override;
+    sf::Vector2u getSizeOnGrid() const override;
 
     bool isOnIncompletePoint(sf::Vector2i pointOnGrid) const;
 

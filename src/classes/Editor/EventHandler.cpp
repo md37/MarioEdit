@@ -10,9 +10,9 @@ public:
         this->variant = variant;
     }
 
-    void operator()(std::shared_ptr<DynamicTile>& tile) {}
+    inline void operator()(std::shared_ptr<DynamicTile>& tile) {}
 
-    void operator()(std::shared_ptr<Figure>& figure) {
+    inline void operator()(std::shared_ptr<Figure>& figure) {
         figure->changeVariant(variant);
     }
 

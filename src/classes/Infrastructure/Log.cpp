@@ -2,17 +2,23 @@
 
 #include <iostream>
 
+bool Log::autoLine = true;
+
 void Log::line() {
     std::cout << "----------------------------------------------------------" << std::endl;
 }
 
 void Log::out(std::string label) {
-    Log::line();
+    if (autoLine) {
+        Log::line();
+    }
     std::cout << "[ " << label << " ]" << std::endl;
 }
 
 void Log::out(bool value, std::string label) {
-    Log::line();
+    if (autoLine) {
+        Log::line();
+    }
     if (!label.empty()) {
         std::cout << "[ " << label << " ] ";
     }
@@ -20,7 +26,9 @@ void Log::out(bool value, std::string label) {
 }
 
 void Log::out(sf::Vector2f vector, std::string label) {
-    Log::line();
+    if (autoLine) {
+        Log::line();
+    }
     if (!label.empty()) {
         std::cout << "[ " << label << " ] ";
     }
@@ -28,7 +36,9 @@ void Log::out(sf::Vector2f vector, std::string label) {
 }
 
 void Log::out(sf::Rect<float> rect, std::string label=std::string("")) {
-    Log::line();
+    if (autoLine) {
+        Log::line();
+    }
     if (!label.empty()) {
         std::cout << "[ " << label << " ] ";
     }
@@ -36,9 +46,15 @@ void Log::out(sf::Rect<float> rect, std::string label=std::string("")) {
 }
 
 void Log::out(std::unique_ptr<Scale> &scale, std::string label=std::string("")) {
-    Log::line();
+    if (autoLine) {
+        Log::line();
+    }
     if (!label.empty()) {
         std::cout << "[ " << label << " ] ";
     }
     std::cout << scale->getCurrent() << " (" << scale->getRatio() << "x)" << std::endl;
+}
+
+void Log::turnOnAutoLine(bool autoLine) {
+    Log::autoLine = autoLine;
 }

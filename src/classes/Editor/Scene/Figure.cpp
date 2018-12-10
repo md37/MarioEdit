@@ -248,8 +248,10 @@ bool Figure::checkForCollisions() {
         auto figureRect = figure->getRect();
         if (collision.checkCollision(figureRect) != Collision::None) {
             Log::out("Collision detected");
+            Log::turnOnAutoLine(false);
             Log::out(getRect(), "Current rect");
             Log::out(figureRect, "Figure rect");
+            Log::turnOnAutoLine(true);
 
             return true;
         }

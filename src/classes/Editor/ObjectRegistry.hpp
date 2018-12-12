@@ -3,9 +3,10 @@
 #include <vector>
 #include "classes/Infrastructure/Interface/DraggableInterface.hpp"
 #include "classes/Infrastructure/Interface/HoverableInterface.hpp"
-#include "classes/Editor/Scene/Figure.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 #include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
+
+class Figure;
 
 class ObjectRegistry {
 

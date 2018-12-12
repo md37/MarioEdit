@@ -6,6 +6,6 @@ class CircleableInterface {
 
 public:
 
-    virtual Circle getCircle()=0;
+    virtual Circle getCircle() const=0;
 
 };

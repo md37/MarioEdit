@@ -7,7 +7,7 @@ EventHandler::EventHandler(Cursor& cursor, std::unique_ptr<Scale> &scale) : curs
 
 }
 
-sf::Event EventHandler::getLastEvent() {
+sf::Event EventHandler::getLastEvent() const {
     return lastEvent;
 }
 
@@ -76,3 +76,5 @@ void EventHandler::handleKeyboardEvents() {
         handleEvent(Event::ToggleFullScreen);
     }
 }
+
+

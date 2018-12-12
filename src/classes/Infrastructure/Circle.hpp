@@ -9,8 +9,8 @@ public:
 
     Circle(sf::Vector2f position, sf::Uint32 radius);
 
-    sf::Vector2f getPosition();
-    sf::Uint32 getRadius();
+    sf::Vector2f getPosition() const;
+    sf::Uint32 getRadius() const;
 
 private:
 

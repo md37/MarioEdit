@@ -19,16 +19,18 @@ public:
     void mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
-    bool isMouseOver() override;
+    bool isMouseOver() const override;
 
     void startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
-    bool isDragging() override;
+    bool isDragging() const override;
 
-    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+    void draw(std::shared_ptr<sf::RenderWindow> window) const override;
 
-    std::shared_ptr<DynamicTile> cloneToDynamicTile(std::unique_ptr<TileFactory> &tileFactory);
+    std::shared_ptr<DynamicTile> cloneToDynamicTile(
+        std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid> &grid
+    );
 
 private:
 

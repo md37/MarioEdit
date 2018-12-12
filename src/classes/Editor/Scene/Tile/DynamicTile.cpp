@@ -2,8 +2,9 @@
 
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Infrastructure/Cursor.hpp"
+#include "classes/Infrastructure/Log.hpp"
 
-DynamicTile::DynamicTile(sf::Sprite sprite, TileConfig config) : GridTile(sprite, config) {
+DynamicTile::DynamicTile(sf::Sprite sprite, std::unique_ptr<Grid>& grid, TileConfig config) : GridTile(sprite, grid, config) {
 
 }
 
@@ -12,11 +13,11 @@ void DynamicTile::rescale(std::unique_ptr<Scale> &newScale) {
 
     Tile::rescale(newScale);
 }
-void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) {
+void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->draw(sprite);
 }
 
-bool DynamicTile::isMouseOver() {
+bool DynamicTile::isMouseOver() const {
     return isMouseOverFlag;
 }
 
@@ -45,42 +46,54 @@ void DynamicTile::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerfo
     animationPerformer->add(undoHighlightAnimation);
 }
 
-bool DynamicTile::isDragging() {
+bool DynamicTile::isDragging() const {
     return isDraggingFlag;
 }
 
 void DynamicTile::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    grid->setHighlightPosition(cursorPosition);
+    Log::out("Tile StartDrag");
 
     dragOffset = sf::Vector2f(cursorPosition) - sprite.getPosition();
 
     grid->turnHighlightOn(getSizeOnGrid());
+    std::optional<Highlight>& highlight = grid->getHighlight();
+
+    if (highlight.has_value()) {
+        highlight->setPosition(cursorPosition);
+    }
+
     isDraggingFlag = true;
 }
 
 void DynamicTile::drag(sf::Vector2f cursorPosition) {
-    grid->setHighlightPosition(cursorPosition);
-
-    setPosition(sf::Vector2f(cursorPosition-dragOffset));
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        highlight->setPosition(cursorPosition);
+        setPosition(sf::Vector2f(cursorPosition-dragOffset));
+    }
 }
 
 void DynamicTile::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    dragOffset = {0, 0};
+    Log::out("Tile Drop");
 
-    dropHighlightPlace = grid->getHighlightPointOnGrid();
-    snapToGrid(dropHighlightPlace);
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        dragOffset = {0, 0};
+        dropHighlightPlace = highlight->getPointOnGrid();
+        snapToGrid(dropHighlightPlace);
 
-    sf::Vector2f positionOnGrid = grid->getHighlightPosition();
-    sf::Vector2f tileSize(getSize());
-    positionOnGrid -= (tileSize-(tileSize/getScalePromotion()))/2.0f;
+        sf::Vector2f positionOnGrid = highlight->getPosition();
+        sf::Vector2f tileSize(getSize());
+        positionOnGrid -= (tileSize-(tileSize/getScalePromotion()))/2.0f;
 
-    setPosition(positionOnGrid);
+        setPosition(positionOnGrid);
 
-    grid->turnHighlightOff();
+        grid->turnHighlightOff();
 
-    recalculateCenter();
-    correctCorners();
-    isDraggingFlag = false;
+        recalculateCenter();
+        correctCorners();
+        isDraggingFlag = false;
+    }
 }
 
 void DynamicTile::correctCorners() {
@@ -110,6 +123,6 @@ void DynamicTile::correctCorners() {
     sprite.setPosition(sf::Vector2f(posX, posY));
 }
 
-sf::Vector2i DynamicTile::getDropHighlightPlace() {
+sf::Vector2i DynamicTile::getDropHighlightPlace() const {
     return dropHighlightPlace;
 }

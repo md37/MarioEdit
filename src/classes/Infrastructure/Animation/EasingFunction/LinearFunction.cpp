@@ -4,7 +4,7 @@ LinearFunction::LinearFunction(sf::Int32 duration, float startValue, float targe
 
 }
 
-float LinearFunction::getValue(sf::Int32 time) {
+float LinearFunction::getValue(sf::Int32 time) const {
     float timePart = (float)time/(float)duration;
     float value = timePart;
     value *= targetValue-startValue;

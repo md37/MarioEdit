@@ -10,20 +10,19 @@ class GridTile : public Tile, GridableInterface, SquareableOnGridInterface {
 
 public:
 
-    explicit GridTile(sf::Sprite sprite, TileConfig config=TileConfig());
+    explicit GridTile(sf::Sprite sprite, std::unique_ptr<Grid>& grid, TileConfig config=TileConfig());
 
-    void setGrid(std::shared_ptr<Grid> grid) override;
     void snapToGrid() override;
     void snapToGrid(sf::Vector2i pointOnGrid) override;
 
-    sf::Vector2i getPointOnGrid() override;
-    sf::Vector2u getSizeOnGrid() override;
+    sf::Vector2i getPointOnGrid() const override;
+    sf::Vector2u getSizeOnGrid() const override;
 
-    bool isOnIncompletePoint(sf::Vector2i pointOnGrid);
+    bool isOnIncompletePoint(sf::Vector2i pointOnGrid) const;
 
 protected:
 
-    std::shared_ptr<Grid> grid;
+    std::unique_ptr<Grid>& grid;
     sf::Vector2i pointOnGrid;
 
 };

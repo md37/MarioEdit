@@ -27,7 +27,7 @@ public:
 
     explicit EventHandler(Cursor& cursor, std::unique_ptr<Scale> &scale);
 
-    sf::Event getLastEvent();
+    sf::Event getLastEvent() const;
     void addEventHandler(Event event, std::function<void()> callback);
     void handleEvents(std::shared_ptr<sf::RenderWindow> window);
 

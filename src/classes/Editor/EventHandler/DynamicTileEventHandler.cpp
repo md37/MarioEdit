@@ -17,8 +17,7 @@ void DynamicTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     if (cursor.isMouseMoved()) {
         auto registeredDragOnTiles = eventRegistry->getRegisteredDrags();
         for (auto &dragOnItem : registeredDragOnTiles) {
-            DragVisitator visitator(cursor);
-            std::visit(visitator, dragOnItem);
+            std::visit(DragVisitator(cursor), dragOnItem);
         }
     }
 
@@ -84,20 +83,23 @@ void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<Dy
 }
 
 void DynamicTileEventHandler::performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
-    auto dropHighlightPlace = scene->getGrid()->getHighlightPointOnGrid();
-    auto tileOnThisPlace = ObjectRegistry::getTileOnGrid(dropHighlightPlace);
+    std::optional<Highlight>& highlight = scene->getGrid()->getHighlight();
+    if (highlight.has_value()) {
+        auto dropHighlightPlace = highlight->getPointOnGrid();
+        auto tileOnThisPlace = ObjectRegistry::getTileOnGrid(dropHighlightPlace);
 
-    if (tileOnThisPlace != nullptr && tileOnThisPlace != tile) {
-        ObjectRegistry::removeTile(tileOnThisPlace);
+        if (tileOnThisPlace != nullptr && tileOnThisPlace != tile) {
+            ObjectRegistry::removeTile(tileOnThisPlace);
+        }
+
+        eventRegistry->unregisterDrag(tile);
+        tile->drop(animationPerformer);
+        cursor.draggedItem.reset();
     }
-
-    eventRegistry->unregisterDrag(tile);
-    tile->drop(animationPerformer);
-    cursor.draggedItem.reset();
 }
 
 void DynamicTileEventHandler::performLongClickDrop(Cursor &cursor) {
-    auto grid = scene->getGrid();
+    std::unique_ptr<Grid>& grid = scene->getGrid();
     auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getPosition());
     auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
 
@@ -126,7 +128,7 @@ void DynamicTileEventHandler::performQuickClickDrop(Cursor &cursor) {
         return;
     }
 
-    auto grid = scene->getGrid();
+    std::unique_ptr<Grid>& grid = scene->getGrid();
     auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getPosition());
     auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
 

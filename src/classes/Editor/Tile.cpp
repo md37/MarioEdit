@@ -45,7 +45,7 @@ void Tile::setScalePromotion(float scalePromotion) {
     sprite.setScale(newSpriteScale.x, newSpriteScale.y);
 }
 
-float Tile::getScalePromotion() {
+float Tile::getScalePromotion() const {
     return scalePromotion;
 }
 
@@ -71,11 +71,11 @@ void Tile::setPosition(sf::Vector2f position) {
     sprite.setPosition(position);
 }
 
-sf::Vector2f Tile::getPosition() {
+sf::Vector2f Tile::getPosition() const {
     return sprite.getPosition();
 }
 
-sf::Vector2u Tile::getSize() {
+sf::Vector2u Tile::getSize() const {
     return sf::Vector2u(
             sprite.getTextureRect().width * sprite.getScale().x,
             sprite.getTextureRect().height * sprite.getScale().y
@@ -95,6 +95,6 @@ void Tile::snapToCenterPoint() {
     sprite.setPosition(position);
 }
 
-bool Tile::isTypeOf(std::shared_ptr<Tile> tile) {
+bool Tile::isTypeOf(std::shared_ptr<Tile> tile) const {
     return imagePosition == tile->imagePosition;
 }

@@ -6,7 +6,7 @@ GainFunction::GainFunction(float deviation, sf::Int32 duration, float startValue
     this->deviation = deviation;
 }
 
-float GainFunction::getValue(sf::Int32 time) {
+float GainFunction::getValue(sf::Int32 time) const {
     float timePart = (float)time/(float)duration;
     float value;
     if (timePart < 0.5f) {
@@ -19,6 +19,6 @@ float GainFunction::getValue(sf::Int32 time) {
     return value;
 }
 
-float GainFunction::bias(float deviation, float timePart) {
+float GainFunction::bias(float deviation, float timePart) const {
     return pow(timePart, log(deviation)/log(0.5f));
 }

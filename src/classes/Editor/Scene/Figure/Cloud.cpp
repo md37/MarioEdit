@@ -1,33 +1,28 @@
 #include "Cloud.hpp"
 
-#include <iostream>
-
 #include <SFML/Graphics/Rect.hpp>
+#include "classes/Infrastructure/Log.hpp"
 
-Cloud::Cloud(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure (tileFactory, grid) {
+Cloud::Cloud(std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid>& grid, sf::Uint8 size) : Figure (tileFactory, grid)
+{
     if (size < 1) {
         size = 1;
     }
 
     this->size = size;
 
-    generate(tileFactory, grid, size);
-    reCreateIndicators();
+    generate();
 }
 
-void Cloud::generate(
-    std::unique_ptr<TileFactory> &tileFactory,
-    std::shared_ptr<Grid> &grid,
-    sf::Uint8 size
-) {
-    auto beginBottom = tileFactory->createStaticTile(0, 8);
-    beginBottom->setGrid(grid);
+void Cloud::generate() {
+    auto pointOnGrid = this->pointOnGrid;
+
+    auto beginBottom = tileFactory->createStaticTile(0, 8, grid);
     beginBottom->snapToGrid(pointOnGrid);
     pointOnGrid.y--;
     tiles.push_back(beginBottom);
 
-    auto beginTop = tileFactory->createStaticTile(0, 7);
-    beginTop->setGrid(grid);
+    auto beginTop = tileFactory->createStaticTile(0, 7, grid);
     beginTop->snapToGrid(pointOnGrid);
     pointOnGrid.x++;
     pointOnGrid.y++;
@@ -35,78 +30,47 @@ void Cloud::generate(
 
 
     for (int i=0; i<size; i++) {
-        auto middleBottom = tileFactory->createStaticTile(1, 8);
-        middleBottom->setGrid(grid);
+        auto middleBottom = tileFactory->createStaticTile(1, 8, grid);
         middleBottom->snapToGrid(pointOnGrid);
         pointOnGrid.y--;
         tiles.push_back(middleBottom);
 
-        auto middleTop = tileFactory->createStaticTile(1, 7);
-        middleTop->setGrid(grid);
+        auto middleTop = tileFactory->createStaticTile(1, 7, grid);
         middleTop->snapToGrid(pointOnGrid);
         pointOnGrid.x++;
         pointOnGrid.y++;
         tiles.push_back(middleTop);
     }
 
-    auto endBottom = tileFactory->createStaticTile(2, 8);
-    endBottom->setGrid(grid);
+    auto endBottom = tileFactory->createStaticTile(2, 8, grid);
     endBottom->snapToGrid(pointOnGrid);
     pointOnGrid.y--;
     tiles.push_back(endBottom);
 
-    auto endTop = tileFactory->createStaticTile(2, 7);
-    endTop->setGrid(grid);
+    auto endTop = tileFactory->createStaticTile(2, 7, grid);
     endTop->snapToGrid(pointOnGrid);
     tiles.push_back(endTop);
 }
 
-void Cloud::draw(std::shared_ptr<sf::RenderWindow> window) {
-    Figure::draw(window);
-
-    if (isMouseOver() && !isDragging()) {
-        leftIndicator->draw(window);
-        rightIndicator->draw(window);
+void Cloud::changeVariant(sf::Uint8 variant) {
+    if (variant < 1 || variant > 2 || variant == size) {
+        return;
     }
-}
 
-void Cloud::rescale(std::unique_ptr<Scale> &scale) {
-    Figure::rescale(scale);
-    reCreateIndicators();
+    Log::out("Change Figure Variant");
 
-    leftIndicator->rescale(scale);
-    rightIndicator->rescale(scale);
-}
+    size = variant;
+    tiles.clear();
 
-void Cloud::snapToGrid(sf::Vector2i pointOnGrid) {
-    Figure::snapToGrid(pointOnGrid);
-}
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        pointOnGrid = highlight->getPointOnGrid();
+        pointOnGrid.y++;
+        position = highlight->getPosition();
 
-void Cloud::reCreateIndicators() {
-    sf::Rect figureRect(getPosition(), sf::Vector2f(getSize()));
+        generate();
 
-    leftIndicator = std::make_unique<ResizeIndicator>(
-        figureRect, ResizeIndicator::IndicatorSide::Left, [=]() mutable {
-            resizeToLeft();
-        }
-    );
-
-    rightIndicator = std::make_unique<ResizeIndicator>(
-        figureRect, ResizeIndicator::IndicatorSide::Right, [=]() mutable {
-            resizeToRight();
-        }
-    );
-}
-
-void Cloud::resizeToLeft() {
-
-}
-
-void Cloud::resizeToRight() {
-
-}
-
-void Cloud::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    Figure::drop(animationPerformer);
-    reCreateIndicators();
+        grid->turnHighlightOn(getSizeOnGrid());
+        resetFrame();
+    }
 }

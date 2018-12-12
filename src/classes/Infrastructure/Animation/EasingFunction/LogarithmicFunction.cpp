@@ -6,7 +6,7 @@ LogarithmicFunction::LogarithmicFunction(sf::Int32 duration, float startValue, f
 
 }
 
-float LogarithmicFunction::getValue(sf::Int32 time) {
+float LogarithmicFunction::getValue(sf::Int32 time) const {
     float timePart = (float)time/(float)duration;
     if (timePart < infinityBound) {
         timePart = infinityBound;

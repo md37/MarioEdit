@@ -17,14 +17,14 @@ void Scale::change(sf::Vector2u windowSize) {
     original = current;
 }
 
-float Scale::getCurrent() {
+float Scale::getCurrent() const {
     return current;
 }
 
-float Scale::getRatio() {
+float Scale::getRatio() const {
     return ratio;
 }
 
-sf::Vector2u Scale::getWindowSize() {
+sf::Vector2u Scale::getWindowSize() const {
     return windowSize;
 }

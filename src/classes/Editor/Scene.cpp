@@ -1,10 +1,11 @@
 #include "Scene.hpp"
 
 #include "classes/Infrastructure/Scale.hpp"
+#include "classes/Editor/Scene/Figure.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
 Scene::Scene(std::unique_ptr<TileFactory> &tileFactory) {
-    grid = std::make_shared<Grid>();
+    grid = std::make_unique<Grid>();
     sceneGenerator = std::make_unique<SceneGenerator>(tileFactory, grid);
     sceneGenerator->generate();
 }
@@ -39,7 +40,7 @@ void Scene::reSnapTilesToGrid() {
     }
 }
 
-void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
+void Scene::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->clear(sf::Color(92, 148, 252));
 
     auto figures = ObjectRegistry::getFigures();
@@ -87,11 +88,11 @@ void Scene::draw(std::shared_ptr<sf::RenderWindow> window) {
     }
 }
 
-std::shared_ptr<Grid> Scene::getGrid() {
+std::unique_ptr<Grid>& Scene::getGrid() {
     return grid;
 }
 
-std::shared_ptr<DynamicTile> Scene::getDraggingTile() {
+std::shared_ptr<DynamicTile> Scene::getDraggingTile() const {
     auto dynamicTiles = ObjectRegistry::getDynamicTiles();
     for (auto const &tile : dynamicTiles) {
         if (tile->isDragging()) {

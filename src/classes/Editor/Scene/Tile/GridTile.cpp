@@ -1,11 +1,7 @@
 #include "GridTile.hpp"
 
-GridTile::GridTile(sf::Sprite sprite, TileConfig config) : Tile(sprite, config) {
+GridTile::GridTile(sf::Sprite sprite, std::unique_ptr<Grid>& grid, TileConfig config) : Tile(sprite, config), grid(grid) {
 
-}
-
-void GridTile::setGrid(std::shared_ptr<Grid> grid) {
-    this->grid = grid;
 }
 
 void GridTile::snapToGrid() {
@@ -17,14 +13,14 @@ void GridTile::snapToGrid(sf::Vector2i pointOnGrid) {
     setPosition(grid->pointOnGridToPosition(pointOnGrid));
 }
 
-bool GridTile::isOnIncompletePoint(sf::Vector2i pointOnGrid) {
+bool GridTile::isOnIncompletePoint(sf::Vector2i pointOnGrid) const {
     return grid->hasIncompleteEnding() && pointOnGrid.x == grid->getCols();
 }
 
-sf::Vector2i GridTile::getPointOnGrid() {
+sf::Vector2i GridTile::getPointOnGrid() const {
     return pointOnGrid;
 }
 
-sf::Vector2u GridTile::getSizeOnGrid() {
+sf::Vector2u GridTile::getSizeOnGrid() const {
     return {1, 1};
 }

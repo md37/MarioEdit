@@ -13,7 +13,7 @@ public:
     virtual void animate()=0;
 
     void stop();
-    bool isFinished();
+    bool isFinished() const;
 
     void setStartCallback(std::function<void()> callback);
     void runStartCallback();
@@ -32,6 +32,7 @@ protected:
 
     std::function<void()> startCallback = nullptr;
     std::function<void()> finishCallback = nullptr;
+
     sf::Int32 getAnimationPointInTime() const;
 
 };

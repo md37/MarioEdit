@@ -12,10 +12,10 @@ public:
 
     explicit Collision(sf::Rect<float> first);
 
-    Direction checkCollision(sf::Rect<float> second);
+    Direction checkCollision(sf::Rect<float> second) const;
 
 private:
 
     sf::Rect<float> first;
-    sf::Vector2f calcCenter(sf::Rect<float> rect);
+    sf::Vector2f calcCenter(sf::Rect<float> rect) const;
 };

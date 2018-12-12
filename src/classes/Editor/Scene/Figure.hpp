@@ -13,36 +13,38 @@ class Figure : public
 
 public:
 
-    Figure(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid);
+    Figure(std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid> &grid);
 
     void rescale(std::unique_ptr<Scale> &scale) override;
-    void draw(std::shared_ptr<sf::RenderWindow> window) override;
+    void draw(std::shared_ptr<sf::RenderWindow> window) const override;
 
     void drawFrame(std::shared_ptr<sf::RenderWindow> window);
 
-    sf::Vector2f getPosition() override;
-    sf::Vector2u getSize() override;
+    sf::Vector2f getPosition() const override;
+    sf::Vector2u getSize() const override;
 
-    sf::Vector2i getPointOnGrid() override;
-    sf::Vector2u getSizeOnGrid() override;
+    sf::Vector2i getPointOnGrid() const override;
+    sf::Vector2u getSizeOnGrid() const override;
 
-public:
-
-    void setGrid(std::shared_ptr<Grid> grid) override;
     void snapToGrid() override;
     void snapToGrid(sf::Vector2i pointOnGrid) override;
 
-    bool isMouseOver() override;
+    bool isMouseOver() const override;
     void mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
-    bool isDragging() override;
+    bool isDragging() const override;
     void startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
+    virtual void changeVariant(sf::Uint8 variant)=0;
+
 protected:
+
+    std::unique_ptr<TileFactory> &tileFactory;
+    std::unique_ptr<Grid>& grid;
 
     std::vector<std::shared_ptr<StaticTile>> tiles;
     sf::Vector2f position = {0.0f, 0.0f};
@@ -50,10 +52,9 @@ protected:
 
     sf::RectangleShape frame;
 
-private:
+    void resetFrame();
 
-    std::unique_ptr<TileFactory> &tileFactory;
-    std::shared_ptr<Grid> grid;
+private:
 
     bool isMouseOverFlag = false;
     bool isFrameCreated = false;
@@ -62,21 +63,22 @@ private:
     sf::Vector2f dragOffset = {0.0f, 0.0f};
     sf::Vector2f dragOffsetForHighlight = {0.0f, 0.0f};
 
-    void createFrame();
+    sf::Color frameColorNormal = sf::Color(255, 255, 255, 30);
+    sf::Color frameColorError = sf::Color(255, 0, 0, 100);
 
-    std::shared_ptr<StaticTile> findMostLeftTile();
-    std::shared_ptr<StaticTile> findMostRightTile();
-    std::shared_ptr<StaticTile> findMostTopTile();
-    std::shared_ptr<StaticTile> findMostBottomTile();
+    std::shared_ptr<StaticTile> findMostLeftTile() const;
+    std::shared_ptr<StaticTile> findMostRightTile() const;
+    std::shared_ptr<StaticTile> findMostTopTile() const;
+    std::shared_ptr<StaticTile> findMostBottomTile() const;
 
-    void recalculateHighlightPosition(sf::Vector2f cursorPosition);
+    void recalculateHighlightPosition(sf::Vector2f cursorPosition) const;
     void calculateDragOffset(sf::Vector2f cursorPosition);
     void moveTiles(sf::Vector2f prevPosition);
 
     void updateFramePosition();
     void recalculateFramePosition(sf::Vector2f cursorPosition);
 
-    sf::Rect<float> getRect();
+    sf::Rect<float> getRect() const;
 
     bool checkForCollisions();
 };

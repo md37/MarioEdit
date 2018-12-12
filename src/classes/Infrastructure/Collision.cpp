@@ -4,7 +4,7 @@ Collision::Collision(sf::Rect<float> first) {
     this->first = first;
 }
 
-Collision::Direction Collision::checkCollision(sf::Rect<float> second) {
+Collision::Direction Collision::checkCollision(sf::Rect<float> second) const {
     auto centerFirst = calcCenter(first);
     auto centerSecond = calcCenter(second);
 
@@ -30,6 +30,6 @@ Collision::Direction Collision::checkCollision(sf::Rect<float> second) {
     return Direction::Bottom;
 }
 
-sf::Vector2f Collision::calcCenter(sf::Rect<float> rect) {
+sf::Vector2f Collision::calcCenter(sf::Rect<float> rect) const {
     return {rect.left + rect.width/2, rect.top + rect.height/2};
 }

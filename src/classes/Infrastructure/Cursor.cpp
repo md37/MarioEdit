@@ -37,7 +37,7 @@ void Cursor::draw(std::shared_ptr<sf::RenderWindow> window) {
     window->draw(*sprite);
 }
 
-bool Cursor::isMouseMoved() {
+bool Cursor::isMouseMoved() const {
     return moveFlag;
 }
 
@@ -45,7 +45,7 @@ void Cursor::mouseMove(bool mouseMove) {
     moveFlag = mouseMove;
 }
 
-bool Cursor::isOver(sf::Vector2f position, sf::Vector2u size) {
+bool Cursor::isOver(sf::Vector2f position, sf::Vector2u size) const {
     auto mousePosition = getPosition();
     auto posX = mousePosition.x;
     auto posY = mousePosition.y;
@@ -55,7 +55,7 @@ bool Cursor::isOver(sf::Vector2f position, sf::Vector2u size) {
            posY <= position.y+size.y;
 }
 
-bool Cursor::isOver(Circle circle) {
+bool Cursor::isOver(Circle circle) const {
     auto mousePosition = getPosition();
 
     auto diff = mousePosition-circle.getPosition();
@@ -64,7 +64,7 @@ bool Cursor::isOver(Circle circle) {
     return diagonal <= circle.getRadius();
 }
 
-bool Cursor::isClick() {
+bool Cursor::isClick() const {
     return clickFlag;
 }
 
@@ -73,19 +73,19 @@ void Cursor::click(bool click, sf::Mouse::Button type) {
     clickType = type;
 }
 
-sf::Mouse::Button Cursor::getClickType() {
+sf::Mouse::Button Cursor::getClickType() const {
     return clickType;
 }
 
-sf::Time Cursor::getClickDuration() {
+sf::Time Cursor::getClickDuration() const {
     return clickClock.getElapsedTime();
 }
 
-bool Cursor::isLongClick() {
+bool Cursor::isLongClick() const {
     return getClickDuration().asMilliseconds() > 150;
 }
 
-bool Cursor::isMousePressed() {
+bool Cursor::isMousePressed() const {
     return mousePressedFlag;
 }
 
@@ -94,7 +94,7 @@ void Cursor::mousePress(bool mousePressed) {
     clickClock.restart();
 }
 
-bool Cursor::isMouseReleased() {
+bool Cursor::isMouseReleased() const {
     return mouseReleasedFlag;
 }
 

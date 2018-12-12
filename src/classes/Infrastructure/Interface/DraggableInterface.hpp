@@ -11,6 +11,6 @@ public:
     virtual void drag(sf::Vector2f cursorPosition)=0;
     virtual void drop(std::unique_ptr<AnimationPerformer> &animationPerformer)=0;
 
-    virtual bool isDragging()=0;
+    virtual bool isDragging() const=0;
 
 };

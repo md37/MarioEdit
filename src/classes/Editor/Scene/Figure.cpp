@@ -6,11 +6,11 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
-Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid) : tileFactory(tileFactory) {
-    this->grid = grid;
+Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid> &grid) : tileFactory(tileFactory), grid(grid) {
+
 }
 
-void Figure::draw(std::shared_ptr<sf::RenderWindow> window) {
+void Figure::draw(std::shared_ptr<sf::RenderWindow> window) const {
     for (auto &tile : tiles) {
         tile->draw(window);
     }
@@ -18,19 +18,17 @@ void Figure::draw(std::shared_ptr<sf::RenderWindow> window) {
 
 void Figure::drawFrame(std::shared_ptr<sf::RenderWindow> window) {
     if (!isFrameCreated) {
-        createFrame();
+        resetFrame();
     }
     window->draw(frame);
 }
 
-void Figure::createFrame() {
-    auto thickness = grid->getLineThickness();
+void Figure::resetFrame() {
     auto size = this->getSize();
 
     frame.setSize(sf::Vector2f(size));
-    frame.setOutlineThickness(thickness * 4);
-    frame.setOutlineColor(sf::Color(255, 255, 255, 128));
-    frame.setFillColor(sf::Color(255, 255, 255, 20));
+    frame.setOutlineThickness(0);
+    frame.setFillColor(frameColorNormal);
 
     updateFramePosition();
 
@@ -47,10 +45,6 @@ void Figure::rescale(std::unique_ptr<Scale> &scale) {
         tile->rescale(scale);
     }
     snapToGrid();
-}
-
-void Figure::setGrid(std::shared_ptr<Grid> grid) {
-    this->grid = grid;
 }
 
 void Figure::snapToGrid() {
@@ -75,12 +69,14 @@ void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
     }
 }
 
-bool Figure::isMouseOver() {
+bool Figure::isMouseOver() const {
     return isMouseOverFlag;
 }
 
 void Figure::mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = true;
+
+    Log::out("Figure MouseEnter");
 }
 
 void Figure::mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) {
@@ -90,13 +86,15 @@ void Figure::mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) 
 void Figure::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = false;
     isFrameCreated = false;
+
+    Log::out("Figure MouseLeave");
 }
 
-sf::Vector2f Figure::getPosition() {
+sf::Vector2f Figure::getPosition() const {
     return position;
 }
 
-sf::Vector2u Figure::getSize() {
+sf::Vector2u Figure::getSize() const {
     auto mostLeftTile = findMostLeftTile();
     auto mostRightTile = findMostRightTile();
     auto mostTopTile = findMostTopTile();
@@ -107,11 +105,11 @@ sf::Vector2u Figure::getSize() {
     return {width, height};
 }
 
-sf::Vector2i Figure::getPointOnGrid() {
+sf::Vector2i Figure::getPointOnGrid() const {
     return grid->positionToPointOnGrid(position);
 }
 
-sf::Vector2u Figure::getSizeOnGrid() {
+sf::Vector2u Figure::getSizeOnGrid() const {
     auto mostLeftTile = findMostLeftTile();
     auto mostRightTile = findMostRightTile();
     auto mostTopTile = findMostTopTile();
@@ -122,7 +120,7 @@ sf::Vector2u Figure::getSizeOnGrid() {
     return {width + 1, height + 1};
 }
 
-std::shared_ptr<StaticTile> Figure::findMostLeftTile() {
+std::shared_ptr<StaticTile> Figure::findMostLeftTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -140,7 +138,7 @@ std::shared_ptr<StaticTile> Figure::findMostLeftTile() {
     return mostLeftTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostRightTile() {
+std::shared_ptr<StaticTile> Figure::findMostRightTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -158,7 +156,7 @@ std::shared_ptr<StaticTile> Figure::findMostRightTile() {
     return mostRightTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostTopTile() {
+std::shared_ptr<StaticTile> Figure::findMostTopTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -176,7 +174,7 @@ std::shared_ptr<StaticTile> Figure::findMostTopTile() {
     return mostTopTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostBottomTile() {
+std::shared_ptr<StaticTile> Figure::findMostBottomTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -194,14 +192,14 @@ std::shared_ptr<StaticTile> Figure::findMostBottomTile() {
     return mostBottomTile;
 }
 
-bool Figure::isDragging() {
+bool Figure::isDragging() const {
     return isDraggingFlag;
 }
 
 void Figure::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
+    Log::out("Figure StartDrag");
     isDraggingFlag = true;
-    frame.setOutlineColor(sf::Color(255, 255, 0, 128));
-    frame.setFillColor(sf::Color(255, 255, 0, 20));
+    frame.setFillColor(frameColorNormal);
 
     grid->turnHighlightOn(getSizeOnGrid());
 
@@ -219,19 +217,22 @@ void Figure::calculateDragOffset(sf::Vector2f cursorPosition) {
 }
 
 void Figure::drag(sf::Vector2f cursorPosition) {
-    auto prevHighlightPosition = grid->getHighlightPosition();
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        auto prevHighlightPosition = highlight->getPosition();
 
-    recalculateHighlightPosition(cursorPosition);
-    recalculateFramePosition(cursorPosition);
-    moveTiles(position);
-    position = frame.getPosition();
+        recalculateHighlightPosition(cursorPosition);
+        recalculateFramePosition(cursorPosition);
+        moveTiles(position);
+        position = frame.getPosition();
 
-    bool isCollision = checkForCollisions();
-    if (isCollision) {
-        frame.setOutlineColor(sf::Color(255, 0, 0, 100));
-        grid->setHighlightPosition(prevHighlightPosition);
-    } else {
-        frame.setOutlineColor(sf::Color(255, 255, 0, 128));
+        bool isCollision = checkForCollisions();
+        if (isCollision) {
+            frame.setFillColor(frameColorError);
+            highlight->setPosition(prevHighlightPosition);
+        } else {
+            frame.setFillColor(frameColorNormal);
+        }
     }
 }
 
@@ -247,9 +248,10 @@ bool Figure::checkForCollisions() {
         auto figureRect = figure->getRect();
         if (collision.checkCollision(figureRect) != Collision::None) {
             Log::out("Collision detected");
+            Log::turnOnAutoLine(false);
             Log::out(getRect(), "Current rect");
             Log::out(figureRect, "Figure rect");
-            Log::line();
+            Log::turnOnAutoLine(true);
 
             return true;
         }
@@ -257,15 +259,18 @@ bool Figure::checkForCollisions() {
     return false;
 }
 
-sf::Rect<float> Figure::getRect() {
+sf::Rect<float> Figure::getRect() const {
     return sf::Rect<float>(getPosition(), sf::Vector2f(getSize()));
 }
 
-void Figure::recalculateHighlightPosition(sf::Vector2f cursorPosition) {
-    auto highlightPosition = cursorPosition;
-    highlightPosition -= dragOffsetForHighlight;
+void Figure::recalculateHighlightPosition(sf::Vector2f cursorPosition) const {
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        auto highlightPosition = cursorPosition;
+        highlightPosition -= dragOffsetForHighlight;
 
-    grid->setHighlightPosition(highlightPosition);
+        highlight->setPosition(highlightPosition);
+    }
 }
 
 void Figure::recalculateFramePosition(sf::Vector2f cursorPosition) {
@@ -286,13 +291,18 @@ void Figure::moveTiles(sf::Vector2f prevPosition) {
 }
 
 void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
+    Log::out("Figure Drop");
+
     isDraggingFlag = false;
 
-    pointOnGrid = grid->getHighlightPointOnGrid();
-    position = grid->pointOnGridToPosition(pointOnGrid);
-    grid->turnHighlightOff();
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        pointOnGrid = highlight->getPointOnGrid();
+        position = grid->pointOnGridToPosition(pointOnGrid);
+        grid->turnHighlightOff();
+    }
 
-    createFrame();
+    resetFrame();
     snapToGrid();
     dragOffset = {0.0f, 0.0f};
     dragOffsetForHighlight = {0.0f, 0.0f};

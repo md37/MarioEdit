@@ -10,7 +10,7 @@ class AnimationPerformer : public RunnableInterface {
 public:
 
     void start() override;
-    bool isStarted() override;
+    bool isStarted() const override;
 
     void add(std::shared_ptr<Animation> animation);
     void remove(std::vector<std::shared_ptr<Animation>>::iterator& animationIterator);

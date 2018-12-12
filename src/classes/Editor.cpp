@@ -1,6 +1,7 @@
 #include "Editor.hpp"
 
 #include "classes/Editor/ObjectRegistry.hpp"
+#include "classes/Infrastructure/Log.hpp"
 
 Editor::Editor(std::unique_ptr<TileFactory> &tileFactory): tileFactory(tileFactory) {
     navigation = std::make_unique<Navigation>(tileFactory);
@@ -14,12 +15,17 @@ void Editor::start() {
     isStartedFlag = true;
 }
 
+bool Editor::isStarted() const {
+    return isStartedFlag;
+}
+
 void Editor::rescale(std::unique_ptr<Scale>& scale) {
+    Log::out(scale, "Rescalling");
     scene->rescale(scale);
     navigation->rescale(scale);
 }
 
-void Editor::draw(std::shared_ptr<sf::RenderWindow> window) {
+void Editor::draw(std::shared_ptr<sf::RenderWindow> window) const {
     scene->draw(window);
     navigation->draw(window);
 
@@ -28,10 +34,6 @@ void Editor::draw(std::shared_ptr<sf::RenderWindow> window) {
     if (isDraggingTile) {
         draggingTile->draw(window);
     }
-}
-
-bool Editor::isStarted() {
-    return isStartedFlag;
 }
 
 void Editor::handleEvents(Keyboard& keyboard, Cursor& cursor) {

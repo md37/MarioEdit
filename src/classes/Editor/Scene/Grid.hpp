@@ -7,10 +7,13 @@
 #include "classes/Editor/Scene/Highlight.hpp"
 #include "classes/Infrastructure/Interface/RescalableInterface.hpp"
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
+#include "GridSettings.hpp"
 
 class Grid : public RescalableInterface, public DrawableInterface {
 
 public:
+
+    explicit Grid(GridSettings settings);
 
     void rescale(std::unique_ptr<Scale>& scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;
@@ -31,14 +34,9 @@ public:
 
 private:
 
-    sf::Uint32 rows = 12;
-    sf::Uint32 cols;
-    float lineDistance;
-    bool hasIncompleteEndingFlag = false;
+    GridSettings settings;
 
     sf::Color lineColor = sf::Color(0, 0, 0, 50);
-    sf::Uint32 lineThickness;
-    sf::Uint32 lineThicknessDivider = 400;
 
     std::optional<Highlight> highlight;
 

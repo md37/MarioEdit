@@ -5,7 +5,8 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 
 Scene::Scene(std::unique_ptr<TileFactory> &tileFactory) {
-    grid = std::make_unique<Grid>();
+    GridSettings gridSettings(12, GridSettings::Auto, sf::Vector2f(GridSettings::Auto, GridSettings::Auto));
+    grid = std::make_unique<Grid>(gridSettings);
     sceneGenerator = std::make_unique<SceneGenerator>(tileFactory, grid);
     sceneGenerator->generate();
 }

@@ -25,7 +25,9 @@ public:
 private:
 
     sf::Uint32 rows;
+    sf::Uint32 rowsOrig;
     sf::Uint32 cols;
+    sf::Uint32 colsOrig;
     sf::Vector2f size;
 
     float lineDistance;

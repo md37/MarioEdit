@@ -4,7 +4,9 @@ const sf::Uint32 GridSettings::Auto;
 
 GridSettings::GridSettings(sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size) {
     this->rows = rows;
+    rowsOrig = rows;
     this->cols = cols;
+    colsOrig = cols;
     this->size = size;
 }
 
@@ -22,11 +24,17 @@ sf::Vector2f GridSettings::getSize() const {
 
 void GridSettings::rescale(std::unique_ptr <Scale> &scale) {
     auto windowSize = scale->getWindowSize();
-
     lineThickness = windowSize.y / lineThicknessDivider;
-    lineDistance = windowSize.y / rows;
-    cols = sf::Uint32(windowSize.x / lineDistance);
-    hasIncompleteEndingFlag = windowSize.x > cols*lineDistance;
+
+    if (colsOrig == Auto) {
+        lineDistance = windowSize.y / rows;
+        cols = sf::Uint32(windowSize.x / lineDistance);
+        hasIncompleteEndingFlag = windowSize.x > cols*lineDistance;
+    } else {
+        lineDistance = windowSize.x / cols;
+        rows = sf::Uint32(windowSize.y / lineDistance);
+        hasIncompleteEndingFlag = windowSize.y > rows*lineDistance;
+    }
 }
 
 sf::Uint32 GridSettings::getLineThickness() const {

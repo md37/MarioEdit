@@ -1,5 +1,6 @@
 #include "Grid.hpp"
 
+#include <iostream>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
 
@@ -98,7 +99,7 @@ sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) const {
 }
 
 sf::Vector2f Grid::getPointOnGrid(sf::Vector2f pointOnScreen) const {
-    auto lineDistance = settings.getLineDistance();
+    sf::Uint32 lineDistance = settings.getLineDistance();
 
     sf::Vector2f retval = {0, 0};
     retval.x = ((int)(pointOnScreen.x/lineDistance))*lineDistance;

@@ -1,13 +1,12 @@
 #include "GridSettings.hpp"
 
+#include <iostream>
+
 const sf::Uint32 GridSettings::Auto;
 
-GridSettings::GridSettings(sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size) {
-    this->rows = rows;
+GridSettings::GridSettings(sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size): rows(rows), cols(cols), size(size) {
     rowsOrig = rows;
-    this->cols = cols;
     colsOrig = cols;
-    this->size = size;
 }
 
 sf::Uint32 GridSettings::getRows() const {
@@ -23,17 +22,35 @@ sf::Vector2f GridSettings::getSize() const {
 }
 
 void GridSettings::rescale(std::unique_ptr <Scale> &scale) {
-    auto windowSize = scale->getWindowSize();
-    lineThickness = windowSize.y / lineThicknessDivider;
+    resolveAutoSize(scale);
+
+    size *= scale->getRatio();
+    auto size = this->size;
+
+    lineThickness = size.y / lineThicknessDivider;
 
     if (colsOrig == Auto) {
-        lineDistance = windowSize.y / rows;
-        cols = sf::Uint32(windowSize.x / lineDistance);
-        hasIncompleteEndingFlag = windowSize.x > cols*lineDistance;
+        lineDistance = size.y / rows;
+        cols = sf::Uint32(size.x / lineDistance);
+        hasIncompleteEndingFlag = size.x > cols*lineDistance;
     } else {
-        lineDistance = windowSize.x / cols;
-        rows = sf::Uint32(windowSize.y / lineDistance);
-        hasIncompleteEndingFlag = windowSize.y > rows*lineDistance;
+        lineDistance = size.x / cols;
+        rows = sf::Uint32(size.y / lineDistance);
+        hasIncompleteEndingFlag = size.y > rows*lineDistance;
+    }
+}
+
+void GridSettings::resolveAutoSize(const std::unique_ptr<Scale> &scale) {
+    if (scale->getRatio() != 1) {
+        return;
+    }
+
+    auto windowSize = scale->getWindowSize();
+    if (size.x == Auto) {
+        size.x = windowSize.x;
+    }
+    if (size.y == Auto) {
+        size.y = windowSize.y;
     }
 }
 

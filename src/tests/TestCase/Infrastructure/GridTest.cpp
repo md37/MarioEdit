@@ -4,8 +4,7 @@
 
 sf::Vector2u windowSize(1280, 800);
 auto scale = std::make_unique<Scale>(windowSize);
-GridSettings gridSettings(12, GridSettings::Auto, sf::Vector2f(GridSettings::Auto, GridSettings::Auto));
-Grid grid(gridSettings);
+Grid grid(GridSettings(12, GridSettings::Auto, sf::Vector2f(GridSettings::Auto, GridSettings::Auto)));
 
 TEST(GridTest, test_size) {
     scale->change(windowSize);
@@ -200,8 +199,8 @@ TEST(GridTest, test_center_0_0) {
     sf::Vector2u pointOnGrid(0, 0);
     sf::Vector2f center = grid.getCenter(pointOnGrid);
 
-    ASSERT_FLOAT_EQ(33, center.x);
-    ASSERT_FLOAT_EQ(-33, center.y);
+    ASSERT_FLOAT_EQ(33.333332, center.x);
+    ASSERT_FLOAT_EQ(-33.333332, center.y);
 }
 
 TEST(GridTest, test_center_2_1) {
@@ -210,6 +209,6 @@ TEST(GridTest, test_center_2_1) {
     sf::Vector2u pointOnGrid(2, 1);
     sf::Vector2f center = grid.getCenter(pointOnGrid);
 
-    ASSERT_FLOAT_EQ(165, center.x);
-    ASSERT_FLOAT_EQ(33, center.y);
+    ASSERT_FLOAT_EQ(166.66666, center.x);
+    ASSERT_FLOAT_EQ(33.333332, center.y);
 }

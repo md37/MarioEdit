@@ -35,4 +35,5 @@ private:
     sf::Uint32 lineThicknessDivider = 400;
     bool hasIncompleteEndingFlag = false;
 
+    void resolveAutoSize(const std::unique_ptr<Scale> &scale);
 };

@@ -29,6 +29,7 @@ private:
     sf::Uint32 cols;
     sf::Uint32 colsOrig;
     sf::Vector2f size;
+    sf::Vector2f sizeOrig;
 
     float lineDistance;
     sf::Uint32 lineThickness;

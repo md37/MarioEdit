@@ -35,6 +35,16 @@ void Log::out(sf::Vector2f vector, std::string label) {
     std::cout << vector.x << "x" << vector.y << std::endl;
 }
 
+void Log::out(sf::Uint32 value, std::string label) {
+    if (autoLine) {
+        Log::line();
+    }
+    if (!label.empty()) {
+        std::cout << "[ " << label << " ] ";
+    }
+    std::cout << value << std::endl;
+}
+
 void Log::out(sf::Rect<float> rect, std::string label=std::string("")) {
     if (autoLine) {
         Log::line();

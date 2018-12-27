@@ -1,7 +1,7 @@
 #include "Scale.hpp"
 
 #include <vector>
-#include "classes/Editor/Tile.hpp"
+#include "classes/Editor/Object/Tile.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
 Scale::Scale(sf::Vector2u windowSize) {

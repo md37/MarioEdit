@@ -5,7 +5,7 @@
 #include "classes/Infrastructure/Interface/DraggableInterface.hpp"
 #include "classes/Infrastructure/Interface/HoverableInterface.hpp"
 #include "classes/Infrastructure/TileFactory.hpp"
-#include "classes/Editor/Tile.hpp"
+#include "classes/Editor/Object/Tile.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 
 class TileFactory;

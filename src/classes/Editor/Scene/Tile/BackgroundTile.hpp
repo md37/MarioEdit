@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "classes/Editor/Tile.hpp"
+#include "classes/Editor/Object/Tile.hpp"
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 
 class BackgroundTile : public Tile, public DrawableInterface {

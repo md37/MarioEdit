@@ -1,6 +1,6 @@
 #pragma once
 
-#include "classes/Editor/Scene/Grid.hpp"
+#include "classes/Editor/Scene/Grid/Grid.hpp"
 
 class GridableInterface {
 

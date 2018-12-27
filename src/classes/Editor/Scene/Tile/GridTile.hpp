@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "classes/Editor/Tile.hpp"
-#include "classes/Editor/Scene/Grid.hpp"
+#include "classes/Editor/Scene/Grid/Grid.hpp"
 #include "classes/Infrastructure/Interface/GridableInterface.hpp"
 #include "classes/Infrastructure/Interface/SquareableOnGridInterface.hpp"
 

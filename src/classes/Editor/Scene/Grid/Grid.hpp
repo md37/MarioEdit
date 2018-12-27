@@ -4,16 +4,16 @@
 #include <optional>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "classes/Editor/Scene/Highlight.hpp"
+#include "classes/Editor/Scene/Grid/Highlight.hpp"
 #include "classes/Infrastructure/Interface/RescalableInterface.hpp"
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
-#include "GridSettings.hpp"
+#include "Settings.hpp"
 
 class Grid : public RescalableInterface, public DrawableInterface {
 
 public:
 
-    explicit Grid(GridSettings settings);
+    explicit Grid(Settings settings);
 
     void rescale(std::unique_ptr<Scale>& scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;
@@ -34,7 +34,7 @@ public:
 
 private:
 
-    GridSettings settings;
+    Settings settings;
 
     sf::Color lineColor = sf::Color(0, 0, 0, 50);
 

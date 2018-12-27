@@ -1,8 +1,8 @@
 #pragma once
 
-#include "classes/Editor/Scene/Figure.hpp"
+#include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 
-class Cloud : public Figure {
+class Cloud : public DynamicFigure {
 
 public:
 

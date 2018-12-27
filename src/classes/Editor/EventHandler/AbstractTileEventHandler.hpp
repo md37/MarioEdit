@@ -1,10 +1,10 @@
 #pragma once
 
 #include "classes/Infrastructure/Cursor.hpp"
-#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 #include "classes/Editor/Scene.hpp"
 #include "classes/Editor/EventState.hpp"
 #include "classes/Editor/EventHandler/EventRegistry.hpp"
+#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 
 class AbstractTileEventHandler {
 

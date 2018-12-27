@@ -12,7 +12,7 @@ public:
 
     inline void operator()(std::shared_ptr<DynamicTile>& tile) {}
 
-    inline void operator()(std::shared_ptr<Figure>& figure) {
+    inline void operator()(std::shared_ptr<DynamicFigure>& figure) {
         figure->changeVariant(variant);
     }
 

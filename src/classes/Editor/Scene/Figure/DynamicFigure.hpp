@@ -5,15 +5,15 @@
 #include "classes/Infrastructure/Collision.hpp"
 #include "classes/Infrastructure/TileFactory.hpp"
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
-#include "classes/Editor/Scene/Grid.hpp"
+#include "classes/Editor/Scene/Grid/Grid.hpp"
 
-class Figure : public
+class DynamicFigure : public
     DrawableInterface, SquareableInterface, GridableInterface, SquareableOnGridInterface,
     RescalableInterface, HoverableInterface, DraggableInterface {
 
 public:
 
-    Figure(std::unique_ptr<TileFactory> &tileFactory);
+    DynamicFigure(std::unique_ptr<TileFactory> &tileFactory);
 
     void rescale(std::unique_ptr<Scale> &scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;
@@ -40,6 +40,8 @@ public:
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
     virtual void changeVariant(sf::Uint8 variant)=0;
+
+    void changeGrid(std::shared_ptr<Grid> grid);
 
 protected:
 

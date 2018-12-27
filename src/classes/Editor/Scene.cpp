@@ -1,12 +1,12 @@
 #include "Scene.hpp"
 
 #include "classes/Infrastructure/Scale.hpp"
-#include "classes/Editor/Scene/Figure.hpp"
+#include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
 Scene::Scene(std::unique_ptr<TileFactory> &tileFactory) {
-    GridSettings gridSettings(
-        12, GridSettings::Auto, sf::Vector2f(GridSettings::Auto, GridSettings::Auto), sf::Vector2f(0, 0)
+    Settings gridSettings(
+        12, Settings::Auto, sf::Vector2f(Settings::Auto, Settings::Auto), sf::Vector2f(0, 0)
     );
     grid = std::make_shared<Grid>(gridSettings);
 

@@ -5,7 +5,7 @@
 #include "classes/Infrastructure/Log.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
-Grid::Grid(GridSettings settings): settings(settings) {
+Grid::Grid(Settings settings): settings(settings) {
 
 }
 

@@ -1,8 +1,8 @@
 #include "SceneGenerator.hpp"
 
-#include "classes/Editor/Scene/Figure/Bush.hpp"
-#include "classes/Editor/Scene/Figure/Cloud.hpp"
-#include "classes/Editor/Scene/Figure/Hill.hpp"
+#include "classes/Editor/Scene/Figure/Type/Bush.hpp"
+#include "classes/Editor/Scene/Figure/Type/Cloud.hpp"
+#include "classes/Editor/Scene/Figure/Type/Hill.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
 SceneGenerator::SceneGenerator(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid>& grid): tileFactory(tileFactory), grid(grid) {

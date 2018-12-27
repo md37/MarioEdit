@@ -2,7 +2,7 @@
 
 #include "classes/Infrastructure/Log.hpp"
 
-Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure(tileFactory) {
+Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : DynamicFigure(tileFactory) {
     if (size < 1) {
         size = 1;
     }
@@ -12,14 +12,14 @@ Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
     generate();
 }
 
-Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, sf::Uint8 size): Figure(tileFactory) {
+Bush::Bush(std::unique_ptr<TileFactory> &tileFactory, sf::Uint8 size): DynamicFigure(tileFactory) {
     if (size < 1) {
         size = 1;
     }
 
     this->size = size;
 
-    GridSettings gridSettings(1, 1+size, sf::Vector2f(160+size*80, 80), sf::Vector2f(0, 0));
+    Settings gridSettings(1, 1+size, sf::Vector2f(160+size*80, 80), sf::Vector2f(0, 0));
     grid = std::make_unique<Grid>(gridSettings);
 
     generate();

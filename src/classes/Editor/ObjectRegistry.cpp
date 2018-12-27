@@ -1,11 +1,11 @@
 #include "ObjectRegistry.hpp"
 
-#include "classes/Editor/Scene/Figure.hpp"
+#include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 
 std::vector<std::shared_ptr<Tile>> ObjectRegistry::allTiles;
 std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::dynamicTiles;
 std::vector<std::shared_ptr<ButtonTile>> ObjectRegistry::buttonTiles;
-std::vector<std::shared_ptr<Figure>> ObjectRegistry::figures;
+std::vector<std::shared_ptr<DynamicFigure>> ObjectRegistry::figures;
 
 void ObjectRegistry::clear() {
     dynamicTiles.clear();
@@ -25,7 +25,7 @@ void ObjectRegistry::add(std::shared_ptr<ButtonTile> tile) {
     buttonTiles.push_back(tile);
 }
 
-void ObjectRegistry::add(std::shared_ptr<Figure> figure) {
+void ObjectRegistry::add(std::shared_ptr<DynamicFigure> figure) {
     figures.push_back(figure);
 }
 
@@ -61,7 +61,7 @@ std::vector<std::shared_ptr<ButtonTile>> ObjectRegistry::getButtonTiles() {
     return buttonTiles;
 }
 
-std::vector<std::shared_ptr<Figure>> ObjectRegistry::getFigures() {
+std::vector<std::shared_ptr<DynamicFigure>> ObjectRegistry::getFigures() {
     return figures;
 }
 

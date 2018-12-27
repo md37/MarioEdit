@@ -4,13 +4,13 @@
 #include <SFML/System/Vector2.hpp>
 #include "classes/Infrastructure/Scale.hpp"
 
-class GridSettings : public RescalableInterface {
+class Settings : public RescalableInterface {
 
 public:
 
     static const sf::Uint32 Auto = 0;
 
-    GridSettings(sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size, sf::Vector2f position);
+    Settings(sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size, sf::Vector2f position);
 
     sf::Uint32 getRows() const;
     sf::Uint32 getCols() const;

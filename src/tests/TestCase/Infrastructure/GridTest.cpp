@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
 
-#include "classes/Editor/Scene/Grid.hpp"
+#include "classes/Editor/Scene/Grid/Grid.hpp"
 
 sf::Vector2u windowSize(1280, 800);
 auto scale = std::make_unique<Scale>(windowSize);
 Grid grid(
-    GridSettings(12, GridSettings::Auto, sf::Vector2f(GridSettings::Auto, GridSettings::Auto), sf::Vector2f(0, 0))
+    Settings(12, Settings::Auto, sf::Vector2f(Settings::Auto, Settings::Auto), sf::Vector2f(0, 0))
 );
 
 TEST(GridTest, test_size) {

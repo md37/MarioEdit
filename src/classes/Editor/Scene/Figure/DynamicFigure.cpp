@@ -1,4 +1,4 @@
-#include "Figure.hpp"
+#include "DynamicFigure.hpp"
 
 #include "classes/Infrastructure/Log.hpp"
 #include "classes/Infrastructure/Collision.hpp"
@@ -6,24 +6,24 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
-Figure::Figure(std::unique_ptr<TileFactory> &tileFactory) : tileFactory(tileFactory) {
+DynamicFigure::DynamicFigure(std::unique_ptr<TileFactory> &tileFactory) : tileFactory(tileFactory) {
     this->grid = grid;
 }
 
-void Figure::draw(std::shared_ptr<sf::RenderWindow> window) const {
+void DynamicFigure::draw(std::shared_ptr<sf::RenderWindow> window) const {
     for (auto &tile : tiles) {
         tile->draw(window);
     }
 }
 
-void Figure::drawFrame(std::shared_ptr<sf::RenderWindow> window) {
+void DynamicFigure::drawFrame(std::shared_ptr<sf::RenderWindow> window) {
     if (!isFrameCreated) {
         resetFrame();
     }
     window->draw(frame);
 }
 
-void Figure::resetFrame() {
+void DynamicFigure::resetFrame() {
     auto size = this->getSize();
 
     frame.setSize(sf::Vector2f(size));
@@ -35,12 +35,12 @@ void Figure::resetFrame() {
     isFrameCreated = true;
 }
 
-void Figure::updateFramePosition() {
+void DynamicFigure::updateFramePosition() {
     auto framePosition = getPosition();
     frame.setPosition(framePosition);
 }
 
-void Figure::rescale(std::unique_ptr<Scale> &scale) {
+void DynamicFigure::rescale(std::unique_ptr<Scale> &scale) {
     Log::out("Rescaling figure");
     grid->rescale(scale);
     for (auto &tile : tiles) {
@@ -49,11 +49,11 @@ void Figure::rescale(std::unique_ptr<Scale> &scale) {
     snapToGrid();
 }
 
-void Figure::snapToGrid() {
+void DynamicFigure::snapToGrid() {
     this->snapToGrid(pointOnGrid);
 }
 
-void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
+void DynamicFigure::snapToGrid(sf::Vector2i pointOnGrid) {
     this->pointOnGrid = pointOnGrid;
     this->position = grid->pointOnGridToPosition(pointOnGrid);
 
@@ -71,32 +71,32 @@ void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
     }
 }
 
-bool Figure::isMouseOver() const {
+bool DynamicFigure::isMouseOver() const {
     return isMouseOverFlag;
 }
 
-void Figure::mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) {
+void DynamicFigure::mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = true;
 
     Log::out("Figure MouseEnter");
 }
 
-void Figure::mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) {
+void DynamicFigure::mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) {
 
 }
 
-void Figure::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) {
+void DynamicFigure::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     isMouseOverFlag = false;
     isFrameCreated = false;
 
     Log::out("Figure MouseLeave");
 }
 
-sf::Vector2f Figure::getPosition() const {
+sf::Vector2f DynamicFigure::getPosition() const {
     return position;
 }
 
-sf::Vector2u Figure::getSize() const {
+sf::Vector2u DynamicFigure::getSize() const {
     auto mostLeftTile = findMostLeftTile();
     auto mostRightTile = findMostRightTile();
     auto mostTopTile = findMostTopTile();
@@ -107,11 +107,11 @@ sf::Vector2u Figure::getSize() const {
     return {width, height};
 }
 
-sf::Vector2i Figure::getPointOnGrid() const {
+sf::Vector2i DynamicFigure::getPointOnGrid() const {
     return grid->positionToPointOnGrid(position);
 }
 
-sf::Vector2u Figure::getSizeOnGrid() const {
+sf::Vector2u DynamicFigure::getSizeOnGrid() const {
     auto mostLeftTile = findMostLeftTile();
     auto mostRightTile = findMostRightTile();
     auto mostTopTile = findMostTopTile();
@@ -122,7 +122,7 @@ sf::Vector2u Figure::getSizeOnGrid() const {
     return {width + 1, height + 1};
 }
 
-std::shared_ptr<StaticTile> Figure::findMostLeftTile() const {
+std::shared_ptr<StaticTile> DynamicFigure::findMostLeftTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -140,7 +140,7 @@ std::shared_ptr<StaticTile> Figure::findMostLeftTile() const {
     return mostLeftTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostRightTile() const {
+std::shared_ptr<StaticTile> DynamicFigure::findMostRightTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -158,7 +158,7 @@ std::shared_ptr<StaticTile> Figure::findMostRightTile() const {
     return mostRightTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostTopTile() const {
+std::shared_ptr<StaticTile> DynamicFigure::findMostTopTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -176,7 +176,7 @@ std::shared_ptr<StaticTile> Figure::findMostTopTile() const {
     return mostTopTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostBottomTile() const {
+std::shared_ptr<StaticTile> DynamicFigure::findMostBottomTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -194,11 +194,11 @@ std::shared_ptr<StaticTile> Figure::findMostBottomTile() const {
     return mostBottomTile;
 }
 
-bool Figure::isDragging() const {
+bool DynamicFigure::isDragging() const {
     return isDraggingFlag;
 }
 
-void Figure::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
+void DynamicFigure::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPerformer> &animationPerformer) {
     Log::out("Figure StartDrag");
     isDraggingFlag = true;
     frame.setFillColor(frameColorNormal);
@@ -210,7 +210,7 @@ void Figure::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<AnimationPer
     moveTiles(position);
 }
 
-void Figure::calculateDragOffset(sf::Vector2f cursorPosition) {
+void DynamicFigure::calculateDragOffset(sf::Vector2f cursorPosition) {
     dragOffset = cursorPosition - getPosition();
 
     auto dragOffsetOnGrid = grid->positionToPointOnGrid(dragOffset);
@@ -218,7 +218,7 @@ void Figure::calculateDragOffset(sf::Vector2f cursorPosition) {
     dragOffsetForHighlight = getPosition() - grid->pointOnGridToPosition(dragOffsetOnGrid);
 }
 
-void Figure::drag(sf::Vector2f cursorPosition) {
+void DynamicFigure::drag(sf::Vector2f cursorPosition) {
     std::optional<Highlight>& highlight = grid->getHighlight();
     if (highlight.has_value()) {
         auto prevHighlightPosition = highlight->getPosition();
@@ -238,7 +238,7 @@ void Figure::drag(sf::Vector2f cursorPosition) {
     }
 }
 
-bool Figure::checkForCollisions() {
+bool DynamicFigure::checkForCollisions() {
     Collision collision(getRect());
     auto figures = ObjectRegistry::getFigures();
     for (auto figure: figures) {
@@ -261,11 +261,11 @@ bool Figure::checkForCollisions() {
     return false;
 }
 
-sf::Rect<float> Figure::getRect() const {
+sf::Rect<float> DynamicFigure::getRect() const {
     return sf::Rect<float>(getPosition(), sf::Vector2f(getSize()));
 }
 
-void Figure::recalculateHighlightPosition(sf::Vector2f cursorPosition) const {
+void DynamicFigure::recalculateHighlightPosition(sf::Vector2f cursorPosition) const {
     std::optional<Highlight>& highlight = grid->getHighlight();
     if (highlight.has_value()) {
         auto highlightPosition = cursorPosition;
@@ -275,13 +275,13 @@ void Figure::recalculateHighlightPosition(sf::Vector2f cursorPosition) const {
     }
 }
 
-void Figure::recalculateFramePosition(sf::Vector2f cursorPosition) {
+void DynamicFigure::recalculateFramePosition(sf::Vector2f cursorPosition) {
     auto newFramePosition = cursorPosition;
     newFramePosition -= dragOffset;
     frame.setPosition(newFramePosition);
 }
 
-void Figure::moveTiles(sf::Vector2f prevPosition) {
+void DynamicFigure::moveTiles(sf::Vector2f prevPosition) {
     auto currentPosition = frame.getPosition();
     auto positionDiff = currentPosition - prevPosition;
 
@@ -292,7 +292,7 @@ void Figure::moveTiles(sf::Vector2f prevPosition) {
     }
 }
 
-void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
+void DynamicFigure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     Log::out("Figure Drop");
 
     isDraggingFlag = false;
@@ -308,4 +308,8 @@ void Figure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     snapToGrid();
     dragOffset = {0.0f, 0.0f};
     dragOffsetForHighlight = {0.0f, 0.0f};
+}
+
+void DynamicFigure::changeGrid(std::shared_ptr<Grid> grid) {
+    this->grid = grid;
 }

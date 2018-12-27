@@ -4,7 +4,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include "classes/Infrastructure/Log.hpp"
 
-Cloud::Cloud(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : Figure(tileFactory)
+Cloud::Cloud(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : DynamicFigure(tileFactory)
 {
     if (size < 1) {
         size = 1;
@@ -15,14 +15,14 @@ Cloud::Cloud(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> gr
     generate();
 }
 
-Cloud::Cloud(std::unique_ptr<TileFactory> &tileFactory, sf::Uint8 size) : Figure(tileFactory) {
+Cloud::Cloud(std::unique_ptr<TileFactory> &tileFactory, sf::Uint8 size) : DynamicFigure(tileFactory) {
     if (size < 1) {
         size = 1;
     }
 
     this->size = size;
 
-    GridSettings gridSettings(2, 1+size, sf::Vector2f(160+size*80, 160), sf::Vector2f(0, 0));
+    Settings gridSettings(2, 1+size, sf::Vector2f(160+size*80, 160), sf::Vector2f(0, 0));
     grid = std::make_unique<Grid>(gridSettings);
 
     generate();

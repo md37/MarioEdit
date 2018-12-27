@@ -1,13 +1,13 @@
-#include "GridSettings.hpp"
+#include "Settings.hpp"
 
 #include <iostream>
 
 #include <iostream>
 #include <classes/Infrastructure/Log.hpp>
 
-const sf::Uint32 GridSettings::Auto;
+const sf::Uint32 Settings::Auto;
 
-GridSettings::GridSettings(
+Settings::Settings(
     sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size, sf::Vector2f position
 ): rows(rows), cols(cols), size(size), position(position) {
     rowsOrig = rows;
@@ -15,19 +15,19 @@ GridSettings::GridSettings(
     sizeOrig = size;
 }
 
-sf::Uint32 GridSettings::getRows() const {
+sf::Uint32 Settings::getRows() const {
     return rows;
 }
 
-sf::Uint32 GridSettings::getCols() const {
+sf::Uint32 Settings::getCols() const {
     return cols;
 }
 
-sf::Vector2f GridSettings::getSize() const {
+sf::Vector2f Settings::getSize() const {
     return size;
 }
 
-void GridSettings::rescale(std::unique_ptr<Scale> &scale) {
+void Settings::rescale(std::unique_ptr<Scale> &scale) {
     size *= scale->getRatio();
 
     resolveAutoSize(scale);
@@ -48,7 +48,7 @@ void GridSettings::rescale(std::unique_ptr<Scale> &scale) {
     }
 }
 
-void GridSettings::resolveAutoSize(const std::unique_ptr<Scale> &scale) {
+void Settings::resolveAutoSize(const std::unique_ptr<Scale> &scale) {
     auto windowSize = scale->getWindowSize();
     if (sizeOrig.x == Auto) {
         size.x = windowSize.x;
@@ -58,18 +58,18 @@ void GridSettings::resolveAutoSize(const std::unique_ptr<Scale> &scale) {
     }
 }
 
-sf::Uint32 GridSettings::getLineThickness() const {
+sf::Uint32 Settings::getLineThickness() const {
     return lineThickness;
 }
 
-float GridSettings::getLineDistance() const {
+float Settings::getLineDistance() const {
     return lineDistance;
 }
 
-bool GridSettings::hasIncompleteEnding() const {
+bool Settings::hasIncompleteEnding() const {
     return hasIncompleteEndingFlag;
 }
 
-sf::Vector2f GridSettings::getPosition() const {
+sf::Vector2f Settings::getPosition() const {
     return position;
 }

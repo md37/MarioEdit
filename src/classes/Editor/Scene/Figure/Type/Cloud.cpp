@@ -1,6 +1,5 @@
 #include "Cloud.hpp"
 
-#include <iostream>
 #include <SFML/Graphics/Rect.hpp>
 #include "classes/Infrastructure/Log.hpp"
 

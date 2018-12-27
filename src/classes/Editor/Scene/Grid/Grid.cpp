@@ -1,6 +1,5 @@
 #include "Grid.hpp"
 
-#include <iostream>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "classes/Infrastructure/Log.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"

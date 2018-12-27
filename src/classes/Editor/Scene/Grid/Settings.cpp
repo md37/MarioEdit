@@ -1,9 +1,6 @@
 #include "Settings.hpp"
 
-#include <iostream>
-
-#include <iostream>
-#include <classes/Infrastructure/Log.hpp>
+#include "classes/Infrastructure/Log.hpp"
 
 const sf::Uint32 Settings::Auto;
 

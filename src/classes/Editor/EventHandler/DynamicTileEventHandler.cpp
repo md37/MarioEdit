@@ -99,7 +99,7 @@ void DynamicTileEventHandler::performDrop(Cursor &cursor, std::shared_ptr<Dynami
 }
 
 void DynamicTileEventHandler::performLongClickDrop(Cursor &cursor) {
-    std::unique_ptr<Grid>& grid = scene->getGrid();
+    std::shared_ptr<Grid>& grid = scene->getGrid();
     auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getPosition());
     auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
 
@@ -128,7 +128,7 @@ void DynamicTileEventHandler::performQuickClickDrop(Cursor &cursor) {
         return;
     }
 
-    std::unique_ptr<Grid>& grid = scene->getGrid();
+    std::shared_ptr<Grid>& grid = scene->getGrid();
     auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getPosition());
     auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
 

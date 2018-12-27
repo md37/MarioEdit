@@ -1,5 +1,7 @@
 #include "Highlight.hpp"
 
+#include <iostream>
+
 Highlight::Highlight(sf::Color color, float lineDistance) : lineDistance(lineDistance) {
     area.setFillColor(color);
     recalculateSize();

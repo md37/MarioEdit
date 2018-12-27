@@ -6,8 +6,8 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
-Figure::Figure(std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid> &grid) : tileFactory(tileFactory), grid(grid) {
-
+Figure::Figure(std::unique_ptr<TileFactory> &tileFactory) : tileFactory(tileFactory) {
+    this->grid = grid;
 }
 
 void Figure::draw(std::shared_ptr<sf::RenderWindow> window) const {
@@ -41,6 +41,8 @@ void Figure::updateFramePosition() {
 }
 
 void Figure::rescale(std::unique_ptr<Scale> &scale) {
+    Log::out("Rescaling figure");
+    grid->rescale(scale);
     for (auto &tile : tiles) {
         tile->rescale(scale);
     }
@@ -59,8 +61,8 @@ void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
     auto mostTopTile = findMostTopTile();
 
     sf::Vector2i diff = {
-            pointOnGrid.x - mostLeftTile->getPointOnGrid().x,
-            pointOnGrid.y - mostTopTile->getPointOnGrid().y
+        pointOnGrid.x - mostLeftTile->getPointOnGrid().x,
+        pointOnGrid.y - mostTopTile->getPointOnGrid().y
     };
 
     for (auto &tile : tiles) {

@@ -29,7 +29,7 @@ public:
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;
 
     std::shared_ptr<DynamicTile> cloneToDynamicTile(
-        std::unique_ptr<TileFactory> &tileFactory, std::unique_ptr<Grid> &grid
+        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> &grid
     );
 
 private:

@@ -10,11 +10,12 @@ public:
 
     static const sf::Uint32 Auto = 0;
 
-    GridSettings(sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size);
+    GridSettings(sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size, sf::Vector2f position);
 
     sf::Uint32 getRows() const;
     sf::Uint32 getCols() const;
     sf::Vector2f getSize() const;
+    sf::Vector2f getPosition() const;
 
     void rescale(std::unique_ptr<Scale> &scale) override;
 
@@ -30,6 +31,7 @@ private:
     sf::Uint32 colsOrig;
     sf::Vector2f size;
     sf::Vector2f sizeOrig;
+    sf::Vector2f position;
 
     float lineDistance;
     sf::Uint32 lineThickness;

@@ -7,7 +7,9 @@
 
 const sf::Uint32 GridSettings::Auto;
 
-GridSettings::GridSettings(sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size): rows(rows), cols(cols), size(size) {
+GridSettings::GridSettings(
+    sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size, sf::Vector2f position
+): rows(rows), cols(cols), size(size), position(position) {
     rowsOrig = rows;
     colsOrig = cols;
     sizeOrig = size;
@@ -26,16 +28,12 @@ sf::Vector2f GridSettings::getSize() const {
 }
 
 void GridSettings::rescale(std::unique_ptr<Scale> &scale) {
-    Log::out("Rescaling grid");
-
     size *= scale->getRatio();
 
     resolveAutoSize(scale);
 
     lineThickness = size.y / lineThicknessDivider;
     lineDistance = size.y / rows;
-
-    Log::out(size, "Size");
 
     if (colsOrig == Auto) {
         lineDistance = size.y / rows;
@@ -51,10 +49,6 @@ void GridSettings::rescale(std::unique_ptr<Scale> &scale) {
 }
 
 void GridSettings::resolveAutoSize(const std::unique_ptr<Scale> &scale) {
-//    if (scale->getRatio() != 1) {
-//        return;
-//    }
-
     auto windowSize = scale->getWindowSize();
     if (sizeOrig.x == Auto) {
         size.x = windowSize.x;
@@ -74,4 +68,8 @@ float GridSettings::getLineDistance() const {
 
 bool GridSettings::hasIncompleteEnding() const {
     return hasIncompleteEndingFlag;
+}
+
+sf::Vector2f GridSettings::getPosition() const {
+    return position;
 }

@@ -4,7 +4,9 @@
 
 sf::Vector2u windowSize(1280, 800);
 auto scale = std::make_unique<Scale>(windowSize);
-Grid grid(GridSettings(12, GridSettings::Auto, sf::Vector2f(GridSettings::Auto, GridSettings::Auto)));
+Grid grid(
+    GridSettings(12, GridSettings::Auto, sf::Vector2f(GridSettings::Auto, GridSettings::Auto), sf::Vector2f(0, 0))
+);
 
 TEST(GridTest, test_size) {
     scale->change(windowSize);

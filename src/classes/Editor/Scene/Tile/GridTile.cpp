@@ -1,6 +1,6 @@
 #include "GridTile.hpp"
 
-GridTile::GridTile(sf::Sprite sprite, std::unique_ptr<Grid>& grid, TileConfig config) : Tile(sprite, config), grid(grid) {
+GridTile::GridTile(sf::Sprite sprite, std::shared_ptr<Grid>& grid, TileConfig config) : Tile(sprite, config), grid(grid) {
 
 }
 

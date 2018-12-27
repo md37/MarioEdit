@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include "classes/Infrastructure/Log.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
 Grid::Grid(GridSettings settings): settings(settings) {
@@ -9,6 +10,8 @@ Grid::Grid(GridSettings settings): settings(settings) {
 }
 
 void Grid::rescale(std::unique_ptr<Scale>& scale) {
+    Log::out("Rescaling grid");
+
     settings.rescale(scale);
 
     if (highlight.has_value()) {
@@ -80,6 +83,7 @@ std::optional<Highlight>& Grid::getHighlight() {
 
 sf::Vector2i Grid::positionToPointOnGrid(sf::Vector2f pointOnScreen) const {
     auto lineDistance = settings.getLineDistance();
+    pointOnScreen -= settings.getPosition();
 
     sf::Vector2i retval = {0, 0};
     retval.x = ((int)(pointOnScreen.x/lineDistance));
@@ -91,10 +95,10 @@ sf::Vector2f Grid::getCenter(sf::Vector2u pointOnGrid) const {
     auto lineDistance = settings.getLineDistance();
 
     sf::Vector2f retval(pointOnGrid);
-    retval.y = retval.y;
     retval *= lineDistance;
     retval.x += lineDistance/2;
     retval.y -= lineDistance/2;
+    retval += settings.getPosition();
     return retval;
 }
 
@@ -108,6 +112,6 @@ sf::Vector2f Grid::getPointOnGrid(sf::Vector2f pointOnScreen) const {
 }
 
 sf::Vector2f Grid::pointOnGridToPosition(sf::Vector2i pointOnGrid) const {
-    sf::Vector2f retval = sf::Vector2f(pointOnGrid) * settings.getLineDistance();
+    sf::Vector2f retval = settings.getPosition() + sf::Vector2f(pointOnGrid) * settings.getLineDistance();
     return retval;
 }

@@ -10,6 +10,7 @@ public:
 
     static void out(std::string label);
     static void out(bool value, std::string label);
+    static void out(float value, std::string label);
     static void out(sf::Vector2f vector, std::string label);
     static void out(sf::Uint32 value, std::string label);
     static void out(sf::Rect<float> rect, std::string label);

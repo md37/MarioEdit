@@ -11,7 +11,7 @@ DynamicTile::DynamicTile(sf::Sprite sprite, std::shared_ptr<Grid>& grid, TileCon
 void DynamicTile::rescale(std::unique_ptr<Scale> &newScale) {
     snapToCenterPoint();
 
-    Tile::rescale(newScale);
+    AbstractTile::rescale(newScale);
 }
 void DynamicTile::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->draw(sprite);
@@ -110,12 +110,12 @@ void DynamicTile::correctCorners() {
         posY = 0;
     }
 
-    auto windowWidth = Tile::window->getSize().x;
+    auto windowWidth = AbstractTile::window->getSize().x;
     if (posX+width > windowWidth) {
         posX = windowWidth-width;
     }
 
-    auto windowHeight = Tile::window->getSize().y;
+    auto windowHeight = AbstractTile::window->getSize().y;
     if (posY+height > windowHeight) {
         posY = windowHeight-height;
     }

@@ -1,10 +1,13 @@
 #pragma once
 
-#include "classes/Editor/Navigation.hpp"
+#include <memory>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include "classes/Editor/Navigation/AbstractNavigation.hpp"
 #include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 #include "classes/Infrastructure/TileFactory.hpp"
 
-class TileNavigation : Navigation {
+class TileNavigation : AbstractNavigation {
 
 public:
 

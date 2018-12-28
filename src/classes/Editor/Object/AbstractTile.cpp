@@ -1,20 +1,20 @@
-#include "Tile.hpp"
+#include "AbstractTile.hpp"
 
 #include <SFML/Graphics/Texture.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
 
-std::shared_ptr<sf::RenderWindow> Tile::window;
+std::shared_ptr<sf::RenderWindow> AbstractTile::window;
 
-void Tile::setWindow(std::shared_ptr<sf::RenderWindow> &window) {
-    Tile::window = window;
+void AbstractTile::setWindow(std::shared_ptr<sf::RenderWindow> &window) {
+    AbstractTile::window = window;
 }
 
-Tile::Tile(sf::Sprite sprite, TileConfig config) {
+AbstractTile::AbstractTile(sf::Sprite sprite, TileConfig config) {
     this->sprite = sprite;
     this->config = config;
 }
 
-void Tile::rescale(std::unique_ptr<Scale> &newScale) {
+void AbstractTile::rescale(std::unique_ptr<Scale> &newScale) {
     auto scaleRatio = newScale->getRatio();
     auto position = getPosition();
     sprite.setPosition(position * scaleRatio);
@@ -38,24 +38,24 @@ void Tile::rescale(std::unique_ptr<Scale> &newScale) {
     recalculateCenter();
 }
 
-void Tile::setScalePromotion(float scalePromotion) {
+void AbstractTile::setScalePromotion(float scalePromotion) {
     this->scalePromotion = scalePromotion;
 
     auto newSpriteScale = scale * scalePromotion;
     sprite.setScale(newSpriteScale.x, newSpriteScale.y);
 }
 
-float Tile::getScalePromotion() const {
+float AbstractTile::getScalePromotion() const {
     return scalePromotion;
 }
 
-void Tile::recalculateCenter() {
+void AbstractTile::recalculateCenter() {
     auto position = getPosition();
     centerPoint.x = position.x + getSize().x / 2;
     centerPoint.y = position.y + getSize().y / 2;
 }
 
-void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
+void AbstractTile::changeImage(sf::Uint32 x, sf::Uint32 y) {
     sf::IntRect textureRect;
     textureRect.width = config.tileWidth;
     textureRect.height = config.tileHeight;
@@ -67,27 +67,27 @@ void Tile::changeImage(sf::Uint32 x, sf::Uint32 y) {
     imagePosition = sf::Vector2u(x, y);
 }
 
-void Tile::setPosition(sf::Vector2f position) {
+void AbstractTile::setPosition(sf::Vector2f position) {
     sprite.setPosition(position);
 }
 
-sf::Vector2f Tile::getPosition() const {
+sf::Vector2f AbstractTile::getPosition() const {
     return sprite.getPosition();
 }
 
-sf::Vector2u Tile::getSize() const {
+sf::Vector2u AbstractTile::getSize() const {
     return sf::Vector2u(
             sprite.getTextureRect().width * sprite.getScale().x,
             sprite.getTextureRect().height * sprite.getScale().y
     );
 }
 
-void Tile::setBorder(sf::Uint8 size, sf::Color color) {
+void AbstractTile::setBorder(sf::Uint8 size, sf::Color color) {
     borderSize = size;
     border.setFillColor(color);
 }
 
-void Tile::snapToCenterPoint() {
+void AbstractTile::snapToCenterPoint() {
     auto position = getPosition();
 
     position.x = centerPoint.x - getSize().x / 2;
@@ -95,6 +95,6 @@ void Tile::snapToCenterPoint() {
     sprite.setPosition(position);
 }
 
-bool Tile::isTypeOf(std::shared_ptr<Tile> tile) const {
+bool AbstractTile::isTypeOf(std::shared_ptr<AbstractTile> tile) const {
     return imagePosition == tile->imagePosition;
 }

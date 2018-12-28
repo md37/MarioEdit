@@ -3,7 +3,7 @@
 #include <memory>
 #include "classes/Infrastructure/Scale.hpp"
 #include "classes/Infrastructure/TileFactory.hpp"
-#include "classes/Editor/Navigation.hpp"
+#include "classes/Editor/Navigation/AbstractNavigation.hpp"
 #include "classes/Editor/Scene/Grid/Grid.hpp"
 #include "classes/Editor/Scene/SceneGenerator.hpp"
 #include "classes/Editor/Scene/Animation/SpecialBlockBlinkAnimation.hpp"

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "classes/Editor/Scene/Tile/GridTile.hpp"
+#include "classes/Editor/Object/GridTile.hpp"
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 
-class StaticTile : public GridTile, public DrawableInterface {
+class StaticTile : public GridTile, DrawableInterface {
 
 public:
 

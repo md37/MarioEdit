@@ -1,12 +1,12 @@
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "classes/Editor/Object/Tile.hpp"
+#include "classes/Editor/Object/AbstractTile.hpp"
 #include "classes/Editor/Scene/Grid/Grid.hpp"
 #include "classes/Infrastructure/Interface/GridableInterface.hpp"
 #include "classes/Infrastructure/Interface/SquareableOnGridInterface.hpp"
 
-class GridTile : public Tile, GridableInterface, SquareableOnGridInterface {
+class GridTile : public AbstractTile, GridableInterface, SquareableOnGridInterface {
 
 public:
 

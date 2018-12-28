@@ -25,6 +25,16 @@ void Log::out(bool value, std::string label) {
     std::cout << (value ? "true" : "false") << std::endl;
 }
 
+void Log::out(float value, std::string label) {
+    if (autoLine) {
+        Log::line();
+    }
+    if (!label.empty()) {
+        std::cout << "[ " << label << " ] ";
+    }
+    std::cout << value << std::endl;
+}
+
 void Log::out(sf::Vector2f vector, std::string label) {
     if (autoLine) {
         Log::line();

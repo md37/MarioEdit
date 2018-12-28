@@ -6,7 +6,7 @@
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Infrastructure/Collision.hpp"
 
-DynamicFigure::DynamicFigure(std::unique_ptr<TileFactory> &tileFactory) : Figure(tileFactory) {
+DynamicFigure::DynamicFigure(std::unique_ptr<TileFactory> &tileFactory) : AbstractFigure(tileFactory) {
 
 }
 

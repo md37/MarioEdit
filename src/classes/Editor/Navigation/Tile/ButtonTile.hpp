@@ -5,12 +5,12 @@
 #include "classes/Infrastructure/Interface/DraggableInterface.hpp"
 #include "classes/Infrastructure/Interface/HoverableInterface.hpp"
 #include "classes/Infrastructure/TileFactory.hpp"
-#include "classes/Editor/Object/Tile.hpp"
+#include "classes/Editor/Object/AbstractTile.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 
 class TileFactory;
 
-class ButtonTile : public Tile, public DrawableInterface, public DraggableInterface, public HoverableInterface {
+class ButtonTile : public AbstractTile, public DrawableInterface, public DraggableInterface, public HoverableInterface {
 
 public:
 

@@ -2,7 +2,7 @@
 
 #include "classes/Infrastructure/Log.hpp"
 
-ButtonTile::ButtonTile(sf::Sprite sprite, TileConfig config) : Tile(sprite, config) {
+ButtonTile::ButtonTile(sf::Sprite sprite, TileConfig config) : AbstractTile(sprite, config) {
 
 }
 

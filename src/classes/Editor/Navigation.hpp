@@ -1,11 +1,22 @@
 #pragma once
 
-#include <memory>
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include "classes/Infrastructure/Interface/RescalableInterface.hpp"
-#include "classes/Infrastructure/Interface/DrawableInterface.hpp"
+#include "classes/Editor/Navigation/TileNavigation.hpp"
+#include "classes/Editor/Navigation/FigureNavigation.hpp"
 
-class Navigation : public RescalableInterface, public DrawableInterface {
+class Navigation : DrawableInterface, RescalableInterface {
+
+public:
+
+    explicit Navigation(std::unique_ptr<TileFactory> &tileFactory);
+
+    void draw(std::shared_ptr<sf::RenderWindow> window) const override;
+    void rescale(std::unique_ptr<Scale> &scale) override;
+
+private:
+
+    std::unique_ptr<TileFactory> &tileFactory;
+
+    std::unique_ptr<TileNavigation> tileNavigation;
+    std::unique_ptr<FigureNavigation> figureNavigation;
 
 };

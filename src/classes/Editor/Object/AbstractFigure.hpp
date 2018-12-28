@@ -6,11 +6,11 @@
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Infrastructure/TileFactory.hpp"
 
-class Figure: public DrawableInterface, SquareableInterface, GridableInterface, SquareableOnGridInterface, RescalableInterface {
+class AbstractFigure: public DrawableInterface, SquareableInterface, GridableInterface, SquareableOnGridInterface, RescalableInterface {
 
 public:
 
-    explicit Figure(std::unique_ptr<TileFactory> &tileFactory);
+    explicit AbstractFigure(std::unique_ptr<TileFactory> &tileFactory);
 
     void rescale(std::unique_ptr<Scale> &scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;

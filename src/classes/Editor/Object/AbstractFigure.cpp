@@ -1,19 +1,19 @@
-#include "Figure.hpp"
+#include "AbstractFigure.hpp"
 
 #include "classes/Infrastructure/Log.hpp"
 #include "classes/Editor/Exception/EmptyFigureFoundException.hpp"
 
-Figure::Figure(std::unique_ptr<TileFactory> &tileFactory) : tileFactory(tileFactory) {
+AbstractFigure::AbstractFigure(std::unique_ptr<TileFactory> &tileFactory) : tileFactory(tileFactory) {
 
 }
 
-void Figure::draw(std::shared_ptr<sf::RenderWindow> window) const {
+void AbstractFigure::draw(std::shared_ptr<sf::RenderWindow> window) const {
     for (auto &tile : tiles) {
         tile->draw(window);
     }
 }
 
-void Figure::rescale(std::unique_ptr<Scale> &scale) {
+void AbstractFigure::rescale(std::unique_ptr<Scale> &scale) {
     Log::out("Rescaling figure");
     grid->rescale(scale);
     for (auto &tile : tiles) {
@@ -22,11 +22,11 @@ void Figure::rescale(std::unique_ptr<Scale> &scale) {
     snapToGrid();
 }
 
-void Figure::snapToGrid() {
+void AbstractFigure::snapToGrid() {
     this->snapToGrid(pointOnGrid);
 }
 
-void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
+void AbstractFigure::snapToGrid(sf::Vector2i pointOnGrid) {
     this->pointOnGrid = pointOnGrid;
     this->position = grid->pointOnGridToPosition(pointOnGrid);
 
@@ -44,7 +44,7 @@ void Figure::snapToGrid(sf::Vector2i pointOnGrid) {
     }
 }
 
-sf::Vector2u Figure::getSize() const {
+sf::Vector2u AbstractFigure::getSize() const {
     auto mostLeftTile = findMostLeftTile();
     auto mostRightTile = findMostRightTile();
     auto mostTopTile = findMostTopTile();
@@ -55,19 +55,19 @@ sf::Vector2u Figure::getSize() const {
     return {width, height};
 }
 
-sf::Vector2f Figure::getPosition() const {
+sf::Vector2f AbstractFigure::getPosition() const {
     return position;
 }
 
-sf::Rect<float> Figure::getRect() const {
+sf::Rect<float> AbstractFigure::getRect() const {
     return sf::Rect<float>(getPosition(), sf::Vector2f(getSize()));
 }
 
-sf::Vector2i Figure::getPointOnGrid() const {
+sf::Vector2i AbstractFigure::getPointOnGrid() const {
     return grid->positionToPointOnGrid(position);
 }
 
-sf::Vector2u Figure::getSizeOnGrid() const {
+sf::Vector2u AbstractFigure::getSizeOnGrid() const {
     auto mostLeftTile = findMostLeftTile();
     auto mostRightTile = findMostRightTile();
     auto mostTopTile = findMostTopTile();
@@ -78,7 +78,7 @@ sf::Vector2u Figure::getSizeOnGrid() const {
     return {width + 1, height + 1};
 }
 
-std::shared_ptr<StaticTile> Figure::findMostLeftTile() const {
+std::shared_ptr<StaticTile> AbstractFigure::findMostLeftTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -96,7 +96,7 @@ std::shared_ptr<StaticTile> Figure::findMostLeftTile() const {
     return mostLeftTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostRightTile() const {
+std::shared_ptr<StaticTile> AbstractFigure::findMostRightTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -114,7 +114,7 @@ std::shared_ptr<StaticTile> Figure::findMostRightTile() const {
     return mostRightTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostTopTile() const {
+std::shared_ptr<StaticTile> AbstractFigure::findMostTopTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;
@@ -132,7 +132,7 @@ std::shared_ptr<StaticTile> Figure::findMostTopTile() const {
     return mostTopTile;
 }
 
-std::shared_ptr<StaticTile> Figure::findMostBottomTile() const {
+std::shared_ptr<StaticTile> AbstractFigure::findMostBottomTile() const {
     if (tiles.size() == 0) {
         EmptyFigureFoundException e;
         throw e;

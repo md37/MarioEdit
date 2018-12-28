@@ -8,13 +8,13 @@
 #include "classes/Infrastructure/Scale.hpp"
 #include "classes/Infrastructure/Interface/SquareableInterface.hpp"
 
-class Tile : public SquareableInterface {
+class AbstractTile : public SquareableInterface {
 
 public:
 
     static void setWindow(std::shared_ptr<sf::RenderWindow>& window);
 
-    explicit Tile(sf::Sprite sprite, TileConfig config=TileConfig());
+    explicit AbstractTile(sf::Sprite sprite, TileConfig config=TileConfig());
 
     sf::Vector2f positionPromotion = {0.0f, 0.0f};
 
@@ -31,7 +31,7 @@ public:
     void setBorder(sf::Uint8 size, sf::Color color=sf::Color(255, 255, 255, 255));
     void snapToCenterPoint();
 
-    bool isTypeOf(std::shared_ptr<Tile> tile) const;
+    bool isTypeOf(std::shared_ptr<AbstractTile> tile) const;
 
 protected:
 

@@ -13,12 +13,12 @@ class ObjectRegistry {
 public:
 
     static void clear();
-    static void add(std::shared_ptr<Tile> tile);
+    static void add(std::shared_ptr<AbstractTile> tile);
     static void add(std::shared_ptr<DynamicTile> tile);
     static void add(std::shared_ptr<ButtonTile> tile);
     static void add(std::shared_ptr<DynamicFigure> figure);
 
-    static std::vector<std::shared_ptr<Tile>> getAllTiles();
+    static std::vector<std::shared_ptr<AbstractTile>> getAllTiles();
 
     static std::vector<std::shared_ptr<DynamicTile>> getDynamicTiles();
     static std::vector<std::shared_ptr<ButtonTile>> getButtonTiles();
@@ -33,7 +33,7 @@ public:
 
 private:
 
-    static std::vector<std::shared_ptr<Tile>> allTiles;
+    static std::vector<std::shared_ptr<AbstractTile>> allTiles;
     static std::vector<std::shared_ptr<DynamicTile>> dynamicTiles;
     static std::vector<std::shared_ptr<ButtonTile>> buttonTiles;
     static std::vector<std::shared_ptr<DynamicFigure>> figures;

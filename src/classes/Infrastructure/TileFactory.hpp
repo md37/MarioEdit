@@ -7,7 +7,7 @@
 #include "classes/Infrastructure/Scale.hpp"
 #include "classes/Infrastructure/TileConfig.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
-#include "classes/Editor/Scene/Tile/StaticTile.hpp"
+#include "classes/Editor/Object/StaticTile.hpp"
 #include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 
 class ButtonTile;

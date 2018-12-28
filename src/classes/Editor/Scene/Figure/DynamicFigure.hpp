@@ -1,8 +1,8 @@
 #pragma once
 
-#include "classes/Editor/Object/Figure.hpp"
+#include "classes/Editor/Object/AbstractFigure.hpp"
 
-class DynamicFigure : public Figure, HoverableInterface, DraggableInterface {
+class DynamicFigure : public AbstractFigure, HoverableInterface, DraggableInterface {
 
 public:
 

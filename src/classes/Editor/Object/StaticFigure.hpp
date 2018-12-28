@@ -1,8 +1,8 @@
 #pragma once
 
-#include "classes/Editor/Object/Figure.hpp"
+#include "classes/Editor/Object/AbstractFigure.hpp"
 
-class StaticFigure : Figure {
+class StaticFigure : AbstractFigure {
 
 public:
 

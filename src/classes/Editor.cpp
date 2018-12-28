@@ -4,7 +4,7 @@
 #include "classes/Infrastructure/Log.hpp"
 
 Editor::Editor(std::unique_ptr<TileFactory> &tileFactory): tileFactory(tileFactory) {
-    navigation = std::make_unique<Navigation>(tileFactory);
+    navigation = std::make_unique<TileNavigation>(tileFactory);
     scene = std::make_unique<Scene>(tileFactory);
     animationPerformer = std::make_unique<AnimationPerformer>();
     eventHandler = std::make_unique<EditorEventHandler>(animationPerformer, scene, tileFactory);

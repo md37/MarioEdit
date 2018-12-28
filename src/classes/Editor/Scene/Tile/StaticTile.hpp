@@ -8,5 +8,6 @@ class StaticTile : public GridTile, public DrawableInterface {
 public:
 
     StaticTile(sf::Sprite sprite, std::shared_ptr<Grid>& grid, TileConfig config);
+
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;
 };

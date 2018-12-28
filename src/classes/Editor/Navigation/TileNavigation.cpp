@@ -1,28 +1,13 @@
-#include "Navigation.hpp"
+#include "TileNavigation.hpp"
 
-#include <SFML/Graphics/Text.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
 
-Navigation::Navigation(std::unique_ptr<TileFactory> &tileFactory): tileFactory(tileFactory) {
+TileNavigation::TileNavigation(std::unique_ptr<TileFactory> &tileFactory) : tileFactory(tileFactory) {
     generateBox();
     generateTileButtons();
 }
 
-void Navigation::rescale(std::unique_ptr<Scale> &scale) {
-    auto boxSize = box.getSize();
-    if (boxSize.x == 0) {
-        boxSize = sf::Vector2f(boxWidth, boxHeight);
-    }
-    boxSize *= scale->getRatio();
-    box.setSize(boxSize);
-
-    auto buttonTiles = ObjectRegistry::getButtonTiles();
-    for (auto const &tile : buttonTiles) {
-        tile->rescale(scale);
-    }
-}
-
-void Navigation::generateBox() {
+void TileNavigation::generateBox() {
     auto newPosition = box.getPosition();
     box.setPosition(newPosition);
 
@@ -33,7 +18,7 @@ void Navigation::generateBox() {
     box.setOutlineColor(borderColor);
 }
 
-void Navigation::generateTileButtons() {
+void TileNavigation::generateTileButtons() {
     auto ground = tileFactory->createButtonTile(0, 0);
     ground->setPosition(sf::Vector2f(20, 20));
     ground->setBorder(1);
@@ -51,14 +36,28 @@ void Navigation::generateTileButtons() {
     questionMark->setBorder(1);
 }
 
-void Navigation::draw(std::shared_ptr<sf::RenderWindow> window) const {
+void TileNavigation::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->draw(box);
     drawTileButtons(window);
 }
 
-void Navigation::drawTileButtons(std::shared_ptr<sf::RenderWindow> &window) const {
+void TileNavigation::drawTileButtons(std::shared_ptr<sf::RenderWindow> &window) const {
     auto buttonTiles = ObjectRegistry::getButtonTiles();
     for (auto const &tile : buttonTiles) {
         tile->draw(window);
+    }
+}
+
+void TileNavigation::rescale(std::unique_ptr<Scale> &scale) {
+    auto boxSize = box.getSize();
+    if (boxSize.x == 0) {
+        boxSize = sf::Vector2f(boxWidth, boxHeight);
+    }
+    boxSize *= scale->getRatio();
+    box.setSize(boxSize);
+
+    auto buttonTiles = ObjectRegistry::getButtonTiles();
+    for (auto const &tile : buttonTiles) {
+        tile->rescale(scale);
     }
 }

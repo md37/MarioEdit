@@ -8,7 +8,7 @@
 
 typedef std::variant<
     std::shared_ptr<DynamicTile>,
-    std::shared_ptr<ButtonTile>,
+    std::shared_ptr<TileButton>,
     std::shared_ptr<DynamicFigure>
 > HoverableItem;
 

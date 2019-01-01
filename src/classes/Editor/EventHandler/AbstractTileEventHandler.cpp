@@ -12,7 +12,7 @@ AbstractTileEventHandler::AbstractTileEventHandler(
 
 }
 
-void AbstractTileEventHandler::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
+void AbstractTileEventHandler::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<TileButton> button) {
     auto dynamicTile = button->cloneToDynamicTile(tileFactory, scene->getGrid());
 
     auto tilePosition = cursor.getPosition();

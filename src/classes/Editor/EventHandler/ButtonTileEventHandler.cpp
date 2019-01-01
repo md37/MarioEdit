@@ -44,7 +44,7 @@ void ButtonTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     }
 }
 
-void ButtonTileEventHandler::doMouseOver(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
+void ButtonTileEventHandler::doMouseOver(Cursor &cursor, std::shared_ptr<TileButton> button) {
     if (!eventRegistry->isOverRegistered(button)) {
         eventRegistry->registerOver(button);
         button->mouseEnter(animationPerformer);
@@ -53,12 +53,12 @@ void ButtonTileEventHandler::doMouseOver(Cursor &cursor, std::shared_ptr<ButtonT
     }
 }
 
-void ButtonTileEventHandler::doMouseOut(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
+void ButtonTileEventHandler::doMouseOut(Cursor &cursor, std::shared_ptr<TileButton> button) {
     eventRegistry->unregisterOver(button);
     button->mouseLeave(animationPerformer);
 }
 
-void ButtonTileEventHandler::doMouseClick(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
+void ButtonTileEventHandler::doMouseClick(Cursor &cursor, std::shared_ptr<TileButton> button) {
     createDynamicTileSnappedToCursor(cursor, button);
     eventState->lastUsedTileButton = button;
     eventState->isDraggingNewTile = true;

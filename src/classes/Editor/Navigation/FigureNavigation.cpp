@@ -22,9 +22,7 @@ void FigureNavigation::generateBox() {
 }
 
 void FigureNavigation::generateButtons() {
-//    auto cloud = std::make_shared<ButtonCloud>(tileFactory, 1);
-//    cloud->snapToGrid(sf::Vector2i(0, 0));
-//    figures.push_back(cloud);
+    
 }
 
 void FigureNavigation::draw(std::shared_ptr<sf::RenderWindow> window) const {
@@ -42,7 +40,6 @@ void FigureNavigation::rescale(std::unique_ptr<Scale> &scale) {
     }
     boxSize *= scale->getRatio();
     box.setSize(boxSize);
-    Log::out(scale->getRatio(), "Ratio");
     box.setPosition(scale->getRatio()*box.getPosition());
 
     for (auto &figure: figures) {

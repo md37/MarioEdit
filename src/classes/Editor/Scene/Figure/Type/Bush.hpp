@@ -1,5 +1,6 @@
 #pragma once
 
+#include "classes/Editor/Object/FigureGenerator/BushGenerator.hpp"
 #include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 
 class Bush : public DynamicFigure {
@@ -14,7 +15,5 @@ public:
 private:
 
     sf::Uint8 size;
-
-    void generate();
-
+    BushGenerator generator;
 };

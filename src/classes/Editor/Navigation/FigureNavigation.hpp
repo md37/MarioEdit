@@ -3,8 +3,8 @@
 #include <memory>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include "classes/Editor/Object/StaticFigure.hpp"
 #include "classes/Editor/Navigation/AbstractNavigation.hpp"
-#include "classes/Editor/Navigation/Figure/ButtonCloud.hpp"
 #include "classes/Infrastructure/Scale.hpp"
 
 class FigureNavigation : AbstractNavigation {
@@ -24,7 +24,7 @@ private:
     sf::Uint32 boxHeight = 120;
     sf::Vector2f boxPosition = {500.0f, 0.0f};
 
-    std::vector<std::shared_ptr<AbstractFigure>> figures;
+    std::vector<std::shared_ptr<StaticFigure>> figures;
 
     void generateBox();
     void generateButtons();

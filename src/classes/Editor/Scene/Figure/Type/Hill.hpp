@@ -1,5 +1,6 @@
 #pragma once
 
+#include "classes/Editor/Object/FigureGenerator/HillGenerator.hpp"
 #include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 
 class Hill : public DynamicFigure {
@@ -14,6 +15,5 @@ public:
 private:
 
     sf::Uint8 size;
-
-    void generate();
+    HillGenerator generator;
 };

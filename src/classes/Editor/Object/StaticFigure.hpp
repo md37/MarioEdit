@@ -2,7 +2,7 @@
 
 #include "classes/Editor/Object/AbstractFigure.hpp"
 
-class StaticFigure : AbstractFigure {
+class StaticFigure : public AbstractFigure {
 
 public:
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "classes/Editor/Object/FigureGenerator/CloudGenerator.hpp"
 #include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 
 class Cloud : public DynamicFigure {
@@ -11,11 +12,8 @@ public:
 
     void changeVariant(sf::Uint8 variant) override;
 
-protected:
-
-    void generate();
-
 private:
 
     sf::Uint8 size;
+    CloudGenerator generator;
 };

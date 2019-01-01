@@ -1,20 +1,21 @@
 #pragma once
 
 #include <SFML/Graphics/RectangleShape.hpp>
+#include "classes/Editor/Object/AbstractTile.hpp"
+#include "classes/Editor/Navigation/AbstractButton.hpp"
+#include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
 #include "classes/Infrastructure/Interface/DraggableInterface.hpp"
 #include "classes/Infrastructure/Interface/HoverableInterface.hpp"
 #include "classes/Infrastructure/TileFactory.hpp"
-#include "classes/Editor/Object/AbstractTile.hpp"
-#include "classes/Editor/Scene/Tile/DynamicTile.hpp"
 
 class TileFactory;
 
-class ButtonTile : public AbstractTile, public DrawableInterface, public DraggableInterface, public HoverableInterface {
+class TileButton : public AbstractTile, AbstractButton {
 
 public:
 
-    explicit ButtonTile(sf::Sprite sprite, TileConfig config=TileConfig());
+    explicit TileButton(sf::Sprite sprite, TileConfig config=TileConfig());
 
     void mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) override;

@@ -4,7 +4,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "classes/Editor/Navigation/AbstractNavigation.hpp"
-#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
+#include "classes/Editor/Navigation/TileButton.hpp"
 #include "classes/Infrastructure/TileFactory.hpp"
 
 class TileNavigation : AbstractNavigation {

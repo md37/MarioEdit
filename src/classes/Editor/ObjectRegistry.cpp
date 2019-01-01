@@ -4,7 +4,7 @@
 
 std::vector<std::shared_ptr<AbstractTile>> ObjectRegistry::allTiles;
 std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::dynamicTiles;
-std::vector<std::shared_ptr<ButtonTile>> ObjectRegistry::buttonTiles;
+std::vector<std::shared_ptr<TileButton>> ObjectRegistry::buttonTiles;
 std::vector<std::shared_ptr<DynamicFigure>> ObjectRegistry::figures;
 
 void ObjectRegistry::clear() {
@@ -20,7 +20,7 @@ void ObjectRegistry::add(std::shared_ptr<DynamicTile> tile) {
     dynamicTiles.push_back(tile);
 }
 
-void ObjectRegistry::add(std::shared_ptr<ButtonTile> tile) {
+void ObjectRegistry::add(std::shared_ptr<TileButton> tile) {
     allTiles.push_back(tile);
     buttonTiles.push_back(tile);
 }
@@ -57,7 +57,7 @@ std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::getDynamicTiles() {
     return dynamicTiles;
 }
 
-std::vector<std::shared_ptr<ButtonTile>> ObjectRegistry::getButtonTiles() {
+std::vector<std::shared_ptr<TileButton>> ObjectRegistry::getButtonTiles() {
     return buttonTiles;
 }
 

@@ -41,9 +41,9 @@ std::shared_ptr<StaticTile> TileFactory::createStaticTile(sf::Uint32 x, sf::Uint
     return tile;
 }
 
-std::shared_ptr<ButtonTile> TileFactory::createButtonTile(sf::Uint32 x, sf::Uint32 y) const {
+std::shared_ptr<TileButton> TileFactory::createButtonTile(sf::Uint32 x, sf::Uint32 y) const {
     auto sprite = prepareSprite();
-    auto tile = std::make_shared<ButtonTile>(sprite, config);
+    auto tile = std::make_shared<TileButton>(sprite, config);
     tile->changeImage(x, y);
     ObjectRegistry::add(tile);
 

@@ -4,7 +4,7 @@
 #include "classes/Infrastructure/Interface/DraggableInterface.hpp"
 #include "classes/Infrastructure/Interface/HoverableInterface.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
-#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
+#include "classes/Editor/Navigation/TileButton.hpp"
 
 class DynamicFigure;
 
@@ -15,13 +15,13 @@ public:
     static void clear();
     static void add(std::shared_ptr<AbstractTile> tile);
     static void add(std::shared_ptr<DynamicTile> tile);
-    static void add(std::shared_ptr<ButtonTile> tile);
+    static void add(std::shared_ptr<TileButton> tile);
     static void add(std::shared_ptr<DynamicFigure> figure);
 
     static std::vector<std::shared_ptr<AbstractTile>> getAllTiles();
 
     static std::vector<std::shared_ptr<DynamicTile>> getDynamicTiles();
-    static std::vector<std::shared_ptr<ButtonTile>> getButtonTiles();
+    static std::vector<std::shared_ptr<TileButton>> getButtonTiles();
 
     static std::vector<std::shared_ptr<DynamicTile>> getHighlightedTiles();
     static std::vector<std::shared_ptr<DynamicTile>> getReturningTiles();
@@ -35,7 +35,7 @@ private:
 
     static std::vector<std::shared_ptr<AbstractTile>> allTiles;
     static std::vector<std::shared_ptr<DynamicTile>> dynamicTiles;
-    static std::vector<std::shared_ptr<ButtonTile>> buttonTiles;
+    static std::vector<std::shared_ptr<TileButton>> buttonTiles;
     static std::vector<std::shared_ptr<DynamicFigure>> figures;
 
 };

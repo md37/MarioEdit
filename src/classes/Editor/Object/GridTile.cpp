@@ -1,5 +1,7 @@
 #include "GridTile.hpp"
 
+#include "classes/Infrastructure/Log.hpp"
+
 GridTile::GridTile(sf::Sprite sprite, std::shared_ptr<Grid>& grid, TileConfig config) : AbstractTile(sprite, config), grid(grid) {
 
 }
@@ -9,7 +11,10 @@ void GridTile::snapToGrid() {
 }
 
 void GridTile::snapToGrid(sf::Vector2i pointOnGrid) {
+    Log::out("Snapping tile to grid");
+
     this->pointOnGrid = pointOnGrid;
+
     setPosition(grid->pointOnGridToPosition(pointOnGrid));
 }
 

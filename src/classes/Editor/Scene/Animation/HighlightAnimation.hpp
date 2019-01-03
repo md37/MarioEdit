@@ -4,7 +4,7 @@
 #include <thread>
 #include <mutex>
 #include <SFML/System/Clock.hpp>
-#include <classes/Infrastructure/Animation/EasingFunction/SmoothStepFunction.hpp>
+#include "classes/Infrastructure/Animation/EasingFunction/SmoothStepFunction.hpp"
 #include "classes/Infrastructure/Animation/EasingFunction.hpp"
 #include "classes/Infrastructure/Animation/Animation.hpp"
 

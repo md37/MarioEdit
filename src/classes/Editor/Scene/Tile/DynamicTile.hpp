@@ -16,7 +16,7 @@ public:
     bool isBlinking = false;
     bool isReturning = false;
 
-    void rescale(std::unique_ptr<Scale> &newScale);
+    void rescale(std::unique_ptr<Scale> &newScale) override;
 
     void mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) override;

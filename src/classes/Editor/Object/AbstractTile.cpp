@@ -1,6 +1,7 @@
 #include "AbstractTile.hpp"
 
 #include <SFML/Graphics/Texture.hpp>
+#include "classes/Infrastructure/Log.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
 std::shared_ptr<sf::RenderWindow> AbstractTile::window;
@@ -15,25 +16,14 @@ AbstractTile::AbstractTile(sf::Sprite sprite, TileConfig config) {
 }
 
 void AbstractTile::rescale(std::unique_ptr<Scale> &newScale) {
+    Log::out("Rescaling tile");
+
     auto scaleRatio = newScale->getRatio();
     auto position = getPosition();
     sprite.setPosition(position * scaleRatio);
 
     scale = sf::Vector2f(newScale->getCurrent(), newScale->getCurrent());
     sprite.setScale(scale * scalePromotion);
-
-    if (borderSize > 0) {
-        auto newBorderSize = borderSize * newScale->getCurrent() * scalePromotion;
-        auto borderSquareSize = sf::Vector2f(getSize());
-        borderSquareSize.x += 2 * newBorderSize;
-        borderSquareSize.y += 2 * newBorderSize;
-        border.setSize(borderSquareSize);
-
-        auto borderSquarePosition = sf::Vector2f(position * scaleRatio);
-        borderSquarePosition.x -= newBorderSize;
-        borderSquarePosition.y -= newBorderSize;
-        border.setPosition(borderSquarePosition);
-    }
 
     recalculateCenter();
 }
@@ -80,11 +70,6 @@ sf::Vector2u AbstractTile::getSize() const {
             sprite.getTextureRect().width * sprite.getScale().x,
             sprite.getTextureRect().height * sprite.getScale().y
     );
-}
-
-void AbstractTile::setBorder(sf::Uint8 size, sf::Color color) {
-    borderSize = size;
-    border.setFillColor(color);
 }
 
 void AbstractTile::snapToCenterPoint() {

@@ -1,5 +1,7 @@
 #include "CloudGenerator.hpp"
 
+#include "classes/Infrastructure/Log.hpp"
+
 CloudGenerator::CloudGenerator(
         std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size
 ) : AbstractFigureGenerator(tileFactory, grid, size) {
@@ -7,6 +9,8 @@ CloudGenerator::CloudGenerator(
 }
 
 std::vector<std::shared_ptr<StaticTile>> CloudGenerator::generate(sf::Vector2i pointOnGrid) {
+    Log::out("Generating cloud");
+
     std::vector<std::shared_ptr<StaticTile>> tiles;
 
     auto beginBottom = tileFactory->createStaticTile(0, 8, grid);

@@ -5,6 +5,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "classes/Editor/Object/StaticFigure.hpp"
 #include "classes/Editor/Navigation/AbstractNavigation.hpp"
+#include "classes/Editor/Navigation/FigureButton.hpp"
 #include "classes/Infrastructure/Scale.hpp"
 
 class FigureNavigation : AbstractNavigation {
@@ -22,9 +23,9 @@ private:
     sf::RectangleShape box;
     sf::Uint32 boxWidth = 420;
     sf::Uint32 boxHeight = 120;
-    sf::Vector2f boxPosition = {500.0f, 0.0f};
+    sf::Vector2f boxPosition = {428.0f, 0.0f};
 
-    std::vector<std::shared_ptr<StaticFigure>> figures;
+    std::vector<std::shared_ptr<FigureButton>> buttons;
 
     void generateBox();
     void generateButtons();

@@ -1,5 +1,7 @@
 #include "BushGenerator.hpp"
 
+#include "classes/Infrastructure/Log.hpp"
+
 BushGenerator::BushGenerator(
         std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size
 ) : AbstractFigureGenerator(tileFactory, grid, size) {
@@ -7,6 +9,8 @@ BushGenerator::BushGenerator(
 }
 
 std::vector<std::shared_ptr<StaticTile>> BushGenerator::generate(sf::Vector2i pointOnGrid) {
+    Log::out("Generating bush");
+
     std::vector<std::shared_ptr<StaticTile>> tiles;
 
     auto begin = tileFactory->createStaticTile(2, 0, grid);

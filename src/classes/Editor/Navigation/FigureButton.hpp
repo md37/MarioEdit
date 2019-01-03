@@ -1,5 +1,9 @@
 #pragma once
 
+#include "classes/Editor/Object/FigureGenerator/AbstractFigureGenerator.hpp"
+#include "classes/Editor/Object/FigureGenerator/BushGenerator.hpp"
+#include "classes/Editor/Object/FigureGenerator/CloudGenerator.hpp"
+#include "classes/Editor/Object/FigureGenerator/HillGenerator.hpp"
 #include "classes/Editor/Object/StaticFigure.hpp"
 #include "classes/Editor/Navigation/AbstractButton.hpp"
 
@@ -7,7 +11,18 @@ class FigureButton : public StaticFigure, AbstractButton {
 
 public:
 
+    FigureButton(
+        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, BushGenerator generator
+    );
+    FigureButton(
+        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, CloudGenerator generator
+    );
+    FigureButton(
+        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, HillGenerator generator
+    );
+
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;
+    void rescale(std::unique_ptr<Scale> &newScale) override;
 
     bool isMouseOver() const override;
 

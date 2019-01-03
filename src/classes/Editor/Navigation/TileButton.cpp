@@ -13,6 +13,22 @@ void TileButton::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->draw(sprite);
 }
 
+void TileButton::rescale(std::unique_ptr<Scale> &newScale) {
+    Log::out("Rescaling tile button");
+    AbstractTile::rescale(newScale);
+
+    auto newBorderSize = borderSize * newScale->getCurrent();
+    auto borderSquareSize = sf::Vector2f(getSize());
+    borderSquareSize.x += 2 * newBorderSize;
+    borderSquareSize.y += 2 * newBorderSize;
+    border.setSize(borderSquareSize);
+
+    auto borderSquarePosition = sf::Vector2f(getPosition());
+    borderSquarePosition.x -= newBorderSize;
+    borderSquarePosition.y -= newBorderSize;
+    border.setPosition(borderSquarePosition);
+}
+
 void TileButton::mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) {
     border.setFillColor(sf::Color(255, 255, 0));
 

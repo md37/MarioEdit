@@ -1,5 +1,7 @@
 #include "HillGenerator.hpp"
 
+#include "classes/Infrastructure/Log.hpp"
+
 HillGenerator::HillGenerator(
         std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size
 ) : AbstractFigureGenerator(tileFactory, grid, size) {
@@ -7,6 +9,7 @@ HillGenerator::HillGenerator(
 }
 
 std::vector<std::shared_ptr<StaticTile>> HillGenerator::generate(sf::Vector2i pointOnGrid) {
+    Log::out("Generating bush");
     std::vector<std::shared_ptr<StaticTile>> tiles;
 
     sf::Uint32 lineStartPosX = pointOnGrid.x;

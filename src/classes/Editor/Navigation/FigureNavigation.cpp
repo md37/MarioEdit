@@ -1,6 +1,7 @@
 #include "FigureNavigation.hpp"
 
 #include "classes/Editor/ObjectRegistry.hpp"
+#include "classes/Editor/Object/FigureGenerator/CloudGenerator.hpp"
 #include "classes/Infrastructure/Log.hpp"
 
 FigureNavigation::FigureNavigation(std::unique_ptr<TileFactory> &tileFactory): tileFactory(tileFactory) {
@@ -22,14 +23,18 @@ void FigureNavigation::generateBox() {
 }
 
 void FigureNavigation::generateButtons() {
-    
+    Settings gridSettings(2, 3, sf::Vector2f(100, 100), sf::Vector2f(300, 200));
+    std::shared_ptr<Grid> grid = std::make_shared<Grid>(gridSettings);
+    BushGenerator bushGenerator(tileFactory, grid, 1);
+    std::shared_ptr<FigureButton> bushButton = std::make_shared<FigureButton>(tileFactory, grid, bushGenerator);
+    buttons.push_back(bushButton);
 }
 
 void FigureNavigation::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->draw(box);
 
-    for (auto &figure: figures) {
-        figure->draw(window);
+    for (auto &button: buttons) {
+        button->draw(window);
     }
 }
 
@@ -42,7 +47,7 @@ void FigureNavigation::rescale(std::unique_ptr<Scale> &scale) {
     box.setSize(boxSize);
     box.setPosition(scale->getRatio()*box.getPosition());
 
-    for (auto &figure: figures) {
-        figure->rescale(scale);
+    for (auto &button: buttons) {
+        button->rescale(scale);
     }
 }

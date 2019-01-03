@@ -27,7 +27,7 @@ void SceneGenerator::createBushes() {
 
 void SceneGenerator::createClouds() {
     auto cloud = std::make_shared<Cloud>(tileFactory, 1);
-    cloud->snapToGrid(sf::Vector2i(0, 0));
+    cloud->snapToGrid(sf::Vector2i(4, 6));
     ObjectRegistry::add(cloud);
 }
 

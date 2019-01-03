@@ -15,6 +15,7 @@ void AbstractFigure::draw(std::shared_ptr<sf::RenderWindow> window) const {
 
 void AbstractFigure::rescale(std::unique_ptr<Scale> &scale) {
     Log::out("Rescaling figure");
+
     grid->rescale(scale);
     for (auto &tile : tiles) {
         tile->rescale(scale);
@@ -27,6 +28,7 @@ void AbstractFigure::snapToGrid() {
 }
 
 void AbstractFigure::snapToGrid(sf::Vector2i pointOnGrid) {
+    Log::out("Snapping figure to grid");
     this->pointOnGrid = pointOnGrid;
     this->position = grid->pointOnGridToPosition(pointOnGrid);
 
@@ -34,8 +36,8 @@ void AbstractFigure::snapToGrid(sf::Vector2i pointOnGrid) {
     auto mostTopTile = findMostTopTile();
 
     sf::Vector2i diff = {
-            pointOnGrid.x - mostLeftTile->getPointOnGrid().x,
-            pointOnGrid.y - mostTopTile->getPointOnGrid().y
+        pointOnGrid.x - mostLeftTile->getPointOnGrid().x,
+        pointOnGrid.y - mostTopTile->getPointOnGrid().y
     };
 
     for (auto &tile : tiles) {

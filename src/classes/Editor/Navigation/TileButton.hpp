@@ -28,6 +28,7 @@ public:
     bool isDragging() const override;
 
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;
+    void rescale(std::unique_ptr<Scale> &newScale) override;
 
     std::shared_ptr<DynamicTile> cloneToDynamicTile(
         std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> &grid

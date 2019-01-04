@@ -45,7 +45,7 @@ void DynamicTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     }
 }
 
-void DynamicTileEventHandler::performHover(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
+void DynamicTileEventHandler::performHover(Cursor &cursor, std::shared_ptr<DynamicTile> tile) {
     auto highlightedTiles = ObjectRegistry::getHighlightedTiles();
     auto tilePosition = tile->getPosition();
     auto tileSize = tile->getSize();
@@ -64,7 +64,7 @@ void DynamicTileEventHandler::performHover(Cursor &cursor, std::shared_ptr<Dynam
     }
 }
 
-void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
+void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> tile) {
     auto tilePosition = tile->getPosition();
     auto tileSize = tile->getSize();
     if (cursor.isOver(tilePosition, tileSize) && eventRegistry->isOverRegistered(tile)) {
@@ -82,7 +82,7 @@ void DynamicTileEventHandler::performDragDrop(Cursor &cursor, std::shared_ptr<Dy
     }
 }
 
-void DynamicTileEventHandler::performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile) {
+void DynamicTileEventHandler::performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> tile) {
     std::optional<Highlight>& highlight = scene->getGrid()->getHighlight();
     if (highlight.has_value()) {
         auto dropHighlightPlace = highlight->getPointOnGrid();
@@ -99,7 +99,7 @@ void DynamicTileEventHandler::performDrop(Cursor &cursor, std::shared_ptr<Dynami
 }
 
 void DynamicTileEventHandler::performLongClickDrop(Cursor &cursor) {
-    std::shared_ptr<Grid>& grid = scene->getGrid();
+    std::shared_ptr<Grid> grid = scene->getGrid();
     auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getPosition());
     auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
 
@@ -128,7 +128,7 @@ void DynamicTileEventHandler::performQuickClickDrop(Cursor &cursor) {
         return;
     }
 
-    std::shared_ptr<Grid>& grid = scene->getGrid();
+    std::shared_ptr<Grid> grid = scene->getGrid();
     auto currentSlotGridPosition = grid->positionToPointOnGrid(cursor.getPosition());
     auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
 

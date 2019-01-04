@@ -11,7 +11,7 @@ class DynamicTile : public GridTile, HoverableInterface, DraggableInterface, Dra
 
 public:
 
-    explicit DynamicTile(sf::Sprite sprite, std::shared_ptr<Grid>& grid, TileConfig config=TileConfig());
+    explicit DynamicTile(sf::Sprite sprite, std::shared_ptr<Grid> grid, TileConfig config=TileConfig());
 
     bool isBlinking = false;
     bool isReturning = false;

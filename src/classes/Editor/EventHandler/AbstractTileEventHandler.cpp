@@ -30,7 +30,7 @@ void AbstractTileEventHandler::cancelDragging(Cursor &cursor) {
     eventRegistry->unregisterDrag(draggingTile);
     ObjectRegistry::removeTile(draggingTile);
 
-    std::shared_ptr<Grid>& grid = scene->getGrid();
+    std::shared_ptr<Grid> grid = scene->getGrid();
     grid->turnHighlightOff();
     eventState->isDraggingNewTile = false;
     cursor.draggedItem.reset();

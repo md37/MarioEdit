@@ -70,7 +70,7 @@ bool TileButton::isDragging() const {
 }
 
 std::shared_ptr<DynamicTile> TileButton::cloneToDynamicTile(
-    std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> &grid
+    std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
 ) {
     auto tile = tileFactory->createDynamicTile(imagePosition.x, imagePosition.y, grid);
     return tile;

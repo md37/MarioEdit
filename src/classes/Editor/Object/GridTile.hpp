@@ -10,7 +10,7 @@ class GridTile : public AbstractTile, GridableInterface, SquareableOnGridInterfa
 
 public:
 
-    explicit GridTile(sf::Sprite sprite, std::shared_ptr<Grid>& grid, TileConfig config=TileConfig());
+    explicit GridTile(sf::Sprite sprite, std::shared_ptr<Grid> grid, TileConfig config=TileConfig());
 
     void snapToGrid() override;
     void snapToGrid(sf::Vector2i pointOnGrid) override;
@@ -22,7 +22,7 @@ public:
 
 protected:
 
-    std::shared_ptr<Grid>& grid;
+    std::shared_ptr<Grid> grid;
     sf::Vector2i pointOnGrid;
 
 };

@@ -17,7 +17,7 @@ public:
     void rescale(std::unique_ptr<Scale> &scale) override;
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;
 
-    std::shared_ptr<Grid>& getGrid();
+    std::shared_ptr<Grid> getGrid();
     std::shared_ptr<DynamicTile> getDraggingTile() const;
 
 private:

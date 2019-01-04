@@ -5,7 +5,7 @@
 #include "classes/Editor/Scene/Figure/Type/Hill.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
-SceneGenerator::SceneGenerator(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid>& grid): tileFactory(tileFactory), grid(grid) {
+SceneGenerator::SceneGenerator(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid): tileFactory(tileFactory), grid(grid) {
 
 }
 

@@ -21,7 +21,7 @@ void TileFactory::setTileOffset(sf::Uint32 offsetX, sf::Uint32 offsetY) {
     config.offsetY = offsetY;
 }
 
-std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid>& grid) const {
+std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid> grid) const {
     Log::out("Creating dynamic tile");
 
     auto sprite = prepareSprite();
@@ -35,7 +35,7 @@ std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Ui
     return tile;
 }
 
-std::shared_ptr<StaticTile> TileFactory::createStaticTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid>& grid) const {
+std::shared_ptr<StaticTile> TileFactory::createStaticTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid> grid) const {
     Log::out("Creating static tile");
 
     auto sprite = prepareSprite();

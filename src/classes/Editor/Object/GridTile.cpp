@@ -2,7 +2,7 @@
 
 #include "classes/Infrastructure/Log.hpp"
 
-GridTile::GridTile(sf::Sprite sprite, std::shared_ptr<Grid>& grid, TileConfig config) : AbstractTile(sprite, config), grid(grid) {
+GridTile::GridTile(sf::Sprite sprite, std::shared_ptr<Grid> grid, TileConfig config) : AbstractTile(sprite, config), grid(grid) {
 
 }
 

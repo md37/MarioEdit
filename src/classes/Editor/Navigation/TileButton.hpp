@@ -31,7 +31,7 @@ public:
     void rescale(std::unique_ptr<Scale> &newScale) override;
 
     std::shared_ptr<DynamicTile> cloneToDynamicTile(
-        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> &grid
+        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
     );
 
 private:

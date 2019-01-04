@@ -23,8 +23,8 @@ private:
     void performLongClickDrop(Cursor &cursor);
     void performQuickClickDrop(Cursor &cursor);
 
-    void performHover(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
-    void performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
-    void performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> &tile);
+    void performHover(Cursor &cursor, std::shared_ptr<DynamicTile> tile);
+    void performDragDrop(Cursor &cursor, std::shared_ptr<DynamicTile> tile);
+    void performDrop(Cursor &cursor, std::shared_ptr<DynamicTile> tile);
 
 };

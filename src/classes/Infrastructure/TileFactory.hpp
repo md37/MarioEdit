@@ -21,8 +21,8 @@ public:
     void setTileSeparators(sf::Uint32 separatorX, sf::Uint32 separatorY);
     void setTileOffset(sf::Uint32 offsetX, sf::Uint32 offsetY);
 
-    std::shared_ptr<DynamicTile> createDynamicTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid>& grid) const;
-    std::shared_ptr<StaticTile> createStaticTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid>& grid) const;
+    std::shared_ptr<DynamicTile> createDynamicTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid> grid) const;
+    std::shared_ptr<StaticTile> createStaticTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid> grid) const;
     std::shared_ptr<TileButton> createButtonTile(sf::Uint32 x, sf::Uint32 y) const;
 
 private:

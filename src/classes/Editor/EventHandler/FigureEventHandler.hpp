@@ -20,9 +20,9 @@ private:
     std::unique_ptr<AnimationPerformer> &animationPerformer;
     std::unique_ptr<EventRegistry> &eventRegistry;
 
-    void performHover(Cursor &cursor, std::shared_ptr<DynamicFigure> &figure);
+    void performHover(Cursor &cursor, std::shared_ptr<DynamicFigure> figure);
 
-    void performDragDrop(Cursor &cursor, std::shared_ptr<DynamicFigure> &figure);
-    void performStartDragging(Cursor &cursor, std::shared_ptr<DynamicFigure> &figure);
-    void performDrop(Cursor &cursor, std::shared_ptr<DynamicFigure> &figure);
+    void performDragDrop(Cursor &cursor, std::shared_ptr<DynamicFigure> figure);
+    void performStartDragging(Cursor &cursor, std::shared_ptr<DynamicFigure> figure);
+    void performDrop(Cursor &cursor, std::shared_ptr<DynamicFigure> figure);
 };

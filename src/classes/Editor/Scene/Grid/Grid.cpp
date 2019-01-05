@@ -111,6 +111,6 @@ sf::Vector2f Grid::getPointOnGrid(sf::Vector2f pointOnScreen) const {
 }
 
 sf::Vector2f Grid::pointOnGridToPosition(sf::Vector2i pointOnGrid) const {
-    sf::Vector2f retval = settings.getPosition() + sf::Vector2f(pointOnGrid) * settings.getLineDistance();
+    sf::Vector2f retval = settings.getPosition() + sf::Vector2f(pointOnGrid) * 80.0f; //settings.getLineDistance();
     return retval;
 }

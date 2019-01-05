@@ -11,7 +11,7 @@ Scene::Scene(std::unique_ptr<TileFactory> &tileFactory) {
     grid = std::make_shared<Grid>(gridSettings);
 
     sceneGenerator = std::make_unique<SceneGenerator>(tileFactory, grid);
-    sceneGenerator->generate();
+//    sceneGenerator->generate();
 }
 
 void Scene::rescale(std::unique_ptr<Scale> &scale) {

@@ -3,34 +3,25 @@
 #include "classes/Infrastructure/Log.hpp"
 
 FigureButton::FigureButton(
-    std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, BushGenerator generator
+    std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, std::shared_ptr<AbstractFigureGenerator> generator
 ) : StaticFigure(tileFactory) {
     this->grid = grid;
-    tiles = generator.generate(pointOnGrid);
-}
-
-FigureButton::FigureButton(
-    std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, CloudGenerator generator
-) : StaticFigure(tileFactory) {
-    this->grid = grid;
-    tiles = generator.generate(pointOnGrid);
-}
-
-FigureButton::FigureButton(
-    std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, HillGenerator generator
-) : StaticFigure(tileFactory) {
-    this->grid = grid;
-    tiles = generator.generate(pointOnGrid);
+    this->generator = generator;
 }
 
 void FigureButton::draw(std::shared_ptr<sf::RenderWindow> window) const {
     window->draw(border);
+    for (auto &tile: tiles) {
+        tile->draw(window);
+    }
 }
 
 void FigureButton::rescale(std::unique_ptr<Scale> &newScale) {
     Log::out("Rescaling figure button");
 
+    tiles = generator->generate(pointOnGrid);
     AbstractFigure::rescale(newScale);
+
     auto newBorderSize = borderSize * newScale->getCurrent();
     auto borderSquareSize = sf::Vector2f(getSize());
     borderSquareSize.x += 2 * newBorderSize;

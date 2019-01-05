@@ -12,13 +12,7 @@ class FigureButton : public StaticFigure, AbstractButton {
 public:
 
     FigureButton(
-        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, BushGenerator generator
-    );
-    FigureButton(
-        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, CloudGenerator generator
-    );
-    FigureButton(
-        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, HillGenerator generator
+        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, std::shared_ptr<AbstractFigureGenerator> generator
     );
 
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;
@@ -37,6 +31,8 @@ public:
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
 private:
+
+    std::shared_ptr<AbstractFigureGenerator> generator;
 
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;

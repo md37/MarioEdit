@@ -14,7 +14,7 @@ FigureButton::FigureButton(
 }
 
 void FigureButton::draw(std::shared_ptr<sf::RenderWindow> window) const {
-    window->draw(border);
+//    window->draw(border);
     for (auto &tile: tiles) {
         tile->draw(window);
     }

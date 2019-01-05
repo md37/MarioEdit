@@ -24,19 +24,8 @@ void FigureNavigation::generateBox() {
 
 void FigureNavigation::generateButtons() {
     {
-        sf::Vector2f position(500, 200);
-        Settings gridSettings(0.5, position);
-        std::shared_ptr<Grid> grid = std::make_shared<Grid>(gridSettings);
-        std::shared_ptr<BushGenerator> bushGenerator = std::make_shared<BushGenerator>(tileFactory, grid, 1);
-        std::shared_ptr<FigureButton> bushButton = std::make_shared<FigureButton>(
-            position, tileFactory, grid, bushGenerator
-        );
-        buttons.push_back(bushButton);
-    }
-
-    {
-        sf::Vector2f position(500, 400);
-        Settings gridSettings(0.5, position);
+        sf::Vector2f position(417, 75);
+        Settings gridSettings(0.8, position);
         std::shared_ptr<Grid> grid = std::make_shared<Grid>(gridSettings);
         std::shared_ptr<CloudGenerator> cloudGenerator = std::make_shared<CloudGenerator>(tileFactory, grid, 1);
         std::shared_ptr<FigureButton> bushButton = std::make_shared<FigureButton>(
@@ -46,8 +35,19 @@ void FigureNavigation::generateButtons() {
     }
 
     {
-        sf::Vector2f position(500, 600);
-        Settings gridSettings(0.5, position);
+        sf::Vector2f position(565, 42);
+        Settings gridSettings(0.8, position);
+        std::shared_ptr<Grid> grid = std::make_shared<Grid>(gridSettings);
+        std::shared_ptr<BushGenerator> bushGenerator = std::make_shared<BushGenerator>(tileFactory, grid, 1);
+        std::shared_ptr<FigureButton> bushButton = std::make_shared<FigureButton>(
+                position, tileFactory, grid, bushGenerator
+        );
+        buttons.push_back(bushButton);
+    }
+
+    {
+        sf::Vector2f position(745, 42);
+        Settings gridSettings(0.8, position);
         std::shared_ptr<Grid> grid = std::make_shared<Grid>(gridSettings);
         std::shared_ptr<HillGenerator> hillGenerator = std::make_shared<HillGenerator>(tileFactory, grid, 1);
         std::shared_ptr<FigureButton> bushButton = std::make_shared<FigureButton>(

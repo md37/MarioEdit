@@ -9,7 +9,7 @@ class AbstractButton : public DrawableInterface, DraggableInterface, HoverableIn
 
 protected:
 
-    sf::RectangleShape border;
+    sf::RectangleShape background;
     sf::Uint8 borderSize = 1;
 
 };

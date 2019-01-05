@@ -7,8 +7,8 @@ TileButton::TileButton(sf::Sprite sprite, TileConfig config) : AbstractTile(spri
 }
 
 void TileButton::draw(std::shared_ptr<sf::RenderWindow> window) const {
-    if (border.getSize().x > 0 && border.getSize().y > 0) {
-        window->draw(border);
+    if (background.getSize().x > 0 && background.getSize().y > 0) {
+        window->draw(background);
     }
     window->draw(sprite);
 }
@@ -21,16 +21,16 @@ void TileButton::rescale(std::unique_ptr<Scale> &newScale) {
     auto borderSquareSize = sf::Vector2f(getSize());
     borderSquareSize.x += 2 * newBorderSize;
     borderSquareSize.y += 2 * newBorderSize;
-    border.setSize(borderSquareSize);
+    background.setSize(borderSquareSize);
 
     auto borderSquarePosition = sf::Vector2f(getPosition());
     borderSquarePosition.x -= newBorderSize;
     borderSquarePosition.y -= newBorderSize;
-    border.setPosition(borderSquarePosition);
+    background.setPosition(borderSquarePosition);
 }
 
 void TileButton::mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    border.setFillColor(sf::Color(255, 255, 0));
+    background.setFillColor(sf::Color(255, 255, 0));
 
     Log::out("ButtonTile MouseEnter");
 }
@@ -40,7 +40,7 @@ void TileButton::mouseOver(std::unique_ptr<AnimationPerformer> &animationPerform
 }
 
 void TileButton::mouseLeave(std::unique_ptr<AnimationPerformer> &animationPerformer) {
-    border.setFillColor(sf::Color(255, 255, 255));
+    background.setFillColor(sf::Color(255, 255, 255));
 
     Log::out("ButtonTile MouseLeave");
 }

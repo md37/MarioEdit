@@ -33,6 +33,8 @@ public:
     void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
+    void cutBorder(float top, float left, float bottom, float right);
+
 private:
 
     std::shared_ptr<AbstractFigureGenerator> generator;
@@ -40,6 +42,13 @@ private:
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;
 
+    sf::Color backgroundColor = sf::Color(255, 255, 255, 150);
+
+    float borderCutTop = 0;
+    float borderCutLeft = 0;
+    float borderCutBottom = 0;
+    float borderCutRight = 0;
+
     void rescaleTiles(std::unique_ptr<Scale> &newScale);
-    void rescaleBorder(const std::unique_ptr<Scale> &newScale);
+    void rescaleBackground(const std::unique_ptr<Scale> &newScale);
 };

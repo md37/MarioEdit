@@ -24,36 +24,39 @@ void FigureNavigation::generateBox() {
 
 void FigureNavigation::generateButtons() {
     {
-        sf::Vector2f position(500, 200);
-        Settings gridSettings(0.5, position);
+        sf::Vector2f position = boxPosition + sf::Vector2f(-15.0f, 75.0f);
+        Settings gridSettings(0.8, position);
         std::shared_ptr<Grid> grid = std::make_shared<Grid>(gridSettings);
-        std::shared_ptr<BushGenerator> bushGenerator = std::make_shared<BushGenerator>(tileFactory, grid, 1);
-        std::shared_ptr<FigureButton> bushButton = std::make_shared<FigureButton>(
-            position, tileFactory, grid, bushGenerator
+        std::shared_ptr<CloudGenerator> generator = std::make_shared<CloudGenerator>(tileFactory, grid, 1);
+        std::shared_ptr<FigureButton> button = std::make_shared<FigureButton>(
+            position, tileFactory, grid, generator
         );
-        buttons.push_back(bushButton);
+        button->cutBorder(-67, 23, 92, 28);
+        buttons.push_back(button);
     }
 
     {
-        sf::Vector2f position(500, 400);
-        Settings gridSettings(0.5, position);
+        sf::Vector2f position = boxPosition + sf::Vector2f(135.0f, 48.0f);
+        Settings gridSettings(0.8, position);
         std::shared_ptr<Grid> grid = std::make_shared<Grid>(gridSettings);
-        std::shared_ptr<CloudGenerator> cloudGenerator = std::make_shared<CloudGenerator>(tileFactory, grid, 1);
-        std::shared_ptr<FigureButton> bushButton = std::make_shared<FigureButton>(
-            position, tileFactory, grid, cloudGenerator
+        std::shared_ptr<BushGenerator> generator = std::make_shared<BushGenerator>(tileFactory, grid, 1);
+        std::shared_ptr<FigureButton> button = std::make_shared<FigureButton>(
+            position, tileFactory, grid, generator
         );
-        buttons.push_back(bushButton);
+        button->cutBorder(-40, 22, 1, 27);
+        buttons.push_back(button);
     }
 
     {
-        sf::Vector2f position(500, 600);
-        Settings gridSettings(0.5, position);
+        sf::Vector2f position = boxPosition + sf::Vector2f(308.0f, 48.0f);
+        Settings gridSettings(0.8, position);
         std::shared_ptr<Grid> grid = std::make_shared<Grid>(gridSettings);
-        std::shared_ptr<HillGenerator> hillGenerator = std::make_shared<HillGenerator>(tileFactory, grid, 1);
-        std::shared_ptr<FigureButton> bushButton = std::make_shared<FigureButton>(
-            position, tileFactory, grid, hillGenerator
+        std::shared_ptr<HillGenerator> generator = std::make_shared<HillGenerator>(tileFactory, grid, 1);
+        std::shared_ptr<FigureButton> button = std::make_shared<FigureButton>(
+            position, tileFactory, grid, generator
         );
-        buttons.push_back(bushButton);
+        button->cutBorder(-40, 0, 65, 0);
+        buttons.push_back(button);
     }
 }
 

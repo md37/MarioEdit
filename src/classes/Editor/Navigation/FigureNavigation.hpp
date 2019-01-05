@@ -21,7 +21,7 @@ private:
     std::unique_ptr<TileFactory> &tileFactory;
 
     sf::RectangleShape box;
-    sf::Uint32 boxWidth = 420;
+    sf::Uint32 boxWidth = 508;
     sf::Uint32 boxHeight = 120;
     sf::Vector2f boxPosition = {428.0f, 0.0f};
 

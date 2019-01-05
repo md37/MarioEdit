@@ -6,12 +6,12 @@
 
 Scene::Scene(std::unique_ptr<TileFactory> &tileFactory) {
     Settings gridSettings(
-        12, Settings::Auto, sf::Vector2f(Settings::Auto, Settings::Auto), sf::Vector2f(0, 0)
+        12, Settings::Auto, sf::Vector2f(0, 0), sf::Vector2f(Settings::Auto, Settings::Auto)
     );
     grid = std::make_shared<Grid>(gridSettings);
 
     sceneGenerator = std::make_unique<SceneGenerator>(tileFactory, grid);
-//    sceneGenerator->generate();
+    sceneGenerator->generate();
 }
 
 void Scene::rescale(std::unique_ptr<Scale> &scale) {

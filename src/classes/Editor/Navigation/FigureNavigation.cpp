@@ -24,7 +24,7 @@ void FigureNavigation::generateBox() {
 
 void FigureNavigation::generateButtons() {
     {
-        Settings gridSettings(1, 3, sf::Vector2f(120, 40), sf::Vector2f(500, 200));
+        Settings gridSettings(sf::Vector2f(500, 200), 0.5);
         std::shared_ptr<Grid> grid = std::make_shared<Grid>(gridSettings);
         std::shared_ptr<BushGenerator> bushGenerator = std::make_shared<BushGenerator>(tileFactory, grid, 1);
         std::shared_ptr<FigureButton> bushButton = std::make_shared<FigureButton>(tileFactory, grid, bushGenerator);
@@ -32,7 +32,7 @@ void FigureNavigation::generateButtons() {
     }
 
     {
-        Settings gridSettings(2, 3, sf::Vector2f(120, 80), sf::Vector2f(500, 400));
+        Settings gridSettings(sf::Vector2f(500, 400), 0.5);
         std::shared_ptr<Grid> grid = std::make_shared<Grid>(gridSettings);
         std::shared_ptr<CloudGenerator> cloudGenerator = std::make_shared<CloudGenerator>(tileFactory, grid, 1);
         std::shared_ptr<FigureButton> bushButton = std::make_shared<FigureButton>(tileFactory, grid, cloudGenerator);
@@ -40,7 +40,7 @@ void FigureNavigation::generateButtons() {
     }
 
     {
-        Settings gridSettings(2, 3, sf::Vector2f(120, 80), sf::Vector2f(500, 600));
+        Settings gridSettings(sf::Vector2f(500, 600), 0.5);
         std::shared_ptr<Grid> grid = std::make_shared<Grid>(gridSettings);
         std::shared_ptr<HillGenerator> hillGenerator = std::make_shared<HillGenerator>(tileFactory, grid, 1);
         std::shared_ptr<FigureButton> bushButton = std::make_shared<FigureButton>(tileFactory, grid, hillGenerator);

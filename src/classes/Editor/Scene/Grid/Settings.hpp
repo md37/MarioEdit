@@ -10,12 +10,14 @@ public:
 
     static const sf::Uint32 Auto = 0;
 
-    Settings(sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size, sf::Vector2f position);
+    Settings(sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f position, sf::Vector2f size);
+    Settings(sf::Vector2f position, float scale);
 
     sf::Uint32 getRows() const;
     sf::Uint32 getCols() const;
     sf::Vector2f getSize() const;
     sf::Vector2f getPosition() const;
+    float getScale() const;
 
     void rescale(std::unique_ptr<Scale> &scale) override;
 
@@ -25,6 +27,7 @@ public:
 
 private:
 
+    float scale = 1.0f;
     sf::Uint32 rows;
     sf::Uint32 rowsOrig;
     sf::Uint32 cols;

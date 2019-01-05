@@ -5,8 +5,19 @@
 const sf::Uint32 Settings::Auto;
 
 Settings::Settings(
-    sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f size, sf::Vector2f position
-): rows(rows), cols(cols), size(size), position(position) {
+    sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f position, sf::Vector2f size
+): rows(rows), cols(cols), position(position), size(size) {
+    rowsOrig = rows;
+    colsOrig = cols;
+    sizeOrig = size;
+}
+
+
+Settings::Settings(sf::Vector2f position, float scale): scale(scale), position(position) {
+    rows = 12;
+    cols = Settings::Auto;
+    size = sf::Vector2f(Settings::Auto, Settings::Auto);
+
     rowsOrig = rows;
     colsOrig = cols;
     sizeOrig = size;
@@ -69,4 +80,8 @@ bool Settings::hasIncompleteEnding() const {
 
 sf::Vector2f Settings::getPosition() const {
     return position;
+}
+
+float Settings::getScale() const {
+    return scale;
 }

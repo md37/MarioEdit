@@ -20,7 +20,11 @@ void FigureButton::rescale(std::unique_ptr<Scale> &newScale) {
     Log::out("Rescaling figure button");
 
     tiles = generator->generate(pointOnGrid);
+    for (auto &tile: tiles) {
+        tile->setScalePromotion(grid->getScale());
+    }
     AbstractFigure::rescale(newScale);
+
 
     auto newBorderSize = borderSize * newScale->getCurrent();
     auto borderSquareSize = sf::Vector2f(getSize());

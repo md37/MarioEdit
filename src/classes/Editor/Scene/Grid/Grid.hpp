@@ -20,6 +20,7 @@ public:
 
     sf::Uint32 getCols() const;
     sf::Vector2u getSize() const;
+    float getScale() const;
 
     void turnHighlightOn(sf::Vector2u size);
     void turnHighlightOff();

@@ -22,6 +22,10 @@ sf::Vector2u Grid::getSize() const {
     return {settings.getCols(), settings.getRows()};
 }
 
+float Grid::getScale() const {
+    return settings.getScale();
+}
+
 void Grid::draw(std::shared_ptr<sf::RenderWindow> window) const {
     for (int i=0; i<settings.getRows()+1; i++) {
         for (int j=0; j<settings.getCols()+1; j++) {
@@ -111,6 +115,6 @@ sf::Vector2f Grid::getPointOnGrid(sf::Vector2f pointOnScreen) const {
 }
 
 sf::Vector2f Grid::pointOnGridToPosition(sf::Vector2i pointOnGrid) const {
-    sf::Vector2f retval = settings.getPosition() + sf::Vector2f(pointOnGrid) * 80.0f; //settings.getLineDistance();
+    sf::Vector2f retval = settings.getPosition() + sf::Vector2f(pointOnGrid) * settings.getScale()*settings.getLineDistance();
     return retval;
 }

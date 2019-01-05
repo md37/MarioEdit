@@ -20,19 +20,19 @@ void SceneGenerator::generateBackground() {
 }
 
 void SceneGenerator::createBushes() {
-    auto bush = std::make_shared<Bush>(tileFactory, 1);
+    auto bush = std::make_shared<Bush>(tileFactory, grid, 1);
     bush->snapToGrid(sf::Vector2i(2, 9));
     ObjectRegistry::add(bush);
 }
 
 void SceneGenerator::createClouds() {
-    auto cloud = std::make_shared<Cloud>(tileFactory, 1);
+    auto cloud = std::make_shared<Cloud>(tileFactory, grid, 1);
     cloud->snapToGrid(sf::Vector2i(4, 6));
     ObjectRegistry::add(cloud);
 }
 
 void SceneGenerator::createHills() {
-    auto hill = std::make_shared<Hill>(tileFactory, 1);
+    auto hill = std::make_shared<Hill>(tileFactory, grid, 1);
     hill->snapToGrid(sf::Vector2i(7, 8));
     ObjectRegistry::add(hill);
 }

@@ -12,7 +12,10 @@ class FigureButton : public StaticFigure, AbstractButton {
 public:
 
     FigureButton(
-        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, std::shared_ptr<AbstractFigureGenerator> generator
+        sf::Vector2f position,
+        std::unique_ptr<TileFactory> &tileFactory,
+        std::shared_ptr<Grid> grid,
+        std::shared_ptr<AbstractFigureGenerator> generator
     );
 
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;

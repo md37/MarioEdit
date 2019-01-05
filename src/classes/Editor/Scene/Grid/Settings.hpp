@@ -11,7 +11,7 @@ public:
     static const sf::Uint32 Auto = 0;
 
     Settings(sf::Uint32 rows, sf::Uint32 cols, sf::Vector2f position, sf::Vector2f size);
-    Settings(sf::Vector2f position, float scale);
+    explicit Settings(float scale, sf::Vector2f position=sf::Vector2f(0, 0));
 
     sf::Uint32 getRows() const;
     sf::Uint32 getCols() const;

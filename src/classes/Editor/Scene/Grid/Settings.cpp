@@ -13,7 +13,7 @@ Settings::Settings(
 }
 
 
-Settings::Settings(sf::Vector2f position, float scale): scale(scale), position(position) {
+Settings::Settings(float scale, sf::Vector2f position): scale(scale), position(position) {
     rows = 12;
     cols = Settings::Auto;
     size = sf::Vector2f(Settings::Auto, Settings::Auto);
@@ -37,6 +37,7 @@ sf::Vector2f Settings::getSize() const {
 
 void Settings::rescale(std::unique_ptr<Scale> &scale) {
     size *= scale->getRatio();
+    position *= scale->getRatio();
 
     resolveAutoSize(scale);
 

@@ -3,8 +3,12 @@
 #include "classes/Infrastructure/Log.hpp"
 
 FigureButton::FigureButton(
-    std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, std::shared_ptr<AbstractFigureGenerator> generator
+    sf::Vector2f position,
+    std::unique_ptr<TileFactory> &tileFactory,
+    std::shared_ptr<Grid> grid,
+    std::shared_ptr<AbstractFigureGenerator> generator
 ) : StaticFigure(tileFactory) {
+    this->position = position;
     this->grid = grid;
     this->generator = generator;
 }
@@ -19,22 +23,10 @@ void FigureButton::draw(std::shared_ptr<sf::RenderWindow> window) const {
 void FigureButton::rescale(std::unique_ptr<Scale> &newScale) {
     Log::out("Rescaling figure button");
 
+    position *= newScale->getRatio();
     grid->rescale(newScale);
     rescaleTiles(newScale);
     rescaleBorder(newScale);
-}
-
-void FigureButton::rescaleBorder(const std::unique_ptr<Scale> &newScale) {
-    auto newBorderSize = borderSize * newScale->getCurrent();
-    auto borderSquareSize = sf::Vector2f(getSize());
-    borderSquareSize.x += 2 * newBorderSize;
-    borderSquareSize.y += 2 * newBorderSize;
-    border.setSize(borderSquareSize);
-
-    auto borderSquarePosition = sf::Vector2f(position * newScale->getRatio());
-    borderSquarePosition.x -= newBorderSize;
-    borderSquarePosition.y -= newBorderSize;
-    border.setPosition(borderSquarePosition);
 }
 
 void FigureButton::rescaleTiles(std::unique_ptr<Scale> &newScale) {
@@ -44,6 +36,19 @@ void FigureButton::rescaleTiles(std::unique_ptr<Scale> &newScale) {
         tile->rescale(newScale);
         tile->snapToGrid();
     }
+}
+
+void FigureButton::rescaleBorder(const std::unique_ptr<Scale> &newScale) {
+    borderSize *= newScale->getRatio();
+    auto borderSquareSize = sf::Vector2f(getSize());
+    borderSquareSize.x += 2 * borderSize;
+    borderSquareSize.y += 2 * borderSize;
+    border.setSize(borderSquareSize);
+
+    auto borderSquarePosition = sf::Vector2f(position);
+    borderSquarePosition.x -= borderSize;
+    borderSquarePosition.y -= borderSize;
+    border.setPosition(borderSquarePosition);
 }
 
 bool FigureButton::isMouseOver() const {

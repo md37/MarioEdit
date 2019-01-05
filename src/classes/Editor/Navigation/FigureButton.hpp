@@ -37,4 +37,6 @@ private:
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;
 
+    void rescaleTiles(std::unique_ptr<Scale> &newScale);
+    void rescaleBorder(const std::unique_ptr<Scale> &newScale);
 };

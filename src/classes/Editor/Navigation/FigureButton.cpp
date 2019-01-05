@@ -19,13 +19,12 @@ void FigureButton::draw(std::shared_ptr<sf::RenderWindow> window) const {
 void FigureButton::rescale(std::unique_ptr<Scale> &newScale) {
     Log::out("Rescaling figure button");
 
-    tiles = generator->generate(pointOnGrid);
-    for (auto &tile: tiles) {
-        tile->setScalePromotion(grid->getScale());
-    }
-    AbstractFigure::rescale(newScale);
+    grid->rescale(newScale);
+    rescaleTiles(newScale);
+    rescaleBorder(newScale);
+}
 
-
+void FigureButton::rescaleBorder(const std::unique_ptr<Scale> &newScale) {
     auto newBorderSize = borderSize * newScale->getCurrent();
     auto borderSquareSize = sf::Vector2f(getSize());
     borderSquareSize.x += 2 * newBorderSize;
@@ -36,6 +35,15 @@ void FigureButton::rescale(std::unique_ptr<Scale> &newScale) {
     borderSquarePosition.x -= newBorderSize;
     borderSquarePosition.y -= newBorderSize;
     border.setPosition(borderSquarePosition);
+}
+
+void FigureButton::rescaleTiles(std::unique_ptr<Scale> &newScale) {
+    tiles = generator->generate(pointOnGrid);
+    for (auto &tile: tiles) {
+        tile->setScalePromotion(grid->getScale());
+        tile->rescale(newScale);
+        tile->snapToGrid();
+    }
 }
 
 bool FigureButton::isMouseOver() const {

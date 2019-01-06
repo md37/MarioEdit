@@ -14,7 +14,7 @@ ButtonTileEventHandler::ButtonTileEventHandler(
 
 void ButtonTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     auto buttons = ObjectRegistry::getButtonTiles();
-    if (!eventState->isDraggingNewTile) {
+    if (!eventState->isDraggingNewObject) {
         for (auto &button: buttons) {
             auto buttonPosition = button->getPosition();
             auto buttonSize = button->getSize();
@@ -37,7 +37,7 @@ void ButtonTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
         auto buttonPosition = button->getPosition();
         auto buttonSize = button->getSize();
         if (cursor.isOver(buttonPosition, buttonSize) && cursor.isMouseReleased()) {
-            eventState->dismissTileDrop = true;
+            eventState->dismissObjectDrop = true;
         } else if (cursor.isOver(buttonPosition, buttonSize) && cursor.isMousePressed() && eventState->lastUsedTileButton != button) {
             cancelDragging(cursor);
         }
@@ -61,6 +61,6 @@ void ButtonTileEventHandler::doMouseOut(Cursor &cursor, std::shared_ptr<TileButt
 void ButtonTileEventHandler::doMouseClick(Cursor &cursor, std::shared_ptr<TileButton> button) {
     createDynamicTileSnappedToCursor(cursor, button);
     eventState->lastUsedTileButton = button;
-    eventState->isDraggingNewTile = true;
+    eventState->isDraggingNewObject = true;
     eventState->clickedOnTileButton = true;
 }

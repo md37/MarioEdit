@@ -6,6 +6,7 @@
 #include "classes/Editor/Navigation/TileButton.hpp"
 #include "classes/Infrastructure/Interface/EventReceiverableInterface.hpp"
 #include "classes/Editor/EventHandler/ButtonTileEventHandler.hpp"
+#include "classes/Editor/EventHandler/ButtonFigureEventHandler.hpp"
 #include "classes/Editor/EventHandler/DynamicTileEventHandler.hpp"
 #include "classes/Editor/EventHandler/FigureEventHandler.hpp"
 
@@ -26,6 +27,7 @@ private:
     std::unique_ptr<EventState> currentState;
 
     std::unique_ptr<ButtonTileEventHandler> buttonTileEventHandler;
+    std::unique_ptr<ButtonFigureEventHandler> buttonFigureEventHandler;
     std::unique_ptr<DynamicTileEventHandler> dynamicTileEventHandler;
     std::unique_ptr<FigureEventHandler> figureEventHandler;
 

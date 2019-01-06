@@ -10,6 +10,14 @@ DynamicFigure::DynamicFigure(std::unique_ptr<TileFactory> &tileFactory) : Abstra
 
 }
 
+DynamicFigure::DynamicFigure(std::unique_ptr<TileFactory> &tileFactory, std::function<std::vector<std::shared_ptr<StaticTile>>(sf::Vector2i, sf::Uint32)> generator) : AbstractFigure(tileFactory) {
+    this->generator = generator;
+}
+
+DynamicFigure::DynamicFigure(std::unique_ptr<TileFactory> &tileFactory, std::vector<std::shared_ptr<StaticTile>> tiles) : AbstractFigure(tileFactory) {
+    this->tiles = tiles;
+}
+
 void DynamicFigure::drawFrame(std::shared_ptr<sf::RenderWindow> window) {
     if (!isFrameCreated) {
         resetFrame();
@@ -67,8 +75,8 @@ void DynamicFigure::startDrag(sf::Vector2f cursorPosition, std::unique_ptr<Anima
     grid->turnHighlightOn(getSizeOnGrid());
 
     calculateDragOffset(cursorPosition);
-    recalculateHighlightPosition(cursorPosition);
-    moveTiles(position);
+//    recalculateHighlightPosition(cursorPosition);
+//    moveTiles(position);
 }
 
 void DynamicFigure::calculateDragOffset(sf::Vector2f cursorPosition) {
@@ -169,4 +177,31 @@ void DynamicFigure::drop(std::unique_ptr<AnimationPerformer> &animationPerformer
 
 void DynamicFigure::changeGrid(std::shared_ptr<Grid> grid) {
     this->grid = grid;
+}
+
+void DynamicFigure::changeVariant(sf::Uint8 variant) {
+    if (variant < 1 || variant > 2 || variant == size) {
+        return;
+    }
+
+    Log::out("Change Figure Variant");
+
+    size = variant;
+    tiles.clear();
+
+    std::optional<Highlight>& highlight = grid->getHighlight();
+    if (highlight.has_value()) {
+        pointOnGrid = highlight->getPointOnGrid();
+        if (variantPositionChange == DynamicFigure::VariantAutoChange) {
+            pointOnGrid.y += variant;
+        } else {
+            pointOnGrid.y += variantPositionChange;
+        }
+        position = highlight->getPosition();
+
+        tiles = generator(pointOnGrid, size);
+
+        grid->turnHighlightOn(getSizeOnGrid());
+        resetFrame();
+    }
 }

@@ -3,12 +3,12 @@
 #include "classes/Infrastructure/Log.hpp"
 
 HillGenerator::HillGenerator(
-        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size
-) : AbstractFigureGenerator(tileFactory, grid, size) {
+        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
+) : AbstractFigureGenerator(tileFactory, grid) {
 
 }
 
-std::vector<std::shared_ptr<StaticTile>> HillGenerator::generate(sf::Vector2i pointOnGrid) {
+std::vector<std::shared_ptr<StaticTile>> HillGenerator::generate(sf::Vector2i pointOnGrid, sf::Uint8 size) {
     Log::out("Generating bush");
     std::vector<std::shared_ptr<StaticTile>> tiles;
 

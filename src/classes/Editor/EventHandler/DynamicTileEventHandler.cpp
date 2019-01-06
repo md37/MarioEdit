@@ -21,7 +21,7 @@ void DynamicTileEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
         }
     }
 
-    if (eventState->isDraggingNewTile) {
+    if (eventState->isDraggingNewObject && eventState->lastUsedTileButton) {
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
         bool isEscape = keyboard.isPressed(sf::Keyboard::Key::Escape);
 
@@ -124,7 +124,7 @@ void DynamicTileEventHandler::performLongClickDrop(Cursor &cursor) {
 
 void DynamicTileEventHandler::performQuickClickDrop(Cursor &cursor) {
     eventState->clickedOnTileButton = false;
-    if (eventState->dismissTileDrop) {
+    if (eventState->dismissObjectDrop) {
         return;
     }
 
@@ -133,11 +133,13 @@ void DynamicTileEventHandler::performQuickClickDrop(Cursor &cursor) {
     auto tileOnCurrentSlot = ObjectRegistry::getTileOnGrid(currentSlotGridPosition);
 
     auto draggingTile = scene->getDraggingTile();
-    if (tileOnCurrentSlot != nullptr && tileOnCurrentSlot != draggingTile) {
-        ObjectRegistry::removeTile(tileOnCurrentSlot);
+    if (draggingTile) {
+        if (tileOnCurrentSlot != nullptr && tileOnCurrentSlot != draggingTile) {
+            ObjectRegistry::removeTile(tileOnCurrentSlot);
+        }
+        draggingTile->drop(animationPerformer);
+        eventRegistry->unregisterDrag(draggingTile);
+        eventState->isDraggingNewObject = false;
+        cursor.draggedItem.reset();
     }
-    draggingTile->drop(animationPerformer);
-    eventRegistry->unregisterDrag(draggingTile);
-    eventState->isDraggingNewTile = false;
-    cursor.draggedItem.reset();
 }

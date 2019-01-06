@@ -105,3 +105,13 @@ std::shared_ptr<DynamicTile> Scene::getDraggingTile() const {
     }
     return nullptr;
 }
+
+std::shared_ptr<DynamicFigure> Scene::getDraggingFigure() const {
+    auto dynamicFigures = ObjectRegistry::getFigures();
+    for (auto const &figure : dynamicFigures) {
+        if (figure->isDragging()) {
+            return figure;
+        }
+    }
+    return nullptr;
+}

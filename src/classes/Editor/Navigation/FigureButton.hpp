@@ -5,6 +5,7 @@
 #include "classes/Editor/Object/FigureGenerator/CloudGenerator.hpp"
 #include "classes/Editor/Object/FigureGenerator/HillGenerator.hpp"
 #include "classes/Editor/Object/StaticFigure.hpp"
+#include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 #include "classes/Editor/Navigation/AbstractButton.hpp"
 
 class FigureButton : public StaticFigure, AbstractButton {
@@ -15,7 +16,8 @@ public:
         sf::Vector2f position,
         std::unique_ptr<TileFactory> &tileFactory,
         std::shared_ptr<Grid> grid,
-        std::shared_ptr<AbstractFigureGenerator> generator
+        std::shared_ptr<AbstractFigureGenerator> generator,
+        sf::Vector2i pointOnGrid=sf::Vector2i(0, 0)
     );
 
     void draw(std::shared_ptr<sf::RenderWindow> window) const override;
@@ -35,6 +37,13 @@ public:
 
     void cutBorder(float top, float left, float bottom, float right);
 
+    sf::Vector2f getPosition() const override;
+    sf::Vector2u getSize() const override;
+
+    std::shared_ptr<DynamicFigure> cloneToDynamicFigure(
+        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
+    );
+
 private:
 
     std::shared_ptr<AbstractFigureGenerator> generator;
@@ -42,7 +51,7 @@ private:
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;
 
-    sf::Color backgroundColor = sf::Color(255, 255, 255, 150);
+    sf::Color backgroundColor = sf::Color(255, 255, 255, 120);
 
     float borderCutTop = 0;
     float borderCutLeft = 0;

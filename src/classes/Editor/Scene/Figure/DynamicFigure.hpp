@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include "classes/Editor/Object/AbstractFigure.hpp"
 
 class DynamicFigure : public AbstractFigure, HoverableInterface, DraggableInterface {
@@ -7,6 +8,8 @@ class DynamicFigure : public AbstractFigure, HoverableInterface, DraggableInterf
 public:
 
     explicit DynamicFigure(std::unique_ptr<TileFactory> &tileFactory);
+    explicit DynamicFigure(std::unique_ptr<TileFactory> &tileFactory, std::function<std::vector<std::shared_ptr<StaticTile>>(sf::Vector2i, sf::Uint32)> generator);
+    explicit DynamicFigure(std::unique_ptr<TileFactory> &tileFactory, std::vector<std::shared_ptr<StaticTile>> tiles);
 
     void drawFrame(std::shared_ptr<sf::RenderWindow> window);
 
@@ -20,13 +23,17 @@ public:
     void drag(sf::Vector2f cursorPosition) override;
     void drop(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
 
-    virtual void changeVariant(sf::Uint8 variant)=0;
-
     void changeGrid(std::shared_ptr<Grid> grid);
+    void changeVariant(sf::Uint8 variant);
 
 protected:
 
+    static const int VariantAutoChange = -1;
+
+    int variantPositionChange = 0;
+    std::function<std::vector<std::shared_ptr<StaticTile>>(sf::Vector2i, sf::Uint32)> generator;
     sf::RectangleShape frame;
+    sf::Uint8 size;
 
     void resetFrame();
 

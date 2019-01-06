@@ -32,6 +32,6 @@ void AbstractTileEventHandler::cancelDragging(Cursor &cursor) {
 
     std::shared_ptr<Grid> grid = scene->getGrid();
     grid->turnHighlightOff();
-    eventState->isDraggingNewTile = false;
+    eventState->isDraggingNewObject = false;
     cursor.draggedItem.reset();
 }

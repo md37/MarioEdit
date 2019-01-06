@@ -18,13 +18,13 @@ file(GLOB GTEST_LIBS ${CMAKE_SOURCE_DIR}/build/gtest/libgtest*)
 
 # CLASSES
 file(GLOB_RECURSE CLASSES_SOURCES src/classes/*.cpp)
-add_library(classes ${CLASSES_SOURCES} src/classes/Editor/Navigation/AbstractButton.hpp)
+add_library(classes ${CLASSES_SOURCES})
 target_link_libraries(classes ${SFML_LIBS})
 target_include_directories(classes PUBLIC src)
 target_include_directories(classes PUBLIC vendor/sfml/include)
 
 # GAME
-set(SOURCES src/main.cpp src/classes/Editor/Object/FigureGenerator/CloudGenerator.cpp src/classes/Editor/Object/FigureGenerator/CloudGenerator.hpp src/classes/Editor/Object/FigureGenerator/HillGenerator.cpp src/classes/Editor/Object/FigureGenerator/HillGenerator.hpp src/classes/Editor/Object/FigureGenerator/BushGenerator.cpp src/classes/Editor/Object/FigureGenerator/BushGenerator.hpp src/classes/Editor/Object/FigureGenerator/AbstractFigureGenerator.hpp src/classes/Editor/Object/FigureGenerator/AbstractFigureGenerator.cpp)
+set(SOURCES src/main.cpp)
 find_package(Threads REQUIRED)
 add_executable(game ${SOURCES})
 target_link_libraries(game classes ${CMAKE_THREAD_LIBS_INIT})

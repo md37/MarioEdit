@@ -6,6 +6,7 @@ std::vector<std::shared_ptr<AbstractTile>> ObjectRegistry::allTiles;
 std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::dynamicTiles;
 std::vector<std::shared_ptr<TileButton>> ObjectRegistry::buttonTiles;
 std::vector<std::shared_ptr<DynamicFigure>> ObjectRegistry::figures;
+std::vector<std::shared_ptr<FigureButton>> ObjectRegistry::buttonFigures;
 
 void ObjectRegistry::clear() {
     dynamicTiles.clear();
@@ -27,6 +28,10 @@ void ObjectRegistry::add(std::shared_ptr<TileButton> tile) {
 
 void ObjectRegistry::add(std::shared_ptr<DynamicFigure> figure) {
     figures.push_back(figure);
+}
+
+void ObjectRegistry::add(std::shared_ptr<FigureButton> figure) {
+    buttonFigures.push_back(figure);
 }
 
 std::vector<std::shared_ptr<AbstractTile>> ObjectRegistry::getAllTiles() {
@@ -65,6 +70,10 @@ std::vector<std::shared_ptr<DynamicFigure>> ObjectRegistry::getFigures() {
     return figures;
 }
 
+std::vector<std::shared_ptr<FigureButton>> ObjectRegistry::getButtonFigures() {
+    return buttonFigures;
+}
+
 std::shared_ptr<DynamicTile> ObjectRegistry::getTileOnGrid(sf::Vector2i gridPoint) {
     for (auto &tile : dynamicTiles) {
         if (tile->getPointOnGrid() == gridPoint) {
@@ -76,4 +85,8 @@ std::shared_ptr<DynamicTile> ObjectRegistry::getTileOnGrid(sf::Vector2i gridPoin
 
 void ObjectRegistry::removeTile(std::shared_ptr<DynamicTile> tile) {
     dynamicTiles.erase(std::remove(dynamicTiles.begin(), dynamicTiles.end(), tile), dynamicTiles.end());
+}
+
+void ObjectRegistry::removeFigure(std::shared_ptr<DynamicFigure> figure) {
+    figures.erase(std::remove(figures.begin(), figures.end(), figure), figures.end());
 }

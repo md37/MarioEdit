@@ -2,17 +2,25 @@
 
 #include "classes/Infrastructure/Log.hpp"
 
-Hill::Hill(std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size) : DynamicFigure(tileFactory), generator(tileFactory, grid, size) {
+Hill::Hill(
+    std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid, sf::Uint8 size
+): DynamicFigure(tileFactory), generatorObject(tileFactory, grid) {
     if (size < 1) {
         size = 1;
     }
     this->grid = grid;
     this->size = size;
 
-    tiles = generator.generate(pointOnGrid);
+    generator = [=](sf::Vector2i pointOnGrid, sf::Uint32 size) mutable {
+        return generatorObject.generate(pointOnGrid, size);
+    };
+    tiles = generator(pointOnGrid, size);
+    variantPositionChange = DynamicFigure::VariantAutoChange;
 }
 
-Hill::Hill(std::unique_ptr<TileFactory> &tileFactory, sf::Uint8 size): DynamicFigure(tileFactory), generator(tileFactory, grid, size) {
+Hill::Hill(
+    std::unique_ptr<TileFactory> &tileFactory, sf::Uint8 size
+): DynamicFigure(tileFactory), generatorObject(tileFactory, grid) {
     if (size < 1) {
         size = 1;
     }
@@ -21,29 +29,11 @@ Hill::Hill(std::unique_ptr<TileFactory> &tileFactory, sf::Uint8 size): DynamicFi
     Settings gridSettings(1+size, 2+size, sf::Vector2f(160+size*80, 80+size*80), sf::Vector2f(0, 0));
     grid = std::make_unique<Grid>(gridSettings);
 
-    generator.updateGrid(grid);
-    tiles = generator.generate(pointOnGrid);
-}
+    generator = [=](sf::Vector2i pointOnGrid, sf::Uint32 size) mutable {
+        return generatorObject.generate(pointOnGrid, size);
+    };
 
-void Hill::changeVariant(sf::Uint8 variant) {
-    if (variant < 1 || variant > 2 || variant == size) {
-        return;
-    }
-
-    Log::out("Change Figure Variant");
-
-    size = variant;
-    tiles.clear();
-
-    std::optional<Highlight>& highlight = grid->getHighlight();
-    if (highlight.has_value()) {
-        pointOnGrid = highlight->getPointOnGrid();
-        pointOnGrid.y += variant;
-        position = highlight->getPosition();
-
-        tiles = generator.generate(pointOnGrid);
-
-        grid->turnHighlightOn(getSizeOnGrid());
-        resetFrame();
-    }
+    generatorObject.updateGrid(grid);
+    tiles = generator(pointOnGrid, size);
+    variantPositionChange = DynamicFigure::VariantAutoChange;
 }

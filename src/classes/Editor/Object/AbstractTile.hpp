@@ -18,6 +18,7 @@ public:
 
     sf::Vector2f positionPromotion = {0.0f, 0.0f};
 
+    sf::Vector2u getImageCoords();
     void changeImage(sf::Uint32 x, sf::Uint32 y);
     void rescale(std::unique_ptr<Scale> &newScale) override;
 

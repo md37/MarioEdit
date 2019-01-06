@@ -57,6 +57,10 @@ void AbstractTile::changeImage(sf::Uint32 x, sf::Uint32 y) {
     imagePosition = sf::Vector2u(x, y);
 }
 
+sf::Vector2u AbstractTile::getImageCoords() {
+    return imagePosition;
+}
+
 void AbstractTile::setPosition(sf::Vector2f position) {
     sprite.setPosition(position);
 }

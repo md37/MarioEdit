@@ -1,7 +1,6 @@
-#include <classes/Editor/ObjectRegistry.hpp>
-#include <classes/Editor/Scene/Figure/Type/Cloud.hpp>
 #include "FigureButton.hpp"
 
+#include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Infrastructure/Log.hpp"
 
 FigureButton::FigureButton(

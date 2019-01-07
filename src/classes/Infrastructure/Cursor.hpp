@@ -8,10 +8,8 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include "classes/Editor/Scene/Figure/Type/Bush.hpp"
-#include "classes/Editor/Scene/Figure/Type/Cloud.hpp"
-#include "classes/Editor/Scene/Figure/Type/Hill.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
+#include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 #include "classes/Infrastructure/Circle.hpp"
 
 class Cursor {

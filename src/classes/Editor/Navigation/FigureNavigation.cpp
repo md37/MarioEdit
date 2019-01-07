@@ -33,6 +33,7 @@ void FigureNavigation::generateButtons() {
             position, tileFactory, grid, generator, pointOnGrid
         );
         button->cutBorder(-4, 24, 28, 28);
+        button->variantPositionChange = 1;
         buttons.push_back(button);
         ObjectRegistry::add(button);
     }
@@ -46,6 +47,7 @@ void FigureNavigation::generateButtons() {
             position, tileFactory, grid, generator
         );
         button->cutBorder(-36, 24, -4, 28);
+        button->variantPositionChange = 0;
         buttons.push_back(button);
         ObjectRegistry::add(button);
     }
@@ -60,6 +62,7 @@ void FigureNavigation::generateButtons() {
             position, tileFactory, grid, generator, pointOnGrid
         );
         button->cutBorder(28, -4, -4, -3);
+        button->variantPositionChange = DynamicFigure::VariantAutoChange;
         buttons.push_back(button);
         ObjectRegistry::add(button);
     }

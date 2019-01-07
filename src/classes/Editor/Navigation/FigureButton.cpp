@@ -13,7 +13,7 @@ FigureButton::FigureButton(
 ) : StaticFigure(tileFactory) {
     this->position = position;
     this->grid = grid;
-    this->generator = generator;
+    this->generatorObject = generator;
     this->pointOnGrid = pointOnGrid;
 
     background.setFillColor(backgroundColor);
@@ -44,7 +44,7 @@ void FigureButton::rescale(std::unique_ptr<Scale> &newScale) {
 }
 
 void FigureButton::rescaleTiles(std::unique_ptr<Scale> &newScale) {
-    tiles = generator->generate(pointOnGrid, 1);
+    tiles = generatorObject->generate(pointOnGrid, 1);
     for (auto &tile: tiles) {
         tile->setScalePromotion(grid->getScale());
         tile->rescale(newScale);
@@ -119,19 +119,29 @@ sf::Vector2u FigureButton::getSize() const {
 }
 
 std::shared_ptr<DynamicFigure> FigureButton::cloneToDynamicFigure(
-    std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
+    std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> mainGrid
 ) {
     Log::out("Cloning to dynamic figure");
 
     std::vector<std::shared_ptr<StaticTile>> tilesCopy;
     for (auto &tile: tiles) {
         auto coords = tile->getImageCoords();
-        std::shared_ptr<StaticTile> tileCopy = tileFactory->createStaticTile(coords.x, coords.y, grid);
+        std::shared_ptr<StaticTile> tileCopy = tileFactory->createStaticTile(coords.x, coords.y, mainGrid);
         tileCopy->snapToGrid(tile->getPointOnGrid());
         tilesCopy.push_back(tileCopy);
     }
-    std::shared_ptr<DynamicFigure> figure = std::make_shared<DynamicFigure>(tileFactory, tilesCopy);
-    figure->changeGrid(grid);
+
+    auto buttonGrid = this->grid;
+
+    auto generator = [=](sf::Vector2i pointOnGrid, sf::Uint32 size) mutable {
+        generatorObject->updateGrid(mainGrid);
+        auto generatedTiles = generatorObject->generate(pointOnGrid, size);
+        generatorObject->updateGrid(buttonGrid);
+        return generatedTiles;
+    };
+    std::shared_ptr<DynamicFigure> figure = std::make_shared<DynamicFigure>(tileFactory, generator, tilesCopy);
+    figure->variantPositionChange = variantPositionChange;
+    figure->changeGrid(mainGrid);
 
     ObjectRegistry::add(figure);
     return figure;

@@ -41,12 +41,14 @@ public:
     sf::Vector2u getSize() const override;
 
     std::shared_ptr<DynamicFigure> cloneToDynamicFigure(
-        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> grid
+        std::unique_ptr<TileFactory> &tileFactory, std::shared_ptr<Grid> mainGrid
     );
+
+    sf::Int8 variantPositionChange = DynamicFigure::VariantAutoChange;
 
 private:
 
-    std::shared_ptr<AbstractFigureGenerator> generator;
+    std::shared_ptr<AbstractFigureGenerator> generatorObject;
 
     bool isMouseOverFlag = false;
     bool isDraggingFlag = false;

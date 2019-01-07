@@ -7,9 +7,19 @@ class DynamicFigure : public AbstractFigure, HoverableInterface, DraggableInterf
 
 public:
 
+    static const int VariantAutoChange = -1;
+    sf::Int8 variantPositionChange = 0;
+
     explicit DynamicFigure(std::unique_ptr<TileFactory> &tileFactory);
-    explicit DynamicFigure(std::unique_ptr<TileFactory> &tileFactory, std::function<std::vector<std::shared_ptr<StaticTile>>(sf::Vector2i, sf::Uint32)> generator);
-    explicit DynamicFigure(std::unique_ptr<TileFactory> &tileFactory, std::vector<std::shared_ptr<StaticTile>> tiles);
+    explicit DynamicFigure(
+        std::unique_ptr<TileFactory> &tileFactory,
+        std::function<std::vector<std::shared_ptr<StaticTile>>(sf::Vector2i, sf::Uint32)> generator
+    );
+    explicit DynamicFigure(
+        std::unique_ptr<TileFactory> &tileFactory,
+        std::function<std::vector<std::shared_ptr<StaticTile>>(sf::Vector2i, sf::Uint32)> generator,
+        std::vector<std::shared_ptr<StaticTile>> tiles
+    );
 
     void drawFrame(std::shared_ptr<sf::RenderWindow> window);
 
@@ -28,10 +38,7 @@ public:
 
 protected:
 
-    static const int VariantAutoChange = -1;
-
-    int variantPositionChange = 0;
-    std::function<std::vector<std::shared_ptr<StaticTile>>(sf::Vector2i, sf::Uint32)> generator;
+    std::function<std::vector<std::shared_ptr<StaticTile>>(sf::Vector2i, sf::Uint32)> generator = nullptr;
     sf::RectangleShape frame;
     sf::Uint8 size;
 

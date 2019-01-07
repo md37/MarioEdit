@@ -4,7 +4,6 @@
 #include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 #include "classes/Editor/Navigation/AbstractNavigation.hpp"
 #include "classes/Editor/Scene/Grid/Grid.hpp"
-#include "classes/Editor/Scene/SceneGenerator.hpp"
 #include "classes/Editor/Scene/Animation/SpecialBlockBlinkAnimation.hpp"
 #include "classes/Infrastructure/Scale.hpp"
 #include "classes/Infrastructure/TileFactory.hpp"
@@ -25,7 +24,6 @@ public:
 private:
 
     std::shared_ptr<Grid> grid;
-    std::unique_ptr<SceneGenerator> sceneGenerator;
 
     void reScaleTiles(std::unique_ptr<Scale> &scale);
     void reSnapTilesToGrid();

@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "classes/Editor/ObjectRegistry.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
+#include "classes/Infrastructure/Log.hpp"
 
 TileFactory::TileFactory(std::string filepath, std::unique_ptr<Scale> &scale) : scale(scale) {
     texture = std::make_unique<sf::Texture>();
@@ -20,7 +21,9 @@ void TileFactory::setTileOffset(sf::Uint32 offsetX, sf::Uint32 offsetY) {
     config.offsetY = offsetY;
 }
 
-std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Uint32 y, std::unique_ptr<Grid>& grid) const {
+std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid> grid) const {
+    Log::out("Creating dynamic tile");
+
     auto sprite = prepareSprite();
     auto tile = std::make_shared<DynamicTile>(sprite, grid, config);
     tile->changeImage(x, y);
@@ -32,7 +35,9 @@ std::shared_ptr<DynamicTile> TileFactory::createDynamicTile(sf::Uint32 x, sf::Ui
     return tile;
 }
 
-std::shared_ptr<StaticTile> TileFactory::createStaticTile(sf::Uint32 x, sf::Uint32 y, std::unique_ptr<Grid>& grid) const {
+std::shared_ptr<StaticTile> TileFactory::createStaticTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid> grid) const {
+    Log::out("Creating static tile");
+
     auto sprite = prepareSprite();
     auto tile = std::make_shared<StaticTile>(sprite, grid, config);
     tile->changeImage(x, y);
@@ -41,9 +46,11 @@ std::shared_ptr<StaticTile> TileFactory::createStaticTile(sf::Uint32 x, sf::Uint
     return tile;
 }
 
-std::shared_ptr<ButtonTile> TileFactory::createButtonTile(sf::Uint32 x, sf::Uint32 y) const {
+std::shared_ptr<TileButton> TileFactory::createButtonTile(sf::Uint32 x, sf::Uint32 y) const {
+    Log::out("Creating button tile");
+
     auto sprite = prepareSprite();
-    auto tile = std::make_shared<ButtonTile>(sprite, config);
+    auto tile = std::make_shared<TileButton>(sprite, config);
     tile->changeImage(x, y);
     ObjectRegistry::add(tile);
 

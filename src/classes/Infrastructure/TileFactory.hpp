@@ -7,10 +7,10 @@
 #include "classes/Infrastructure/Scale.hpp"
 #include "classes/Infrastructure/TileConfig.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
-#include "classes/Editor/Scene/Tile/StaticTile.hpp"
-#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
+#include "classes/Editor/Object/StaticTile.hpp"
+#include "classes/Editor/Navigation/TileButton.hpp"
 
-class ButtonTile;
+class TileButton;
 
 class TileFactory {
 
@@ -21,9 +21,9 @@ public:
     void setTileSeparators(sf::Uint32 separatorX, sf::Uint32 separatorY);
     void setTileOffset(sf::Uint32 offsetX, sf::Uint32 offsetY);
 
-    std::shared_ptr<DynamicTile> createDynamicTile(sf::Uint32 x, sf::Uint32 y, std::unique_ptr<Grid>& grid) const;
-    std::shared_ptr<StaticTile> createStaticTile(sf::Uint32 x, sf::Uint32 y, std::unique_ptr<Grid>& grid) const;
-    std::shared_ptr<ButtonTile> createButtonTile(sf::Uint32 x, sf::Uint32 y) const;
+    std::shared_ptr<DynamicTile> createDynamicTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid> grid) const;
+    std::shared_ptr<StaticTile> createStaticTile(sf::Uint32 x, sf::Uint32 y, std::shared_ptr<Grid> grid) const;
+    std::shared_ptr<TileButton> createButtonTile(sf::Uint32 x, sf::Uint32 y) const;
 
 private:
 

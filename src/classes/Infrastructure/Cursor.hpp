@@ -3,15 +3,13 @@
 #include <memory>
 #include <vector>
 #include <variant>
+#include <optional>
 #include <SFML/Config.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include <optional>
-#include "classes/Editor/Scene/Figure/Bush.hpp"
-#include "classes/Editor/Scene/Figure/Cloud.hpp"
-#include "classes/Editor/Scene/Figure/Hill.hpp"
 #include "classes/Editor/Scene/Tile/DynamicTile.hpp"
+#include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 #include "classes/Infrastructure/Circle.hpp"
 
 class Cursor {
@@ -23,7 +21,7 @@ public:
     sf::Vector2f getPosition() const;
 
     std::optional<
-        std::variant<std::shared_ptr<DynamicTile>, std::shared_ptr<Figure>>
+        std::variant<std::shared_ptr<DynamicTile>, std::shared_ptr<DynamicFigure>>
     >draggedItem;
 
     Cursor();

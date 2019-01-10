@@ -1,7 +1,7 @@
 #pragma once
 
 #include "classes/Editor/EventState.hpp"
-#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
+#include "classes/Editor/Navigation/TileButton.hpp"
 #include "classes/Editor/Scene.hpp"
 #include "classes/Infrastructure/Interface/EventReceiverableInterface.hpp"
 #include "AbstractTileEventHandler.hpp"
@@ -21,8 +21,8 @@ public:
 
 private:
 
-    void doMouseOver(Cursor &cursor, std::shared_ptr<ButtonTile> button);
-    void doMouseOut(Cursor &cursor, std::shared_ptr<ButtonTile> button);
-    void doMouseClick(Cursor &cursor, std::shared_ptr<ButtonTile> button);
+    void doMouseOver(Cursor &cursor, std::shared_ptr<TileButton> button);
+    void doMouseOut(Cursor &cursor, std::shared_ptr<TileButton> button);
+    void doMouseClick(Cursor &cursor, std::shared_ptr<TileButton> button);
 
 };

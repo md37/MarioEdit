@@ -12,7 +12,7 @@ public:
 
     inline void operator()(std::shared_ptr<DynamicTile>& tile) {}
 
-    inline void operator()(std::shared_ptr<Figure>& figure) {
+    inline void operator()(std::shared_ptr<DynamicFigure>& figure) {
         figure->changeVariant(variant);
     }
 
@@ -37,13 +37,17 @@ EditorEventHandler::EditorEventHandler(
         currentState, animationPerformer, scene, tileFactory, eventRegistry
     );
 
+    buttonFigureEventHandler = std::make_unique<ButtonFigureEventHandler>(
+        currentState, animationPerformer, scene, tileFactory, eventRegistry
+    );
+
     figureEventHandler = std::make_unique<FigureEventHandler>(
-        animationPerformer, eventRegistry
+        currentState, animationPerformer, scene, tileFactory, eventRegistry
     );
 }
 
 void EditorEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
-    currentState->dismissTileDrop = false;
+    currentState->dismissObjectDrop = false;
 
     auto pressedNumeric = keyboard.getPressedNumeric();
     auto draggingItem = cursor.draggedItem;
@@ -52,6 +56,7 @@ void EditorEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     }
 
     buttonTileEventHandler->handleEvents(keyboard, cursor);
+    buttonFigureEventHandler->handleEvents(keyboard, cursor);
     dynamicTileEventHandler->handleEvents(keyboard, cursor);
     figureEventHandler->handleEvents(keyboard, cursor);
 }

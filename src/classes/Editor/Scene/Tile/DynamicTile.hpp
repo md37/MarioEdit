@@ -3,20 +3,20 @@
 #include "classes/Infrastructure/Interface/HoverableInterface.hpp"
 #include "classes/Infrastructure/Interface/DraggableInterface.hpp"
 #include "classes/Infrastructure/Interface/DrawableInterface.hpp"
-#include "classes/Editor/Scene/Tile/GridTile.hpp"
+#include "classes/Editor/Object/GridTile.hpp"
 #include "classes/Editor/Scene/Animation/HighlightAnimation.hpp"
 #include "classes/Editor/Scene/Animation/UndoHighlightAnimation.hpp"
 
-class DynamicTile : public GridTile, public HoverableInterface, public DraggableInterface, DrawableInterface {
+class DynamicTile : public GridTile, HoverableInterface, DraggableInterface, DrawableInterface {
 
 public:
 
-    explicit DynamicTile(sf::Sprite sprite, std::unique_ptr<Grid>& grid, TileConfig config=TileConfig());
+    explicit DynamicTile(sf::Sprite sprite, std::shared_ptr<Grid> grid, TileConfig config=TileConfig());
 
     bool isBlinking = false;
     bool isReturning = false;
 
-    void rescale(std::unique_ptr<Scale> &newScale);
+    void rescale(std::unique_ptr<Scale> &newScale) override;
 
     void mouseEnter(std::unique_ptr<AnimationPerformer> &animationPerformer) override;
     void mouseOver(std::unique_ptr<AnimationPerformer> &animationPerformer) override;

@@ -12,7 +12,7 @@ AbstractTileEventHandler::AbstractTileEventHandler(
 
 }
 
-void AbstractTileEventHandler::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<ButtonTile> button) {
+void AbstractTileEventHandler::createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<TileButton> button) {
     auto dynamicTile = button->cloneToDynamicTile(tileFactory, scene->getGrid());
 
     auto tilePosition = cursor.getPosition();
@@ -30,8 +30,8 @@ void AbstractTileEventHandler::cancelDragging(Cursor &cursor) {
     eventRegistry->unregisterDrag(draggingTile);
     ObjectRegistry::removeTile(draggingTile);
 
-    std::unique_ptr<Grid>& grid = scene->getGrid();
+    std::shared_ptr<Grid> grid = scene->getGrid();
     grid->turnHighlightOff();
-    eventState->isDraggingNewTile = false;
+    eventState->isDraggingNewObject = false;
     cursor.draggedItem.reset();
 }

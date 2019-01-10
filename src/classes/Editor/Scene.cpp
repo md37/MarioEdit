@@ -1,13 +1,14 @@
 #include "Scene.hpp"
 
 #include "classes/Infrastructure/Scale.hpp"
-#include "classes/Editor/Scene/Figure.hpp"
+#include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 #include "classes/Editor/ObjectRegistry.hpp"
 
 Scene::Scene(std::unique_ptr<TileFactory> &tileFactory) {
-    grid = std::make_unique<Grid>();
-    sceneGenerator = std::make_unique<SceneGenerator>(tileFactory, grid);
-    sceneGenerator->generate();
+    Settings gridSettings(
+        12, Settings::Auto, sf::Vector2f(0, 0), sf::Vector2f(Settings::Auto, Settings::Auto)
+    );
+    grid = std::make_shared<Grid>(gridSettings);
 }
 
 void Scene::rescale(std::unique_ptr<Scale> &scale) {
@@ -88,7 +89,7 @@ void Scene::draw(std::shared_ptr<sf::RenderWindow> window) const {
     }
 }
 
-std::unique_ptr<Grid>& Scene::getGrid() {
+std::shared_ptr<Grid> Scene::getGrid() {
     return grid;
 }
 
@@ -97,6 +98,16 @@ std::shared_ptr<DynamicTile> Scene::getDraggingTile() const {
     for (auto const &tile : dynamicTiles) {
         if (tile->isDragging()) {
             return tile;
+        }
+    }
+    return nullptr;
+}
+
+std::shared_ptr<DynamicFigure> Scene::getDraggingFigure() const {
+    auto dynamicFigures = ObjectRegistry::getFigures();
+    for (auto const &figure : dynamicFigures) {
+        if (figure->isDragging()) {
+            return figure;
         }
     }
     return nullptr;

@@ -54,7 +54,7 @@ void Main::reInitializeWindow() {
     window->setKeyRepeatEnabled(false);
 
     Cursor::reinitialize(window);
-    Tile::setWindow(window);
+    AbstractTile::setWindow(window);
 
     scale->change(window->getSize());
     editor->rescale(scale);

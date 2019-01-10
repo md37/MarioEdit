@@ -1,10 +1,10 @@
 #pragma once
 
 #include "classes/Infrastructure/Cursor.hpp"
-#include "classes/Editor/Navigation/Tile/ButtonTile.hpp"
 #include "classes/Editor/Scene.hpp"
 #include "classes/Editor/EventState.hpp"
 #include "classes/Editor/EventHandler/EventRegistry.hpp"
+#include "classes/Editor/Navigation/TileButton.hpp"
 
 class AbstractTileEventHandler {
 
@@ -26,7 +26,7 @@ protected:
     std::unique_ptr<TileFactory> &tileFactory;
     std::unique_ptr<EventRegistry> &eventRegistry;
 
-    void createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<ButtonTile> button);
+    void createDynamicTileSnappedToCursor(Cursor &cursor, std::shared_ptr<TileButton> button);
     void cancelDragging(Cursor& cursor);
 
 };

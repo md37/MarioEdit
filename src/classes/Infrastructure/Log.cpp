@@ -25,6 +25,16 @@ void Log::out(bool value, std::string label) {
     std::cout << (value ? "true" : "false") << std::endl;
 }
 
+void Log::out(float value, std::string label) {
+    if (autoLine) {
+        Log::line();
+    }
+    if (!label.empty()) {
+        std::cout << "[ " << label << " ] ";
+    }
+    std::cout << value << std::endl;
+}
+
 void Log::out(sf::Vector2f vector, std::string label) {
     if (autoLine) {
         Log::line();
@@ -33,6 +43,36 @@ void Log::out(sf::Vector2f vector, std::string label) {
         std::cout << "[ " << label << " ] ";
     }
     std::cout << vector.x << "x" << vector.y << std::endl;
+}
+
+void Log::out(sf::Vector2i vector, std::string label) {
+    if (autoLine) {
+        Log::line();
+    }
+    if (!label.empty()) {
+        std::cout << "[ " << label << " ] ";
+    }
+    std::cout << vector.x << "x" << vector.y << std::endl;
+}
+
+void Log::out(sf::Vector2u vector, std::string label) {
+    if (autoLine) {
+        Log::line();
+    }
+    if (!label.empty()) {
+        std::cout << "[ " << label << " ] ";
+    }
+    std::cout << vector.x << "x" << vector.y << std::endl;
+}
+
+void Log::out(sf::Uint32 value, std::string label) {
+    if (autoLine) {
+        Log::line();
+    }
+    if (!label.empty()) {
+        std::cout << "[ " << label << " ] ";
+    }
+    std::cout << value << std::endl;
 }
 
 void Log::out(sf::Rect<float> rect, std::string label=std::string("")) {

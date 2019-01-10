@@ -1,14 +1,18 @@
 #include "FigureEventHandler.hpp"
 
-#include "classes/Infrastructure/Log.hpp"
+#include <iostream>
 #include "classes/Editor/ObjectRegistry.hpp"
-#include "classes/Editor/Scene/Figure.hpp"
+#include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 #include "classes/Editor/EventHandler/DragVisitator.hpp"
+#include "classes/Infrastructure/Log.hpp"
 
 FigureEventHandler::FigureEventHandler(
+    std::unique_ptr<EventState> &eventState,
     std::unique_ptr<AnimationPerformer> &animationPerformer,
-    std::unique_ptr<EventRegistry> &figureEventRegistry
-): animationPerformer(animationPerformer), eventRegistry(figureEventRegistry) {
+    std::unique_ptr<Scene> &scene,
+    std::unique_ptr<TileFactory> &tileFactory,
+    std::unique_ptr<EventRegistry> &eventRegistry
+): AbstractFigureEventHandler(eventState, animationPerformer, scene, tileFactory, eventRegistry) {
 
 }
 
@@ -30,7 +34,7 @@ void FigureEventHandler::handleEvents(Keyboard &keyboard, Cursor &cursor) {
     }
 }
 
-void FigureEventHandler::performHover(Cursor &cursor, std::shared_ptr<Figure> &figure) {
+void FigureEventHandler::performHover(Cursor &cursor, std::shared_ptr<DynamicFigure> figure) {
     bool isDraggingItem = cursor.draggedItem.has_value();
     auto figurePosition = figure->getPosition();
     auto figureSize = figure->getSize();
@@ -46,12 +50,13 @@ void FigureEventHandler::performHover(Cursor &cursor, std::shared_ptr<Figure> &f
     }
 }
 
-void FigureEventHandler::performDragDrop(Cursor& cursor, std::shared_ptr<Figure> &figure) {
+void FigureEventHandler::performDragDrop(Cursor& cursor, std::shared_ptr<DynamicFigure> figure) {
     auto figurePosition = figure->getPosition();
     auto figureSize = figure->getSize();
 
     if (cursor.isOver(figurePosition, figureSize) && eventRegistry->isOverRegistered(figure)) {
         bool isLeftClick = cursor.getClickType() == sf::Mouse::Button::Left;
+
         bool isDraggingItem = cursor.draggedItem.has_value();
 
         if (cursor.isClick() && !eventRegistry->isDragRegistered(figure) && isLeftClick && !isDraggingItem) {
@@ -64,14 +69,19 @@ void FigureEventHandler::performDragDrop(Cursor& cursor, std::shared_ptr<Figure>
     }
 }
 
-void FigureEventHandler::performStartDragging(Cursor &cursor, std::shared_ptr<Figure> &figure) {
+void FigureEventHandler::performStartDragging(Cursor &cursor, std::shared_ptr<DynamicFigure> figure) {
     figure->startDrag(cursor.getPosition(), animationPerformer);
     cursor.draggedItem = figure;
     eventRegistry->registerDrag(figure);
 }
 
-void FigureEventHandler::performDrop(Cursor &cursor, std::shared_ptr<Figure> &figure) {
+void FigureEventHandler::performDrop(Cursor &cursor, std::shared_ptr<DynamicFigure> figure) {
     eventRegistry->unregisterDrag(figure);
     figure->drop(animationPerformer);
     cursor.draggedItem.reset();
+
+    eventState->lastUsedFigureButton->mouseLeave(animationPerformer);
+    eventRegistry->unregisterOver(eventState->lastUsedFigureButton);
+
+    eventState->isDraggingNewObject = false;
 }

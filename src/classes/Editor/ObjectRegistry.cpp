@@ -1,17 +1,18 @@
 #include "ObjectRegistry.hpp"
 
-#include "classes/Editor/Scene/Figure.hpp"
+#include "classes/Editor/Scene/Figure/DynamicFigure.hpp"
 
-std::vector<std::shared_ptr<Tile>> ObjectRegistry::allTiles;
+std::vector<std::shared_ptr<AbstractTile>> ObjectRegistry::allTiles;
 std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::dynamicTiles;
-std::vector<std::shared_ptr<ButtonTile>> ObjectRegistry::buttonTiles;
-std::vector<std::shared_ptr<Figure>> ObjectRegistry::figures;
+std::vector<std::shared_ptr<TileButton>> ObjectRegistry::buttonTiles;
+std::vector<std::shared_ptr<DynamicFigure>> ObjectRegistry::figures;
+std::vector<std::shared_ptr<FigureButton>> ObjectRegistry::buttonFigures;
 
 void ObjectRegistry::clear() {
     dynamicTiles.clear();
 }
 
-void ObjectRegistry::add(std::shared_ptr<Tile> tile) {
+void ObjectRegistry::add(std::shared_ptr<AbstractTile> tile) {
     allTiles.push_back(tile);
 }
 
@@ -20,16 +21,20 @@ void ObjectRegistry::add(std::shared_ptr<DynamicTile> tile) {
     dynamicTiles.push_back(tile);
 }
 
-void ObjectRegistry::add(std::shared_ptr<ButtonTile> tile) {
+void ObjectRegistry::add(std::shared_ptr<TileButton> tile) {
     allTiles.push_back(tile);
     buttonTiles.push_back(tile);
 }
 
-void ObjectRegistry::add(std::shared_ptr<Figure> figure) {
+void ObjectRegistry::add(std::shared_ptr<DynamicFigure> figure) {
     figures.push_back(figure);
 }
 
-std::vector<std::shared_ptr<Tile>> ObjectRegistry::getAllTiles() {
+void ObjectRegistry::add(std::shared_ptr<FigureButton> figure) {
+    buttonFigures.push_back(figure);
+}
+
+std::vector<std::shared_ptr<AbstractTile>> ObjectRegistry::getAllTiles() {
     return allTiles;
 }
 
@@ -57,12 +62,16 @@ std::vector<std::shared_ptr<DynamicTile>> ObjectRegistry::getDynamicTiles() {
     return dynamicTiles;
 }
 
-std::vector<std::shared_ptr<ButtonTile>> ObjectRegistry::getButtonTiles() {
+std::vector<std::shared_ptr<TileButton>> ObjectRegistry::getButtonTiles() {
     return buttonTiles;
 }
 
-std::vector<std::shared_ptr<Figure>> ObjectRegistry::getFigures() {
+std::vector<std::shared_ptr<DynamicFigure>> ObjectRegistry::getFigures() {
     return figures;
+}
+
+std::vector<std::shared_ptr<FigureButton>> ObjectRegistry::getButtonFigures() {
+    return buttonFigures;
 }
 
 std::shared_ptr<DynamicTile> ObjectRegistry::getTileOnGrid(sf::Vector2i gridPoint) {
@@ -76,4 +85,8 @@ std::shared_ptr<DynamicTile> ObjectRegistry::getTileOnGrid(sf::Vector2i gridPoin
 
 void ObjectRegistry::removeTile(std::shared_ptr<DynamicTile> tile) {
     dynamicTiles.erase(std::remove(dynamicTiles.begin(), dynamicTiles.end(), tile), dynamicTiles.end());
+}
+
+void ObjectRegistry::removeFigure(std::shared_ptr<DynamicFigure> figure) {
+    figures.erase(std::remove(figures.begin(), figures.end(), figure), figures.end());
 }
